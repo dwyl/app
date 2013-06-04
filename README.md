@@ -1,11 +1,10 @@
 time
 ====
 
-**"Not everything that counts can be counted, 
-and not everything that can be counted counts."**
+![Not everything that counts can be counted, 
+and not everything that can be counted counts. ~ Albert Einstein
+](http://i.imgur.com/ESOb79D.png "Not everything that counts can be counted")
 
-~ Albert Einstein
- 
 
 **How Will You Measure Your Life?** http://youtu.be/tvos4nORf_Y
 
