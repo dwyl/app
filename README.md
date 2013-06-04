@@ -1,9 +1,40 @@
 time
 ====
 
+**"Not everything that counts can be counted, 
+and not everything that can be counted counts."**
+
+~ Albert Einstein
+ 
+
+**How Will You Measure Your Life?** http://youtu.be/tvos4nORf_Y
+
+- - -
+
 Experiments in Time. JavaScript, CoffeeScript and Mocha
 
-Firstly, If you don't already know CoffeeScript (*shame on you*! :-P )
+Ever since I read Malcom Gladwell's 
+http://en.wikipedia.org/wiki/Outliers_(book) 
+I've "clicked" with the idea that I need to keep investing my time
+and after 10,000 hours I will acheive "overnight success". :-)
+
+I've already dedicated **way** more than 10kh to learning
+*everything* I can about computing, not just how to write code.
+
+My only measure of *progress* (to date)
+has been my own sense of acheivement.
+(and my ability to whiz through my "day-job" coding tasks)
+
+I need a better way to *measure* my life.
+I want to track my progress towards *all* my goals, not just coding.
+There are some goals which are more important than others.
+
+
+
+
+- - - - - - 
+
+If you don't already know CoffeeScript (*shame on you*! :-P )
 Here are a few resources:
 
 - (Interactive) Online Book: http://autotelicum.github.com/Smooth-CoffeeScript/interactive/interactive-coffeescript.html
