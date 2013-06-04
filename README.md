@@ -10,25 +10,32 @@ and not everything that can be counted counts. ~ Albert Einstein
 
 - - -
 
-Experiments in Time. JavaScript, CoffeeScript and Mocha
+(Thought) Experiments in Time. JavaScript, CoffeeScript and Mocha
 
-Ever since I read Malcom Gladwell's 
-http://en.wikipedia.org/wiki/Outliers_(book) 
-I've "clicked" with the idea that I need to keep investing my time
-and after 10,000 hours I will acheive "overnight success". :-)
+Ever since I read [Malcom Gladwell's Outliers]
+(http://en.wikipedia.org/wiki/Outliers_(book))
+I've "*clicked*" with the idea that I need to keep investing my time
+and after **10,000 hours** I will acheive "**overnight success**". :-)
 
 I've already dedicated **way** more than 10kh to learning
-*everything* I can about computing, not just how to write code.
+*everything* I can about technology, not just how to write code.
 
 My only measure of *progress* (to date)
 has been my own sense of acheivement.
 (and my ability to whiz through my "day-job" coding tasks)
 
-I need a better way to *measure* my life.
+I want a better way to *measure* my life.
 I want to track my progress towards *all* my goals, not just coding.
+
 There are some goals which are more important than others.
 
+I often watch Ted Talks e.g:
+[Stop Learning, Start Thinking, Create Something](http://youtu.be/Uq-FOOQ1TpE)
+[Hackschooling Makes Me Happy](http://youtu.be/h11u3vtcpaY)
 
+But if I don't share them anywhere, is the time "*wasted*"...?
+Or does watching inspiring videos which expose us to new thoughts/ideas 
+*count* towards a goal...?
 
 
 - - - - - - 
