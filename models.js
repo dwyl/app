@@ -4,7 +4,7 @@
 
 
 (function() {
-  var Schema, db, mongoose, msg;
+  var Schema, db, mongoose, msg, ppl;
 
   db = require('./config/db');
 
@@ -17,10 +17,33 @@
   msg = new Schema({
     m: String,
     n: String,
-    t: Number,
-    p: String
+    p: String,
+    t: Number
   });
 
   mongoose.model('msg', msg);
 
+  ppl = new Schema({
+    email: String,
+    family_name: String,
+    gender: String,
+    given_name: String,
+    google_access_token: String,
+    google_id: String,
+    google_id_token: String,
+    google_link: String,
+    google_oauth_code: String,
+    google_refresh_token: String,
+    locale: String,
+    picture: String,
+    name: String,
+    verified_email: Boolean
+  });
+
+  mongoose.model('ppl', ppl);
+
 }).call(this);
+
+/*
+//@ sourceMappingURL=models.map
+*/

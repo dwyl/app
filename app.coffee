@@ -5,6 +5,7 @@ port = 80
 models = require('./models')
 mongoose = require('mongoose')
 MSG = mongoose.model('msg')
+PPL = mongoose.model('ppl')
 
 app.use(express.static(__dirname + '/public'))
 app.set('views', __dirname + '/tpl')
@@ -47,7 +48,7 @@ app.get('/login', (req, res) ->
 
 app.get('/oauth2callback', (req, res) ->
 	code = req.query.code
-	console.log code
+	console.log "OAUth Response Code: "+code
 	res.send code
 
 	oauth2Client.getToken(code, (err, tokens) ->
@@ -66,7 +67,30 @@ app.get('/oauth2callback', (req, res) ->
 					console.dir err
 				else
 					console.log 'Profile 1 :: '
-					console.log(profile)
+					# console.log(profile)
+					person = new PPL({
+						google_id: profile.id
+						email: profile.email # should we allow more than one email address?
+						verified_email: profile.verified_email # self explanatory
+						name: profile.name # full name of the person 
+						given_name: profile.given_name # first name
+						family_name: profile.family_name # last name
+						google_link: profile.link # link to google plus page
+						picture: profile.picture # profile picture
+						gender: profile.gender # F/M
+						locale: profile.locale # two char lang code
+						google_id_token: tokens.id_token # OAuth Token
+						google_refresh_token: tokens.refresh_token # OAuth Refresh Token
+						google_access_token: tokens.access_token # 
+						google_oauth_code: code
+					})
+					person.save( (err) ->
+						if (err)
+							return err;
+						else
+							console.log "Person: "+person
+					)
+
 				
 			) # END .execute			
 		) # END googleapis.discover.execute

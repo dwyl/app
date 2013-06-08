@@ -78,6 +78,7 @@ With Express: http://www.danielbaulig.de/socket-ioexpress/
 **Tutorial**: http://j-query.blogspot.co.uk/2011/11/mongoose-and-mongohq.html
 
 >> Mongoose: http://mongoosejs.com/
++ Mongoose Data Types: http://mongoosejs.com/docs/schematypes.html
 
 >> MongoHQ: https://www.mongohq.com/home
 
@@ -124,6 +125,10 @@ Watch List of Google + API Features: http://www.youtube.com/watch?v=EBf_OTPWmFk&
 
 People Methods: https://developers.google.com/+/api/latest/people#methods
 
+
+### Salesforce OAuth
+
+http://developer.apigee.com/salesforce_tutorial.html
 
 
 ### Hypertable
