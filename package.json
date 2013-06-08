@@ -5,7 +5,9 @@
     "dependencies": {
         "socket.io": "latest",
         "express": "latest",
-        "jade": "latest"
+        "jade": "latest",
+        "mongoose":"latest",
+        "googleapis":"latest"
     },
     "author": "@nelsonic"
 }
