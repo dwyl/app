@@ -7,7 +7,8 @@
         "express": "latest",
         "jade": "latest",
         "mongoose":"latest",
-        "googleapis":"latest"
+        "googleapis":"latest",
+        "ect":"latest"
     },
     "author": "@nelsonic"
 }

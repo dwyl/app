@@ -9,11 +9,15 @@ PPL = mongoose.model('ppl')
 
 app.use(express.static(__dirname + '/public'))
 app.set('views', __dirname + '/tpl')
-app.set('view engine', 'jade')
-app.engine('jade', require('jade').__express)
+# app.set('view engine', 'jade')
+# app.engine('jade', require('jade').__express)
+ECT = require 'ect'
+ectRenderer = ECT({ watch: true, root: __dirname + '/views' })
+app.engine('.html', ectRenderer.render)
+
 
 app.get('/', (req, res) ->
-    res.render('page')
+    res.render('page.html')
 )
  
 googleapis = require('googleapis')
