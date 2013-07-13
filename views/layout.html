@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" ng-app>
+	<head>
+		<title>Start Here</title>
+		<script src="http://code.angularjs.org/1.0.6/angular.min.js"></script>
+    	<script src="script.js"></script>
+	</head>
+
+	<body>
+		<div ng-controller="HelloCntl">
+			Your name: <input type="text" ng-model="name"/>
+			<hr/>
+			Hello {{name || "World"}}!
+		</div>
+
+		
+	</body>
+</html>

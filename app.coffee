@@ -8,7 +8,7 @@ MSG = mongoose.model('msg')
 PPL = mongoose.model('ppl')
 
 app.use(express.static(__dirname + '/public'))
-app.set('views', __dirname + '/tpl')
+app.set('views', __dirname + '/views')
 # app.set('view engine', 'jade')
 # app.engine('jade', require('jade').__express)
 ECT = require 'ect'
@@ -17,7 +17,7 @@ app.engine('.html', ectRenderer.render)
 
 
 app.get('/', (req, res) ->
-    res.render('page.html')
+    res.render('layout.html')
 )
  
 googleapis = require('googleapis')
