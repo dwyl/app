@@ -105,6 +105,7 @@ exports.parse = function(url, options) {
       case 'slaveOk':
       case 'slave_ok':
         serverOptions.slave_ok = (value == 'true');
+        dbOptions.slaveOk = (value == 'true');
         break;
       case 'maxPoolSize':
       case 'poolSize':
@@ -175,6 +176,9 @@ exports.parse = function(url, options) {
       case 'authSource':
         dbOptions.authSource = value;
         break;
+      case 'gssapiServiceName':
+        dbOptions.gssapiServiceName = value;
+        break;
       case 'authMechanism':
         if(value == 'GSSAPI') {
           // If no password provided decode only the principal
@@ -186,8 +190,14 @@ exports.parse = function(url, options) {
             object.auth.user = decodeURIComponent(object.auth.user);
           }
         }
+        
         // Only support GSSAPI or MONGODB-CR for now
-        if(value != 'GSSAPI' && value != 'MONGODB-CR') throw new Error("only GSSAPI or MONGODB-CR is supported by authMechanism");
+        if(value != 'GSSAPI' 
+          && value != 'MONGODB-CR'
+          && value != 'PLAIN') 
+            throw new Error("only GSSAPI, PLAIN or MONGODB-CR is supported by authMechanism");
+        
+        // Authentication mechanism
         dbOptions.authMechanism = value;
         break;
       case 'wtimeoutMS':

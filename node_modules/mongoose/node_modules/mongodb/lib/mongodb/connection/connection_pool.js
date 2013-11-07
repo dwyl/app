@@ -8,8 +8,7 @@ var utils = require('./connection_utils'),
   Connection = require("./connection").Connection;
 
 // Set processor, setImmediate if 0.10 otherwise nextTick
-var processor = timers.setImmediate ? timers.setImmediate : process.nextTick;
-processor = process.nextTick
+var processor = require('../utils').processor();
 
 var ConnectionPool = exports.ConnectionPool = function(host, port, poolSize, bson, socketOptions) {
   if(typeof host !== 'string') {
@@ -78,6 +77,7 @@ ConnectionPool.prototype.setMaxBsonSize = function(maxBsonSize) {
 
   for(var i = 0; i < this.openConnections.length; i++) {
     this.openConnections[i].maxBsonSize = maxBsonSize;
+    this.openConnections[i].maxBsonSettings.maxBsonSize = maxBsonSize;
   }
 }
 
@@ -88,6 +88,7 @@ ConnectionPool.prototype.setMaxMessageSizeBytes = function(maxMessageSizeBytes) 
 
   for(var i = 0; i < this.openConnections.length; i++) {
     this.openConnections[i].maxMessageSizeBytes = maxMessageSizeBytes;
+    this.openConnections[i].maxBsonSettings.maxMessageSizeBytes = maxMessageSizeBytes;
   }
 }
 

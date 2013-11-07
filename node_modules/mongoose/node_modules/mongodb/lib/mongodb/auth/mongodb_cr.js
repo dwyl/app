@@ -27,8 +27,11 @@ var authenticate = function(db, username, password, authdb, options, callback) {
         // Ensure we save any error
         if(err) {
           errorObject = err;
-        } else if(result.documents[0].err != null || result.documents[0].errmsg != null){
-          errorObject = utils.toError(result.documents[0]);
+        } else if(result 
+          && Array.isArray(result.documents) 
+          && result.documents.length > 0 
+          && (result.documents[0].err != null || result.documents[0].errmsg != null)) {
+            errorObject = utils.toError(result.documents[0]);
         }
 
         // Work around the case where the number of connections are 0
@@ -36,8 +39,9 @@ var authenticate = function(db, username, password, authdb, options, callback) {
           var internalCallback = callback;
           callback = null;
 
-          if(errorObject == null && result.documents[0].ok == 1) {
-            // We authenticated correctly save the credentials
+          if(errorObject == null
+              && result && Array.isArray(result.documents) && result.documents.length > 0
+              && result.documents[0].ok == 1) {            // We authenticated correctly save the credentials
             db.serverConfig.auth.add('MONGODB-CR', db.databaseName, username, password, authdb);
             // Return callback
             internalCallback(errorObject, true);

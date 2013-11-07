@@ -13,6 +13,8 @@ var PingStrategy = exports.PingStrategy = function(replicaset, secondaryAcceptab
   this.Db = require("../../../db").Db;
   // Active db connections
   this.dbs = {};
+  // Current server index
+  this.index = 0;
   // Logger api
   this.Logger = null;
 }
@@ -142,8 +144,13 @@ PingStrategy.prototype.checkoutConnection = function(tags, secondaryCandidates) 
   if(finalCandidates.length == 0)
     return new Error("No replica set members available for query");
 
-  // Pick a random acceptable server
-  var connection = finalCandidates[Math.round(Math.random(1000000) * (finalCandidates.length - 1))].checkoutReader();
+  // Ensure no we don't overflow
+  this.index = this.index % finalCandidates.length
+  // Pick a random acceptable server  
+  var connection = finalCandidates[this.index].checkoutReader();
+  // Point to next candidate (round robin style)
+  this.index = this.index + 1;
+
   if(self.logger && self.logger.debug) {    
     if(connection)
       self.logger.debug("picked server %s:%s", connection.socketOptions.host, connection.socketOptions.port);
@@ -204,7 +211,21 @@ PingStrategy.prototype._pingServer = function(callback) {
                 __serverInstance.runtimeStats['pingMs'] = Date.now() - startTime;
               }
 
-              done();
+              __db.executeDbCommand({ismaster:1}, {failFast:true}, function(err, result) {
+                if(err) {
+                  delete self.dbs[__db.serverConfig.host + ":" + __db.serverConfig.port];
+                  __db.close();
+                  return done();
+                }
+
+                // Process the ismaster for the server
+                if(result && result.documents && self.replicaset.processIsMaster) {
+                  self.replicaset.processIsMaster(__serverInstance, result.documents[0]);
+                }
+
+                // Done with the pinging
+                done();
+              });
             });            
           };
           // Ping
@@ -269,11 +290,26 @@ PingStrategy.prototype._pingServer = function(callback) {
                   __serverInstance.runtimeStats['pingMs'] = Date.now() - startTime;
                 }
 
-                done();
+                __db.executeDbCommand({ismaster:1}, {failFast:true}, function(err, result) {
+                  if(err) {
+                    delete self.dbs[__db.serverConfig.host + ":" + __db.serverConfig.port];
+                    __db.close();
+                    return done();
+                  }
+    
+                  // Process the ismaster for the server
+                  if(result && result.documents && self.replicaset.processIsMaster) {
+                    self.replicaset.processIsMaster(__serverInstance, result.documents[0]);
+                  }
+
+                  // Done with the pinging
+                  done();
+                });
               });
             });            
           };
 
+          // Ping the server
           _ping(_db, serverInstance);
         }
 

@@ -135,15 +135,25 @@ var _timeoutHandle = function(self) {
           var reconnect_servers = [];
           var state = self.replset._state;
 
+          // We are in recovery mode, let's remove the current server
+          if(!master.ismaster 
+            && !master.secondary
+            && state.addresses[master.me]) {
+              self.server.close();
+              state.addresses[master.me].close();
+              delete state.secondaries[master.me];
+              return setTimeout(_timeoutHandle(self), self.options.haInterval);
+          }
+
           // For all the hosts let's check that we have connections
           for(var i = 0; i < hosts.length; i++) {
             var host = hosts[i];
-
             // Check if we need to reconnect to a server
             if(state.addresses[host] == null) {
               reconnect_servers.push(host);
             } else if(state.addresses[host] && !state.addresses[host].isConnected()) {
               state.addresses[host].close();
+              delete state.secondaries[host];
               reconnect_servers.push(host);              
             }
 
@@ -167,7 +177,8 @@ var _timeoutHandle = function(self) {
                 state.master.isMasterDoc.secondary = false;                
               }
 
-              // Execute any waiting writes
+              // Execute any waiting commands (queries or writes)
+              self.replset._commandsStore.execute_queries();
               self.replset._commandsStore.execute_writes();   
             }
           }
@@ -320,11 +331,15 @@ var _apply_auths = function(self, _db, _server, _callback) {
         var username = _auth.username;
         var password = _auth.password;
         var options = { 
-            authMechanism: _auth.authMechanism
+            authMechanism: _auth.authMechanism            
           , authSource: _auth.authdb
           , connection: _connection 
         };
 
+        // If we have changed the service name
+        if(_auth.gssapiServiceName) 
+          options.gssapiServiceName = _auth.gssapiServiceName;
+        
         // Hold any error
         var _error = null;
         

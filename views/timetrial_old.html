@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Time Trial</title>
+		<!-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet"> -->
+		<link href="./bootstrap.min.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<script>
+		    // cumulative time
+		    // e.g: endTime - startTime
+		    
+		    // global timer
+		    var totalElapsedTime=0, timerStarted=0, timerInterval;
+
+		    function displayTimer() {
+		        var d, hh, mm, ms, now, ss, timer, time;
+		        now = new Date().getTime(); // timestamp (miliseconds)
+
+		        d = new Date(now - timerStarted);
+		        hh = d.getHours()
+		        mm = d.getMinutes()
+		        ss = d.getSeconds()
+		        ms = d.getMilliseconds()
+		        timer = document.getElementById('timer');
+		        time = hh + ':' + mm + ':' + ss + ':' + ms;
+		        timer.innerHTML = time;
+		    }
+
+		    function startTimer() {
+		        // save start time
+		        timerStarted = new Date().getTime()
+		    	console.log('timerStarted: '+timerStarted)
+		        // update timer periodically
+		        timerInterval = setInterval(function() {
+		            displayTimer()
+		        }, 100);
+		    }
+
+		    function stopTimer() {
+		        clearInterval(timerInterval);
+		        var d, hh, mm, ms, ss;
+		        endTime = new Date().getTime()
+		        
+		        totalElapsedTime = new Date(endTime - timerStarted)/1000;	        
+		        diff = endTime-timerStarted
+		        
+		        // milliseconds
+		        ms = 
+
+		        if(diff > 1000) {
+		        	ss = Math.floor(diff/1000);
+		        	if(ss < 10) {
+		        		ss = '0'+String(ss);
+		        	}
+		        }
+		        // minutes
+		        if(diff > 60000) {
+		        	mm = Math.floor(diff/60000);
+		        	if(mm < 10) {
+		        		mm = '0'+String(mm);
+		        	}
+
+		        }
+		        results = document.getElementById('results');
+		        results.innerHTML = totalElapsedTime;
+
+		        console.log('endTime:      '+endTime)
+		        console.log('totalElapsedTime:    '+totalElapsedTime +'ms')
+		        console.log('Difference : ' +diff)
+		        console.log('ss : '+ss)
+		        console.log('mm : '+mm)
+		    }
+		</script>
+
+		<div id='timer'>00:00:00</div>
+		<button onclick='startTimer()' class='btn btn-small btn-success'>Start</button>
+		<br />
+		<button onclick='stopTimer()' class='btn btn-small btn-warning'>Stop</button>
+		<br />
+		<div id='results'>Results Here</div>
+
+		
+	</body>
+</html>

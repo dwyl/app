@@ -3,6 +3,8 @@ var Db = require('./db').Db
   , Mongos = require('./connection/mongos').Mongos
   , ReplSet = require('./connection/repl_set/repl_set').ReplSet
   , ReadPreference = require('./connection/read_preference').ReadPreference
+  , inherits = require('util').inherits
+  , EventEmitter = require('events').EventEmitter
   , parse = require('./connection/url_parser').parse;
 
 /**
@@ -31,14 +33,57 @@ var Db = require('./db').Db
  * @param {Object} [options] additional options for the collection.
  */
 function MongoClient(serverConfig, options) {
-  options = options == null ? {} : options;
-  // If no write concern is set set the default to w:1
-  if(options != null && !options.journal && !options.w && !options.fsync) {
-    options.w = 1;
+  if(serverConfig != null) {
+    options = options == null ? {} : options;
+    // If no write concern is set set the default to w:1
+    if(options != null && !options.journal && !options.w && !options.fsync) {
+      options.w = 1;
+    }
+    
+    // The internal db instance we are wrapping
+    this._db = new Db('test', serverConfig, options);    
+  }
+}
+
+/**
+ * @ignore
+ */
+inherits(MongoClient, EventEmitter);
+
+/**
+ * Connect to MongoDB using a url as documented at
+ *
+ *  docs.mongodb.org/manual/reference/connection-string/
+ *
+ * Options
+ *  - **uri_decode_auth** {Boolean, default:false} uri decode the user name and password for authentication
+ *  - **db** {Object, default: null} a hash off options to set on the db object, see **Db constructor**
+ *  - **server** {Object, default: null} a hash off options to set on the server objects, see **Server** constructor**
+ *  - **replSet** {Object, default: null} a hash off options to set on the replSet object, see **ReplSet** constructor**
+ *  - **mongos** {Object, default: null} a hash off options to set on the mongos object, see **Mongos** constructor**
+ *
+ * @param {String} url connection url for MongoDB.
+ * @param {Object} [options] optional options for insert command
+ * @param {Function} callback this will be called after executing this method. The first parameter will contain the Error object if an error occured, or null otherwise. While the second parameter will contain the initialized db object or null if an error occured.
+ * @return {null}
+ * @api public
+ */
+MongoClient.prototype.connect = function(url, options, callback) {
+  var self = this;
+
+  if(typeof options == 'function') {
+    callback = options;
+    options = {};
   }
 
-  // The internal db instance we are wrapping
-  this._db = new Db('test', serverConfig, options);
+  MongoClient.connect(url, options, function(err, db) {
+    if(err) return callback(err, db);
+    // Store internal db instance reference
+    self._db = db;
+    // Emit open and perform callback
+    self.emit("open", err, db);
+    callback(err, db);
+  });
 }
 
 /**
@@ -51,9 +96,12 @@ function MongoClient(serverConfig, options) {
 MongoClient.prototype.open = function(callback) {
   // Self reference
   var self = this;
-
+  // Open the db
   this._db.open(function(err, db) {
     if(err) return callback(err, null);
+    // Emit open event
+    self.emit("open", err, db);
+    // Callback
     callback(null, self);
   })
 }
@@ -98,32 +146,12 @@ MongoClient.prototype.db = function(dbName) {
  * @return {null}
  * @api public
  */
-// MongoClient.connect = function(url, options, callback) {
-//   if(typeof options == 'function') {
-//     callback = options;
-//     options = {};
-//   }
-
-//   Db.connect(url, options, function(err, db) {
-//     if(err) return callback(err, null);
-
-//     if(db.options !== null && !db.options.safe && !db.options.journal 
-//       && !db.options.w && !db.options.fsync && typeof db.options.w != 'number'
-//       && (db.options.safe == false && url.indexOf("safe=") == -1)) {
-//         db.options.w = 1;
-//     }
-
-//     // Return the db
-//     callback(null, db);
-//   });
-// }
-
 MongoClient.connect = function(url, options, callback) {
   var args = Array.prototype.slice.call(arguments, 1);
   callback = typeof args[args.length - 1] == 'function' ? args.pop() : null;
   options = args.length ? args.shift() : null;
   options = options || {};
-  
+
   // Set default empty server options  
   var serverOptions = options.server || {};
   var mongosOptions = options.mongos || {};
@@ -131,7 +159,8 @@ MongoClient.connect = function(url, options, callback) {
   var dbOptions = options.db || {};
 
   // If callback is null throw an exception
-  if(callback == null) throw new Error("no callback function provided");
+  if(callback == null) 
+    throw new Error("no callback function provided");
 
   // Parse the string
   var object = parse(url, options);
@@ -224,8 +253,16 @@ MongoClient.connect = function(url, options, callback) {
 
         if(totalNumberOfServers == 0) {
           // If we have a mix of mongod and mongos, throw an error
-          if(totalNumberOfMongosServers > 0 && totalNumberOfMongodServers > 0)
-            return callback(new Error("cannot combine a list of replicaset seeds and mongos seeds"));
+          if(totalNumberOfMongosServers > 0 && totalNumberOfMongodServers > 0) {
+            return process.nextTick(function() {
+              try {
+                callback(new Error("cannot combine a list of replicaset seeds and mongos seeds"));
+              } catch (err) {
+                if(db) db.close();
+                throw err
+              }              
+            })
+          }
           
           if(totalNumberOfMongodServers == 0 && object.servers.length == 1) {
             var obj = object.servers[0];
@@ -250,7 +287,18 @@ MongoClient.connect = function(url, options, callback) {
             }
           }
 
-          if(serverConfig == null) return callback(new Error("Could not locate any valid servers in initial seed list"));
+          if(serverConfig == null) {
+            return process.nextTick(function() {
+              try {
+                callback(new Error("Could not locate any valid servers in initial seed list"));
+              } catch (err) {
+                if(db) db.close();
+                throw err
+              }
+            });
+          }
+          // Ensure no firing off open event before we are ready
+          serverConfig.emitOpen = false;
           // Set up all options etc and connect to the database
           _finishConnecting(serverConfig, object, options, callback)
         }
@@ -302,7 +350,16 @@ var _finishConnecting = function(serverConfig, object, options, callback) {
   var db = new Db(object.dbName, serverConfig, object.db_options);
   // Open the db
   db.open(function(err, db){
-    if(err) return callback(err, null);
+    if(err) {
+      return process.nextTick(function() {
+        try {
+          callback(err, null);
+        } catch (err) {
+          if(db) db.close();
+          throw err
+        }
+      });
+    }
 
     if(db.options !== null && !db.options.safe && !db.options.journal 
       && !db.options.w && !db.options.fsync && typeof db.options.w != 'number'
@@ -320,18 +377,40 @@ var _finishConnecting = function(serverConfig, object, options, callback) {
       // Build options object
       var options = {};
       if(object.db_options.authMechanism) options.authMechanism = object.db_options.authMechanism;
+      if(object.db_options.gssapiServiceName) options.gssapiServiceName = object.db_options.gssapiServiceName;
 
       // Authenticate
       authentication_db.authenticate(object.auth.user, object.auth.password, options, function(err, success){
         if(success){
-          callback(null, db);
+          process.nextTick(function() {
+            try {
+              callback(null, db);            
+            } catch (err) {
+              if(db) db.close();
+              throw err
+            }
+          });
         } else {
           if(db) db.close();
-          callback(err ? err : new Error('Could not authenticate user ' + auth[0]), null);
+          process.nextTick(function() {
+            try {
+              callback(err ? err : new Error('Could not authenticate user ' + auth[0]), null);
+            } catch (err) {
+              if(db) db.close();
+              throw err
+            }
+          });
         }
       });
     } else {
-      callback(err, db);
+      process.nextTick(function() {
+        try {
+          callback(err, db);            
+        } catch (err) {
+          if(db) db.close();
+          throw err
+        }
+      })
     }
   });
 }
