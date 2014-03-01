@@ -375,4 +375,8 @@ See: https://github.com/google/google-api-nodejs-client/blob/master/examples/oau
   verified: false }
 
 
+- - - 
+
+Sketch I did ages ago: 
+![time app sketch](https://raw.github.com/nelsonic/nelsonic.github.io/master/img/time-app-sketch.jpeg)
 
