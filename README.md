@@ -380,3 +380,8 @@ See: https://github.com/google/google-api-nodejs-client/blob/master/examples/oau
 Sketch I did ages ago: 
 ![time app sketch](https://raw.github.com/nelsonic/nelsonic.github.io/master/img/time-app-sketch.jpeg)
 
+**20140302** We've been using [Meteor](https://www.meteor.com/) for PeerSun lately.
+It offers many amazing benefits to the "hacker", but I'm still uncomfortable with it.
+So this weekend I'm reading 
+[Node.js the Right Way](http://pragprog.com/book/jwnode/node-js-the-right-way)
+Its promising.
