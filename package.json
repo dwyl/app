@@ -1,0 +1,24 @@
+{
+  "name": "time",
+  "version": "0.0.2",
+  "description": "Track any time-based activity",
+  "main": "index.js",
+  "scripts": {
+    "test": "tbc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/nelsonic/time.git"
+  },
+  "keywords": [
+    "time",
+    "activity",
+    "tracking"
+  ],
+  "author": "nelson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nelsonic/time/issues"
+  },
+  "homepage": "https://github.com/nelsonic/time"
+}

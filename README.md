@@ -28,3 +28,35 @@ A simple way to track activities over time.
 
 This is the ***sketch*** I did ages ago:
 ![time app sketch](https://raw.github.com/nelsonic/nelsonic.github.io/master/img/time-app-sketch.jpeg)
+
+- [ ] Create GET for all **public** viewable timers.
+- [ ] Allow anyone to start a timer without registration/login
+
+
+## How?
+
+### Node.js + Hapi
+
+```
+git clone git@github.com:nelsonic/time.git
+```
+
+### CouchBase
+
+
+
+
+#### Resources
+
+- Node module: https://github.com/couchbase/couchnode
+- Getting started: http://www.couchbase.com/communities/nodejs/getting-started
+
+#### Background
+
+**Q**: Why switch from CouchDB to CouchBase? <br />
+**A**: Speed. (lower latency for reads/writes)
+
+- Difference between CouchDB and CouchBase:
+http://stackoverflow.com/questions/5578608/difference-between-couchdb-and-couchbase
+- CouchDB vs CouchBase: http://www.couchbase.com/couchbase-vs-couchdb
+- The future of CouchDB: http://damienkatz.net/2012/01/the_future_of_couchdb.html
