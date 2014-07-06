@@ -35,13 +35,17 @@ This is the ***sketch*** I did ages ago:
 
 ## How?
 
-### Node.js + Hapi
+### Backend: Node.js + Hapi
 
 ```
 git clone git@github.com:nelsonic/time.git
 ```
+- [ ] publish npm module
 
-### CouchBase
+![proposed module name](http://i.imgur.com/zvkM5k8.png)
+
+
+### Database/Cache: CouchBase
 
 
 
@@ -60,3 +64,4 @@ git clone git@github.com:nelsonic/time.git
 http://stackoverflow.com/questions/5578608/difference-between-couchdb-and-couchbase
 - CouchDB vs CouchBase: http://www.couchbase.com/couchbase-vs-couchdb
 - The future of CouchDB: http://damienkatz.net/2012/01/the_future_of_couchdb.html
+- Understanding & Installing CouchBase: https://www.youtube.com/watch?v=28ws32sGqas
