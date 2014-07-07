@@ -4,7 +4,7 @@
   "description": "Track any time-based activity",
   "main": "index.js",
   "scripts": {
-    "test": "tbc"
+    "test": "./node_modules/lab/bin/lab -c && ./node_modules/lab/bin/lab -r html -o ./test/coverage.html"
   },
   "repository": {
     "type": "git",
@@ -20,5 +20,12 @@
   "bugs": {
     "url": "https://github.com/nelsonic/time/issues"
   },
-  "homepage": "https://github.com/nelsonic/time"
+  "homepage": "https://github.com/nelsonic/time",
+  "dependencies": {
+    "hapi": "~6.0.2",
+    "joi": "~4.6.1"
+  },
+  "devDependencies": {
+    "lab": "^3.2.1"
+  }
 }

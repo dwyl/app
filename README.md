@@ -1,6 +1,5 @@
-time
-====
-
+time [![Build Status](https://travis-ci.org/nelsonic/time.png?branch=master)](https://travis-ci.org/nelsonic/time) [![Code Climate](https://codeclimate.com/github/nelsonic/time.png)](https://codeclimate.com/github/nelsonic/time) [![Dependencies](https://david-dm.org/nelsonic/time.png?theme=shields.io)](https://david-dm.org/nelsonic/time)
+============
 ![Not everything that counts can be counted,
 and not everything that can be counted counts. ~ Albert Einstein
 ](http://i.imgur.com/ESOb79D.png "Not everything that counts can be counted")
@@ -29,8 +28,10 @@ A simple way to track activities over time.
 This is the ***sketch*** I did ages ago:
 ![time app sketch](https://raw.github.com/nelsonic/nelsonic.github.io/master/img/time-app-sketch.jpeg)
 
+- [ ] Connect to CouchBase
 - [ ] Create GET for all **public** viewable timers.
 - [ ] Allow anyone to start a timer without registration/login
+
 
 
 ## How?
