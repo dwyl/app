@@ -1,6 +1,3 @@
-// var couchbase = require('couchbase').Mock;
-// var db = new couchbase.Connection();
-
 var couchbase = require('couchbase');
 var cluster = new couchbase.Cluster();
 var db = cluster.openBucket('default');
@@ -16,6 +13,4 @@ db.set('testdoc', {name:'Frank'}, function(err, result) {
   });
 });
 
-
-
-console.log('hai CouchBase');
+console.log('Couchbase says hai!');
