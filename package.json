@@ -23,7 +23,7 @@
   "homepage": "https://github.com/nelsonic/time",
   "dependencies": {
     "couchbase": "^2.0.0-dp1",
-    "hapi": "~6.0.2",
+    "hapi": "~6.2.0",
     "joi": "~4.6.1"
   },
   "devDependencies": {
