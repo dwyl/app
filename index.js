@@ -8,13 +8,13 @@ var T = {}; // Timer methods
 T.getConfig = {
   handler: function(req, reply) {
     if (req.params.id) {
-      if (quotes.length <= req.params.id) return reply('No timer found.').code(404);
-      return reply(quotes[req.params.id]);
+      if (timers.length <= req.params.id) return reply('No timer found.').code(404);
+      return reply(timers[req.params.id]);
     }
-    reply(quotes);
+    reply(timers);
   }
 };
-
+/*
 T.getRandomConfig = {
   handler: function(req, reply) {
     var id = Math.floor(Math.random() * timers.length);
@@ -27,11 +27,11 @@ T.postConfig = {
     var newQuote = { author: req.payload.author, text: req.payload.text };
     quotes.push(newQuote);
     reply(newQuote);
-  }
-, validate: {
+  },
+ validate: {
     payload: {
-      author: Joi.string().required()
-    , text: Joi.string().required()
+      author: Joi.string().required(),
+      text: Joi.string().required()
     }
   }
 };
@@ -43,37 +43,15 @@ T.deleteConfig = {
     reply(true);
   }
 };
-
+*/
 var routes = [
   { path: '/timer/{id?}', method: 'GET', config: T.getConfig },
-  { path: '/random', method: 'GET', config: T.getRandomConfig },
-  { path: '/timer', method: 'POST', config: T.postConfig },
-  { path: '/timer/{id}', method: 'DELETE', config: T.deleteConfig }
+  // { path: '/random', method: 'GET', config: T.getRandomConfig },
+  // { path: '/timer', method: 'POST', config: T.postConfig },
+  // { path: '/timer/{id}', method: 'DELETE', config: T.deleteConfig }
 ];
 
-
-server.route([
-  {
-    method: 'GET',
-    path: '/{yourname*}',
-    config: {  // validate will ensure YOURNAME is valid before replying to your request
-        validate: { params: { yourname: Joi.string().max(40).min(2).alphanum() } },
-        handler: function (req,reply) {
-            reply('Hello '+ req.params.yourname + '!');
-        }
-    },
-  },
-  {
-    method: 'GET',
-    path: '/hai/{hai*}',
-    config: {  // validate will ensure YOURNAME is valid before replying to your request
-        validate: { params: { hai: Joi.string().max(40).min(2).alphanum() } },
-        handler: function (req,reply) {
-            reply('Hello '+ req.params.hai + '!');
-        }
-    }
-  }
-]);
+server.route(routes);
 
 server.start(function() {
     // console.log('Now Visit: http://localhost:3000/YOURNAME');
