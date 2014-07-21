@@ -28,12 +28,6 @@ A simple way to track activities over time.
 This is the ***sketch*** I did ages ago:
 ![time app sketch](https://raw.github.com/nelsonic/nelsonic.github.io/master/img/time-app-sketch.jpeg)
 
-- [ ] Connect to CouchBase
-- [ ] Write mock/test for Couchbase CRUD
-- [ ] Create GET for all **public** viewable timers.
-- [ ] Allow anyone to start a timer without registration/login
-
-
 
 ## How?
 
@@ -51,7 +45,19 @@ git clone git@github.com:nelsonic/time.git
 
 
 - [x] Download: http://www.couchbase.com/download#cb-server
-- [ ] Connect to CouchBase from Node
+- [x] Install the "Developer Preview" of Couchnode:
+
+```
+npm install couchbase@2.0.0-dp1 --save
+```
+
+- [x] Connect to CouchBase from Node
+- [x] Write mock/test for Couchbase CRUD (see: test/db.js)
+- [ ] Insert a new timer: (a) Start Date/Time (b) Short description
+- [ ] Create GET for all **public** viewable timers.
+- [ ] Allow anyone to start a timer without registration/login
+- [ ] Ask the user if they want to store the GPS Lat/Lng for their activity
+
 
 Using https://github.com/couchbase/couchnode @v.1.2.4 <br/>
 I attempt to connect to CouchBase server using the code in the README

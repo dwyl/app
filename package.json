@@ -4,7 +4,7 @@
   "description": "Track any time-based activity",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/lab/bin/lab -c && ./node_modules/lab/bin/lab -r html -o ./test/coverage.html"
+    "test": "./node_modules/lab/bin/lab -c -v && ./node_modules/lab/bin/lab -r html -o ./test/coverage.html"
   },
   "repository": {
     "type": "git",
@@ -22,9 +22,9 @@
   },
   "homepage": "https://github.com/nelsonic/time",
   "dependencies": {
+    "couchbase": "^2.0.0-dp1",
     "hapi": "~6.0.2",
-    "joi": "~4.6.1",
-    "couchbase": "~1.2.4"
+    "joi": "~4.6.1"
   },
   "devDependencies": {
     "lab": "^3.2.1"
