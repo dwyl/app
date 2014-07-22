@@ -54,6 +54,7 @@ npm install couchbase@2.0.0-dp1 --save
 - [x] Connect to CouchBase from Node
 - [x] Write mock/test for Couchbase CRUD (see: test/db.js)
 - [ ] Insert a new timer: (a) Start Date/Time (b) Short description
+{start: new Date.getTime(), desc: "Brush teeth"}
 - [ ] Create GET for all **public** viewable timers.
 - [ ] Allow anyone to start a timer without registration/login
 - [ ] Ask the user if they want to store the GPS Lat/Lng for their activity
