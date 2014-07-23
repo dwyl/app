@@ -253,26 +253,26 @@
             <li><a href="#overview">overview</a></li>
             
             <li>
-                <span class="cov high">92.45</span>
+                <span class="cov high">87.27</span>
                 <a href="#index.js"><span class="basename">index.js</span></a>
             </li>
             
         </div>
         <div class="stats high">
-            <div class="percentage">92.45%</div>
-            <div class="sloc">53</div>
-            <div class="hits">49</div>
-            <div class="misses">4</div>
+            <div class="percentage">87.27%</div>
+            <div class="sloc">55</div>
+            <div class="hits">48</div>
+            <div class="misses">7</div>
         </div>
         <div id="files">
             
             <div class="file">
                 <h2 id="index.js">index.js</h2>
                 <div class="stats high">
-                    <div class="percentage">92.45%</div>
-                    <div class="sloc">53</div>
-                    <div class="hits">49</div>
-                    <div class="misses">4</div>
+                    <div class="percentage">87.27%</div>
+                    <div class="sloc">55</div>
+                    <div class="hits">48</div>
+                    <div class="misses">7</div>
                 </div>
                 <table>
                     <thead>
@@ -344,7 +344,7 @@
                         <tr class="hit">
                             <td class="line">8</td>
                             <td class="hits">1</td>
-                            <td class="source">T.getConfig = {</td>
+                            <td class="source">T.get = {</td>
                         </tr>
                     
                 
@@ -488,14 +488,14 @@
                         <tr class="hit">
                             <td class="line">25</td>
                             <td class="hits"></td>
-                            <td class="source"></td>
+                            <td class="source">*/</td>
                         </tr>
                     
                 
                     
                         <tr class="hit">
                             <td class="line">26</td>
-                            <td class="hits"></td>
+                            <td class="hits">1</td>
                             <td class="source">T.postConfig = {</td>
                         </tr>
                     
@@ -509,27 +509,33 @@
                     
                 
                     
-                        <tr class="hit">
-                            <td class="line">28</td>
-                            <td class="hits"></td>
-                            <td class="source">    var newQuote = { author: req.payload.author, text: req.payload.text };</td>
-                        </tr>
+                        
+                            <tr class="miss">
+                                <td class="line">28</td>
+                                <td class="hits"></td>
+                                <td class="source">    var newQuote = { author: req.payload.author, text: req.payload.text };</td>
+                            </tr>
+                        
                     
                 
                     
-                        <tr class="hit">
-                            <td class="line">29</td>
-                            <td class="hits"></td>
-                            <td class="source">    quotes.push(newQuote);</td>
-                        </tr>
+                        
+                            <tr class="miss">
+                                <td class="line">29</td>
+                                <td class="hits"></td>
+                                <td class="source">    quotes.push(newQuote);</td>
+                            </tr>
+                        
                     
                 
                     
-                        <tr class="hit">
-                            <td class="line">30</td>
-                            <td class="hits"></td>
-                            <td class="source">    reply(newQuote);</td>
-                        </tr>
+                        
+                            <tr class="miss">
+                                <td class="line">30</td>
+                                <td class="hits"></td>
+                                <td class="source">    reply(newQuote);</td>
+                            </tr>
+                        
                     
                 
                     
@@ -600,7 +606,7 @@
                         <tr class="hit">
                             <td class="line">39</td>
                             <td class="hits"></td>
-                            <td class="source"></td>
+                            <td class="source">/*</td>
                         </tr>
                     
                 
@@ -680,7 +686,7 @@
                         <tr class="hit">
                             <td class="line">49</td>
                             <td class="hits"></td>
-                            <td class="source">  { path: &#x27;/timer/{id?}&#x27;, method: &#x27;GET&#x27;, config: T.getConfig },</td>
+                            <td class="source">  { path: &#x27;/timer/{id?}&#x27;, method: &#x27;GET&#x27;, config: T.get },</td>
                         </tr>
                     
                 
@@ -696,7 +702,7 @@
                         <tr class="hit">
                             <td class="line">51</td>
                             <td class="hits"></td>
-                            <td class="source">  // { path: &#x27;/timer&#x27;, method: &#x27;POST&#x27;, config: T.postConfig },</td>
+                            <td class="source">  { path: &#x27;/timer&#x27;, method: &#x27;POST&#x27;, config: T.postConfig },</td>
                         </tr>
                     
                 

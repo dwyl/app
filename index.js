@@ -5,7 +5,7 @@ var server = new Hapi.Server('0.0.0.0', 3000);
 
 var T = {}; // Timer methods
 
-T.getConfig = {
+T.get = {
   handler: function(req, reply) {
     var timers = [];
     if (req.params.id) {
@@ -22,7 +22,7 @@ T.getRandomConfig = {
     reply(timers[id]);
   }
 };
-
+*/
 T.postConfig = {
   handler: function(req, reply) {
     var newQuote = { author: req.payload.author, text: req.payload.text };
@@ -36,7 +36,7 @@ T.postConfig = {
     }
   }
 };
-
+/*
 T.deleteConfig = {
   handler: function(req, reply) {
     if (quotes.length <= req.params.id) return reply('No quote found.').code(404);
@@ -46,9 +46,9 @@ T.deleteConfig = {
 };
 */
 var routes = [
-  { path: '/timer/{id?}', method: 'GET', config: T.getConfig },
+  { path: '/timer/{id?}', method: 'GET', config: T.get },
   // { path: '/random', method: 'GET', config: T.getRandomConfig },
-  // { path: '/timer', method: 'POST', config: T.postConfig },
+  { path: '/timer', method: 'POST', config: T.postConfig },
   // { path: '/timer/{id}', method: 'DELETE', config: T.deleteConfig }
 ];
 
