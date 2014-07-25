@@ -253,15 +253,20 @@
             <li><a href="#overview">overview</a></li>
             
             <li>
-                <span class="cov high">87.27</span>
+                <span class="cov high">82.05</span>
                 <a href="#index.js"><span class="basename">index.js</span></a>
+            </li>
+            
+            <li>
+                <span class="cov high">100</span>
+                <a href="#lib/time.js"><span class="dirname">lib/</span><span class="basename">time.js</span></a>
             </li>
             
         </div>
         <div class="stats high">
-            <div class="percentage">87.27%</div>
-            <div class="sloc">55</div>
-            <div class="hits">48</div>
+            <div class="percentage">89.23%</div>
+            <div class="sloc">65</div>
+            <div class="hits">58</div>
             <div class="misses">7</div>
         </div>
         <div id="files">
@@ -269,9 +274,9 @@
             <div class="file">
                 <h2 id="index.js">index.js</h2>
                 <div class="stats high">
-                    <div class="percentage">87.27%</div>
-                    <div class="sloc">55</div>
-                    <div class="hits">48</div>
+                    <div class="percentage">82.05%</div>
+                    <div class="sloc">39</div>
+                    <div class="hits">32</div>
                     <div class="misses">7</div>
                 </div>
                 <table>
@@ -343,8 +348,8 @@
                     
                         <tr class="hit">
                             <td class="line">8</td>
-                            <td class="hits">1</td>
-                            <td class="source">T.get = {</td>
+                            <td class="hits"></td>
+                            <td class="source">// T.init(db);</td>
                         </tr>
                     
                 
@@ -352,13 +357,29 @@
                         <tr class="hit">
                             <td class="line">9</td>
                             <td class="hits"></td>
-                            <td class="source">  handler: function(req, reply) {</td>
+                            <td class="source"></td>
                         </tr>
                     
                 
                     
                         <tr class="hit">
                             <td class="line">10</td>
+                            <td class="hits">1</td>
+                            <td class="source">T.get = {</td>
+                        </tr>
+                    
+                
+                    
+                        <tr class="hit">
+                            <td class="line">11</td>
+                            <td class="hits"></td>
+                            <td class="source">  handler: function(req, reply) {</td>
+                        </tr>
+                    
+                
+                    
+                        <tr class="hit">
+                            <td class="line">12</td>
                             <td class="hits">1</td>
                             <td class="source">    var timers = [];</td>
                         </tr>
@@ -367,7 +388,7 @@
                     
                         
                             <tr class="chunks">
-                                <td class="line">11</td>
+                                <td class="line">13</td>
                                 <td class="hits"></td>
                                 <td class="source"><div>    if (</div><div class="miss true">req.params.id</div><div>) {</div></td>
                             </tr>
@@ -377,7 +398,7 @@
                     
                         
                             <tr class="chunks">
-                                <td class="line">12</td>
+                                <td class="line">14</td>
                                 <td class="hits"></td>
                                 <td class="source"><div>      if (</div><div class="miss true">timers.length &lt;= req.params.id</div><div>) return reply(&#x27;No timer found.&#x27;).code(404);</div></td>
                             </tr>
@@ -387,7 +408,7 @@
                     
                         
                             <tr class="miss">
-                                <td class="line">13</td>
+                                <td class="line">15</td>
                                 <td class="hits"></td>
                                 <td class="source">      return reply(timers[req.params.id]);</td>
                             </tr>
@@ -396,7 +417,7 @@
                 
                     
                         <tr class="hit">
-                            <td class="line">14</td>
+                            <td class="line">16</td>
                             <td class="hits"></td>
                             <td class="source">    }</td>
                         </tr>
@@ -405,7 +426,7 @@
                     
                         
                             <tr class="miss">
-                                <td class="line">15</td>
+                                <td class="line">17</td>
                                 <td class="hits"></td>
                                 <td class="source">    reply(timers);</td>
                             </tr>
@@ -414,25 +435,9 @@
                 
                     
                         <tr class="hit">
-                            <td class="line">16</td>
-                            <td class="hits"></td>
-                            <td class="source">  }</td>
-                        </tr>
-                    
-                
-                    
-                        <tr class="hit">
-                            <td class="line">17</td>
-                            <td class="hits"></td>
-                            <td class="source">};</td>
-                        </tr>
-                    
-                
-                    
-                        <tr class="hit">
                             <td class="line">18</td>
                             <td class="hits"></td>
-                            <td class="source">/*</td>
+                            <td class="source">  }</td>
                         </tr>
                     
                 
@@ -440,7 +445,7 @@
                         <tr class="hit">
                             <td class="line">19</td>
                             <td class="hits"></td>
-                            <td class="source">T.getRandomConfig = {</td>
+                            <td class="source">};</td>
                         </tr>
                     
                 
@@ -448,53 +453,13 @@
                         <tr class="hit">
                             <td class="line">20</td>
                             <td class="hits"></td>
-                            <td class="source">  handler: function(req, reply) {</td>
+                            <td class="source"></td>
                         </tr>
                     
                 
                     
                         <tr class="hit">
                             <td class="line">21</td>
-                            <td class="hits"></td>
-                            <td class="source">    var id = Math.floor(Math.random() * timers.length);</td>
-                        </tr>
-                    
-                
-                    
-                        <tr class="hit">
-                            <td class="line">22</td>
-                            <td class="hits"></td>
-                            <td class="source">    reply(timers[id]);</td>
-                        </tr>
-                    
-                
-                    
-                        <tr class="hit">
-                            <td class="line">23</td>
-                            <td class="hits"></td>
-                            <td class="source">  }</td>
-                        </tr>
-                    
-                
-                    
-                        <tr class="hit">
-                            <td class="line">24</td>
-                            <td class="hits"></td>
-                            <td class="source">};</td>
-                        </tr>
-                    
-                
-                    
-                        <tr class="hit">
-                            <td class="line">25</td>
-                            <td class="hits"></td>
-                            <td class="source">*/</td>
-                        </tr>
-                    
-                
-                    
-                        <tr class="hit">
-                            <td class="line">26</td>
                             <td class="hits">1</td>
                             <td class="source">T.postConfig = {</td>
                         </tr>
@@ -502,7 +467,7 @@
                 
                     
                         <tr class="hit">
-                            <td class="line">27</td>
+                            <td class="line">22</td>
                             <td class="hits"></td>
                             <td class="source">  handler: function(req, reply) {</td>
                         </tr>
@@ -511,7 +476,7 @@
                     
                         
                             <tr class="miss">
-                                <td class="line">28</td>
+                                <td class="line">23</td>
                                 <td class="hits"></td>
                                 <td class="source">    var newQuote = { author: req.payload.author, text: req.payload.text };</td>
                             </tr>
@@ -521,7 +486,7 @@
                     
                         
                             <tr class="miss">
-                                <td class="line">29</td>
+                                <td class="line">24</td>
                                 <td class="hits"></td>
                                 <td class="source">    quotes.push(newQuote);</td>
                             </tr>
@@ -531,7 +496,7 @@
                     
                         
                             <tr class="miss">
-                                <td class="line">30</td>
+                                <td class="line">25</td>
                                 <td class="hits"></td>
                                 <td class="source">    reply(newQuote);</td>
                             </tr>
@@ -540,7 +505,7 @@
                 
                     
                         <tr class="hit">
-                            <td class="line">31</td>
+                            <td class="line">26</td>
                             <td class="hits"></td>
                             <td class="source">  },</td>
                         </tr>
@@ -548,7 +513,7 @@
                 
                     
                         <tr class="hit">
-                            <td class="line">32</td>
+                            <td class="line">27</td>
                             <td class="hits"></td>
                             <td class="source"> validate: {</td>
                         </tr>
@@ -556,7 +521,7 @@
                 
                     
                         <tr class="hit">
-                            <td class="line">33</td>
+                            <td class="line">28</td>
                             <td class="hits"></td>
                             <td class="source">    payload: {</td>
                         </tr>
@@ -564,7 +529,7 @@
                 
                     
                         <tr class="hit">
-                            <td class="line">34</td>
+                            <td class="line">29</td>
                             <td class="hits"></td>
                             <td class="source">      author: Joi.string().required(),</td>
                         </tr>
@@ -572,7 +537,7 @@
                 
                     
                         <tr class="hit">
-                            <td class="line">35</td>
+                            <td class="line">30</td>
                             <td class="hits"></td>
                             <td class="source">      text: Joi.string().required()</td>
                         </tr>
@@ -580,7 +545,7 @@
                 
                     
                         <tr class="hit">
-                            <td class="line">36</td>
+                            <td class="line">31</td>
                             <td class="hits"></td>
                             <td class="source">    }</td>
                         </tr>
@@ -588,7 +553,7 @@
                 
                     
                         <tr class="hit">
-                            <td class="line">37</td>
+                            <td class="line">32</td>
                             <td class="hits"></td>
                             <td class="source">  }</td>
                         </tr>
@@ -596,7 +561,7 @@
                 
                     
                         <tr class="hit">
-                            <td class="line">38</td>
+                            <td class="line">33</td>
                             <td class="hits"></td>
                             <td class="source">};</td>
                         </tr>
@@ -604,79 +569,15 @@
                 
                     
                         <tr class="hit">
-                            <td class="line">39</td>
+                            <td class="line">34</td>
                             <td class="hits"></td>
-                            <td class="source">/*</td>
+                            <td class="source"></td>
                         </tr>
                     
                 
                     
                         <tr class="hit">
-                            <td class="line">40</td>
-                            <td class="hits"></td>
-                            <td class="source">T.deleteConfig = {</td>
-                        </tr>
-                    
-                
-                    
-                        <tr class="hit">
-                            <td class="line">41</td>
-                            <td class="hits"></td>
-                            <td class="source">  handler: function(req, reply) {</td>
-                        </tr>
-                    
-                
-                    
-                        <tr class="hit">
-                            <td class="line">42</td>
-                            <td class="hits"></td>
-                            <td class="source">    if (quotes.length &lt;= req.params.id) return reply(&#x27;No quote found.&#x27;).code(404);</td>
-                        </tr>
-                    
-                
-                    
-                        <tr class="hit">
-                            <td class="line">43</td>
-                            <td class="hits"></td>
-                            <td class="source">    quotes.splice(req.params.id, 1);</td>
-                        </tr>
-                    
-                
-                    
-                        <tr class="hit">
-                            <td class="line">44</td>
-                            <td class="hits"></td>
-                            <td class="source">    reply(true);</td>
-                        </tr>
-                    
-                
-                    
-                        <tr class="hit">
-                            <td class="line">45</td>
-                            <td class="hits"></td>
-                            <td class="source">  }</td>
-                        </tr>
-                    
-                
-                    
-                        <tr class="hit">
-                            <td class="line">46</td>
-                            <td class="hits"></td>
-                            <td class="source">};</td>
-                        </tr>
-                    
-                
-                    
-                        <tr class="hit">
-                            <td class="line">47</td>
-                            <td class="hits"></td>
-                            <td class="source">*/</td>
-                        </tr>
-                    
-                
-                    
-                        <tr class="hit">
-                            <td class="line">48</td>
+                            <td class="line">35</td>
                             <td class="hits">1</td>
                             <td class="source">var routes = [</td>
                         </tr>
@@ -684,7 +585,7 @@
                 
                     
                         <tr class="hit">
-                            <td class="line">49</td>
+                            <td class="line">36</td>
                             <td class="hits"></td>
                             <td class="source">  { path: &#x27;/timer/{id?}&#x27;, method: &#x27;GET&#x27;, config: T.get },</td>
                         </tr>
@@ -692,7 +593,7 @@
                 
                     
                         <tr class="hit">
-                            <td class="line">50</td>
+                            <td class="line">37</td>
                             <td class="hits"></td>
                             <td class="source">  // { path: &#x27;/random&#x27;, method: &#x27;GET&#x27;, config: T.getRandomConfig },</td>
                         </tr>
@@ -700,7 +601,7 @@
                 
                     
                         <tr class="hit">
-                            <td class="line">51</td>
+                            <td class="line">38</td>
                             <td class="hits"></td>
                             <td class="source">  { path: &#x27;/timer&#x27;, method: &#x27;POST&#x27;, config: T.postConfig },</td>
                         </tr>
@@ -708,7 +609,7 @@
                 
                     
                         <tr class="hit">
-                            <td class="line">52</td>
+                            <td class="line">39</td>
                             <td class="hits"></td>
                             <td class="source">  // { path: &#x27;/timer/{id}&#x27;, method: &#x27;DELETE&#x27;, config: T.deleteConfig }</td>
                         </tr>
@@ -716,7 +617,7 @@
                 
                     
                         <tr class="hit">
-                            <td class="line">53</td>
+                            <td class="line">40</td>
                             <td class="hits"></td>
                             <td class="source">];</td>
                         </tr>
@@ -724,7 +625,7 @@
                 
                     
                         <tr class="hit">
-                            <td class="line">54</td>
+                            <td class="line">41</td>
                             <td class="hits"></td>
                             <td class="source"></td>
                         </tr>
@@ -732,7 +633,7 @@
                 
                     
                         <tr class="hit">
-                            <td class="line">55</td>
+                            <td class="line">42</td>
                             <td class="hits">1</td>
                             <td class="source">server.route(routes);</td>
                         </tr>
@@ -740,7 +641,7 @@
                 
                     
                         <tr class="hit">
-                            <td class="line">56</td>
+                            <td class="line">43</td>
                             <td class="hits"></td>
                             <td class="source"></td>
                         </tr>
@@ -748,7 +649,7 @@
                 
                     
                         <tr class="hit">
-                            <td class="line">57</td>
+                            <td class="line">44</td>
                             <td class="hits">1</td>
                             <td class="source">server.start(function() {</td>
                         </tr>
@@ -756,7 +657,7 @@
                 
                     
                         <tr class="hit">
-                            <td class="line">58</td>
+                            <td class="line">45</td>
                             <td class="hits"></td>
                             <td class="source">    // console.log(&#x27;Now Visit: http://localhost:3000/YOURNAME&#x27;);</td>
                         </tr>
@@ -764,7 +665,7 @@
                 
                     
                         <tr class="hit">
-                            <td class="line">59</td>
+                            <td class="line">46</td>
                             <td class="hits"></td>
                             <td class="source">});</td>
                         </tr>
@@ -772,7 +673,7 @@
                 
                     
                         <tr class="hit">
-                            <td class="line">60</td>
+                            <td class="line">47</td>
                             <td class="hits"></td>
                             <td class="source"></td>
                         </tr>
@@ -780,7 +681,7 @@
                 
                     
                         <tr class="hit">
-                            <td class="line">61</td>
+                            <td class="line">48</td>
                             <td class="hits">1</td>
                             <td class="source">module.exports = server;</td>
                         </tr>
@@ -788,7 +689,293 @@
                 
                     
                         <tr class="hit">
-                            <td class="line">62</td>
+                            <td class="line">49</td>
+                            <td class="hits"></td>
+                            <td class="source"></td>
+                        </tr>
+                    
+                
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="file">
+                <h2 id="lib/time.js">lib/time.js</h2>
+                <div class="stats high">
+                    <div class="percentage">100%</div>
+                    <div class="sloc">26</div>
+                    <div class="hits">26</div>
+                    <div class="misses">0</div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Line</th>
+                            <th>Hits</th>
+                            <th>Source</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                
+                    
+                        <tr class="hit">
+                            <td class="line">1</td>
+                            <td class="hits"></td>
+                            <td class="source">// lib/db.js</td>
+                        </tr>
+                    
+                
+                    
+                        <tr class="hit">
+                            <td class="line">2</td>
+                            <td class="hits"></td>
+                            <td class="source"></td>
+                        </tr>
+                    
+                
+                    
+                        <tr class="hit">
+                            <td class="line">3</td>
+                            <td class="hits">1</td>
+                            <td class="source">var d = {};</td>
+                        </tr>
+                    
+                
+                    
+                        <tr class="hit">
+                            <td class="line">4</td>
+                            <td class="hits">1</td>
+                            <td class="source">var db;</td>
+                        </tr>
+                    
+                
+                    
+                        <tr class="hit">
+                            <td class="line">5</td>
+                            <td class="hits"></td>
+                            <td class="source"></td>
+                        </tr>
+                    
+                
+                    
+                        <tr class="hit">
+                            <td class="line">6</td>
+                            <td class="hits"></td>
+                            <td class="source"></td>
+                        </tr>
+                    
+                
+                    
+                        <tr class="hit">
+                            <td class="line">7</td>
+                            <td class="hits"></td>
+                            <td class="source"></td>
+                        </tr>
+                    
+                
+                    
+                        <tr class="hit">
+                            <td class="line">8</td>
+                            <td class="hits">1</td>
+                            <td class="source">d.POST = function(){</td>
+                        </tr>
+                    
+                
+                    
+                        <tr class="hit">
+                            <td class="line">9</td>
+                            <td class="hits"></td>
+                            <td class="source"></td>
+                        </tr>
+                    
+                
+                    
+                        <tr class="hit">
+                            <td class="line">10</td>
+                            <td class="hits"></td>
+                            <td class="source">};</td>
+                        </tr>
+                    
+                
+                    
+                        <tr class="hit">
+                            <td class="line">11</td>
+                            <td class="hits"></td>
+                            <td class="source"></td>
+                        </tr>
+                    
+                
+                    
+                        <tr class="hit">
+                            <td class="line">12</td>
+                            <td class="hits"></td>
+                            <td class="source">// module.exports = function(db){</td>
+                        </tr>
+                    
+                
+                    
+                        <tr class="hit">
+                            <td class="line">13</td>
+                            <td class="hits"></td>
+                            <td class="source">//   var DB = {};</td>
+                        </tr>
+                    
+                
+                    
+                        <tr class="hit">
+                            <td class="line">14</td>
+                            <td class="hits"></td>
+                            <td class="source">//   DB.set</td>
+                        </tr>
+                    
+                
+                    
+                        <tr class="hit">
+                            <td class="line">15</td>
+                            <td class="hits"></td>
+                            <td class="source">//</td>
+                        </tr>
+                    
+                
+                    
+                        <tr class="hit">
+                            <td class="line">16</td>
+                            <td class="hits"></td>
+                            <td class="source">//     return {</td>
+                        </tr>
+                    
+                
+                    
+                        <tr class="hit">
+                            <td class="line">17</td>
+                            <td class="hits"></td>
+                            <td class="source">//         // module instance</td>
+                        </tr>
+                    
+                
+                    
+                        <tr class="hit">
+                            <td class="line">18</td>
+                            <td class="hits"></td>
+                            <td class="source">//     };</td>
+                        </tr>
+                    
+                
+                    
+                        <tr class="hit">
+                            <td class="line">19</td>
+                            <td class="hits"></td>
+                            <td class="source">// };</td>
+                        </tr>
+                    
+                
+                    
+                        <tr class="hit">
+                            <td class="line">20</td>
+                            <td class="hits"></td>
+                            <td class="source">//</td>
+                        </tr>
+                    
+                
+                    
+                        <tr class="hit">
+                            <td class="line">21</td>
+                            <td class="hits"></td>
+                            <td class="source">// db.set(&#x27;testdoc&#x27;, {that:&#x27;Frank&#x27;}, function(err, result) {</td>
+                        </tr>
+                    
+                
+                    
+                        <tr class="hit">
+                            <td class="line">22</td>
+                            <td class="hits"></td>
+                            <td class="source">//   if (err) throw err;</td>
+                        </tr>
+                    
+                
+                    
+                        <tr class="hit">
+                            <td class="line">23</td>
+                            <td class="hits"></td>
+                            <td class="source">//</td>
+                        </tr>
+                    
+                
+                    
+                        <tr class="hit">
+                            <td class="line">24</td>
+                            <td class="hits"></td>
+                            <td class="source">//   db.get(&#x27;testdoc&#x27;, function(err, result) {</td>
+                        </tr>
+                    
+                
+                    
+                        <tr class="hit">
+                            <td class="line">25</td>
+                            <td class="hits"></td>
+                            <td class="source">//     if (err) throw err;</td>
+                        </tr>
+                    
+                
+                    
+                        <tr class="hit">
+                            <td class="line">26</td>
+                            <td class="hits"></td>
+                            <td class="source">//</td>
+                        </tr>
+                    
+                
+                    
+                        <tr class="hit">
+                            <td class="line">27</td>
+                            <td class="hits"></td>
+                            <td class="source">//     console.log(result.value);</td>
+                        </tr>
+                    
+                
+                    
+                        <tr class="hit">
+                            <td class="line">28</td>
+                            <td class="hits"></td>
+                            <td class="source">//     // {name: Frank}</td>
+                        </tr>
+                    
+                
+                    
+                        <tr class="hit">
+                            <td class="line">29</td>
+                            <td class="hits"></td>
+                            <td class="source">//   });</td>
+                        </tr>
+                    
+                
+                    
+                        <tr class="hit">
+                            <td class="line">30</td>
+                            <td class="hits"></td>
+                            <td class="source">// });</td>
+                        </tr>
+                    
+                
+                    
+                        <tr class="hit">
+                            <td class="line">31</td>
+                            <td class="hits"></td>
+                            <td class="source">//</td>
+                        </tr>
+                    
+                
+                    
+                        <tr class="hit">
+                            <td class="line">32</td>
+                            <td class="hits">1</td>
+                            <td class="source">module.exports = {&quot;hello&quot;:&quot;world&quot;};</td>
+                        </tr>
+                    
+                
+                    
+                        <tr class="hit">
+                            <td class="line">33</td>
                             <td class="hits"></td>
                             <td class="source"></td>
                         </tr>

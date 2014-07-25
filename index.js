@@ -5,6 +5,8 @@ var server = new Hapi.Server('0.0.0.0', 3000);
 
 var T = {}; // Timer methods
 
+// T.init(db);
+
 T.get = {
   handler: function(req, reply) {
     var timers = [];
@@ -15,14 +17,7 @@ T.get = {
     reply(timers);
   }
 };
-/*
-T.getRandomConfig = {
-  handler: function(req, reply) {
-    var id = Math.floor(Math.random() * timers.length);
-    reply(timers[id]);
-  }
-};
-*/
+
 T.postConfig = {
   handler: function(req, reply) {
     var newQuote = { author: req.payload.author, text: req.payload.text };
@@ -36,15 +31,7 @@ T.postConfig = {
     }
   }
 };
-/*
-T.deleteConfig = {
-  handler: function(req, reply) {
-    if (quotes.length <= req.params.id) return reply('No quote found.').code(404);
-    quotes.splice(req.params.id, 1);
-    reply(true);
-  }
-};
-*/
+
 var routes = [
   { path: '/timer/{id?}', method: 'GET', config: T.get },
   // { path: '/random', method: 'GET', config: T.getRandomConfig },

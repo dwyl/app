@@ -1,8 +1,9 @@
 var Lab = require("lab"),    // the Lab
     server = require("../"); // require index.js
-Lab.experiment("Basic HTTP Tests", function() {
+/*
+Lab.experiment("", function() {
     // tests
-    Lab.test("Main endpoint /timer/{id?} ", function(done) {
+    Lab.test("Main endpoint /person/{id?} ", function(done) {
         var options = {
             method: "GET",
             url: "/timer/1"
@@ -15,5 +16,9 @@ Lab.experiment("Basic HTTP Tests", function() {
         });
     });
 
+    // Create a new person in the database
+
 
 });
+
+*/

@@ -1,9 +1,9 @@
-// var couchbase = require('couchbase');
-// var cluster = new couchbase.Cluster();
-// var db = cluster.openBucket('default');
 
 var couchbase = require('couchbase').Mock;
 var db = new couchbase.Connection();
+var d = require('../lib/time');
+
+// console.log(d);
 
 var Lab = require("lab");
 Lab.experiment("CouchDB Tests", function() {
@@ -34,6 +34,6 @@ Lab.experiment("CouchDB Tests", function() {
     });
   });
 
-  
+
 
 });
