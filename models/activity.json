@@ -1,0 +1,6 @@
+{
+  "PersonId":"string",
+  "ActivityType":"string",
+  "StartTime":"timestamp",
+  "EndTime": "timestamp"
+}
