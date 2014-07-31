@@ -117,3 +117,16 @@ http://stackoverflow.com/questions/5578608/difference-between-couchdb-and-couchb
 ### Search
 
 > - [ ] Investigate: http://docs.couchbase.com/couchbase-elastic-search/
+
+
+## Background / Research
+
+- A google search for [**time tracking app**](https://www.google.com/search?q=time+tracking+app)
+ yields "about" ***108 Million results***
+ ![Google search for time tracking app](http://i.imgur.com/wnGWp3F.png)
+
+## Understanding APIs
+
+Wondering what the difference between PUT and POST is?
+
+http://stackoverflow.com/questions/630453/put-vs-post-in-rest
