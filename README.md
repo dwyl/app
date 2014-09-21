@@ -15,8 +15,8 @@ Watch: **How Will You Measure Your Life?** http://youtu.be/tvos4nORf_Y
 ~ Henry David Thoreau
 
 Time (a *finite* amount of) is one of the few things we *all* have in common. <br />
-Wether we like it or not, we each only have
-It is our most precious non-renewable 'resource'. <br />
+Wether we like it or not, we each only have a ***fixed amount***. <br />
+It is our most precious ***non-renewable*** 'resource'. <br />
 We need a *much* better way of keeping track of how we spend it.
 
 ## What?
@@ -31,7 +31,7 @@ This is the ***sketch*** I did ages ago:
 
 ## How?
 
-### Backend: Node.js + Hapi
+### Backend: Node.js + Hapi.js
 
 ```
 git clone git@github.com:nelsonic/time.git

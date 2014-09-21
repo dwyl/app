@@ -1,4 +1,3 @@
-
 var couchbase = require('couchbase').Mock;
 var db = new couchbase.Connection();
 var d = require('../lib/time');
