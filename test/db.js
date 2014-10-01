@@ -33,6 +33,4 @@ Lab.experiment("CouchDB Tests", function() {
     });
   });
 
-
-
 });
