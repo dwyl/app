@@ -4,7 +4,7 @@
   "description": "Track any time-based activity",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/lab/bin/lab -c -v && ./node_modules/lab/bin/lab -r html -o ./test/coverage.html",
+    "test": "./node_modules/lab/bin/lab -C -c -v && ./node_modules/lab/bin/lab -r html -o ./test/coverage.html",
     "start": "node index.js"
   },
   "repository": {
@@ -28,6 +28,7 @@
     "joi": "~4.7.0"
   },
   "devDependencies": {
-    "lab": "^3.2.1"
+    "code": "^1.3.0",
+    "lab": "^5.2.1"
   }
 }
