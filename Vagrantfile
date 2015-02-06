@@ -17,7 +17,7 @@ n stable
 node -v
 npm install nodemon -g
 
-# see: https://gist.github.com/wingdspur/2026107
+# OpenJDK Java runtime http://packages.ubuntu.com/precise/openjdk-7-jre-headless
 sudo apt-get install openjdk-7-jre-headless -y
 
 ### Check http://www.elasticsearch.org/download/ for latest version of ElasticSearch and replace wget link below
@@ -40,7 +40,7 @@ SCRIPT
 
 
 Vagrant.configure("2") do |config|
-  
+
   # config.vm.box = "base"
   config.vm.box = "ubuntu-nodejs-server"
   config.vm.box_url = "https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
