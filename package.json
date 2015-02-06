@@ -1,6 +1,6 @@
 {
   "name": "time",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "description": "Track any time-based activity",
   "main": "index.js",
   "scripts": {
@@ -29,6 +29,9 @@
   },
   "devDependencies": {
     "code": "^1.3.0",
-    "lab": "^5.2.1"
+    "faucet": "0.0.1",
+    "lab": "^5.2.1",
+    "tap": "^0.5.0",
+    "tape": "^3.5.0"
   }
 }
