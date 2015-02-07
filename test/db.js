@@ -70,7 +70,6 @@ test("UPDATE a record", function(t) {
   });
 });
 
-
 process.on('uncaughtException', function(err) {
   console.log('Something is not right there ... ' + err);
 });
