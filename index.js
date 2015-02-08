@@ -1,7 +1,11 @@
 var Hapi = require('hapi'),
     Joi  = require('joi');
 
-var server = new Hapi.Server('0.0.0.0', 3000);
+var server = new Hapi.Server();
+server.connection({
+  host: 'localhost',
+  port: 4000 
+});
 
 var T = {}; // Timer methods
 
@@ -16,7 +20,7 @@ T.get = {
       } else {
         return reply(timers[req.params.id]);
       }
-      
+
     }
     reply(timers);
   }
@@ -46,7 +50,7 @@ var routes = [
 server.route(routes);
 
 server.start(function() {
-    // console.log('Now Visit: http://localhost:3000/YOURNAME');
+    console.log('Now Visit: http://localhost:4000/YOURNAME');
 });
 
 module.exports = server;

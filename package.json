@@ -1,10 +1,10 @@
 {
   "name": "time",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "description": "Track any time-based activity",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/lab/bin/lab -C -c -v && ./node_modules/lab/bin/lab -r html -o ./test/coverage.html",
+    "test": "node ./node_modules/.bin/istanbul cover ./node_modules/tape/bin/tape ./test/*.js | node_modules/tap-spec/bin/cmd.js",
     "start": "node index.js"
   },
   "repository": {
@@ -24,11 +24,12 @@
   "homepage": "https://github.com/nelsonic/time",
   "dependencies": {
     "esta": "^1.0.8",
-    "hapi": "~6.9.0",
-    "joi": "~4.7.0"
+    "hapi": "^8.1.0",
+    "joi": "^5.1.0"
   },
   "devDependencies": {
-    "code": "^1.3.0",
-    "lab": "^5.2.1"
+    "istanbul": "^0.3.5",
+    "tap-spec": "^2.2.1",
+    "tape": "^3.5.0"
   }
 }

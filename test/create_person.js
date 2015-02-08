@@ -1,5 +1,5 @@
-var Lab = require("lab"),    // the Lab
-    server = require("../"); // require index.js
+// var Lab = require("lab"),    // the Lab
+//     server = require("../"); // require index.js
 /*
 Lab.experiment("", function() {
     // tests
