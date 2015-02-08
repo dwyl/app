@@ -20,11 +20,8 @@ test("CONNECT to ElasticSearch", function(t) {
     if(err){
       console.error(err);
     }
-    // console.log('STATUS: '+result.status);
-    if(result.status !== 200) {
-      console.error('')
-    }
-    t.equal(parseInt(result.status,10), 200);
+
+    t.equal(parseInt(result.status,10), 200, "Status 200");
     t.end();
   });
 
@@ -35,7 +32,7 @@ test("CREATE & READ a record", function(t) {
 
     ES.READ(rec, function(result) {
       // console.log(result);
-      t.equal(result._source.start, rec.start);
+      t.equal(result._source.start, rec.start, "Record created: "+result._source.start);
       t.end();
     });
   });
@@ -61,8 +58,8 @@ test("UPDATE a record", function(t) {
       // console.log(rec);
       ES.READ(rec, function(res) {
         // console.log(res);
-        t.equal(res._source.end, rec.end);
-        t.equal(res._version, 2);
+        t.equal(res._source.end, rec.end, "Record was updated: "+res._source.end);
+        t.equal(res._version, 2, "Version: "+res._version);
         // console.log(result.value);
         t.end(); // done() callback is required to end the test.
       });
@@ -71,5 +68,5 @@ test("UPDATE a record", function(t) {
 });
 
 process.on('uncaughtException', function(err) {
-  console.log('Something is not right there ... ' + err);
+  console.log('Database Fail ... ' + err);
 });
