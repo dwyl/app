@@ -1,5 +1,5 @@
 {
-  "FirstName":"string",
-  "LastName":"string",
-  "PersonId":"string"
+  "fn":"string",
+  "ln":"string",
+  "pid":"string"
 }

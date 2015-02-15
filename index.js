@@ -4,7 +4,7 @@ var Hapi = require('hapi'),
 var server = new Hapi.Server();
 server.connection({
   host: 'localhost',
-  port: 4000 
+  port: 4000
 });
 
 var T = {}; // Timer methods
