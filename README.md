@@ -1,11 +1,12 @@
-time [![Build Status](https://travis-ci.org/ideaq/time.png?branch=master)](https://travis-ci.org/ideaq/time) [![Code Climate](https://codeclimate.com/github/ideaq/time.png)](https://codeclimate.com/github/ideaq/time) [![Dependencies](https://david-dm.org/ideaq/time.png?theme=shields.io)](https://david-dm.org/ideaq/time)
+time [![Build Status](https://travis-ci.org/nelsonic/time.png?branch=master)](https://travis-ci.org/nelsonic/time) [![Code Climate](https://codeclimate.com/github/nelsonic/time.png)](https://codeclimate.com/github/nelsonic/time) [![Dependencies](https://david-dm.org/nelsonic/time.png?theme=shields.io)](https://david-dm.org/nelsonic/time)
 ============
 ![Not everything that counts can be counted,
 and not everything that can be counted counts. ~ Albert Einstein
 ](http://i.imgur.com/ESOb79D.png "Not everything that counts can be counted")
 
-
-Watch: **How Will You Measure Your Life?** http://youtu.be/tvos4nORf_Y
+Watch: **How Will You *Measure* Your Life?**
+http://youtu.be/tvos4nORf_Y  
+and ***Don't waste people's time***: http://ecorner.stanford.edu/authorMaterialInfo.html?mid=3404
 
 - - -
 
@@ -68,10 +69,6 @@ git clone git@github.com:nelsonic/time.git
  yields "about" ***108 Million results***
  ![Google search for time tracking app](http://i.imgur.com/wnGWp3F.png)
 
-## Understanding APIs
+## Curious About APIs?
 
-Wondering what the difference between PUT and POST is?
-
-http://stackoverflow.com/questions/630453/put-vs-post-in-rest
-
-> Don't waste people's time: http://ecorner.stanford.edu/authorMaterialInfo.html?mid=3404
+> Here's some research/notes: https://github.com/nelsonic/learn-api-design
