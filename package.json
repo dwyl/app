@@ -1,11 +1,13 @@
 {
   "name": "time",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Track any time-based activity",
   "main": "index.js",
   "scripts": {
-    "test": "node ./node_modules/.bin/istanbul cover ./node_modules/tape/bin/tape ./test/*.js | node_modules/tap-spec/bin/cmd.js",
-    "start": "node index.js"
+    "test": "node ./node_modules/tape/bin/tape ./test/*.js",
+    "spec": "node ./node_modules/tape/bin/tape ./test/*.js | node_modules/tap-spec/bin/cmd.js",
+    "coverage": "node ./node_modules/.bin/istanbul cover ./node_modules/tape/bin/tape ./test/*.js | node_modules/tap-spec/bin/cmd.js",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",

@@ -21,7 +21,7 @@ test("CONNECT to ElasticSearch", function(t) {
       console.error(err);
     }
 
-    t.equal(parseInt(result.status,10), 200, "Status 200");
+    t.equal(parseInt(result.status, 10), 200, "Status 200");
     t.end();
   });
 
@@ -68,5 +68,5 @@ test("UPDATE a record", function(t) {
 });
 
 process.on('uncaughtException', function(err) {
-  console.log('Database Fail ... ' + err);
+  console.log('Database FAIL ... ' + err);
 });
