@@ -6,12 +6,12 @@ var server = new Hapi.Server();
 server.connection({ port: port });
 
 var routes = [
-  { path: '/home', method: 'GET',
-    config: require('./handlers/home')  },
-  { path: '/timer/{id?}', method: 'GET',
-    config: require('./handlers/find')  },
-  { path: '/timer/new', method: 'POST',
-    config: require('./handlers/start') }
+{ path: '/home', method: 'GET',
+  config: require('./handlers/home')  },
+{ path: '/timer/{id?}', method: 'GET',
+  config: require('./handlers/find_timer.js')  },
+{ path: '/timer/new', method: 'POST',
+  config: require('./handlers/start_timer.js') }
   // { path: '/timer/{id}', method: 'DELETE', config: T.deleteConfig }
 ];
 

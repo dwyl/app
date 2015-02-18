@@ -14,7 +14,7 @@ test("Warm Up the Engine", function(t) {
 });
 
 
-test("GET timer /timer/{id?} should fail (at first)", function(t) {
+test("GET timer /timer/{id?} should return 404", function(t) {
   var options = {
     method: "GET",
     url: "/timer/1"
