@@ -1,7 +1,0 @@
-{
-  "pid":"string",
-  "aid":"string",
-  "desc":"string",
-  "st":"timestamp",
-  "et": "timestamp"
-}
