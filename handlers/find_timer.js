@@ -3,7 +3,7 @@ var ES = require('esta');
 module.exports = {
   handler: function(req, reply) {
     // need some authentication / permissions logic here
-    if (req.params.id) {
+    // if (req.params.id) {
       var record =  {
         index: "time",
         type: "timer",
@@ -19,9 +19,9 @@ module.exports = {
           return reply('No timer found.').code(404);
         }
       });
-    } else {
-      return reply('No timer id supplied').code(404);
-    }
+    // } else {
+    //   return reply('No timer id supplied').code(404);
+    // }
   },
   // validate: require('../models/timer') // no validation in GET
 }
