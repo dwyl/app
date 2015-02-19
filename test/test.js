@@ -13,19 +13,6 @@ test("Warm Up the Engine", function(t) {
   });
 });
 
-
-test("GET timer /timer/{id?} should return 404", function(t) {
-  var options = {
-    method: "GET",
-    url: "/timer/1"
-  };
-  // server.inject lets us similate an http request
-  server.inject(options, function(response) {
-    t.equal(response.statusCode, 404, "No records at startup");
-    t.end();
-  });
-});
-
 test("POST timer /timer/new should FAIL when supplied bad payload", function(t) {
   var options = {
     method: "POST",

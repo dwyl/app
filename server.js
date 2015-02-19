@@ -9,9 +9,9 @@ var routes = [
 { path: '/home', method: 'GET',
   config: require('./handlers/home')  },
 { path: '/timer/{id}', method: 'GET',
-  config: require('./handlers/find_timer.js')  },
+  config: require('./handlers/timer_find.js')  },
 { path: '/timer/new', method: 'POST',
-  config: require('./handlers/start_timer.js') }
+  config: require('./handlers/timer_start.js') }
   // { path: '/timer/{id}', method: 'DELETE', config: T.deleteConfig }
 ];
 
