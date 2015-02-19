@@ -1,6 +1,6 @@
 # time [![Build Status](https://travis-ci.org/ideaq/time.png?branch=master)](https://travis-ci.org/ideaq/time) [![Code Climate](https://codeclimate.com/github/ideaq/time.png)](https://codeclimate.com/github/ideaq/time) [![Dependencies](https://david-dm.org/ideaq/time.png?theme=shields.io)](https://david-dm.org/ideaq/time)
 
-============
+
 ![Not everything that counts can be counted,
 and not everything that can be counted counts. ~ Albert Einstein
 ](http://i.imgur.com/ESOb79D.png "Not everything that counts can be counted")
@@ -20,7 +20,7 @@ Time (a *finite* amount) is one of the few things we *all* have in common.
 Wether we like it or not, we each only have a ***fixed amount***.  
 It is our most precious ***non-renewable*** 'resource'.  
 We need a *much* better way of keeping track of how we spend it.
-
+˜
 ## What?
 
 A simple way to track activities over time.
@@ -44,7 +44,6 @@ git clone git@github.com:nelsonic/time.git
 
 
 ### Database ElasticSearch
-
 
 + [x] Brush up on ElasticSearch: https://github.com/nelsonic/learn-elasticsearch
 + [ ] Insert a new timer: (a) Start Date/Time (b) Short description
@@ -70,6 +69,11 @@ git clone git@github.com:nelsonic/time.git
  yields "about" ***108 Million results***
  ![Google search for time tracking app](http://i.imgur.com/wnGWp3F.png)
 
-## Curious About APIs?
+## API
+
+Our core objective is build a ***Great API*** from day one.
+
+
+#### Curious About APIs?
 
 > Here's some research/notes: https://github.com/nelsonic/learn-api-design
