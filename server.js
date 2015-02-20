@@ -8,6 +8,8 @@ server.connection({ port: port });
 var routes = [
 { path: '/home', method: 'GET',
   config: require('./handlers/home')  },
+{ path: '/login', method: 'POST',
+  config: require('./handlers/login')  },
 { path: '/timer/{id}', method: 'GET',
   config: require('./handlers/timer_find.js')  },
 { path: '/timer/new', method: 'POST',

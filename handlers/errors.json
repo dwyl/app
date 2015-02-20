@@ -1,7 +1,8 @@
 {
-  "login-unregistered": {
-    "status"  : 401,
-    "message" : "Not registered",
-    "code"    : 4011
+  "login-unreg": {
+    "status"  : 404,
+    "message" : "Email address not registered",
+    "code"    : 4041
   }
+
 }
