@@ -1,0 +1,7 @@
+{
+  "login-unregistered": {
+    "status"  : 401,
+    "message" : "Not registered",
+    "code"    : 4011
+  }
+}
