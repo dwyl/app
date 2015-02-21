@@ -1,8 +1,11 @@
 var Hapi = require('hapi');
+var Basic = require('hapi-auth-basic');
+
 var Joi  = require('joi');
 var ES   = require('esta');
 var port = process.env.PORT || 1337; // heroku define port or use 1337
 var server = new Hapi.Server();
+
 server.connection({ port: port });
 
 var routes = [
@@ -18,6 +21,12 @@ var routes = [
 ];
 
 server.route(routes);
+
+server.register(Basic, function (err) {
+  server.auth.strategy('simple', 'basic', {
+    validateFunc: require('./handlers/auth.js')
+  });
+});
 
 server.start(function() {
     console.log('Now Visit: http://localhost:'+port);

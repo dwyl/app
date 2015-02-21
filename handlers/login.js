@@ -9,7 +9,7 @@ module.exports = {
     var record =  {
       index: "people",
       type: "person",
-      id: perma(req.payload.email, 'full')
+      id: perma(req.payload.email, 17) // exceptionally low collision probability
     }
     ES.READ(record, function(res) {
       // console.log(" - - - - - - - - ");
