@@ -1,12 +1,12 @@
 var ES     = require('esta');
 var Bcrypt = require('bcrypt');
-var perma  = require('perma'); // use hash of email address as person.id
+var aguid  = require('aguid'); // https://github.com/ideaq/aguid
 
-module.exports = function validate (email, password, callback) {
+module.exports = function validateFunc (email, password, callback) {
   var record =  {
     index: "people",
     type: "person",
-    id: perma(email, 24) // exceptionally low collision probability
+    id: aguid(email)
   }
 
   ES.READ(record, function(res) {

@@ -70,4 +70,5 @@ test("UPDATE a record", function(t) {
 
 process.on('uncaughtException', function(err) {
   console.log('Database FAIL ... ' + err);
+  console.log('Tip: Remember to start the Vagrant VM and Elasticsearch DB!')
 });

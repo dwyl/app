@@ -1,11 +1,10 @@
 var test   = require('tape');
 var server = require("../server.js");
-var perma  = require('perma');
 
-test("POST /login for un-registered person >> 404", function(t) {
+test("POST /login for un-registered person >> 401", function(t) {
   var person = {
     "email"    : "everything.is@awesome.io",
-    "password" : perma("PinkFluffyUnicorns", 10)
+    "password" : "PinkFluffyUnicorns"
   }
   var options = {
     method  : "POST",
@@ -17,7 +16,7 @@ test("POST /login for un-registered person >> 404", function(t) {
     // console.log(" - - - - - - - - - - - - ");
     // console.dir(res.result);
     // console.log(" - - - - - - - - - - - - ");
-    t.equal(res.statusCode, 404, "Unregistered Cannot Login");
+    t.equal(res.statusCode, 401, "Unregistered Cannot Login");
     t.end();
     server.stop();
   });
