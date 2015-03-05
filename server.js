@@ -11,8 +11,10 @@ server.connection({ port: port });
 var routes = [
 { path: '/home', method: 'GET',
   config: require('./handlers/home')  },
-{ path: '/login', method: 'POST', config: { auth: 'basic' },
+{ path: '/login', method: 'POST', config: { auth: 'simple' },
   handler: require('./handlers/login.js') },
+{ path: '/register', method: 'POST', config: { auth: false },
+  handler: require('./handlers/register.js') },
 { path: '/timer/{id}', method: 'GET',
   config: require('./handlers/timer_find.js')  },
 { path: '/timer/new', method: 'POST',
@@ -21,12 +23,11 @@ var routes = [
 ];
 
 server.register(Basic, function (err) {
-  server.auth.strategy('basic', 'basic', {
+  server.auth.strategy('simple', 'basic', {
     validateFunc: require('./handlers/auth_basic.js')
   });
+  server.route(routes);
 });
-
-server.route(routes);
 
 server.start(function() {
     console.log('Now Visit: http://localhost:'+port);
