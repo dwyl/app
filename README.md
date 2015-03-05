@@ -1,5 +1,7 @@
-# time [![Build Status](https://travis-ci.org/ideaq/time.png?branch=master)](https://travis-ci.org/ideaq/time) [![Code Climate](https://codeclimate.com/github/ideaq/time.png)](https://codeclimate.com/github/ideaq/time) [![Dependencies](https://david-dm.org/ideaq/time.png?theme=shields.io)](https://david-dm.org/ideaq/time)
-[![HAPI 8.0](http://img.shields.io/badge/hapi-8.0-blue.svg)](http://hapijs.com)
+# time
+[![Build Status](https://travis-ci.org/ideaq/time.png?branch=master)](https://travis-ci.org/ideaq/time) [![Code Climate](https://codeclimate.com/github/ideaq/time.png)](https://codeclimate.com/github/ideaq/time)
+[![Test Coverage](https://codeclimate.com/github/ideaq/time/badges/coverage.svg)](https://codeclimate.com/github/ideaq/time) [![Dependencies](https://david-dm.org/ideaq/time.png?theme=shields.io)](https://david-dm.org/ideaq/time)
+[![HAPI 8.2](http://img.shields.io/badge/hapi-8.2-brightgreen.svg)](http://hapijs.com)
 
 ![Not everything that counts can be counted,
 and not everything that can be counted counts. ~ Albert Einstein
