@@ -1,3 +1,4 @@
+// This "Test" Just checks we are able to connect to ElasticSearch
 var ES = require('esta');
 var test = require('tape');
 
@@ -69,4 +70,5 @@ test("UPDATE a record", function(t) {
 
 process.on('uncaughtException', function(err) {
   console.log('Database FAIL ... ' + err);
+  console.log('Tip: Remember to start the Vagrant VM and Elasticsearch DB!')
 });

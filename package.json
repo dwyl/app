@@ -1,13 +1,15 @@
 {
-  "name": "time",
-  "version": "0.0.6",
+  "name": "atimer",
+  "version": "0.0.8",
   "description": "Track any time-based activity",
   "main": "index.js",
   "scripts": {
-    "test": "node ./node_modules/tape/bin/tape ./test/*.js",
+    "codeclimate": "CODECLIMATE_REPO_TOKEN=0839d00dd01047ffadfb3c56bf9c9baa0047179de582a47517e3f558ad4eafff ./node_modules/codeclimate-test-reporter/bin/codeclimate.js < ./coverage/lcov.info",
+    "coverage": "./node_modules/.bin/istanbul cover ./node_modules/tape/bin/tape ./test/*.js && ./node_modules/.bin/istanbul check-coverage --statements 100 --functions 100 --lines 100 --branches 100",
+    "jshint": "./node_modules/jshint/bin/jshint -c .jshintrc --exclude-path .gitignore .",
+    "start": "node server.js",
     "spec": "node ./node_modules/tape/bin/tape ./test/*.js | node_modules/tap-spec/bin/cmd.js",
-    "coverage": "node ./node_modules/.bin/istanbul cover ./node_modules/tape/bin/tape ./test/*.js | node_modules/tap-spec/bin/cmd.js",
-    "start": "node server.js"
+    "test": "node ./node_modules/tape/bin/tape ./test/*.js"
   },
   "repository": {
     "type": "git",
@@ -25,15 +27,31 @@
   },
   "homepage": "https://github.com/nelsonic/time",
   "dependencies": {
+    "aguid": "^1.0.3",
+    "bcrypt": "^0.8.1",
+    "boom": "^2.6.1",
     "esta": "^1.0.8",
-    "hapi": "^8.1.0",
+    "hapi": "^8.2.0",
+    "hapi-auth-basic": "^2.0.0",
+    "hapi-auth-jwt2": "^1.0.8",
     "hoek": "^2.11.0",
-    "joi": "^5.1.0"
+    "joi": "^6.0.0",
+    "jsonwebtoken": "^3.2.2"
   },
   "devDependencies": {
+    "codeclimate-test-reporter": "0.0.4",
     "istanbul": "^0.3.5",
-    "perma": "^1.0.4",
+    "jshint": "^2.5.10",
+    "pre-commit": "0.0.9",
     "tap-spec": "^2.2.1",
     "tape": "^3.5.0"
+  },
+  "pre-commit": [
+    "jshint",
+    "coverage",
+    "codeclimate"
+  ],
+  "engines": {
+    "node": ">= 0.10"
   }
 }
