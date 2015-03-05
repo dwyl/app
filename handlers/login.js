@@ -1,10 +1,10 @@
-console.log("hello from login.js");
+var JWT    = require('jsonwebtoken');  // used to sign our content
+var secret = 'NeverShareYourSecret'; // use ENV var for this
+
 // export single function (not object.handler!)
 module.exports = function handler(req, reply) {
     // create JWT for auth header
-    // console.log("Im inside login.js module");
-    // console.log(" - - - - - - - - - - - - ");
-    // console.log(req);
-    // console.log(" - - - - - - - - - - - - ");
-    return reply('You Logged in!');
+    var token = JWT.sign(req.auth.credentials, secret);
+    return reply('You Logged in!')
+    .header("Authorization", token);
 }

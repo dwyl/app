@@ -47,10 +47,12 @@ test("Create a new user and log in", function(t) {
     };
     // login with the user we created above
     server.inject(options2, function(res) {
+      console.log(" - - - - - - - - - - - - ");
+      console.dir(res.headers.authorization); // auth header
+      console.log(" - - - - - - - - - - - - ");
       t.equal(res.statusCode, 200, "Login Success!!");
       t.end();
       server.stop();
-
     });
 
   });
