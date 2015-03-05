@@ -1,5 +1,5 @@
 var JWT    = require('jsonwebtoken');  // used to sign our content
-var secret = 'NeverShareYourSecret'; // use ENV var for this
+var secret = 'NeverShareYourSecret'; // @todo use ENV var for this
 
 // export single function (not object.handler!)
 module.exports = function handler(req, reply) {

@@ -12,9 +12,9 @@ module.exports = function validate (email, password, callback) {
 
   ES.READ(record, function(res) {
     if(res.found) { // compare to bcrypt hash on file
-      console.log(" - - - - - - - - - - - - ");
-      console.dir(res); // show boom result from hapi-auth-basic
-      console.log(" - - - - - - - - - - - - ");
+      // console.log(" - - - - - - - - - - - - ");
+      // console.dir(res); // show boom result from hapi-auth-basic
+      // console.log(" - - - - - - - - - - - - ");
       Bcrypt.compare(password, res._source.password, function (err, isValid) {
         callback(err, isValid, { id: res._id, email: res._source.email });
       });

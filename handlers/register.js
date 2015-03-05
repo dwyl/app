@@ -33,7 +33,7 @@ module.exports = function handler(req, reply) {
           //encrypt the password
           bcrypt.genSalt(12, function(err, salt) {
             bcrypt.hash(req.payload.password, salt, function(err, hash) {
-              console.log(hash); // our hashed password
+              // console.log(hash); // our hashed password
               //add the encrypted password to the record
               record.password = hash;
 
