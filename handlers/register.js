@@ -1,12 +1,14 @@
 // import Boom for errors
-var Boom = require('boom'); // error handling https://github.com/hapijs/boom
+var Boom   = require('boom'); // error handling https://github.com/hapijs/boom
 // import the module we use to access the database
+var Hoek   = require('hoek'); //
 var ES     = require('esta');
 // import the module we are using to encrypt passwords
 var bcrypt = require('bcrypt');
 // import the module we are using to create (GU)IDs
 var aguid  = require('aguid');
-
+var JWT    = require('jsonwebtoken');  // used to sign our content
+var secret = 'NeverShareYourSecret';   // @todo use ENV var for this
 // export single function (not object.handler!)
 module.exports = function handler(req, reply) {
 
@@ -39,7 +41,13 @@ module.exports = function handler(req, reply) {
 
               //register the new user
               ES.CREATE(record, function (res) {
-                return reply(res);
+                Hoek.assert(res.created, 'Person NOT Registered!');
+                // console.log(' - - - - ES Res: ')
+                // console.log(res);
+                // console.log(' - - - - - - - - ')
+                var token = JWT.sign({id:aguid(req.payload.email)}, secret); // synchronous
+                return reply(res)
+                  .header("Authorization", token);
               });
             });
           });

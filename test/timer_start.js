@@ -1,4 +1,4 @@
-var test = require('tape');
+var test   = require('tape');
 var server = require("../server.js");
 var token; // used below
 
@@ -22,7 +22,7 @@ test("POST /timer/new should FAIL when no Auth Token Sent", function(t) {
 
 var secret = 'NeverShareYourSecret'; // @todo use ENV var for this
 var JWT    = require('jsonwebtoken');
-var token  = JWT.sign({pica:"boo"}, secret); // synchronous
+var token  = JWT.sign({id:"picaboo"}, secret); // synchronous
 
 
 test("POST /timer/new should FAIL when supplied bad payload", function(t) {
@@ -33,9 +33,7 @@ test("POST /timer/new should FAIL when supplied bad payload", function(t) {
       "ct" : "fail", // we don't allow people/apps to set the created time!
       "desc" : "its time!"
     },
-    headers : {
-      authorization : token
-    }
+    headers : { authorization : token }
   };
   // server.inject lets us similate an http request
   server.inject(options, function(response) {
@@ -56,9 +54,7 @@ test("START a NEW Timer (no st sent by client)!", function(t) {
     method: "POST",
     url: "/timer/new",
     payload: timer,
-    headers : {
-      authorization : token
-    }
+    headers : { authorization : token }
   };
   // server.inject lets us similate an http request
   server.inject(options, function(res) {
@@ -96,9 +92,7 @@ test("START a NEW Timer with start time!", function(t) {
     method: "POST",
     url: "/timer/new",
     payload: timer,
-    headers : {
-      authorization : token
-    }
+    headers : { authorization : token }
   };
   // server.inject lets us similate an http request
   server.inject(options, function(res) {

@@ -23,8 +23,8 @@ var routes = [ // move routes to separate file?
 { path: '/timer/{id}', method: 'GET',
   config: { auth: 'jwt', handler: require('./handlers/timer_find.js') } },
 { path: '/timer/new', method: 'POST',
-  config: { auth: 'jwt', handler: require('./handlers/timer_start.js'),
-    validate: require('./models/timer')
+  config: { validate: require('./models/timer'),
+    auth: 'jwt', handler: require('./handlers/timer_start.js')
   }
 }
   // { path: '/timer/{id}', method: 'DELETE', config: T.deleteConfig }
