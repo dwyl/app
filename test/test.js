@@ -12,21 +12,3 @@ test("Warm Up the Engine", function(t) {
     t.end();
   });
 });
-
-test("POST timer /timer/new should FAIL when supplied bad payload", function(t) {
-  var options = {
-    method: "POST",
-    url: "/timer/new",
-    payload: {
-      "ct" : "fail", // we don't allow people/apps to set the created time!
-      "desc" : "its time!"
-    }
-  };
-  // server.inject lets us similate an http request
-  server.inject(options, function(response) {
-    t.equal(response.statusCode, 400, "New timer FAILS validation: "
-      + response.result.message);
-    t.end();
-    server.stop();
-  });
-});

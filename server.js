@@ -24,14 +24,16 @@ var routes = [ // move routes to separate file?
   config: { auth: 'jwt', handler: require('./handlers/timer_find.js') } },
 { path: '/timer/new', method: 'POST',
   config: { auth: 'jwt', handler: require('./handlers/timer_start.js'),
-    validate: require('./models/timer') } },
+    validate: require('./models/timer')
+  }
+}
   // { path: '/timer/{id}', method: 'DELETE', config: T.deleteConfig }
 ];
 // [ {register: Basic}, {register: AuthJWT} ]
 server.register([ {register: Basic}, {register: AuthJWT} ], function (err) {
-  if(err) {
-    console.log(err);
-  }
+  // if(err) {
+  //   console.log(err);
+  // }
   server.auth.strategy('basic', 'basic', {
     validateFunc: require('./handlers/auth_basic_validate.js')
   });
