@@ -4,19 +4,15 @@
 [![Node version](https://img.shields.io/node/v/atimer.svg?style=flat)](http://nodejs.org/download/)
 [![HAPI 8.2](http://img.shields.io/badge/hapi-8.2-brightgreen.svg)](http://hapijs.com)
 
-![Not everything that counts can be counted,
-and not everything that can be counted counts. ~ Albert Einstein
-](http://i.imgur.com/ESOb79D.png "Not everything that counts can be counted")
 
-Watch: **How Will You *Measure* Your Life?**
-http://youtu.be/tvos4nORf_Y  
-and ***Don't waste people's time***: http://ecorner.stanford.edu/authorMaterialInfo.html?mid=3404
+![Until we can manage time, we can manage nothing else](http://i.imgur.com/GbTyiib.png)
+
 
 - - -
 
 ## Why?
 
-“***The price of anything is the amount of life you exchange for it.***”
+> “*The **price** of anything is the **amount** of **life** you **exchange for it**.*”
 ~ Henry David Thoreau
 
 Time (a *finite* amount) is one of the few things we *all* have in common.  
@@ -26,6 +22,10 @@ We need a *much* better way of keeping track of how we spend it.
 ˜
 
 > More detail: https://github.com/ideaq/time/issues/19
+
++ Watch: **How Will You *Measure* Your Life?**
+http://youtu.be/tvos4nORf_Y  
++ and ***Don't waste people's time***: http://ecorner.stanford.edu/authorMaterialInfo.html?mid=3404
 
 ## What?
 
