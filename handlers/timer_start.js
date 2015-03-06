@@ -2,8 +2,7 @@ var ES    = require('esta');
 var perma = require('perma');
 var Hoek  = require('hoek'); //
 
-module.exports = {
-  handler: function(req, reply) {
+module.exports = function(req, reply) {
     // extract the person id from JWT
 
     // fake it for now
@@ -33,6 +32,4 @@ module.exports = {
       Hoek.merge(rec, timer); // http://git.io/Amv6
       reply(rec);
     })
-  },
-  validate: require('../models/timer')
 }

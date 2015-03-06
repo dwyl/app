@@ -9,26 +9,37 @@ var secret = 'NeverShareYourSecret'; // @todo use ENV var for this
 
 server.connection({ port: port });
 
-var routes = [
+var routes = [ // move routes to separate file?
 { path: '/home', method: 'GET',
-  config: require('./handlers/home')  },
-{ path: '/login', method: 'POST', config: { auth: 'basic' },
-  handler: require('./handlers/login.js') },
-{ path: '/register', method: 'POST', config: { auth: false },
-  handler: require('./handlers/register.js') },
+  config: {
+    auth: false,
+    handler: require('./handlers/home')
+  }
+},
+{ path: '/login', method: 'POST',
+  config: { auth: 'basic', handler: require('./handlers/login.js') } },
+{ path: '/register', method: 'POST',
+  config: { auth: false, handler: require('./handlers/register.js') } },
 { path: '/timer/{id}', method: 'GET',
-  config: require('./handlers/timer_find.js')  },
+  config: { auth: 'jwt', handler: require('./handlers/timer_find.js') } },
 { path: '/timer/new', method: 'POST',
-  config: require('./handlers/timer_start.js') }
+  config: { auth: 'jwt', handler: require('./handlers/timer_start.js'),
+    validate: require('./models/timer') } },
   // { path: '/timer/{id}', method: 'DELETE', config: T.deleteConfig }
 ];
 // [ {register: Basic}, {register: AuthJWT} ]
-server.register(Basic, function (err) {
-  // if(err) {
-  //   console.log(err);
-  // }
+server.register([ {register: Basic}, {register: AuthJWT} ], function (err) {
+  if(err) {
+    console.log(err);
+  }
   server.auth.strategy('basic', 'basic', {
-    validateFunc: require('./handlers/auth_basic.js')
+    validateFunc: require('./handlers/auth_basic_validate.js')
+  });
+  // required means this is the default auth for all routes
+  // see: http://hapijs.com/tutorials/auth
+  server.auth.strategy('jwt', 'jwt', 'required',  {
+    key: secret,
+    validateFunc: require('./handlers/auth_jwt_validate.js')
   });
   server.route(routes);
 });
