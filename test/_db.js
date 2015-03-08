@@ -17,11 +17,7 @@ for(var key in record) {
 }
 
 test("CONNECT to ElasticSearch", function(t) {
-  ES.CONNECT(function(err, result) {
-    if(err){
-      console.error(err);
-    }
-
+  ES.CONNECT(function(result) {
     t.equal(parseInt(result.status, 10), 200, "Status 200");
     t.end();
   });
