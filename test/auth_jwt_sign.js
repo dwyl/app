@@ -1,1 +1,1 @@
-// do we need functional tests for this...?
+// do we need functional tests for lib/auth_jwt_sign.js ...?

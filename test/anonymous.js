@@ -35,6 +35,7 @@ test("test/anonymous.js -> Anonymous people can create timers!", function(t) {
     // server.inject lets us similate an http request
     server.inject(options, function(res) {
       var T = JSON.parse(res.payload);
+      console.log(res.payload);
       t.equal(res.statusCode, 200, "New timer started! " + T.st);
         t.end();
         server.stop();
