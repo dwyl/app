@@ -19,8 +19,8 @@ module.exports = function(req, reply) {
 
     for (var k in req.payload){
       // if (req.payload.hasOwnProperty(k)) {
-        console.log("Key is " + k + ", value is " + req.payload[k]);
-        timer[k] = req.payload[k]
+        // console.log("Key is " + k + ", value is " + req.payload[k]);
+        timer[k] = req.payload[k];
       // }
     }
     if(!timer.st) {

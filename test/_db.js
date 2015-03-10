@@ -1,4 +1,5 @@
 // This "Test" Just checks we are able to connect to ElasticSearch
+// if we do not have a database to store records this app is useless...
 var ES = require('esta');
 var test = require('tape');
 

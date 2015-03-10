@@ -1,3 +1,4 @@
+// anonymous people should be able to use the app
 var JWT = require('../lib/auth_jwt_sign.js');
 // export single function (not object.handler!)
 module.exports = function handler(req, reply) {
@@ -6,5 +7,5 @@ module.exports = function handler(req, reply) {
     // console.log(req.auth)
     // console.log(' - - - - - - - ')
     var token = JWT(req); // synchronous
-    return reply('You Logged in!').header("Authorization", token);
+    return reply('Welcome Anonymous!').header("Authorization", token);
 }

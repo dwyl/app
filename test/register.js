@@ -1,10 +1,10 @@
 var test   = require('tape');
 var server = require("../server.js");
-
-test("Bad request to /register (should fail)", function(t) {
+// console.log(" - - - - - - - - -> test/register.js <- - - - - - - - -");
+test("test/register.js -> Bad request to /register (should fail)", function(t) {
   var options = {
     method  : "POST",
-    url     : "/register",
+    url     : "/register"
   };
   // server.inject lets us similate an http request
   server.inject(options, function(res) {
@@ -17,7 +17,7 @@ test("Bad request to /register (should fail)", function(t) {
   });
 });
 
-test("Register a new person", function(t) {
+test("test/register.js -> Register a new person", function(t) {
   var person = {
     "email"    : "anabella.tester@awesome.net",
     "password" : "PinkFluffyUnicorns"
@@ -35,7 +35,7 @@ test("Register a new person", function(t) {
   });
 });
 
-test("Attempt to register the same person twice", function(t) {
+test("test/register.js -> Attempt to register the same person twice", function(t) {
   var person = {
     "email"    : "anabella.tester@awesome.net",
     "password" : "PinkFluffyUnicorns"
@@ -53,7 +53,23 @@ test("Attempt to register the same person twice", function(t) {
   });
 });
 
-
+test("test/register.js -> Attempt to register with short password", function(t) {
+  var person = {
+    "email"    : "another.tester@awesome.net",
+    "password" : "123"
+  }
+  var options = {
+    method  : "POST",
+    url     : "/register",
+    payload : person
+  };
+  // server.inject lets us similate an http request
+  server.inject(options, function(res) {
+    t.equal(res.statusCode, 400, "Longer password required");
+    t.end();
+    server.stop();
+  });
+});
 
 // use this while developing registration then comment out
 // as we already have a test/z_teardown.jss

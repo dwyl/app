@@ -1,8 +1,8 @@
 var test   = require('tape');
 var server = require("../server.js");
 // var perma  = require('perma');
-
-test("POST /login 401 for un-registered person", function(t) {
+// console.log(" - - - - - - - - -> test/auth_basic.js <- - - - - - - - -");
+test("test/auth_basic.js -> POST /login 401 for un-registered person", function(t) {
   var email      = "unregistered@awesome.io";
   var password   = "PinkFluffyUnicorns";
   var authHeader = "Basic " + (new Buffer(email + ':' + password, 'utf8')).toString('base64');
@@ -24,7 +24,7 @@ test("POST /login 401 for un-registered person", function(t) {
   });
 });
 
-test("Create a new user and log in", function(t) {
+test("test/auth_basic.js -> Create a new user and log in", function(t) {
   var email      = "anthony.tester@awesome.net";
   var password   = "PinkFluffyUnicorns";
   var options = {

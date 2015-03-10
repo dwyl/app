@@ -29,13 +29,29 @@ http://youtu.be/tvos4nORf_Y
 
 ## What?
 
-
-
 A simple way to track activities over time.
 
 ## How? [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/ideaq/time/issues)
 
 > Help us build it! https://github.com/ideaq/time/issues
+
+### *Expected* Environment Variables
+
+The API server will *not* work unless these
+environment variables are set.
+
+Run the following command to set up your local machine:
+```sh
+export ES_HOST="127.0.0.1"
+export ES_PORT=9200
+export JWT_SECRET="NeverShareYourSecret"
+```
+See [**.travis.yml**](https://github.com/ideaq/time/blob/master/.travis.yml)
+for [Continuous integration](http://en.wikipedia.org/wiki/Continuous_integration) settings.
+
+### No Registration Required
+
+Try without registering: https://github.com/ideaq/time/issues/58
 
 ## API
 

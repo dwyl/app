@@ -1,6 +1,6 @@
 {
   "name": "atimer",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Track any time-based activity",
   "main": "index.js",
   "scripts": {
@@ -30,19 +30,20 @@
     "aguid": "^1.0.3",
     "bcrypt": "^0.8.1",
     "boom": "^2.6.1",
-    "esta": "^2.0.2",
+    "esta": "^3.0.1",
     "hapi": "^8.2.0",
     "hapi-auth-basic": "^2.0.0",
-    "hapi-auth-jwt2": "^1.0.8",
+    "hapi-auth-jwt2": "^2.0.1",
     "hoek": "^2.11.0",
     "joi": "^6.0.0",
-    "jsonwebtoken": "4.0.0"
+    "jsonwebtoken": "^4.0.0",
+    "perma": "^2.0.1"
   },
   "devDependencies": {
     "codeclimate-test-reporter": "0.0.4",
     "istanbul": "^0.3.5",
     "jshint": "^2.5.10",
-    "pre-commit": "0.0.9",
+    "pre-commit": "^1.0.6",
     "tap-spec": "^2.2.1",
     "tape": "^3.5.0"
   },
