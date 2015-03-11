@@ -56,7 +56,7 @@ test(file + "Anonymous people can create timers!", function(t) {
         t.end();
         server.stop();
       });
-    }, 200);
+    }, 500);
 
   });
 

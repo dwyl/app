@@ -20,6 +20,6 @@ test(file + "GET timer /timer/1 (invalid timer id) should return 404", function(
         t.end();
         server.stop();
       });
-    },200);
+    },500);
   });
 });

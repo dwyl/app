@@ -38,7 +38,7 @@ test(file + "/register + login new person and log in", function(t) {
         t.end();
         server.stop();
       });
-    }, 200);
+    }, 500);
   });
 });
 

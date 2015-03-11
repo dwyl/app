@@ -24,7 +24,7 @@ test(file + "POST /timer/new should FAIL when no Auth Token Sent", function(t) {
         t.end();
         server.stop();
       });
-    },200);
+    },500);
   });
 });
 
