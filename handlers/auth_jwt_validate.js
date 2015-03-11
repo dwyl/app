@@ -8,12 +8,12 @@ var validateFunc = function (decoded, request, callback) {
   // console.log(" - - - request info: - - - - - -");
   // console.log(request.info);
 
-  var ua = decoded['user-agent'];   // see: https://github.com/ideaq/time/issues/62
-  if(ua && ua !== request.headers['user-agent']) {
-    console.log(" - - - FAIL - - - UA: " + ua)
-    console.log(ua + " === " +request.headers['user-agent'])
-    return callback(null, false); // session expired
-  }
+  // var ua = decoded['user-agent'];   // see: https://github.com/ideaq/time/issues/62
+  // if(ua && ua !== request.headers['user-agent']) {
+  //   console.log(" - - - FAIL - - - UA: " + ua)
+  //   console.log(ua + " === " +request.headers['user-agent'])
+  //   return callback(null, false); // session expired
+  // }
   if(!decoded.jti) {
     console.log(" - - - FAIL - - - sid: " + decoded.sid)
     return callback(null, false); // session expired
