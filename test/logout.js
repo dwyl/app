@@ -1,7 +1,8 @@
 // Logout https://github.com/ideaq/time/issues/65
 var test   = require('tape');
 var server = require("../server.js");
-var token; // used below
+var token;   // used below
+var timerid; // used below
 
 test("test/logout.js -> /register new person and log in", function(t) {
   var email      = "anthony.tester@awesome.net";
@@ -38,7 +39,7 @@ test("test/logout.js -> /register new person and log in", function(t) {
   });
 });
 
-test("test/logout.js -> New person creates a timer", function(t) {
+test("test/logout.js -> New person creates a NEW TIMER", function(t) {
   var timer = {
     "desc" : "We're going to Ibiza!",
     "st" : new Date().toISOString()
@@ -63,8 +64,7 @@ test("test/logout.js -> New person creates a timer", function(t) {
 test("test/logout.js -> LOGOUT", function(t) {
   var options = {
     method: "POST",
-    url: "/timer/new",
-    payload: timer,
+    url: "/logout",
     headers : { authorization : token }
   };
   // server.inject lets us similate an http request
@@ -77,7 +77,7 @@ test("test/logout.js -> LOGOUT", function(t) {
   });
 });
 
-test("test/logout.js -> New person creates a timer", function(t) {
+test("test/logout.js -> Confirm Logged out person CANNOT CREATE", function(t) {
   var timer = {
     "desc" : "This should not be permitted!"
   }
@@ -95,5 +95,20 @@ test("test/logout.js -> New person creates a timer", function(t) {
       t.end();
       server.stop();
     // });
+  });
+});
+
+test("test/logout.js -> Confirm Logged out person CANNOT ACCESS valid TIMER", function(t) {
+  var options = {
+    method: "GET",
+    url: "/timer/"+timerid,
+    headers : { authorization : token }
+  };
+  // server.inject lets us similate an http request
+  server.inject(options, function(response) {
+    // console.log(response);
+    t.equal(response.statusCode, 401, "Invalid JWT (person logged out)");
+    t.end();
+    server.stop();
   });
 });
