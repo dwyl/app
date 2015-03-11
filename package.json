@@ -32,7 +32,7 @@
     "esta": "^3.0.1",
     "hapi": "^8.2.0",
     "hapi-auth-basic": "^2.0.0",
-    "hapi-auth-jwt2": "^2.0.1",
+    "hapi-auth-jwt2": "^3.0.0",
     "hoek": "^2.11.0",
     "joi": "^6.0.0",
     "jsonwebtoken": "^4.1.0",

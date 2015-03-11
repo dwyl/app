@@ -1,11 +1,14 @@
 // Logout https://github.com/ideaq/time/issues/65
+var ES     = require('esta');
 var test   = require('tape');
 var server = require("../server.js");
+var dir    = __dirname.split('/')[__dirname.split('/').length-1];
+var file   = dir + __filename.replace(__dirname, '') + " -> ";
 var token;   // used below
 var timerid; // used below
 
-test("test/logout.js -> /register new person and log in", function(t) {
-  var email      = "anthony.tester@awesome.net";
+test(file + "/register + login new person and log in", function(t) {
+  var email      = "logout.tester@awesome.net";
   var password   = "PinkFluffyUnicorns";
   var options = {
     method  : "POST",
@@ -15,53 +18,33 @@ test("test/logout.js -> /register new person and log in", function(t) {
   // server.inject lets us similate an http request
   server.inject(options, function(res) {
     t.equal(res.statusCode, 200, "Person registration is succesful");
-
-    //information required for logging in user
-    var authHeader = "Basic " + (new Buffer(email + ':' + password, 'utf8')).toString('base64');
-    var options2    = {
-      method  : "POST",
-      url     : "/login",
-      headers : {
-        authorization : authHeader
-      }
+    // console.log(file + " - - - - - - - - - - - - ");
+    // console.log(res.headers.authorization);
+    token = res.headers.authorization
+    t.ok(token.length > 50, "Auth Token was set");
+    var timer = {
+      "desc" : "Everything is Awesome! http://youtu.be/81QMiGhIymU"
+    }
+    var options = {
+      method: "POST",
+      url: "/timer/new",
+      payload: timer,
+      headers : { authorization : token }
     };
-    // login with the user we created above
-    server.inject(options2, function(res) {
-      // console.log("test/logout.js ->  res.headers.authorization:");
-      // console.dir(res.headers.authorization); // auth header
-      // console.log(" - - - - - - - - - - - - ");
-      token = res.headers.authorization
-      t.equal(res.statusCode, 200, "Login Success!!");
-      t.end();
-      server.stop();
-    });
-
+    setTimeout(function() { // give the session record time to propagate in Cluster
+      server.inject(options, function(res) {
+        var T = JSON.parse(res.payload);
+        t.equal(res.statusCode, 200, "New timer started! " + T.st);
+        t.end();
+        server.stop();
+      });
+    }, 200);
   });
 });
 
-test("test/logout.js -> New person creates a NEW TIMER", function(t) {
-  var timer = {
-    "desc" : "We're going to Ibiza!",
-    "st" : new Date().toISOString()
-  }
 
-  var options = {
-    method: "POST",
-    url: "/timer/new",
-    payload: timer,
-    headers : { authorization : token }
-  };
-  // server.inject lets us similate an http request
-  server.inject(options, function(res) {
-    var T = JSON.parse(res.payload);
-    t.equal(res.statusCode, 200, "New timer started! " + T.st);
-      t.end();
-      server.stop();
-    // });
-  });
-});
 
-test("test/logout.js -> LOGOUT", function(t) {
+test(file + "LOGOUT", function(t) {
   var options = {
     method: "POST",
     url: "/logout",
@@ -69,19 +52,41 @@ test("test/logout.js -> LOGOUT", function(t) {
   };
   // server.inject lets us similate an http request
   server.inject(options, function(res) {
-    var T = JSON.parse(res.payload);
-    t.equal(res.statusCode, 200, "New timer started! " + T.st);
-      t.end();
-      server.stop();
+    // var T = JSON.parse(res.payload);
+    console.log(file + " - - - - - - - - - - - - ");
+    console.log(res.result);
+    t.equal(res.statusCode, 200, "New timer started! ");
+
+    var ses = { "index":"time", "type":"session", "id":res.result._id }
+    ES.READ(ses, function(record){
+      console.log(file + " - - - - - - - - - - - - ");
+      console.log(record._source);
+      // t.end();
+      // server.stop();
+      var options = {
+        method: "POST",
+        url: "/timer/new",
+        payload: { "desc" : "This should not be permitted!" },
+        headers : { authorization : token }
+      };
+      // server.inject lets us similate an http request
+      server.inject(options, function(res) {
+        console.log(file + " - - - - - - - - - - - - ");
+        console.log(res.result);
+        t.equal(res.statusCode, 401, "Cannot create after logout");
+          t.end();
+          server.stop();
+        // });
+      });
+    })
     // });
   });
 });
-
-test("test/logout.js -> Confirm Logged out person CANNOT CREATE", function(t) {
+/*
+test(file + "Confirm Logged out person CANNOT CREATE", function(t) {
   var timer = {
     "desc" : "This should not be permitted!"
   }
-
   var options = {
     method: "POST",
     url: "/timer/new",
@@ -90,14 +95,15 @@ test("test/logout.js -> Confirm Logged out person CANNOT CREATE", function(t) {
   };
   // server.inject lets us similate an http request
   server.inject(options, function(res) {
-    var T = JSON.parse(res.payload);
-    t.equal(res.statusCode, 401, "New timer started! " + T.st);
+    console.log(file + " - - - - - - - - - - - - ");
+    console.log(res.result);
+    t.equal(res.statusCode, 401, "New timer started! ");
       t.end();
       server.stop();
     // });
   });
 });
-
+/*
 test("test/logout.js -> Confirm Logged out person CANNOT ACCESS valid TIMER", function(t) {
   var options = {
     method: "GET",
@@ -111,4 +117,15 @@ test("test/logout.js -> Confirm Logged out person CANNOT ACCESS valid TIMER", fu
     t.end();
     server.stop();
   });
+});
+*/
+
+// use this while developing registration then comment out
+// as we already have a test/z_teardown.jss
+var drop = require('./z_drop');
+test(file + "Logout Teardown", function(t) {
+  drop(function(res){
+    t.equal(res.acknowledged, true, "All Records Deleted ;-)");
+    t.end();
+  }).end();
 });
