@@ -36,7 +36,7 @@
     "hapi-auth-jwt2": "^2.0.1",
     "hoek": "^2.11.0",
     "joi": "^6.0.0",
-    "jsonwebtoken": "^4.0.0",
+    "jsonwebtoken": "^4.1.0",
     "perma": "^2.0.1"
   },
   "devDependencies": {

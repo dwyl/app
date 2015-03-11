@@ -14,16 +14,12 @@ var validateFunc = function (decoded, request, callback) {
   //   console.log(ua + " === " +request.headers['user-agent'])
   //   return callback(null, false); // session expired
   // }
-  // if(!decoded.jti) { // this will NEVER RUN!
-  //   console.log(" - - - FAIL - - - sid: " + decoded.sid)
-  //   return callback(null, false); // session expired
-  // }
   var session = {
     index : "time",
     type  : "session",
     id    : decoded.jti  // use SESSION ID as key for sessions
   } // jti? wtf? >> http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html#jtiDef
-  console.log(" > > > Attempt to READ: " +session.id)
+  console.log(" > > > Attempt to READ Session: " +session.id)
   ES.READ(session, function(res){
     console.log(" - - - session: - - -");
     console.log(res);
