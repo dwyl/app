@@ -1,7 +1,9 @@
 var test   = require('tape');
 var server = require("../server.js");
-// console.log(" - - - - - - - - -> test/register.js <- - - - - - - - -");
-test("test/register.js -> Bad request to /register (should fail)", function(t) {
+var dir   = __dirname.split('/')[__dirname.split('/').length-1];
+var file  = dir + __filename.replace(__dirname, '');
+
+test(file+"Bad request to /register (should fail)", function(t) {
   var options = {
     method  : "POST",
     url     : "/register"
@@ -17,7 +19,7 @@ test("test/register.js -> Bad request to /register (should fail)", function(t) {
   });
 });
 
-test("test/register.js -> Register a new person", function(t) {
+test(file+"Register a new person", function(t) {
   var person = {
     "email"    : "anabella.tester@awesome.net",
     "password" : "PinkFluffyUnicorns"
@@ -35,7 +37,7 @@ test("test/register.js -> Register a new person", function(t) {
   });
 });
 
-test("test/register.js -> Attempt to register the same person twice", function(t) {
+test(file+"Attempt to register the same person twice", function(t) {
   var person = {
     "email"    : "anabella.tester@awesome.net",
     "password" : "PinkFluffyUnicorns"
@@ -53,7 +55,7 @@ test("test/register.js -> Attempt to register the same person twice", function(t
   });
 });
 
-test("test/register.js -> Attempt to register with short password", function(t) {
+test(file+"Attempt to register with short password", function(t) {
   var person = {
     "email"    : "another.tester@awesome.net",
     "password" : "123"
@@ -73,10 +75,10 @@ test("test/register.js -> Attempt to register with short password", function(t) 
 
 // use this while developing registration then comment out
 // as we already have a test/z_teardown.jss
-var drop = require('./z_drop');
-test("Registration Teardown", function(t) {
-  drop(function(res){
-    t.equal(res.acknowledged, true, "All Records Deleted ;-)");
-    t.end();
-  }).end();
-});
+// var drop = require('./z_drop');
+// test(file+"Registration Teardown", function(t) {
+//   drop(function(res){
+//     t.equal(res.acknowledged, true, "All Records Deleted ;-)");
+//     t.end();
+//   }).end();
+// });

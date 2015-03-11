@@ -1,12 +1,13 @@
+var JWT   = require('jsonwebtoken');
 var ES    = require('esta');
 var perma = require('perma');
-var Hoek  = require('hoek'); //
+var Hoek  = require('hoek');
 
 module.exports = function(req, reply) {
     // extract the person id from JWT
-
+    var decoded = JWT.verify(req.headers.authorization, process.env.JWT_SECRET);
     // fake it for now
-    var person = Math.floor(Math.random() * (1000000));
+    var person = decoded.person;
     var created = new Date().toISOString();
     var id = perma(person+created);
     var timer =  {

@@ -82,7 +82,7 @@ test(file + "LOGOUT", function(t) {
     // });
   });
 });
-/*
+
 test(file + "Confirm Logged out person CANNOT CREATE", function(t) {
   var timer = {
     "desc" : "This should not be permitted!"
@@ -103,7 +103,7 @@ test(file + "Confirm Logged out person CANNOT CREATE", function(t) {
     // });
   });
 });
-/*
+
 test("test/logout.js -> Confirm Logged out person CANNOT ACCESS valid TIMER", function(t) {
   var options = {
     method: "GET",
@@ -118,7 +118,7 @@ test("test/logout.js -> Confirm Logged out person CANNOT ACCESS valid TIMER", fu
     server.stop();
   });
 });
-*/
+
 
 // use this while developing registration then comment out
 // as we already have a test/z_teardown.jss

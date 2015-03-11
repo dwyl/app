@@ -14,7 +14,7 @@ module.exports = function handler(req, reply) {
     // console.log(' - - - - - - - - ');
     // lookup if the person with that email has *already* registered
     var record =  {
-      index: "people",
+      index: "time",
       type: "person",
       id: aguid(req.payload.email),
       email: req.payload.email
@@ -39,7 +39,8 @@ module.exports = function handler(req, reply) {
               Hoek.assert(res.created, 'Person NOT Registered!'); // only if DB fails!
               // console.log(' - - - - ES Res: ')
               // console.log(res);
-              // console.log(' - - - - - - - - ')
+              // console.log(' - - - - handler/register.js - new person registered: ');
+              // console.log(res);
               var token = JWT(req); // synchronous
               return reply(res).header("Authorization", token);
             });

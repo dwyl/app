@@ -1,31 +1,34 @@
 var test   = require('tape');
 var server = require("../server.js");
-var token; // used below
+var dir    = __dirname.split('/')[__dirname.split('/').length-1];
+var file   = dir + __filename.replace(__dirname, '') + " -> ";
+var token;
 
-test("POST /timer/new should FAIL when no Auth Token Sent", function(t) {
-  var options = {
-    method: "POST",
-    url: "/timer/new",
-    payload: {
-      "ct" : "fail", // we don't allow people/apps to set the created time!
-      "desc" : "its time!"
-    }
-  };
-  // server.inject lets us similate an http request
-  server.inject(options, function(response) {
-    t.equal(response.statusCode, 401, "New timer FAILS JTW Auth: "
-      + response.result.message);
-    t.end();
-    server.stop();
+test(file + "POST /timer/new should FAIL when no Auth Token Sent", function(t) {
+  var options = { method : "GET", url : "/anonymous" };
+  server.inject(options, function(res) {
+    // t.equal(res.statusCode, 200, res.result);
+    token = res.headers.authorization;
+    var options = {
+      method: "POST",
+      url: "/timer/new",
+      payload: {
+        "ct" : "fail", // we don't allow people/apps to set the created time!
+        "desc" : "its time!"
+      }
+    };
+    setTimeout(function() { // give ES a chance to index the person record
+      server.inject(options, function(response) {
+        t.equal(response.statusCode, 401, "New timer FAILS JTW Auth: "
+          + response.result.message);
+        t.end();
+        server.stop();
+      });
+    },200);
   });
 });
 
-var secret = 'NeverShareYourSecret'; // @todo use ENV var for this
-var JWT    = require('jsonwebtoken');
-var token  = JWT.sign({id:"picaboo"}, secret); // synchronous
-
-
-test("POST /timer/new should FAIL when supplied bad payload", function(t) {
+test(file + "POST /timer/new should FAIL when supplied valid token but bad payload", function(t) {
   var options = {
     method: "POST",
     url: "/timer/new",
@@ -37,6 +40,8 @@ test("POST /timer/new should FAIL when supplied bad payload", function(t) {
   };
   // server.inject lets us similate an http request
   server.inject(options, function(response) {
+    // console.log(file + " response: " )
+    // console.log(response.result)
     t.equal(response.statusCode, 400, "New timer FAILS validation: "
       + response.result.message);
     t.end();
@@ -45,7 +50,7 @@ test("POST /timer/new should FAIL when supplied bad payload", function(t) {
 });
 
 
-test("START a NEW Timer (no st sent by client)!", function(t) {
+test(file + "START a NEW Timer (no st sent by client)!", function(t) {
   var timer = {
     "desc" : "Get the Party Started!"
   }
@@ -72,9 +77,6 @@ test("START a NEW Timer (no st sent by client)!", function(t) {
       }
     };
     server.inject(options, function(res) {
-      // console.log(" - - - - - - - - ");
-      // console.dir(res.payload);
-      // console.log(" - - - - - - - - ");
       t.equal(res.statusCode, 200, "New timer retrieved!");
       t.end();
       server.stop();
@@ -82,7 +84,7 @@ test("START a NEW Timer (no st sent by client)!", function(t) {
   });
 });
 
-test("START a NEW Timer with start time!", function(t) {
+test(file + "START a NEW Timer with start time!", function(t) {
   var timer = {
     "desc" : "We're going to Ibiza!",
     "st" : new Date().toISOString()
@@ -103,3 +105,13 @@ test("START a NEW Timer with start time!", function(t) {
     // });
   });
 });
+
+// use this while developing registration then comment out
+// as we already have a test/z_teardown.jss
+// var drop = require('./z_drop');
+// test(file + "Logout Teardown", function(t) {
+//   drop(function(res){
+//     t.equal(res.acknowledged, true, "All Records Deleted ;-)");
+//     t.end();
+//   }).end();
+// });

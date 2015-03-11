@@ -1,4 +1,6 @@
 var ES = require('esta');
+var dir    = __dirname.split('/')[__dirname.split('/').length-1];
+var file   = dir + __filename.replace(__dirname, '') + " -> ";
 
 module.exports = function(req, reply) {
     // need some authentication / permissions logic here
@@ -8,6 +10,8 @@ module.exports = function(req, reply) {
         type: "timer",
         id: req.params.id
       }
+      // console.log(file + "Record to lookup: - - - - - - - - - - - - - - - - - - - - - - - -")
+      // console.log(record)
       ES.READ(record, function(res) {
         // console.log(" - - - - - - - - ");
         // console.log(res);
@@ -15,7 +19,7 @@ module.exports = function(req, reply) {
         if(res.found) {
           return reply(res);
         } else {
-          return reply('No timer found.').code(404);
+          return reply(res).code(404);
         }
       });
     // } else {
