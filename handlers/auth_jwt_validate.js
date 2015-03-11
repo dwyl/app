@@ -14,10 +14,10 @@ var validateFunc = function (decoded, request, callback) {
   //   console.log(ua + " === " +request.headers['user-agent'])
   //   return callback(null, false); // session expired
   // }
-  if(!decoded.jti) {
-    console.log(" - - - FAIL - - - sid: " + decoded.sid)
-    return callback(null, false); // session expired
-  }
+  // if(!decoded.jti) { // this will NEVER RUN!
+  //   console.log(" - - - FAIL - - - sid: " + decoded.sid)
+  //   return callback(null, false); // session expired
+  // }
   var session = {
     index : "time",
     type  : "session",
@@ -31,6 +31,7 @@ var validateFunc = function (decoded, request, callback) {
       return callback(null, true); // session is valid
     }
     else {
+      console.log("Invalid Session");
       return callback(null, false); // session expired
     }
   });
