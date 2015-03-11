@@ -35,7 +35,12 @@ Our goal is to save people time and I would argue that **timer data needs to hav
 
 _**[Conclusion required!](https://github.com/ideaq/time/issues/67)** - suggest this feature is built last in the sprint if there's time_
 
+
 ###Screens
+First partial UI sketch, keeping it as simple as possible. _To be iterated over._
+
+![First sketch](https://cloud.githubusercontent.com/assets/4185328/6601248/7717a73c-c80c-11e4-9a86-066934c90dce.jpg)
+
 _**Initial suggestion -**_ Minimal number and content of screens as follows:
 * Simple login screen, shown as default unless user is logged in already
 * Main screen:
