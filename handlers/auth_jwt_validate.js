@@ -3,9 +3,10 @@ var ES = require('esta');
 
 // bring your own validation function
 var validateFunc = function (decoded, request, callback) {
-  console.log(" - - -> handlers/auth_jwt_validate.js <- - -")
-  console.log(" - - - decoded JWT token: - - -");
+  console.log(" - - - handlers/auth_jwt_validate.js > decoded JWT token: - - -");
   console.log(decoded);
+  // console.log(" - - - request info: - - - - - -");
+  // console.log(request.info);
 
   var ua = decoded['user-agent'];   // see: https://github.com/ideaq/time/issues/62
   if(ua && ua !== request.headers['user-agent']) {
@@ -13,16 +14,16 @@ var validateFunc = function (decoded, request, callback) {
     console.log(ua + " === " +request.headers['user-agent'])
     return callback(null, false); // session expired
   }
-  if(!decoded.sid) {
+  if(!decoded.jti) {
     console.log(" - - - FAIL - - - sid: " + decoded.sid)
     return callback(null, false); // session expired
   }
   var session = {
     index : "time",
     type  : "session",
-    id    : decoded.sid  // use SESSION ID as key for sessions
-  }
-
+    id    : decoded.jti  // use SESSION ID as key for sessions
+  } // jti? wtf? >> http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html#jtiDef
+  console.log(" > > > Attempt to READ: " +session.id)
   ES.READ(session, function(res){
     console.log(" - - - session: - - -");
     console.log(res);
@@ -33,17 +34,6 @@ var validateFunc = function (decoded, request, callback) {
       return callback(null, false); // session expired
     }
   });
-  // console.log(" - - - request info: - - - - - -");
-  // console.log(request.info);
-  // console.log(" - - - user agent: " + request.headers['user-agent']);
-
-
-    // do your checks to see if the person is valid
-    // if (!people[decoded.id]) {
-    //   return callback(null, false);
-    // }
-    // else {
-    // }
 };
 
 module.exports = validateFunc
