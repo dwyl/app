@@ -67,7 +67,7 @@ test(file + "LOGOUT", function(t) {
     // var T = JSON.parse(res.payload);
     console.log(file + " - - - - - - - - - - - - /logout res:");
     console.log(res.result);
-    t.equal(res.statusCode, 200, "New timer started! ");
+    t.equal(res.statusCode, 200, "/logout worked");
 
     var ses = { "index":"time", "type":"session", "id":res.result._id }
     ES.READ(ses, function(record){
