@@ -5,6 +5,7 @@ module.exports = function handler(req, reply) {
     // console.log(' - - - LOGIN creds: ')
     // console.log(req.auth)
     // console.log(' - - - - - - - ')
-    var token = JWT(req); // synchronous
-    return reply('You Logged in!').header("Authorization", token);
+    JWT(req, function(token, esres){
+      return reply(esres).header("Authorization", token);
+    }); // synchronous
 }

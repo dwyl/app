@@ -46,7 +46,7 @@ test(file + "Create a new person and log in", function(t) {
         authorization : authHeader
       }
     };
-    setTimeout(function() { // give ES a chance to index the person record
+    // setTimeout(function() { // give ES a chance to index the person record
       server.inject(options2, function(res) {
         // console.log(file + " - - - - - - - - - - - - /login res");
         // console.dir(res.payload); // auth header
@@ -55,7 +55,7 @@ test(file + "Create a new person and log in", function(t) {
         t.end();
         server.stop();
       });
-    },200);
+    // },200);
 
   });
 });

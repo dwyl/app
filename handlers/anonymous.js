@@ -2,6 +2,7 @@
 var JWT = require('../lib/auth_jwt_sign.js');
 // export single function (not object.handler!)
 module.exports = function handler(req, reply) {
-    var token = JWT(req); // synchronous
-    return reply('Welcome Anonymous!').header("Authorization", token);
+  JWT(req, function(token, esres){
+    return reply(esres).header("Authorization", token);
+  }); // Asynchronous
 }

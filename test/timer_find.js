@@ -13,13 +13,13 @@ test(file + "GET timer /timer/1 (invalid timer id) should return 404", function(
       url: "/timer/1",
       headers : { authorization : token }
     };
-    setTimeout(function() { // give ES a chance to index the person record
+    // setTimeout(function() { // give ES a chance to index the person record
       server.inject(options, function(response) {
         console.log(response.payload);
         t.equal(response.statusCode, 404, "Record did not exist, as expected");
         t.end();
         server.stop();
       });
-    },500);
+    // },500);
   });
 });

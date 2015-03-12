@@ -47,7 +47,7 @@ test(file + "Anonymous people can create timers!", function(t) {
       headers : { authorization : token }
     };
     // server.inject lets us similate an http request
-    setTimeout(function() { // give ES a chance to index the session record
+    // setTimeout(function() { // give ES a chance to index the session record
       server.inject(options, function(res) {
         var T = JSON.parse(res.payload);
         // console.log(" - - - - - test/anonymous.js -> /timer/new res - - - - - ")
@@ -56,7 +56,7 @@ test(file + "Anonymous people can create timers!", function(t) {
         t.end();
         server.stop();
       });
-    }, 500);
+    // }, 500);
 
   });
 

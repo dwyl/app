@@ -31,14 +31,14 @@ test(file + "/register + login new person and log in", function(t) {
       payload: timer,
       headers : { authorization : token }
     };
-    setTimeout(function() { // give the session record time to propagate in Cluster
+    // setTimeout(function() { // give the session record time to propagate in Cluster
       server.inject(options, function(res) {
         var T = JSON.parse(res.payload);
         t.equal(res.statusCode, 200, "New timer started! " + T.st);
         t.end();
         server.stop();
       });
-    }, 500);
+    // }, 500);
   });
 });
 

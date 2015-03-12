@@ -1,6 +1,6 @@
 {
   "name": "atimer",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "Track any time-based activity",
   "main": "index.js",
   "scripts": {
