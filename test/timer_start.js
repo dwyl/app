@@ -20,15 +20,15 @@ test(file + "POST /timer/new should FAIL when no Auth Token Sent", function(t) {
     // setTimeout(function() { // give ES a chance to index the person record
       server.inject(options, function(response) {
         t.equal(response.statusCode, 401, "New timer FAILS JTW Auth: "
-          + response.result.message);
+          + response.result.message+'\n');
         t.end();
         server.stop();
       });
     // },500);
   });
 });
-
-test(file + "POST /timer/new should FAIL when supplied valid token but bad payload", function(t) {
+var JWT  = require('jsonwebtoken'); // https://github.com/docdis/learn-json-web-tokens
+test(file + "POST /timer/new should FAIL when supplied VALID token but bad payload", function(t) {
   var options = {
     method: "POST",
     url: "/timer/new",
@@ -38,12 +38,16 @@ test(file + "POST /timer/new should FAIL when supplied valid token but bad paylo
     },
     headers : { authorization : token }
   };
+  var decoded = JWT.verify(token, process.env.JWT_SECRET);
+  console.log(file + " - - - - - - - - - - POST /timer/new VALID decoded token:")
+  console.log(decoded);
+  console.log("     ") // blank line
   // server.inject lets us similate an http request
   server.inject(options, function(response) {
     // console.log(file + " response: " )
     // console.log(response.result)
     t.equal(response.statusCode, 400, "New timer FAILS validation: "
-      + response.result.message);
+      + response.result.message +'\n');
     t.end();
     server.stop();
   });
@@ -77,7 +81,7 @@ test(file + "START a NEW Timer (no st sent by client)!", function(t) {
       }
     };
     server.inject(options, function(res) {
-      t.equal(res.statusCode, 200, "New timer retrieved!");
+      t.equal(res.statusCode, 200, "New timer retrieved!"+'\n');
       t.end();
       server.stop();
     });
@@ -99,7 +103,7 @@ test(file + "START a NEW Timer with start time!", function(t) {
   // server.inject lets us similate an http request
   server.inject(options, function(res) {
     var T = JSON.parse(res.payload);
-    t.equal(res.statusCode, 200, "New timer started! " + T.st);
+    t.equal(res.statusCode, 200, "New timer started! " + T.st+'\n');
       t.end();
       server.stop();
     // });
