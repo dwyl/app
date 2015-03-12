@@ -50,7 +50,7 @@ test(file + "Anonymous people can create timers!", function(t) {
     // setTimeout(function() { // give ES a chance to index the session record
       server.inject(options, function(res) {
         var T = JSON.parse(res.payload);
-        // console.log(" - - - - - test/anonymous.js -> /timer/new res - - - - - ")
+        // console.log(file + " - - - - - /timer/new res - - - - - ")
         // console.log(res.payload);
         t.equal(res.statusCode, 200, "New timer started! " + T.st);
         t.end();

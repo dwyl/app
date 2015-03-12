@@ -40,13 +40,13 @@ server.register([ {register: Basic}, {register: AuthJWT} ], function (err) {
   //   console.log(err);
   // }
   server.auth.strategy('basic', 'basic', {
-    validateFunc: require('./handlers/auth_basic_validate.js')
+    validateFunc: require('./lib/auth_basic_validate.js')
   });
   // required means this is the default auth for all routes
   // see: http://hapijs.com/tutorials/auth
   server.auth.strategy('jwt', 'jwt', 'required',  {
     key: secret,
-    validateFunc: require('./handlers/auth_jwt_validate.js')
+    validateFunc: require('./lib/auth_jwt_validate.js')
   });
   server.route(routes);
 });
