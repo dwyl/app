@@ -7,7 +7,7 @@ var record =  {
   index: "time",
   type: "timer",
   id: Math.floor(Math.random() * (1000000)),
-  start: new Date().getTime()
+  start: new Date().toISOString()
 }
 
 var rec = {}; // make a copy of rec for later.
@@ -64,6 +64,37 @@ test("UPDATE a record", function(t) {
     });
   });
 });
+
+var aguid = require('aguid');
+
+var session =  {
+  index: "time",
+  type: "session",
+  id: aguid(),
+  start: new Date().toISOString(),
+  ct: new Date().toISOString(),
+  person: "anonymous"
+}
+
+var rec2 = {}; // make a copy of rec for later.
+for(var key in session) {
+  if(session.hasOwnProperty(key)) {
+    rec2[key] = session[key];
+  }
+}
+
+test("CREATE & READ a SESSION record", function(t) {
+  ES.CREATE(session, function(result) {
+    console.log(result);
+    ES.READ(rec2, function(result) {
+      // console.log(result);
+      t.equal(result._source.start, rec2.start, "Record created: "+result._source.start);
+      t.end();
+    });
+  });
+});
+
+
 
 process.on('uncaughtException', function(err) {
   console.log('Database FAIL ... ' + err);
