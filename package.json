@@ -1,6 +1,6 @@
 {
   "name": "atimer",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "Track any time-based activity",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "coverage": "./node_modules/.bin/istanbul cover ./node_modules/tape/bin/tape ./test/*.js | node_modules/tap-spec/bin/cmd.js && ./node_modules/.bin/istanbul check-coverage --statements 100 --functions 100 --lines 100 --branches 100",
     "jshint": "./node_modules/jshint/bin/jshint -c .jshintrc --exclude-path .gitignore .",
     "start": "node server.js",
-    "test": "node ./node_modules/tape/bin/tape ./test/*.js",
+    "test": "node ./node_modules/tape/bin/tape ./test/*.js | node_modules/tap-spec/bin/cmd.js",
     "spec": "node ./node_modules/tape/bin/tape ./test/*.js | node_modules/tap-spec/bin/cmd.js"
 
   },
@@ -34,7 +34,7 @@
     "esta": "^3.0.1",
     "hapi": "^8.2.0",
     "hapi-auth-basic": "^2.0.0",
-    "hapi-auth-jwt2": "^3.0.0",
+    "hapi-auth-jwt2": "^3.0.1",
     "hoek": "^2.11.0",
     "joi": "^6.0.0",
     "jsonwebtoken": "^4.1.0",
