@@ -39,7 +39,7 @@ test(file + "/register + login new person and log in", function(t) {
       payload: timer,
       headers : { authorization : token }
     };
-    // setTimeout(function() { // give the session record time to propagate in Cluster
+    setTimeout(function() { // give the session record time to propagate in Cluster
       server.inject(options, function(res) {
         console.log(file + " - - - - - - - - - - /timer/new res:")
         console.log(res.payload);
@@ -50,7 +50,7 @@ test(file + "/register + login new person and log in", function(t) {
         t.end();
         server.stop();
       });
-    // }, 500);
+    }, process.env.TRAVIS_TIMEOUT || 1);
   });
 });
 

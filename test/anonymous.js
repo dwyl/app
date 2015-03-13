@@ -35,7 +35,7 @@ test(file + "Anonymous people can create timers!", function(t) {
   };
   server.inject(options, function(res) {
     console.log(res.result);
-    t.equal(res.statusCode, 200, " + Created = "+res.result.created);
+    t.equal(res.statusCode, 200, "Session Created = "+res.result.created);
     var token = res.headers.authorization;
     // use the token to start a timer:
     var decoded = JWT.verify(token, process.env.JWT_SECRET);
@@ -52,8 +52,10 @@ test(file + "Anonymous people can create timers!", function(t) {
       payload: timer,
       headers : { authorization : token }
     };
+    console.log(file + "options: ");
+    console.log(options);
     // server.inject lets us similate an http request
-    // setTimeout(function() { // give ES a chance to index the session record
+    setTimeout(function() { // give (TRAVIS) ES a chance to index the session record
       server.inject(options, function(res) {
         var T = JSON.parse(res.payload);
         console.log(file + " - - - - - /timer/new res - - - - - ")
@@ -63,7 +65,7 @@ test(file + "Anonymous people can create timers!", function(t) {
         t.end();
         server.stop();
       });
-    // }, 500);
+    }, process.env.TRAVIS_TIMEOUT || 1);
 
   });
 

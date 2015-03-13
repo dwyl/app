@@ -28,7 +28,7 @@ test(file + "GET timer /timer/1 (invalid timer id) should return 404", function(
     console.log(file + " - - - - - - - - - - decoded token:")
     console.log(decoded);
     console.log("     ") // blank line
-    // setTimeout(function() { // give ES a chance to index the person record
+    setTimeout(function() { // give (TRAVIS!!!) ES a chance to index the session record
       server.inject(options, function(response) {
         console.log(response.payload);
         // I think this should be a 404 error, but for now the auth plugin gives 401.
@@ -36,6 +36,6 @@ test(file + "GET timer /timer/1 (invalid timer id) should return 404", function(
         t.end();
         server.stop();
       });
-    // },500);
+    }, process.env.TRAVIS_TIMEOUT || 1);
   });
 });

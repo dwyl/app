@@ -17,14 +17,14 @@ test(file + "POST /timer/new should FAIL when no Auth Token Sent", function(t) {
         "desc" : "its time!"
       }
     };
-    // setTimeout(function() { // give ES a chance to index the person record
+    setTimeout(function() { // give (Travis!) ES a chance to index the person record
       server.inject(options, function(response) {
         t.equal(response.statusCode, 401, "New timer FAILS JTW Auth: "
           + response.result.message+'\n');
         t.end();
         server.stop();
       });
-    // },500);
+    }, process.env.TRAVIS_TIMEOUT || 1);
   });
 });
 var JWT  = require('jsonwebtoken'); // https://github.com/docdis/learn-json-web-tokens

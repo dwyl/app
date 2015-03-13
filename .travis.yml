@@ -4,4 +4,4 @@ node_js:
 services:
   - elasticsearch
 env:
-  - ES_HOST="127.0.0.1" ES_PORT=9200 JWT_SECRET="EverythingIsAwesome"
+  - ES_HOST="127.0.0.1" ES_PORT=9200 JWT_SECRET="EverythingIsAwesome" TRAVIS_TIMEOUT=3000
