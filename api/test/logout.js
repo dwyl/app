@@ -1,7 +1,7 @@
 // Logout https://github.com/ideaq/time/issues/65
 var ES     = require('esta');
 var test   = require('tape');
-var server = require("../server.js");
+var server = require("../../app.js");
 var dir    = __dirname.split('/')[__dirname.split('/').length-1];
 var file   = dir + __filename.replace(__dirname, '') + " -> ";
 var token;   // used below

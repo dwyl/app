@@ -49,6 +49,15 @@ export JWT_SECRET="NeverShareYourSecret"
 See [**.travis.yml**](https://github.com/ideaq/time/blob/master/.travis.yml)
 for [Continuous integration](http://en.wikipedia.org/wiki/Continuous_integration) settings.
 
+### Use Vagrant to Run ElasticSearch on your Local Machine
+
+```sh
+vagrant up
+vagrant ssh
+sudo service elasticsearch start
+```
+
+
 ### No Registration Required
 
 Try without registering: https://github.com/ideaq/time/issues/58
