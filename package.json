@@ -1,6 +1,6 @@
 {
   "name": "atimer",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "Track any time-based activity",
   "main": "index.js",
   "scripts": {
@@ -34,7 +34,7 @@
     "esta": "^3.0.1",
     "hapi": "^8.2.0",
     "hapi-auth-basic": "^2.0.0",
-    "hapi-auth-jwt2": "^3.0.1",
+    "hapi-auth-jwt2": "^3.1.1",
     "hoek": "^2.11.0",
     "joi": "^6.0.0",
     "jsonwebtoken": "^4.1.0",
