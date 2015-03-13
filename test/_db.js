@@ -1,5 +1,13 @@
 // This "Test" Just checks we are able to connect to ElasticSearch
 // if we do not have a database to store records this app is useless...
+var dir   = __dirname.split('/')[__dirname.split('/').length-1];
+var file  = dir + __filename.replace(__dirname, '') + " -> ";
+console.log(" - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
+console.log(file + " process.env")
+console.log(process.env)
+console.log(" - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
+
+
 var ES = require('esta');
 var test = require('tape');
 var drop = require('./z_drop');

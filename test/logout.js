@@ -50,7 +50,7 @@ test(file + "/register + login new person and log in", function(t) {
         t.end();
         server.stop();
       });
-    }, process.env.TRAVIS_TIMEOUT || 1);
+    }, process.env.TIMEOUT || 1);
   });
 });
 
