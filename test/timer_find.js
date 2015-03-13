@@ -36,6 +36,6 @@ test(file + "GET timer /timer/1 (invalid timer id) should return 404", function(
         t.end();
         server.stop();
       });
-    }, process.env.TRAVIS_TIMEOUT || 1);
+    }, process.env.TIMEOUT || 1);
   });
 });

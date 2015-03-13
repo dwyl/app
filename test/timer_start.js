@@ -24,7 +24,7 @@ test(file + "POST /timer/new should FAIL when no Auth Token Sent", function(t) {
         t.end();
         server.stop();
       });
-    }, process.env.TRAVIS_TIMEOUT || 1);
+    }, process.env.TIMEOUT || 1);
   });
 });
 var JWT  = require('jsonwebtoken'); // https://github.com/docdis/learn-json-web-tokens

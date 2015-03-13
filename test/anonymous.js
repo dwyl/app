@@ -65,7 +65,7 @@ test(file + "Anonymous people can create timers!", function(t) {
         t.end();
         server.stop();
       });
-    }, process.env.TRAVIS_TIMEOUT || 1);
+    }, process.env.TIMEOUT || 1);
 
   });
 

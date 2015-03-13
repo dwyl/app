@@ -2,6 +2,14 @@
 // if we do not have a database to store records this app is useless...
 var ES = require('esta');
 var test = require('tape');
+var drop = require('./z_drop');
+test("Teardown", function(t) {
+  drop(function(res){
+    t.equal(res.acknowledged, true, "All Records Deleted");
+    t.end();
+  }).end();
+});
+
 
 var record =  {
   index: "time",
