@@ -84,11 +84,12 @@ for(var key in session) {
 }
 
 test("CREATE & READ a SESSION record", function(t) {
-  ES.CREATE(session, function(result) {
-    console.log(result);
-    ES.READ(rec2, function(result) {
-      // console.log(result);
-      t.equal(result._source.start, rec2.start, "Record created: "+result._source.start);
+  ES.CREATE(session, function(result2) {
+    console.log(result2);
+    ES.READ(rec2, function(result3) {
+      console.log("Session Created:");
+      console.log(result3);
+      t.equal(result3._source.start, rec2.start, "Record created: "+result3._source.start);
       t.end();
     });
   });

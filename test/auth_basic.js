@@ -3,7 +3,7 @@ var server = require("../server.js");
 var dir    = __dirname.split('/')[__dirname.split('/').length-1];
 var file   = dir + __filename.replace(__dirname, '') + " -> ";
 // console.log(" - - - - - - - - -> test/auth_basic.js <- - - - - - - - -");
-test(test + "POST /login 401 for un-registered person", function(t) {
+test(file + "POST /login 401 for un-registered person", function(t) {
   var email      = "unregistered@awesome.io";
   var password   = "PinkFluffyUnicorns";
   var authHeader = "Basic " + (new Buffer(email + ':' + password, 'utf8')).toString('base64');
