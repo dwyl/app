@@ -1,8 +1,3 @@
-module.exports = {
-  handler: function(req, reply) {
-    // console.log(req);
-    // need to define exactly what the API should return on home page.
-    // e.g: please register at timerzzz.com
-    reply('Welcome to Timer Land!');
-  }
+module.exports = function(req, reply) {
+  reply('Welcome to Timer Land!'); // to be improved: http://git.io/pHTs
 }

@@ -1,6 +1,7 @@
 language: node_js
 node_js:
   - 0.10
-  - 0.12
 services:
   - elasticsearch
+env:
+  - ES_HOST="127.0.0.1" ES_PORT=9200 JWT_SECRET="EverythingIsAwesome!"
