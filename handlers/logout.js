@@ -14,7 +14,7 @@ module.exports = function logout(req, reply) {
       ended : new Date().toISOString()
     }
 
-    console.log(file + "Attempt to UPDATE Session: " +session.id)
+    // console.log(file + "Attempt to UPDATE Session: " +session.id)
     ES.UPDATE(session, function(res){
       // console.log(file + "session: - - -");
       // console.log(res);

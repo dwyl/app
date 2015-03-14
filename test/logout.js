@@ -12,7 +12,7 @@ var JWT  = require('jsonwebtoken'); // https://github.com/docdis/learn-json-web-
 
 test(file + "/register + login new person and log in", function(t) {
   var email      = "a"+(Math.floor(Math.random() * 6) + 1) + "@awesome.net";
-  console.log(file + " email address to register: "+email);
+  // console.log(file + " email address to register: "+email);
   var password   = "PinkFluffyUnicorns";
   var options = {
     method  : "POST",
@@ -26,9 +26,9 @@ test(file + "/register + login new person and log in", function(t) {
     // console.log(res.headers.authorization);
     token = res.headers.authorization
     var decoded = JWT.verify(token, process.env.JWT_SECRET);
-    console.log(file + " - - - - - - - - - - decoded token:")
-    console.log(decoded);
-    console.log("     ") // blank line
+    // console.log(file + " - - - - - - - - - - decoded token:")
+    // console.log(decoded);
+    // console.log("     ") // blank line
     t.ok(token.length > 50, "Auth Token was set");
     var timer = {
       "desc" : "Everything is Awesome! http://youtu.be/81QMiGhIymU"
@@ -41,9 +41,9 @@ test(file + "/register + login new person and log in", function(t) {
     };
     setTimeout(function() { // give the session record time to propagate in Cluster
       server.inject(options, function(res) {
-        console.log(file + " - - - - - - - - - - /timer/new res:")
-        console.log(res.payload);
-        console.log("     ") // blank line
+        // console.log(file + " - - - - - - - - - - /timer/new res:")
+        // console.log(res.payload);
+        // console.log("     ") // blank line
 
         var T = JSON.parse(res.payload);
         t.equal(res.statusCode, 200, "New timer started! " + T.st);
@@ -65,16 +65,16 @@ test(file + "LOGOUT", function(t) {
   // server.inject lets us similate an http request
   server.inject(options, function(res) {
     // var T = JSON.parse(res.payload);
-    console.log(file + " - - - - - - - - - - - - /logout res:");
-    console.log(res.result);
+    // console.log(file + " - - - - - - - - - - - - /logout res:");
+    // console.log(res.result);
     t.equal(res.statusCode, 200, "/logout worked");
 
     var ses = { "index":"time", "type":"session", "id":res.result._id }
     ES.READ(ses, function(record){
-      console.log("   ") // blank line
-      console.log(file + " - - - - - - - - - - - - ");
-      console.log(record._source);
-      console.log("   ") // blank line
+      // console.log("   ") // blank line
+      // console.log(file + " - - - - - - - - - - - - ");
+      // console.log(record._source);
+      // console.log("   ") // blank line
 
       // t.end();
       // server.stop();
@@ -86,9 +86,9 @@ test(file + "LOGOUT", function(t) {
       };
       // server.inject lets us similate an http request
       server.inject(options, function(res) {
-        console.log(file + " - - - - - - - - - - - - ");
-        console.log(res.result);
-        console.log("   ") // blank line
+        // console.log(file + " - - - - - - - - - - - - ");
+        // console.log(res.result);
+        // console.log("   ") // blank line
 
         t.equal(res.statusCode, 401, "Cannot create after logout");
           t.end();
@@ -112,9 +112,9 @@ test(file + "Confirm Logged out person CANNOT CREATE", function(t) {
   };
   // server.inject lets us similate an http request
   server.inject(options, function(res) {
-    console.log(file + " - - - - - - - - - - - - /timer/new res (should be 401 cause we logged out!)");
-    console.log(res.result);
-    console.log("   ") // blank line
+    // console.log(file + " - - - - - - - - - - - - /timer/new res (should be 401 cause we logged out!)");
+    // console.log(res.result);
+    // console.log("   ") // blank line
     t.equal(res.statusCode, 401, "New timer started! ");
       t.end();
       server.stop();
@@ -130,8 +130,8 @@ test("test/logout.js -> /timer/:id ... Confirm Logged out person CANNOT ACCESS v
   };
   // server.inject lets us similate an http request
   server.inject(options, function(response) {
-    console.log(file + " - - - - - - - - - - - - /timer/id res (should be 401 ... logged out!)");
-    console.log(response.result);
+    // console.log(file + " - - - - - - - - - - - - /timer/id res (should be 401 ... logged out!)");
+    // console.log(response.result);
     t.equal(response.statusCode, 401, "Invalid JWT (person logged out)");
     t.end();
     server.stop();

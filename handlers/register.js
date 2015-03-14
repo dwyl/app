@@ -39,8 +39,8 @@ module.exports = function handler(req, reply) {
               Hoek.assert(res.created, 'Person NOT Registered!'); // only if DB fails!
               // console.log(' - - - - ES Res: ')
               // console.log(res);
-              console.log('handler/register.js -> new person registered: ');
-              console.log(res);
+              // console.log('handler/register.js -> new person registered: ');
+              // console.log(res);
               JWT(req, function(token, esres){
                 return reply(esres).header("Authorization", token);
               }); // Asynchronous

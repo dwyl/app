@@ -1,11 +1,11 @@
 // This "Test" Just checks we are able to connect to ElasticSearch
 // if we do not have a database to store records this app is useless...
-var dir   = __dirname.split('/')[__dirname.split('/').length-1];
-var file  = dir + __filename.replace(__dirname, '') + " -> ";
-console.log(" - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
-console.log(file + " process.env")
-console.log(process.env)
-console.log(" - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
+// var dir   = __dirname.split('/')[__dirname.split('/').length-1];
+// var file  = dir + __filename.replace(__dirname, '') + " -> ";
+// console.log(" - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
+// console.log(file + " process.env")
+// console.log(process.env)
+// console.log(" - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
 
 
 var ES = require('esta');
@@ -101,10 +101,10 @@ for(var key in session) {
 
 test("CREATE & READ a SESSION record", function(t) {
   ES.CREATE(session, function(result2) {
-    console.log(result2);
+    // console.log(result2);
     ES.READ(rec2, function(result3) {
-      console.log("Session Created:");
-      console.log(result3);
+      // console.log("Session Created:");
+      // console.log(result3);
       t.equal(result3._source.start, rec2.start, "Record created: "+result3._source.start);
       t.end();
     });

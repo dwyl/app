@@ -24,13 +24,13 @@ test(file + "GET timer /timer/1 (invalid timer id) should return 404", function(
       url: "/timer/1",
       headers : { authorization : token }
     };
-    var decoded = JWT.verify(token, process.env.JWT_SECRET);
-    console.log(file + " - - - - - - - - - - decoded token:")
-    console.log(decoded);
-    console.log("     ") // blank line
+    // var decoded = JWT.verify(token, process.env.JWT_SECRET);
+    // console.log(file + " - - - - - - - - - - decoded token:")
+    // console.log(decoded);
+    // console.log("     ") // blank line
     setTimeout(function() { // give (TRAVIS!!!) ES a chance to index the session record
       server.inject(options, function(response) {
-        console.log(response.payload);
+        // console.log(response.payload);
         // I think this should be a 404 error, but for now the auth plugin gives 401.
         t.equal(response.statusCode, 404, "Record did not exist, as expected");
         t.end();

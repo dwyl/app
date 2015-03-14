@@ -34,14 +34,14 @@ test(file + "Anonymous people can create timers!", function(t) {
     url     : "/anonymous"
   };
   server.inject(options, function(res) {
-    console.log(res.result);
+    // console.log(res.result);
     t.equal(res.statusCode, 200, "Session Created = "+res.result.created);
     var token = res.headers.authorization;
     // use the token to start a timer:
-    var decoded = JWT.verify(token, process.env.JWT_SECRET);
-    console.log(file + " - - - - - - - - - - decoded token:")
-    console.log(decoded);
-    console.log("     ") // blank line
+    // var decoded = JWT.verify(token, process.env.JWT_SECRET);
+    // console.log(file + " - - - - - - - - - - decoded token:")
+    // console.log(decoded);
+    // console.log("     ") // blank line
     var timer = {
       "desc" : "Anonymous people deserve a voice too!",
       "st" : new Date().toISOString()
@@ -52,15 +52,15 @@ test(file + "Anonymous people can create timers!", function(t) {
       payload: timer,
       headers : { authorization : token }
     };
-    console.log(file + "options: ");
-    console.log(options);
+    // console.log(file + "options: ");
+    // console.log(options);
     // server.inject lets us similate an http request
     setTimeout(function() { // give (TRAVIS) ES a chance to index the session record
       server.inject(options, function(res) {
         var T = JSON.parse(res.payload);
-        console.log(file + " "+options.method + " " + options.url)
-        console.log(res.payload);
-        console.log("     ") // blank line
+        // console.log(file + " "+options.method + " " + options.url)
+        // console.log(res.payload);
+        // console.log("     ") // blank line
         t.equal(res.statusCode, 200, "New timer started! " + T.st);
         t.end();
         server.stop();

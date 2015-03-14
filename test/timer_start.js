@@ -38,10 +38,10 @@ test(file + "POST /timer/new should FAIL when supplied VALID token but bad paylo
     },
     headers : { authorization : token }
   };
-  var decoded = JWT.verify(token, process.env.JWT_SECRET);
-  console.log(file + " - - - - - - - - - - POST /timer/new VALID decoded token:")
-  console.log(decoded);
-  console.log("     ") // blank line
+  // var decoded = JWT.verify(token, process.env.JWT_SECRET);
+  // console.log(file + " - - - - - - - - - - POST /timer/new VALID decoded token:")
+  // console.log(decoded);
+  // console.log("     ") // blank line
   // server.inject lets us similate an http request
   server.inject(options, function(response) {
     // console.log(file + " response: " )
