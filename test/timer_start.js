@@ -24,7 +24,7 @@ test(file + "POST /timer/new should FAIL when no Auth Token Sent", function(t) {
     });
   });
 });
-var JWT  = require('jsonwebtoken'); // https://github.com/docdis/learn-json-web-tokens
+
 test(file + "POST /timer/new should FAIL when supplied VALID token but bad payload", function(t) {
   var options = {
     method: "POST",

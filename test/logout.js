@@ -7,7 +7,7 @@ var file   = dir + __filename.replace(__dirname, '') + " -> ";
 var token;   // used below
 var timerid;
 
-test(file + "/register + login new person and log in", function(t) {
+test(file + "/register + login new person", function(t) {
   var email      = "a"+(Math.floor(Math.random() * 6) + 1) + "@awesome.net";
   var password   = "PinkFluffyUnicorns";
   var options = {

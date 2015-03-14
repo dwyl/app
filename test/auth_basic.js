@@ -42,11 +42,3 @@ test(file + "Create a new person and log in", function(t) {
     });
   });
 });
-
-var drop = require('./z_drop');
-test(file + "Teardown", function(t) {
-  drop(function(res){
-    t.equal(res.acknowledged, true, "All Records Deleted ;-)");
-    t.end();
-  }).end();
-});

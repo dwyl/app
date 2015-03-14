@@ -14,18 +14,6 @@ test(file + "GET / Warm Up the Engine", function(t) {
   });
 });
 
-test(file + "GET /anonymous ", function(t) {
-  var options    = {
-    method  : "GET",
-    url     : "/anonymous"
-  };
-  server.inject(options, function(res) {
-    t.equal(res.statusCode, 200, res.result);
-    t.end();
-    server.stop();
-  });
-});
-
 test(file + "Anonymous people can create timers!", function(t) {
   var options    = {
     method  : "GET",
