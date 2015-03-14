@@ -6,33 +6,33 @@ var aguid  = require('aguid'); // import the module we are using to create (GU)I
 var JWT    = require('../lib/auth_jwt_sign.js'); // used to sign our content
 
 module.exports = function handler(req, reply) {
-    var person =  {
-      index: "time",
-      type: "person",
-      id: aguid(req.payload.email),
-      email: req.payload.email
+  var person =  {
+    index: "time",
+    type: "person",
+    id: aguid(req.payload.email),
+    email: req.payload.email
+  }
+  ES.READ(person, function(res) {
+    if(res.found) { // return Boom 400 user already registered!
+      return reply(Boom.badRequest('Email address already registered'));
     }
-    ES.READ(person, function(res) {
-      if(res.found) { // return Boom 400 user already registered!
-        return reply(Boom.badRequest('Email address already registered'));
-      }
-      else {// person has not registered
-        bcrypt.genSalt(12, function(err, salt) { //encrypt the password
-          bcrypt.hash(req.payload.password, salt, function(err, hash) {
+    else {// person has not registered
+      bcrypt.genSalt(12, function(err, salt) { //encrypt the password
+        bcrypt.hash(req.payload.password, salt, function(err, hash) {
 
-            person.password = hash;
+          person.password = hash;
 
-            ES.CREATE(person, function (res) {
+          ES.CREATE(person, function (res) {
 
-              Hoek.assert(res.created, 'Person NOT Registered!'); // only if DB fails!
+            Hoek.assert(res.created, 'Person NOT Registered!'); // only if DB fails!
 
-              JWT(req, function(token, esres){
-                return reply(esres).header("Authorization", token);
-              }); // Asynchronous
+            JWT(req, function(token, esres){
+              return reply(esres).header("Authorization", token);
+            }); // Asynchronous
 
-            }); // end ES.CREATE
-          }); // end bcrypt.hash
-        }); // end bcrypt.genSalt
-      }
-    });
+          }); // end ES.CREATE
+        }); // end bcrypt.hash
+      }); // end bcrypt.genSalt
+    }
+  });
 }
