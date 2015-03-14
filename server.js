@@ -24,7 +24,7 @@ var routes = [ // move routes to separate file?
   config: { auth: 'basic', handler: require('./handlers/login.js') } },
 { path: '/logout', method: 'POST',
   config: { auth: 'jwt', handler: require('./handlers/logout.js') } },
-{ path: '/timer/{id}', method: 'GET',
+{ path: '/timer/{id}', method: 'GET', // Validate {id} to prevent injection?
   config: { auth: 'jwt', handler: require('./handlers/timer_find.js') } },
 { path: '/timer/new', method: 'POST',
   config: { validate: require('./models/timer'),
