@@ -31,23 +31,22 @@ var routes = [ // move routes to separate file?
     auth: 'jwt', handler: require('./handlers/timer_start.js')
   }
 }
-  // { path: '/timer/{id}', method: 'DELETE', config: T.deleteConfig }
+
 ];
-// [ {register: Basic}, {register: AuthJWT} ]
+
 server.register([ {register: Basic}, {register: AuthJWT} ], function (err) {
-  // if(err) {
-  //   console.log(err);
-  // }
+
   server.auth.strategy('basic', 'basic', {
     validateFunc: require('./lib/auth_basic_validate.js')
   });
-  // required means this is the default auth for all routes
-  // see: http://hapijs.com/tutorials/auth
+
   server.auth.strategy('jwt', 'jwt', 'required',  {
     key: process.env.JWT_SECRET,
     validateFunc: require('./lib/auth_jwt_validate.js')
   });
+
   server.route(routes);
+
 });
 
 server.start(function() {

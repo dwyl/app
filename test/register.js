@@ -8,11 +8,7 @@ test(file+"Bad request to /register (should fail)", function(t) {
     method  : "POST",
     url     : "/register"
   };
-  // server.inject lets us similate an http request
   server.inject(options, function(res) {
-    // console.log(" - - - - - - - - - - - - ");
-    // console.dir(res.result);
-    // console.log(" - - - - - - - - - - - - ");
     t.equal(res.statusCode, 400, "No payload submitted");
     t.end();
     server.stop();
@@ -29,7 +25,6 @@ test(file+"Register a new person", function(t) {
     url     : "/register",
     payload : person
   };
-  // server.inject lets us similate an http request
   server.inject(options, function(res) {
     t.equal(res.statusCode, 200, "Person registration is succesful");
     t.end();
@@ -47,7 +42,6 @@ test(file+"Attempt to register the same person twice", function(t) {
     url     : "/register",
     payload : person
   };
-  // server.inject lets us similate an http request
   server.inject(options, function(res) {
     t.equal(res.statusCode, 400, "Person registration fails");
     t.end();
@@ -65,20 +59,9 @@ test(file+"Attempt to register with short password", function(t) {
     url     : "/register",
     payload : person
   };
-  // server.inject lets us similate an http request
   server.inject(options, function(res) {
     t.equal(res.statusCode, 400, "Longer password required");
     t.end();
     server.stop();
   });
 });
-
-// use this while developing registration then comment out
-// as we already have a test/z_teardown.jss
-// var drop = require('./z_drop');
-// test(file+"Registration Teardown", function(t) {
-//   drop(function(res){
-//     t.equal(res.acknowledged, true, "All Records Deleted ;-)");
-//     t.end();
-//   }).end();
-// });

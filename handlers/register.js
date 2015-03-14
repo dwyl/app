@@ -1,53 +1,38 @@
-// import Boom for errors
 var Boom   = require('boom'); // error handling https://github.com/hapijs/boom
-// import the module we use to access the database
-var Hoek   = require('hoek'); //
+var Hoek   = require('hoek');
 var ES     = require('esta');
-// import the module we are using to encrypt passwords
-var bcrypt = require('bcrypt');
-// import the module we are using to create (GU)IDs
-var aguid  = require('aguid');
+var bcrypt = require('bcrypt'); // import the module we are using to encrypt passwords
+var aguid  = require('aguid'); // import the module we are using to create (GU)IDs
 var JWT    = require('../lib/auth_jwt_sign.js'); // used to sign our content
-// export single function (not object.handler!)
+
 module.exports = function handler(req, reply) {
-    // console.log(req.payload);
-    // console.log(' - - - - - - - - ');
-    // lookup if the person with that email has *already* registered
     var person =  {
       index: "time",
       type: "person",
       id: aguid(req.payload.email),
       email: req.payload.email
     }
-
-    //check db for for the person
     ES.READ(person, function(res) {
-      if(res.found) {
-        // return Boom 400 user already registered!
+      if(res.found) { // return Boom 400 user already registered!
         return reply(Boom.badRequest('Email address already registered'));
       }
       else {// person has not registered
-        //encrypt the password
-        bcrypt.genSalt(12, function(err, salt) {
+        bcrypt.genSalt(12, function(err, salt) { //encrypt the password
           bcrypt.hash(req.payload.password, salt, function(err, hash) {
-            // console.log(hash); // our hashed password
-            //add the encrypted password to the record
+
             person.password = hash;
 
-            //register the new user
             ES.CREATE(person, function (res) {
+
               Hoek.assert(res.created, 'Person NOT Registered!'); // only if DB fails!
-              // console.log(' - - - - ES Res: ')
-              // console.log(res);
-              // console.log('handler/register.js -> new person registered: ');
-              // console.log(res);
+
               JWT(req, function(token, esres){
                 return reply(esres).header("Authorization", token);
               }); // Asynchronous
-            });
-          });
-        });
 
+            }); // end ES.CREATE
+          }); // end bcrypt.hash
+        }); // end bcrypt.genSalt
       }
     });
 }

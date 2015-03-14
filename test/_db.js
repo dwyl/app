@@ -1,23 +1,7 @@
 // This "Test" Just checks we are able to connect to ElasticSearch
-// if we do not have a database to store records this app is useless...
-// var dir   = __dirname.split('/')[__dirname.split('/').length-1];
-// var file  = dir + __filename.replace(__dirname, '') + " -> ";
-// console.log(" - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
-// console.log(file + " process.env")
-// console.log(process.env)
-// console.log(" - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
-
-
+// without a database to store records this app is useless...
 var ES = require('esta');
 var test = require('tape');
-var drop = require('./z_drop');
-test("Teardown", function(t) {
-  drop(function(res){
-    t.equal(res.acknowledged, true, "All Records Deleted");
-    t.end();
-  }).end();
-});
-
 
 var record =  {
   index: "time",
@@ -45,7 +29,6 @@ test("CREATE & READ a record", function(t) {
   ES.CREATE(record, function(result) {
 
     ES.READ(rec, function(result) {
-      // console.log(result);
       t.equal(result._source.start, rec.start, "Record created: "+result._source.start);
       t.end();
     });
@@ -66,16 +49,12 @@ test("UPDATE a record", function(t) {
     }
   }
   ES.CREATE(record, function(res) {
-    // if (err) throw err;
     rec.end = new Date().getTime();
     ES.UPDATE(rec, function(res) {
-      // console.log(rec);
       ES.READ(rec, function(res) {
-        // console.log(res);
         t.equal(res._source.end, rec.end, "Record was updated: "+res._source.end);
         t.equal(res._version, 2, "Version: "+res._version);
-        // console.log(result.value);
-        t.end(); // done() callback is required to end the test.
+        t.end();
       });
     });
   });
@@ -101,17 +80,12 @@ for(var key in session) {
 
 test("CREATE & READ a SESSION record", function(t) {
   ES.CREATE(session, function(result2) {
-    // console.log(result2);
     ES.READ(rec2, function(result3) {
-      // console.log("Session Created:");
-      // console.log(result3);
       t.equal(result3._source.start, rec2.start, "Record created: "+result3._source.start);
       t.end();
     });
   });
 });
-
-
 
 process.on('uncaughtException', function(err) {
   console.log('Database FAIL ... ' + err);
