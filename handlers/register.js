@@ -7,7 +7,7 @@ var JWT    = require('../lib/auth_jwt_sign.js'); // used to sign our content
 
 module.exports = function handler(req, reply) {
   var person =  {
-    index: "time",
+    index: "people",
     type: "person",
     id: aguid(req.payload.email),
     email: req.payload.email
