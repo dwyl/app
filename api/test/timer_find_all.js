@@ -17,7 +17,7 @@ test(file+ "Teardown", function(t) {
 function create(t, callback) {
   var timer = {
     "desc" : "My Amazing Timer #"+countdown,
-    "st" : new Date().toISOString()
+    "start" : new Date().toISOString()
   }
   var options = {
     method: "POST",
@@ -53,9 +53,6 @@ function finish(res, t){
   });
 }
 
-
-
-// new anonymous person
 test(file + "Register new person to create a few timers", function(t) {
   var person = {
     "email"    : "multiple.timers@awesome.net",
@@ -98,8 +95,7 @@ test(file + "GET /timer/all to list all timers", function(t) {
 test(file + "GET /timer/all should fail for Timmy no timers", function(t) {
   var person = {
     "email"    : "timmy.no.timers@awesome.net",
-    "password" : "EveryThingisAwesome",
-    "firstname": "Timmay!"
+    "password" : "EveryThingisAwesome"
   }
   var options = {
     method  : "POST",

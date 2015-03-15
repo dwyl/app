@@ -1,4 +1,4 @@
-var ES    = require('esta');
+var ES = require('esta');
 
 var validateFunc = function (decoded, request, callback) {
 

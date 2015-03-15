@@ -72,7 +72,7 @@ test(file + "START a NEW Timer (no st sent by client)!", function(t) {
 test(file + "START a NEW Timer with start time!", function(t) {
   var timer = {
     "desc" : "We're going to Ibiza!",
-    "st" : new Date().toISOString()
+    "start" : new Date().toISOString()
   }
   var options = {
     method: "POST",

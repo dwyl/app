@@ -24,7 +24,7 @@ test(file + "Anonymous people can create timers!", function(t) {
     var token = res.headers.authorization;
     var timer = {
       "desc" : "Anonymous people deserve a voice too!",
-      "st" : new Date().toISOString()
+      "start" : new Date().toISOString()
     }
     var options = {
       method: "POST",

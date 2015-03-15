@@ -14,15 +14,15 @@ module.exports = function(req, reply) {
     type: "timer",
     person: decoded.person,
     session: decoded.jti, // session id from JWT
-    ct: created,
+    created: created,
     id: id
   }
 
   for (var k in req.payload){
     timer[k] = req.payload[k]; // extract values from payload
   }
-  if(!timer.st) { // client did not define the start time
-    timer.st = created; // set it to the same as created
+  if(!timer.start) { // client did not define the start time
+    timer.start = created; // set it to the same as created
   } else {
     // allow the client to set the started time
   }

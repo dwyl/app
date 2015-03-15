@@ -1,10 +1,4 @@
 module.exports = [
-  { path: '/', method: 'GET',
-    config: {
-      auth: false,
-      handler: require('./handlers/home')
-    }
-  },
   { path: '/anonymous', method: 'GET',
     config: { auth: false, handler: require('./handlers/anonymous.js') } },
   { path: '/register', method: 'POST',
