@@ -1,8 +1,11 @@
 module.exports = [
-  { path: '/', method: 'GET',
+  { path: '/',
+    method: 'GET',
     config: {
       auth: false,
-      handler: require('./handlers/home')
+      handler: function(request, reply) {
+        reply.view("index", {fortune:"everything is awesome"});
+      }
     }
   }
 ]

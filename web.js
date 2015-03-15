@@ -1,12 +1,12 @@
 var Hapi    = require('hapi');
+var AuthJWT = require('hapi-auth-jwt2')
 var Basic   = require('hapi-auth-basic');
 var Hoek    = require('hoek');
-var AuthJWT = require('hapi-auth-jwt2')
 var Joi     = require('joi');
 var ES      = require('esta');  // https://github.com/nelsonic/esta
+var Path    = require('path');
 var port    = process.env.PORT || 1337; // heroku define port or use 1337
 var server  = new Hapi.Server();
-var Path    = require('path');
 server.connection({ port: port });
 
 server.register([ {register: Basic}, {register: AuthJWT} ], function (err) {
@@ -24,21 +24,12 @@ server.register([ {register: Basic}, {register: AuthJWT} ], function (err) {
     engines: {
         html: require('handlebars')
     },
-    path: Path.join(__dirname, 'front/views')
+    relativeTo: __dirname,
+    path: Path.join(__dirname, 'front/views'),
+    layoutPath: './views/layout',
   });
   var api    = require('./api/routes.js');
-  // var front  = require('./front/routes.js');
-  var front = [{
-    path: '/',
-    method: 'GET',
-    config: {
-      auth: false,
-      handler: function(request, reply) {
-        reply.view("index", {fortune:"everything is awesome"});
-      }
-    }
-  }]
-
+  var front  = require('./front/routes.js');
   var routes = Hoek.merge(api, front);
 
   server.route(routes);
@@ -48,6 +39,5 @@ server.register([ {register: Basic}, {register: AuthJWT} ], function (err) {
 server.start(function(){
   console.log('Now Visit: http://localhost:'+port);
 });
-
 
 module.exports = server;

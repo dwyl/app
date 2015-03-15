@@ -6,29 +6,26 @@ var Hoek  = require('hoek');
 module.exports = function(req, reply) {
   // extract the person id from JWT
   var decoded = req.auth.credentials; //JWT.verify(req.headers.authorization, process.env.JWT_SECRET);
-  var person = decoded.person;
-  var created = new Date().toISOString();
-  var id = aguid();
   var timer =  {
     index: "time",
     type: "timer",
     person: decoded.person,
     session: decoded.jti, // session id from JWT
-    created: created,
-    id: id
+    created: new Date().toISOString(),
+    id: aguid()
   }
 
   for (var k in req.payload){
     timer[k] = req.payload[k]; // extract values from payload
   }
   if(!timer.start) { // client did not define the start time
-    timer.start = created; // set it to the same as created
+    timer.start = timer.created; // set it to the same as created
   } else {
     // allow the client to set the started time
   }
 
-  ES.CREATE(timer, function(rec) {
-    Hoek.merge(rec, timer); // http://git.io/Amv6
-    reply(rec);
+  ES.CREATE(timer, function(record) {
+    Hoek.merge(record, timer); // http://git.io/Amv6
+    reply(record);
   })
 }
