@@ -16,6 +16,8 @@ module.exports = [
     config: { auth: 'jwt', handler: require('./handlers/logout.js') } },
   { path: '/timer/{id}', method: 'GET', // Validate {id} to prevent injection?
     config: { auth: 'jwt', handler: require('./handlers/timer_find.js') } },
+  { path: '/timer/all', method: 'GET', // Validate {id} to prevent injection?
+    config: { auth: 'jwt', handler: require('./handlers/timer_find_all.js') } },
   { path: '/timer/new', method: 'POST',
     config: { validate: require('../models/timer'),
       auth: 'jwt', handler: require('./handlers/timer_start.js')

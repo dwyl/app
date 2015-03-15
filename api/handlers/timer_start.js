@@ -1,18 +1,18 @@
-var JWT   = require('jsonwebtoken');
+// var JWT   = require('jsonwebtoken');
 var ES    = require('esta');
-var perma = require('perma');
+var aguid = require('aguid');
 var Hoek  = require('hoek');
 
 module.exports = function(req, reply) {
   // extract the person id from JWT
-  var decoded = JWT.verify(req.headers.authorization, process.env.JWT_SECRET);
+  var decoded = req.auth.credentials; //JWT.verify(req.headers.authorization, process.env.JWT_SECRET);
   var person = decoded.person;
   var created = new Date().toISOString();
-  var id = perma(person+created);
+  var id = aguid();
   var timer =  {
     index: "time",
     type: "timer",
-    person: person,
+    person: decoded.person,
     session: decoded.jti, // session id from JWT
     ct: created,
     id: id

@@ -1,8 +1,8 @@
 var http = require('http');
 
 var options = {
-  host:"127.0.0.1",
-  port: 9200, // use ENV var?
+  host: process.env.ES_HOST,
+  port: process.env.ES_PORT,
   path: "/_all", // DELETEs EVERYTHING!!
   method: 'DELETE',
   headers: { 'Content-Type': 'application/json' }

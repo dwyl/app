@@ -25,7 +25,9 @@ server.register([ {register: Basic}, {register: AuthJWT} ], function (err) {
 
 });
 
-server.start();
-console.log('Now Visit: http://localhost:'+port);
+server.start(function(){
+  console.log('Now Visit: http://localhost:'+port);
+});
+
 
 module.exports = server;
