@@ -35,7 +35,7 @@ _**Initial suggestion -**_ Minimal number and content of screens as follows:
 * Main screen:
   * Timer, set to 00:00 to begin with (seconds & minutes, with hours added dynamically when required)
   * Description of timer with placeholder text
-  * Log of today's stopped timers
+  * Log of today's (?) stopped timers
   * Simple login area, shown as default unless user is logged in already
 * Additional items required at this point:
   * Some way of [knowing user is logged in](https://github.com/ideaq/time/issues/85)
@@ -59,7 +59,8 @@ Some of our UI open questions _**have**_ to be answered **before the MVP** as th
 
 Some initial questions **to be answered by the MVP** also surfaced whilst putting together the UI:
 * How does the user edit the timer description? Tap to edit?
-  * How does the user edit a _past_ timer description? Especially if tapping a past timer restart it...
+  * How does the user edit a _past_ timer description? Especially if tapping a past timer restart it.
+* If the description wraps over more than one line, do we show the whole description or do we cut it off and add '...' at the end
 * Should _past_ timers shown on main page show the total time spent on that activity for a period (today or the current week for example) or just the last time the timer was used?
 * Should just today's timers be shown on the main page of the app? Or Today + Yesterday? Or the full week?
 * Should clicking on a _past_ timer on the main page [restart it](https://github.com/ideaq/time/issues/30#issuecomment-75047797)?
