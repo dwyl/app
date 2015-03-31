@@ -13,7 +13,7 @@ server.connection({ port: port });
 var routes = require('./routes.js');
 
 server.register([ {register: Basic},
-  {register: AuthJWT}, { register: lout } ], function (err) {
+  {register: AuthJWT}, { register: lout }], function (err) {
 
   server.auth.strategy('basic', 'basic', {
     validateFunc: require('./lib/auth_basic_validate.js')
@@ -25,7 +25,6 @@ server.register([ {register: Basic},
   });
 
   server.route(routes);
-
 });
 
 server.start();

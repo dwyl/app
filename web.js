@@ -5,8 +5,9 @@ var Hoek    = require('hoek');
 var Joi     = require('joi');
 var ES      = require('esta');  // https://github.com/nelsonic/esta
 var Path    = require('path');
-var port    = process.env.PORT || 1337; // heroku define port or use 1337
+var port    = process.env.PORT || 1337; // heroku define port or use 1337 1000
 var server  = new Hapi.Server();
+
 server.connection({ port: port });
 
 server.register([ {register: Basic}, {register: AuthJWT} ], function (err) {
@@ -31,13 +32,25 @@ server.register([ {register: Basic}, {register: AuthJWT} ], function (err) {
   var api    = require('./api/routes.js');
   var front  = require('./front/routes.js');
   var routes = Hoek.merge(api, front);
-
   server.route(routes);
 
 });
 
+// http://stackoverflow.com/questions/10750303
+var os = require('os');
+var interfaces = os.networkInterfaces();
+var ip = [];
+for (var k in interfaces) {
+  for (var k2 in interfaces[k]) {
+    var address = interfaces[k][k2];
+    if (address.family === 'IPv4' && !address.internal) {
+      ip.push(address.address);
+    }
+  }
+}
+
 server.start(function(){
-  console.log('Now Visit: http://localhost:'+port);
+  console.log('Now Visit: http://' + ip[0] + ':' +port);
 });
 
 module.exports = server;

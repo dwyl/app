@@ -7,8 +7,9 @@
     "api": "node ./api/server.js",
     "codeclimate": "CODECLIMATE_REPO_TOKEN=0839d00dd01047ffadfb3c56bf9c9baa0047179de582a47517e3f558ad4eafff ./node_modules/codeclimate-test-reporter/bin/codeclimate.js < ./coverage/lcov.info",
     "coverage": "./node_modules/.bin/istanbul cover ./node_modules/tape/bin/tape ./api/test/*.js | node_modules/tap-spec/bin/cmd.js && ./node_modules/.bin/istanbul check-coverage --statements 100 --functions 100 --lines 100 --branches 100",
+    "faster": "node ./node_modules/faster/bin/faster.js",
     "jshint": "./node_modules/jshint/bin/jshint -c .jshintrc --exclude-path .gitignore .",
-    "start": "node app.js",
+    "start": "node web.js",
     "test": "node ./node_modules/tape/bin/tape ./api/test/*.js | node_modules/tap-spec/bin/cmd.js",
     "spec": "node ./node_modules/tape/bin/tape ./api/test/*.js | node_modules/tap-spec/bin/cmd.js"
   },
@@ -29,21 +30,23 @@
   "homepage": "https://github.com/nelsonic/time",
   "dependencies": {
     "aguid": "^1.0.3",
-    "bcrypt": "^0.8.1",
+    "bcrypt": "^0.8.2",
     "boom": "^2.6.1",
     "esta": "^3.2.0",
     "handlebars": "^3.0.0",
-    "hapi": "^8.2.0",
+    "hapi": "^8.4.0",
     "hapi-auth-basic": "^2.0.0",
     "hapi-auth-jwt2": "^3.2.1",
     "hoek": "^2.11.0",
     "joi": "^6.0.0",
     "jsonwebtoken": "^4.1.0",
     "lout": "^6.2.1",
-    "perma": "^2.0.1"
+    "perma": "^2.0.1",
+    "sad": "^1.0.7"
   },
   "devDependencies": {
     "codeclimate-test-reporter": "0.0.4",
+    "faster": "^3.2.8",
     "istanbul": "^0.3.5",
     "jshint": "^2.5.10",
     "pre-commit": "^1.0.6",
@@ -56,6 +59,6 @@
     "codeclimate"
   ],
   "engines": {
-    "node": ">= 0.10"
+    "node": ">= 0.12"
   }
 }
