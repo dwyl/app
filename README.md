@@ -35,7 +35,7 @@ A simple way to track activities over time.
 
 > Help us build it! https://github.com/ideaq/time/issues
 
-### *Expected* Environment Variables
+### *Expected* Environment Variables˜
 
 The API server will *not* work unless these
 environment variables are set.
