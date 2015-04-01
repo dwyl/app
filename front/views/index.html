@@ -1,32 +1,54 @@
 <html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> -->
     <title>Timers Are Amazing!</title>
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.2.0/united/bootstrap.min.css"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+    <link rel="stylesheet" href="./css/mobile-first.css"/>
+
+    <!--FontAwesome-->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <!-- Adding google fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300|Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
   </head>
   <body>
-    <span id="main">01:12</span>
-    <p>{{fortune}}</p>
-    <h1>KItten!</h1>
-    <img src="http://www.randomkittengenerator.com/images/cats/rotator.php" />
 
-<style>
-body {
+    <section id="main">
+      <div class="timer-time">
+        00:02
+        <button>
+          <i class="fa fa-stop fa-lg" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="timer-desc">
+        <input placeholder="What are you timing?" type="text" autocomplete/>
+      </div>
+    </section>
 
-  /*margin: 1em 0em 0em 20%;*/
-  margin: 1em;
+    <section id="past-timers">
+      <div id="why">
+        <p>Track your time. Your past timers will appear here.</p>
+      </div>
+      <!-- <div class="timer-one-line">
+          <i class="fa fa-check-circle-o"></i>
+          <span class="timer-desc">Task 1 but a bit longer and super long so it wraps the line</span>
+          <span class="timer-time">14:21</span>
+      </div> -->
+    </section>
 
-  border-radius: 40px;
-  /*margin-left: 30px;*/
-  min-height: 100%;
-  margin-top:10px;
-
-}
-#main {
-  font-size: 5em;
-  padding: 5%;
-}
-</style>
+    <section id="login">
+      <form>
+        <div class="email fa fa-envelope-o">
+            <input type="text" required placeholder="Email Address" name="email"/>
+        </div>
+        <div class="pw fa fa-lock">
+            <input type="password" placeholder=" Password" name="password"/>
+        </div>
+        <div id="login-button">
+          <button type="submit">Save your timer</button>
+        </div>
+      </form>
+    </section>
 <!-- https://github.com/ideaq/faster -->
 
 <script src="https://rawgit.com/ideaq/faster/master/lib/client.js"></script>

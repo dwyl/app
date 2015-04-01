@@ -1,0 +1,199 @@
+/*==============================
+  GENERAL STYLES
+================================*/
+
+/*https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/*/
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body{
+  margin: 0;
+  font-family: 'Open Sans', sans-serif;
+  color: #403f3f;
+}
+
+p {
+  margin: 0;
+}
+
+/*==============================
+  Section | MAIN (current timer)
+================================*/
+#main {
+  width: 100%;
+  padding: 0.5em;
+  background: #EEE8E8;
+  text-align: center;
+}
+
+
+/*======== Timer time ========*/
+  #main .timer-time {
+    font-size: 3em;
+    display: inline-block;
+    margin: 0 auto;
+  }
+
+    .timer-time button {
+      border-radius: 50%;
+      background: #464646;
+      padding: 0.75em;
+      margin: 1em;
+      color: #f5f5f5;
+      border: 2px solid #f5f5f5;
+      position: fixed;
+      top: 1.3em;
+      right: 0.5em;
+    }
+
+/*======== Timer description ========*/
+  #main .timer-desc{
+    display: block;
+    margin: 0 auto;
+  }
+
+    #main .timer-desc input{
+      font-size: 0.9em;
+      font-family: 'Open Sans', sans-serif;
+      text-align: center;
+      background: none;
+      border:0;
+      border-bottom: 1px solid #848484;
+      border-radius: 0; /*iOS shows curves on border without this*/
+    }
+
+      #main .timer-desc input:focus{
+          outline:0;
+      }
+
+   /*Only way to change placeholder text color*/
+    #main ::-webkit-input-placeholder {
+      color: #848484;
+    }
+    #main ::-moz-placeholder {
+      color: #848484;
+    }
+
+
+/*==============================
+    Section | PAST TIMERS
+================================*/
+
+/*======== Message when there are no timers ========*/
+  #why {
+    font-size: 3em;
+    font-family: 'Open Sans Condensed', sans-serif;
+    color: #d3d3d3;
+    width: 90%;
+    margin:auto;
+  }
+
+/*======== Past timer list ========*/
+#past-timers{
+  width: 100%;
+  font-size:0.9em;
+  padding:0.7em 0.2em;
+  border-bottom: 1px solid #d3d3d3;
+  display: table;
+}
+
+  .timer-one-line{
+    display: table-row;
+  }
+
+  .timer-one-line i,
+  .timer-one-line span{
+    display: table-cell;
+    padding: 0 0.3em;
+  }
+
+    span.timer-desc{
+      text-align:left;
+    }
+
+    span.timer-time{
+      text-align:right;
+    }
+
+/*==============================
+    Section | LOGIN
+================================*/
+#login{
+  background: #323232;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+}
+
+/*======== Input fields ========*/
+  div.email, div.pw {
+    position: relative; /* fa Helps curtail overlap of fa */
+    padding: 0.4em;
+    margin: 0.8em auto;
+    border-bottom: solid 1px #fff;
+    display: block; /*default is inline*/
+    width: 90%;
+  }
+
+    .email input, .pw input{
+      font-family: 'Open Sans', sans-serif;
+      border: 0;
+      margin-left: 0.3em;
+      width: 90%;
+      background:none;
+      font-size:0.9em;
+      color:white; /*text input by user*/
+    }
+
+      .email input:focus, .pw input:focus{
+        outline: 0;
+      }
+
+  /*fa*/
+  .fa-envelope-o:before, .fa-lock:before{
+    color: #848484;
+  }
+
+/*======== Submit button ========*/
+  #login-button{
+    width: 90%; /*keeps contents in line with other login fields*/
+    text-align:right; /*aligns contents to the right*/
+    margin:auto;
+  }
+
+    #login-button button{
+      border-radius:0;
+      color: #fff;
+      font-size:0.9em;
+      border: solid 1px #fff;
+      text-transform:uppercase;
+      text-align: center;
+      background: none;
+      padding:0.5em;
+      margin: 0 0 0.7em;
+    }
+
+/*==============================
+    Section | NAV
+================================*/
+#nav{
+  background: #323232;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+}
+
+  #profile-button{
+    color: white;
+    font-size: 1.5em;
+    padding: 0.1em 0.2em;
+  }
+
+/*==============================
+    Colours
+================================*/
+/*greens: #00ca74 #01a25e #78d123 #93da4f*/
