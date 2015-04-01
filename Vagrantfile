@@ -22,8 +22,8 @@ sudo apt-get install openjdk-7-jre-headless -y
 
 ### Check http://www.elasticsearch.org/download/ for latest version of ElasticSearch and replace wget link below
 
-wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.4.2.deb
-sudo dpkg -i elasticsearch-1.4.2.deb
+wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.5.0.deb
+sudo dpkg -i elasticsearch-1.5.0.deb
 
 curl -L http://github.com/elasticsearch/elasticsearch-servicewrapper/tarball/master | tar -xz
 sudo mkdir -p /usr/local/share/elasticsearch/bin/
@@ -45,7 +45,6 @@ Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu-nodejs-server"
   config.vm.box_url = "https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
 
-  config.vm.network :forwarded_port, guest: 3000, host: 3000
   config.vm.network :forwarded_port, guest: 9200, host: 9200
   config.vm.network :forwarded_port, guest: 9300, host: 9300
   # Create a private network, which allows host-only access to the machine
