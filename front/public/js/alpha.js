@@ -1,11 +1,11 @@
 
 $(document).ready(function(){
   var t = document.getElementById('t');
+  var active; // the id of the active timer
   var counting;    // store timer interval
   var timers = {}; // store timers locally
 
-  var newtimer = function(st, callback) {
-    var start = new Date(st).toISOString();
+  var timerupsert = function(timer, callback) {
     var jwt = localStorage.getItem('jwt')
     console.log('jwt',jwt);
     $.ajax({
@@ -13,28 +13,28 @@ $(document).ready(function(){
       headers: {
         Authorization: jwt
       },
-      // beforeSend: function (req) {
-      //   req.setRequestHeader("Authorization", jwt);
-      // },
       url: "/timer/new",
-      data: { "start" : start },
+      data: timer,
       dataType: "json",
       success: function(res, status, xhr) {
         console.log(res);
-        // localStorage.setItem('person', res._id);
-        // localStorage.setItem('jwt', xhr.getResponseHeader("authorization"));
-        // alert(xhr.getResponseHeader("authorization"));
+        active = res._id;
+        timers[res._id] = res;
         callback();
       },
       error: function(xhr, err) {
-        console.log(xhr,err);
+        console.log(err);
       }
     });
   }
 
+
+
   var start = function() {
-    var st = new Date().getTime(); // - (200 * 1000);
-    newtimer(st, function(){
+    var st = new Date();
+    var timer = { start : st.toISOString() };
+    st = st.getTime(); // - (200 * 1000);
+    timerupsert(timer, function(){
       console.log("started");
     });
     // console.log("START: "+st);

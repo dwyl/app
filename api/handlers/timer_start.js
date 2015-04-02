@@ -4,8 +4,6 @@ var aguid = require('aguid');
 var Hoek  = require('hoek');
 
 module.exports = function(req, reply) {
-  // extract the person id from JWT
-  console.log("REQ",req.payload);
   var decoded = req.auth.credentials; //JWT.verify(req.headers.authorization, process.env.JWT_SECRET);
   var timer =  {
     index: "time",
