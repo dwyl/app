@@ -6,6 +6,7 @@ module.exports = {
     created: Joi.forbidden(), // don't allow people to set this!
     start:   Joi.date().iso(),
     end:     Joi.date().iso().optional(),
-    aid:     Joi.string()
+    aid:     Joi.string(),
+    session: Joi.string().optional()
   }
 }

@@ -6,6 +6,10 @@ $(document).ready(function(){
   var timers = {}; // store timers locally
 
   var timerupsert = function(timer, callback) {
+    var url = "/timer/new";
+    if(timer._id) { // need to create timer/update
+      url = "/timer/update";
+    }
     var jwt = localStorage.getItem('jwt')
     console.log('jwt',jwt);
     $.ajax({
