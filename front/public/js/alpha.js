@@ -10,14 +10,14 @@ $(document).ready(function(){
     console.log('jwt',jwt);
     $.ajax({
       type: "POST",
-      // headers: {
-      //   Authorization: jwt
-      // },
-      beforeSend: function (req) {
-        req.setRequestHeader("Authorization", jwt);
+      headers: {
+        Authorization: jwt
       },
+      // beforeSend: function (req) {
+      //   req.setRequestHeader("Authorization", jwt);
+      // },
       url: "/timer/new",
-      data: JSON.stringify({ "start" : start }),
+      data: { "start" : start },
       dataType: "json",
       success: function(res, status, xhr) {
         console.log(res);
@@ -25,6 +25,9 @@ $(document).ready(function(){
         // localStorage.setItem('jwt', xhr.getResponseHeader("authorization"));
         // alert(xhr.getResponseHeader("authorization"));
         callback();
+      },
+      error: function(xhr, err) {
+        console.log(xhr,err);
       }
     });
   }
