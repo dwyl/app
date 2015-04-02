@@ -1,11 +1,21 @@
 
 $(document).ready(function(){
   var t = document.getElementById('t');
-  var counting;
-  var timers = {};
+  var counting;    // store timer interval
+  var timers = {}; // store timers locally
+
+  var newtimer = function(st) {
+    var url = "/timer/new";
+    $.get(url, function(data){
+      console.log(data);
+    })
+  }
+
+
   var start = function() {
-    var st = new Date().getTime() - (4000 * 1000);
-    console.log("START: "+st);
+    var st = new Date().getTime(); // - (200 * 1000);
+    // newtimer(st);
+    // console.log("START: "+st);
     counting = setInterval( function() {
       var now = new Date().getTime()
       var elapsed = now - st;
@@ -14,7 +24,8 @@ $(document).ready(function(){
   }
 
   var timeformat = function(elapsed){
-    var elapsed = Math.floor(elapsed/1000);
+    var h, m, s;
+    elapsed = Math.floor(elapsed/1000);
     // timer is less than 10 seconds
     if(elapsed < 10) {
       return "00:0"+elapsed
@@ -24,34 +35,34 @@ $(document).ready(function(){
       return "00:"+elapsed
     } // 60*60 = 3600 (number of seconds in an hour)
     else if (elapsed < 3600) { // minutes
-      var minutes = Math.floor(elapsed / 60);
-      if(minutes < 10){
-        minutes = "0"+minutes;
+      m = Math.floor(elapsed / 60);
+      if(m < 10){
+        m = "0"+m;
       }
-      var seconds = elapsed % 60;
-      if(seconds < 10) {
-        seconds = "0"+seconds;
+      s = elapsed % 60;
+      if(s < 10) {
+        s = "0"+s;
       }
-      return "" + minutes +":"+seconds;
+      return "" + m +":"+s;
     } // 60*60*24 = 86400
     else { // minutes
-      var hours = Math.floor(elapsed / 3600 );
+      h = Math.floor(elapsed / 3600 );
       // if(hours < 10){
       //   hours = "0"+hours;
       // }
       // remove hours from elapsed:
-      var elapsed = elapsed - (hours * 3600);
+      elapsed = elapsed - (h * 3600);
 
-      var minutes = Math.floor(elapsed / 60);
-      if(minutes < 10){
-        minutes = "0"+minutes;
+      m = Math.floor(elapsed / 60);
+      if(m < 10){
+        m = "0"+m;
       }
-      var seconds = elapsed % 60;
-      if(seconds < 10) {
-        seconds = "0"+seconds;
+      s = elapsed % 60;
+      if(s < 10) {
+        s = "0"+s;
       }
       // return hours
-      return ""+hours+":" + minutes +":"+seconds;
+      return ""+h+":" + m +":"+s;
     }
   }
 
@@ -80,7 +91,35 @@ $(document).ready(function(){
       return stop();
   };
 
-  start(); // auto start when the page loads
+  /**
+   * boot checks if the person has used the app before
+   * takes a callback
+   */
+  var boot = function(callback) {
+    // check if the person already has a session
+    if(localStorage.getItem('jwt')) {
+      return callback();
+    } else {
+      var url = "/anonymous";
+      $.ajax({
+        type: "GET",
+        url: "/anonymous",
+        dataType: "json",
+        success: function(res, status, xhr) {
+          console.log(res);
+          // localStorage.setItem('person', res._id);
+          localStorage.setItem('jwt', xhr.getResponseHeader("authorization"));
+          // alert(xhr.getResponseHeader("authorization"));
+          callback();
+        }
+      })
+    }
+  }
+  localStorage.clear();
+  boot(function(){
+    console.log('Booted.');
+  });
+  // start(); // auto start when the page loads
   console.log('working!')
 
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
@@ -179,4 +218,4 @@ $(document).ready(function(){
     document.getElementById('clear').style.display="none";
   }
 */
-}());
+});
