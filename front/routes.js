@@ -1,7 +1,3 @@
-var path = require('path');
-var pub = path.normalize(__dirname + '/public');
-console.log(" >>>> "+ pub);
-
 module.exports = [
   { path: '/',
     method: 'GET',
@@ -20,7 +16,7 @@ module.exports = [
       handler: {
           directory: {
               listing: true,
-              path: pub
+              path: require('path').normalize(__dirname + '/public')
           }
       }
     }

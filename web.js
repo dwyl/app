@@ -7,8 +7,8 @@ var ES      = require('esta');  // https://github.com/nelsonic/esta
 var Path    = require('path');
 var port    = process.env.PORT || 1337; // heroku define port or use 1337 1000
 var server  = new Hapi.Server();
-
-server.connection({ port: port });
+var ip      = require('./api/lib/lanip');
+server.connection({ host : ip, port: port, routes: { cors: true } });
 
 server.register([ {register: Basic}, {register: AuthJWT} ], function (err) {
 
@@ -36,21 +36,8 @@ server.register([ {register: Basic}, {register: AuthJWT} ], function (err) {
 
 });
 
-// http://stackoverflow.com/questions/10750303
-var os = require('os');
-var interfaces = os.networkInterfaces();
-var ip = [];
-for (var k in interfaces) {
-  for (var k2 in interfaces[k]) {
-    var address = interfaces[k][k2];
-    if (address.family === 'IPv4' && !address.internal) {
-      ip.push(address.address);
-    }
-  }
-}
-
 server.start(function(){
-  console.log('Now Visit: http://' + ip[0] + ':' +port);
+  console.log('Now Visit: http://' + ip + ':' +port);
 });
 
 module.exports = server;
