@@ -1,10 +1,10 @@
 <html>
   <head>
-    <!-- <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Timers Are Amazing!</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-    <link rel="stylesheet" href="./css/mobile-first.css"/>
+    <link rel="stylesheet" href="../public/css/mobile-first.css"/>
 
     <!--FontAwesome-->
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
@@ -15,8 +15,8 @@
 
     <section id="main">
       <div class="timer-time">
-        00:02
-        <button>
+        <div id="t">00:06</div>
+        <button id="stop">
           <i class="fa fa-stop fa-lg" aria-hidden="true"></i>
         </button>
       </div>
@@ -36,6 +36,8 @@
       </div> -->
     </section>
 
+
+
     <section id="login">
       <form>
         <div class="email fa fa-envelope-o">
@@ -49,8 +51,17 @@
         </div>
       </form>
     </section>
-<!-- https://github.com/ideaq/faster -->
 
+    <script id="past-template" type="text/x-handlebars-template">
+        <h1>{{title}}</h1>
+        <p>
+          {{entry}}
+        </p>
+    </script>
+<!-- https://github.com/ideaq/faster -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.min.js"></script>
+<script src="/public/js/alpha.js"></script>
 <script src="https://rawgit.com/ideaq/faster/master/lib/client.js"></script>
   </body>
 </html>

@@ -1,5 +1,6 @@
 var path = require('path');
-var cssdir = path.normalize(__dirname + '/views/css');
+var pub = path.normalize(__dirname + '/public');
+console.log(" >>>> "+ pub);
 
 module.exports = [
   { path: '/',
@@ -13,12 +14,13 @@ module.exports = [
   },
   {
     method: 'GET',
-    path: '/css/{param*}',
+    path: '/public/{param*}',
     config: {
       auth: false,
       handler: {
           directory: {
-              path: cssdir
+              listing: true,
+              path: pub
           }
       }
     }
