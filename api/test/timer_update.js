@@ -26,7 +26,7 @@ test(file + "CREATE a NEW Timer without a desc (which we will update below)", fu
   });
 });
 
-test(file + "POST /timer/update to set a description", function(t) {
+test(file + "POST /timer/upsert to set a description", function(t) {
   var updated = {
     id: timer.id,
 
@@ -34,7 +34,7 @@ test(file + "POST /timer/update to set a description", function(t) {
   }
   var options = {
     method: "POST",
-    url: "/timer/update",
+    url: "/timer/upsert",
     payload: updated,
     headers : { authorization : token }
   };
@@ -48,10 +48,10 @@ test(file + "POST /timer/update to set a description", function(t) {
   });
 });
 
-test(file + "POST /timer/update with a NEW TIMER but NO start (fault tolerance)", function(t) {
+test(file + "POST /timer/upsert with a NEW TIMER but NO start (fault tolerance)", function(t) {
   var options = {
     method: "POST",
-    url: "/timer/update",
+    url: "/timer/upsert",
     payload: {id:"1234"},
     headers : { authorization : token }
   };
@@ -64,10 +64,10 @@ test(file + "POST /timer/update with a NEW TIMER but NO start (fault tolerance)"
   });
 });
 
-test(file + "POST /timer/update with a NEW TIMER with start (fault tolerance)", function(t) {
+test(file + "POST /timer/upsert with a NEW TIMER with start (fault tolerance)", function(t) {
   var options = {
     method: "POST",
-    url: "/timer/update",
+    url: "/timer/upsert",
     payload: {id:"1234", start: new Date().toISOString() },
     headers : { authorization : token }
   };
