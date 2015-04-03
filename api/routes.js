@@ -17,7 +17,7 @@ module.exports = [
       auth: 'jwt', handler: require('./handlers/timer_start.js')
     }
   },
-  { path: '/timer/update', method: 'POST',
+  { path: '/timer/upsert', method: 'POST',
     config: { validate: require('../models/timer'),
       auth: 'jwt', handler: require('./handlers/timer_update.js')
     }

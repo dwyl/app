@@ -1,7 +1,7 @@
 
 $(document).ready(function(){
   var t = document.getElementById('t');
-  var active; // the id of the active timer
+  var active = {}; // currently active (running) timer
   var counting;    // store timer interval
   var timers = {}; // store timers locally
 
@@ -17,7 +17,7 @@ $(document).ready(function(){
       headers: {
         Authorization: jwt
       },
-      url: "/timer/new",
+      url: "/timer/upsert",
       data: timer,
       dataType: "json",
       success: function(res, status, xhr) {
@@ -32,6 +32,7 @@ $(document).ready(function(){
     });
   }
 
+  //saves description to the timer
 
 
   var start = function() {
@@ -92,9 +93,6 @@ $(document).ready(function(){
     }
   }
 
-  //saves description to the timer
-
-
   var stop = function(){
     clearInterval(counting);
     // // Extract the text from the template .html() is the jquery helper method for that
@@ -140,12 +138,50 @@ $(document).ready(function(){
         }
       });
     }
-  }
-  localStorage.clear();
+  } // END boot
 
+  /**
+   * update updates the description of the timer and
+   * also the end time when people stop the timer.
+   * @param timer {object} (require)
+   * @param callback {function} (required)
+   */
+   var udpate = function(timer, callback) {
+     $.ajax({
+       type: "GET",
+       url: "/timer/update",
+       dataType: "json",
+       success: function(res, status, xhr) {
+         console.log(res);
+         // localStorage.setItem('person', res._id);
+         localStorage.setItem('jwt', xhr.getResponseHeader("authorization"));
+         // alert(xhr.getResponseHeader("authorization"));
+         callback();
+       }
+     });
+   }
+
+
+  /**
+   *  put all event listeners in here so we know where they are!
+   */
+  var listeners = function() {
+    var desc = $('#desc');
+    desc.focus(function(){
+      // are we going to clear the placeholder?
+    });
+    desc.blur(function(){
+      var newdesc = desc.val();
+      console.log("Description was updated to "+ newdesc);
+
+    });
+  }
+
+  localStorage.clear();
   boot(function(){
     console.log('Booted.');
     start(); // auto start when the page loads
+    listeners();
   });
 
   console.log('working!')
