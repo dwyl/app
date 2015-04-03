@@ -30,7 +30,7 @@ function create(t, callback) {
     // console.log(" >>> "+countdown + " res.created "+ T.created);
     if(countdown === 0) {
       var T = JSON.parse(res.payload);
-      t.equal(res.statusCode, 200, records+ " New timers started! " + T.st);
+      t.equal(res.statusCode, 200, records+ " New timers started! " + T.start);
       callback(res, t);
     }
   });
@@ -39,7 +39,7 @@ function create(t, callback) {
 function finish(res, t){
   // console.log(res);
   var T = JSON.parse(res.payload);
-  var tid = T._id;
+  var tid = T.id;
   var options = {
     method: "GET",
     url: "/timer/"+tid,
@@ -65,6 +65,7 @@ test(file + "Register new person to create a few timers", function(t) {
     payload : person
   };
   server.inject(options, function(res) {
+    console.log(res.result);
     t.equal(res.statusCode, 200, "Session Created = "+res.result.created);
     token = res.headers.authorization;
     // can't create create functions inside a for loop so no anon callbacks!
@@ -85,7 +86,7 @@ test(file + "GET /timer/all to list all timers", function(t) {
       // console.log(res.result);
       var T = JSON.parse(res.payload);
       t.equal(res.statusCode, 200, "Find all records for this person");
-      t.equal(T.hits.total, 100, "100 records found");
+      t.equal(T.hits.total, 100, T.hits.total+"records found");
       server.stop();
       t.end();
     });

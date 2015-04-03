@@ -17,6 +17,7 @@ test(file + "CREATE a NEW Timer without a desc (which we will update below)", fu
       headers : { authorization : token }
     };
     server.inject(options, function(response) {
+      // console.log(response.result);
       t.equal(response.statusCode, 200, "New Timer Created: "+response.result.start);
       timer = response.result;
       t.end();
@@ -26,25 +27,54 @@ test(file + "CREATE a NEW Timer without a desc (which we will update below)", fu
 });
 
 test(file + "POST /timer/update to set a description", function(t) {
-  timer.desc = "updated now";
-  // person field is not allowed.
-  delete timer.person;
-  delete timer.created;
-  delete timer._version;
-  delete timer._id;
-  delete timer._index;
-  delete timer._type;
-  
+  var updated = {
+    id: timer.id,
+
+    desc: "updated now"
+  }
   var options = {
     method: "POST",
     url: "/timer/update",
-    payload: timer,
+    payload: updated,
     headers : { authorization : token }
   };
   server.inject(options, function(response) {
-    console.log(response.result);
+    // console.log(response.result);
     t.equal(response.statusCode, 200, "Timer description updated to: "
       + response.result.desc +'\n');
+    t.equal(response.result.desc, updated.desc, "Timer description updated successfully");
+    t.end();
+    server.stop();
+  });
+});
+
+test(file + "POST /timer/update with a NEW TIMER but NO start (fault tolerance)", function(t) {
+  var options = {
+    method: "POST",
+    url: "/timer/update",
+    payload: {id:"1234"},
+    headers : { authorization : token }
+  };
+  server.inject(options, function(response) {
+    // console.log(response.result);
+    t.equal(response.statusCode, 200, "New Timer Created: "+response.result.start);
+    timer = response.result;
+    t.end();
+    server.stop();
+  });
+});
+
+test(file + "POST /timer/update with a NEW TIMER with start (fault tolerance)", function(t) {
+  var options = {
+    method: "POST",
+    url: "/timer/update",
+    payload: {id:"1234", start: new Date().toISOString() },
+    headers : { authorization : token }
+  };
+  server.inject(options, function(response) {
+    // console.log(response.result);
+    t.equal(response.statusCode, 200, "New Timer Created: "+response.result.start);
+    timer = response.result;
     t.end();
     server.stop();
   });

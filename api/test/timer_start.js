@@ -53,8 +53,8 @@ test(file + "START a NEW Timer (no st sent by client)!", function(t) {
   };
   server.inject(options, function(res) {
     var T = JSON.parse(res.payload);
-    t.equal(res.statusCode, 200, "New timer started! " + T.st);
-    var tid = T._id;
+    t.equal(res.statusCode, 200, "New timer started! " + T.start);
+    var tid = T.id;
     var options = {
       method: "GET",
       url: "/timer/"+tid,
