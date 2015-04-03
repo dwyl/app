@@ -86,7 +86,7 @@ test(file + "GET /timer/all to list all timers", function(t) {
       // console.log(res.result);
       var T = JSON.parse(res.payload);
       t.equal(res.statusCode, 200, "Find all records for this person");
-      t.true(T.hits.total > 99, "TRAVIS (Free/Slow) ElasticSearch (ONLY) Found"+T.hits.total);
+      t.true(T.hits.total > 97, "TRAVIS (Free/Slow) ElasticSearch (ONLY) Found: "+T.hits.total);
       server.stop();
       t.end();
     });

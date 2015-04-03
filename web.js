@@ -8,6 +8,7 @@ var Path    = require('path');
 var port    = process.env.PORT || 1337; // heroku define port or use 1337 1000
 var server  = new Hapi.Server();
 var ip      = require('./api/lib/lanip');
+console.log(">>>>>> IP: "+ip)
 server.connection({ host : ip, port: port, routes: { cors: true } });
 
 server.register([ {register: Basic}, {register: AuthJWT} ], function (err) {

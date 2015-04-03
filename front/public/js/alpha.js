@@ -5,13 +5,18 @@ $(document).ready(function(){
   var counting;    // store timer interval
   var timers = {}; // store timers locally
 
+  /**
+   * update updates the description of the timer and
+   * also the end time when people stop the timer.
+   * @param timer {object} (require)
+   * @param callback {function} (required)
+   */
   var timerupsert = function(timer, callback) {
-    var url = "/timer/new";
-    if(timer._id) { // need to create timer/update
-      url = "/timer/update";
-    }
-    var jwt = localStorage.getItem('jwt')
-    console.log('jwt',jwt);
+    console.log(" - - - - - - - - - -  timer: ")
+    console.log(timer);
+    console.log(" - - - - - - - - - - - - - - - -")
+    timer = removedissalowedfields(timer);
+    var jwt = localStorage.getItem('jwt');
     $.ajax({
       type: "POST",
       headers: {
@@ -22,8 +27,8 @@ $(document).ready(function(){
       dataType: "json",
       success: function(res, status, xhr) {
         console.log(res);
-        active = res._id;
-        timers[res._id] = res;
+        active = res;   // assign the new/updated timer record to active
+        timers[res.id] = res; // add it to our local db of timers
         callback();
       },
       error: function(xhr, err) {
@@ -32,20 +37,26 @@ $(document).ready(function(){
     });
   }
 
-  //saves description to the timer
-
+  var removedissalowedfields = function(timer){
+    delete timer.ct;    // client is not allowed to SET/UPDATE ct
+    delete timer.index;
+    delete timer.type;
+    delete timer.created
+    return timer;
+  }
 
   var start = function() {
     var st = new Date();
     var timer = { start : st.toISOString() };
-    st = st.getTime(); // - (200 * 1000);
+    var timestamp = st.getTime(); // - (200 * 1000);
+    // create a new record:
     timerupsert(timer, function(){
-      console.log("started");
+      console.log("started: "+timer.start);
     });
     // console.log("START: "+st);
     counting = setInterval( function() {
       var now = new Date().getTime()
-      var elapsed = now - st;
+      var elapsed = now - timestamp;
       t.innerHTML = timeformat(elapsed);
     }, 1000/3);
   }
@@ -140,27 +151,6 @@ $(document).ready(function(){
     }
   } // END boot
 
-  /**
-   * update updates the description of the timer and
-   * also the end time when people stop the timer.
-   * @param timer {object} (require)
-   * @param callback {function} (required)
-   */
-   var udpate = function(timer, callback) {
-     $.ajax({
-       type: "GET",
-       url: "/timer/update",
-       dataType: "json",
-       success: function(res, status, xhr) {
-         console.log(res);
-         // localStorage.setItem('person', res._id);
-         localStorage.setItem('jwt', xhr.getResponseHeader("authorization"));
-         // alert(xhr.getResponseHeader("authorization"));
-         callback();
-       }
-     });
-   }
-
 
   /**
    *  put all event listeners in here so we know where they are!
@@ -170,10 +160,17 @@ $(document).ready(function(){
     desc.focus(function(){
       // are we going to clear the placeholder?
     });
+
+    //saves description to the timer
     desc.blur(function(){
       var newdesc = desc.val();
+      console.log("Desc WAS: "+active.desc)
       console.log("Description was updated to "+ newdesc);
-
+      var timer = active;
+      timer.desc = newdesc;
+      timerupsert(timer, function(){
+        console.log("Updated");
+      });
     });
   }
 
