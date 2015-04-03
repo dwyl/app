@@ -20,6 +20,20 @@ p {
   margin: 0;
 }
 
+/* Making placeholder text disappear when clicked on */
+[placeholder]:focus::-webkit-input-placeholder {
+  transition: opacity 0.5s 0.5s ease;
+  opacity: 0;
+}
+[placeholder]:focus::-moz-placeholder {
+  transition: opacity 0.5s 0.5s ease;
+  opacity: 0;
+}
+[placeholder]:focus::-ms-input-placeholder  {
+  transition: opacity 0.5s 0.5s ease;
+  opacity: 0;
+}
+
 /*==============================
   Section | MAIN (current timer)
 ================================*/
