@@ -25,5 +25,5 @@
   "undef"         : true,
   "white"         : true,
   "browser"       : true,
-  "globals": { "$": true }
+  "globals": { "$": true, "Handlebars": true }
 }
