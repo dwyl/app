@@ -26,9 +26,10 @@ $(document).ready(function(){
       data: timer,
       dataType: "json",
       success: function(res, status, xhr) {
-        console.log(res);
+        // console.log(res);
         active = res;   // assign the new/updated timer record to active
         timers[res.id] = res; // add it to our local db of timers
+        db.set();
         callback();
       },
       error: function(xhr, err) {
@@ -103,28 +104,33 @@ $(document).ready(function(){
       return ""+h+":" + m +":"+s;
     }
   }
-
-  var stop = function(){
+  /**
+   *  Stop the currently running timer.
+   *
+   */
+  var stop = function() {
     clearInterval(counting);
-    // // Extract the text from the template .html() is the jquery helper method for that
-    // var raw_template = $('#complete').html();
-    // // Compile that into an handlebars template
-    // var template = Handlebars.compile(raw_template);
-    // // Retrieve the placeHolder where the Posts will be displayed
-    // var placeHolder = $("#main");
-    // // Create a context to render the template
-    // var context = {"title": "First Post", "entry": "You can't stop me now!"};
-    // // Generate the HTML for the template
-    // var html = template(context);
-    // // Render the posts into the page
-    // placeHolder.append(html);
+    var timer = active;
+    timer.end = new Date().toISOString();
+    timerupsert(timer, function(){
+      console.log("Timer Stopped");
+    });
+    // Extract the text from the template .html() is the jquery helper method for that
+    var raw_template = $('#timer_list_template').html();
+    // Compile that into an handlebars template
+    var template = Handlebars.compile(raw_template);
+    // Retrieve the placeHolder where the Posts will be displayed
+    var placeHolder = $("#past-timers");
+
+    var elapsed = new Date(timer.end).getTime() - new Date(timer.start).getTime();
+    // Generate the HTML for the template
+    timer.took = "hello"; // timeformat(elapsed);
+    var context = {took: timer.took, desc: timer.desc}
+    var html = template(context);
+    // Render the posts into the page
+    placeHolder.append(html);
+    console.log(html);
   }
-
-  var sb = document.getElementById("stop"); // stop button
-  sb.onclick = function() {
-
-      return stop();
-  };
 
   /**
    * boot checks if the person has used the app before
@@ -151,9 +157,22 @@ $(document).ready(function(){
     }
   } // END boot
 
+  /**
+   * db is our localstorage "database" (a stringified object)
+   * which allows us to be "offline-first"
+   */
+   var db = {
+     set : function() {
+       localStorage.setItem('_db', JSON.stringify(timers));
+       return;
+     },
+     get : function() {
+       return JSON.parse(localStorage.getItem('_db'));
+     }
+   }
 
   /**
-   *  put all event listeners in here so we know where they are!
+   *  All event listeners go here
    */
   var listeners = function() {
     var desc = $('#desc');
@@ -172,7 +191,15 @@ $(document).ready(function(){
         console.log("Updated");
       });
     });
+
   }
+
+  var sb = $("#stop"); // stop button
+  sb.click( function() {
+    console.log("#stop Clicked!")
+    return stop();
+  });
+  console.log("hello ines!")
 
   localStorage.clear();
   boot(function(){

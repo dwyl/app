@@ -37,7 +37,6 @@
     </section>
 
 
-
     <section id="login">
       <form>
         <div class="email fa fa-envelope-o">
@@ -52,15 +51,20 @@
       </form>
     </section>
 
-    <script id="past-template" type="text/x-handlebars-template">
-        <h1>{{title}}</h1>
+
+
+    <script id="timer_list_template" type="text/x-handlebars-template">
+        <h1>Timer Took: {{took}}</h1>
+        <pre>
+          {{{timer}}}
+        </pre>
         <p>
-          {{entry}}
+          {{desc}}
         </p>
     </script>
 <!-- https://github.com/ideaq/faster -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="/public/js/alpha.js"></script>
 <script src="https://rawgit.com/ideaq/faster/master/lib/client.js"></script>
   </body>
