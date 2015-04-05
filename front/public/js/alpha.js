@@ -115,21 +115,19 @@ $(document).ready(function(){
     timerupsert(timer, function(){
       console.log("Timer Stopped");
     });
-    // Extract the text from the template .html() is the jquery helper method for that
+
+    //*Add timer to past-timers list using handlebars */
     var raw_template = $('#timer_list_template').html();
-    // Compile that into an handlebars template
     var template = Handlebars.compile(raw_template);
-    // Retrieve the placeHolder where the Posts will be displayed
     var placeHolder = $("#past-timers");
 
     var elapsed = new Date(timer.end).getTime() - new Date(timer.start).getTime();
     // Generate the HTML for the template
-    timer.took = "hello"; // timeformat(elapsed);
+    timer.took = timeformat(elapsed);
     var context = {took: timer.took, desc: timer.desc}
     var html = template(context);
     // Render the posts into the page
     placeHolder.append(html);
-    console.log(html);
   }
 
   /**

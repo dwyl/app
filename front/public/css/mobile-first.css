@@ -109,7 +109,6 @@ p {
 /*======== Past timer list ========*/
 #past-timers{
   width: 100%;
-  font-size:0.9em;
   padding:0.7em 0.2em;
   border-bottom: 1px solid #d3d3d3;
   display: table;
@@ -119,10 +118,17 @@ p {
     display: table-row;
   }
 
-  .timer-one-line i,
   .timer-one-line span{
     display: table-cell;
     padding: 0 0.3em;
+    font-size:0.9em;
+    border: 1px solid black;
+  }
+
+  .timer-one-line i{
+    display: table-cell;
+    background:red;
+    width: 20px;
   }
 
     span.timer-desc{

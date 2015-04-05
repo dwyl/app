@@ -29,11 +29,6 @@
       <div id="why">
         <p>Track your time. Your past timers will appear here.</p>
       </div>
-      <!-- <div class="timer-one-line">
-          <i class="fa fa-check-circle-o"></i>
-          <span class="timer-desc">Task 1 but a bit longer and super long so it wraps the line</span>
-          <span class="timer-time">14:21</span>
-      </div> -->
     </section>
 
 
@@ -51,21 +46,24 @@
       </form>
     </section>
 
+<!-- HANDLEBARS TEMPLATE -->
+  <script id="timer_list_template" type="text/x-handlebars-template">
+    <h1>Timer Took: \{{took}}</h1>
 
+    <div class="timer-one-line">
+        <i class="fa fa-check-circle-o"></i>
+        <span class="timer-desc">\{{desc}}</span>
+        <span class="timer-time">\{{took}}</span>
+    </div>
+  </script>
 
-    <script id="timer_list_template" type="text/x-handlebars-template">
-        <h1>Timer Took: {{took}}</h1>
-        <pre>
-          {{{timer}}}
-        </pre>
-        <p>
-          {{desc}}
-        </p>
-    </script>
-<!-- https://github.com/ideaq/faster -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="/public/js/alpha.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.min.js"></script>
+
+<!-- https://github.com/ideaq/faster -->
 <script src="https://rawgit.com/ideaq/faster/master/lib/client.js"></script>
+
+
   </body>
 </html>
