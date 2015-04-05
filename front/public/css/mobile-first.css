@@ -110,25 +110,22 @@ p {
 #past-timers{
   width: 100%;
   padding:0.7em 0.2em;
-  border-bottom: 1px solid #d3d3d3;
   display: table;
 }
 
   .timer-one-line{
     display: table-row;
+    border-bottom: 1px solid #d3d3d3;
   }
 
-  .timer-one-line span{
+  .timer-one-line span, .timer-one-line i{
     display: table-cell;
     padding: 0 0.3em;
-    font-size:0.9em;
-    border: 1px solid black;
+    font-size:1em;
   }
 
   .timer-one-line i{
-    display: table-cell;
-    background:red;
-    width: 20px;
+    width:1em;
   }
 
     span.timer-desc{

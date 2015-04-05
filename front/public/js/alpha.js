@@ -116,6 +116,9 @@ $(document).ready(function(){
       console.log("Timer Stopped");
     });
 
+    //hide standard text for when there are no timers - change for alpha!
+    $('#why').hide();
+
     //*Add timer to past-timers list using handlebars */
     var raw_template = $('#timer_list_template').html();
     var template = Handlebars.compile(raw_template);
