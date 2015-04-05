@@ -116,7 +116,7 @@ $(document).ready(function(){
       console.log("Timer Stopped");
     });
 
-    //hide standard text for when there are no timers - change for alpha!
+    //hide standard text for when there are no timers - change for beta!
     $('#why').hide();
 
     //*Add timer to past-timers list using handlebars */
@@ -129,8 +129,13 @@ $(document).ready(function(){
     timer.took = timeformat(elapsed);
     var context = {took: timer.took, desc: timer.desc}
     var html = template(context);
-    // Render the posts into the page
-    placeHolder.append(html);
+    // Render the posts into the page in reverse chronological order
+    placeHolder.prepend(html);
+
+    // Zero out timer
+    active = 0;
+    //start(); //Open question on whether a new one should start automatically
+    $('#desc').val('');
   }
 
   /**
