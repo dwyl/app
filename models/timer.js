@@ -8,6 +8,8 @@ module.exports = {
     end:     Joi.date().iso().optional(),
     aid:     Joi.string(),
     session: Joi.string().optional(),
-    id: Joi.string().optional()
+    id: Joi.string().optional(),
+    elapsed: Joi.number().optional(),
+    took: Joi.string().optional()
   }
 }

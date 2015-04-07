@@ -12,9 +12,12 @@ $(document).ready(function(){
    * @param callback {function} (required)
    */
   var timerupsert = function(timer, callback) {
-    console.log(" - - - - - - - - - -  timer: ")
+    console.log(" - - - - - - - - - -  upsert this timer: ")
     console.log(timer);
-    console.log(" - - - - - - - - - - - - - - - -")
+    if(!timer.start) {
+      console.log("FAIL!")
+      return false;
+    }
     timer = removedissalowedfields(timer);
     var jwt = localStorage.getItem('jwt');
     $.ajax({
@@ -26,7 +29,8 @@ $(document).ready(function(){
       data: timer,
       dataType: "json",
       success: function(res, status, xhr) {
-        // console.log(res);
+        console.log(' - - - - - - - - timerupsert res:')
+        console.log(res);
         active = res;   // assign the new/updated timer record to active
         timers[res.id] = res; // add it to our local db of timers
         db.set();
@@ -42,17 +46,20 @@ $(document).ready(function(){
     delete timer.ct;    // client is not allowed to SET/UPDATE ct
     delete timer.index;
     delete timer.type;
-    delete timer.created
+    delete timer.created;
+    delete timer.took;
     return timer;
   }
 
   var start = function() {
+    $('#start').hide();
+    $('#stop').show();
     var st = new Date();
-    var timer = { start : st.toISOString() };
+    active = { start : st.toISOString() };
     var timestamp = st.getTime(); // - (200 * 1000);
     // create a new record:
-    timerupsert(timer, function(){
-      console.log("started: "+timer.start);
+    timerupsert(active, function(){
+      // console.log("started: "+active.start);
     });
     // console.log("START: "+st);
     counting = setInterval( function() {
@@ -110,33 +117,73 @@ $(document).ready(function(){
    */
   var stop = function() {
     clearInterval(counting);
-    var timer = active;
-    timer.end = new Date().toISOString();
-    timerupsert(timer, function(){
+
+    active.desc = $('#desc').val();
+    active.end = new Date().toISOString();
+    active.elapsed = new Date(active.end).getTime() - new Date(active.start).getTime();
+    active.took = timeformat(active.elapsed);
+    timerupsert(active, function(){
       console.log("Timer Stopped");
+      clearactive();
+      rendertimers();
     });
 
     //hide standard text for when there are no timers - change for beta!
     $('#why').hide();
-
-    //*Add timer to past-timers list using handlebars */
-    var raw_template = $('#timer_list_template').html();
-    var template = Handlebars.compile(raw_template);
-    var placeHolder = $("#past-timers");
-
-    var elapsed = new Date(timer.end).getTime() - new Date(timer.start).getTime();
-    // Generate the HTML for the template
-    timer.took = timeformat(elapsed);
-    var context = {took: timer.took, desc: timer.desc}
-    var html = template(context);
-    // Render the posts into the page in reverse chronological order
-    placeHolder.prepend(html);
-
-    // Zero out timer
-    active = 0;
-    //start(); //Open question on whether a new one should start automatically
     $('#desc').val('');
+    $('#t').text('00:00');
+    $('#stop').fadeOut();
+    $('#start').fadeIn();
+    return;
   }
+
+var clearactive = function(){
+  // delete the active object's properties
+  for (var k in active){
+    if(active.hasOwnProperty(k)){
+      delete active[k]; // clear the active timer because we stopped it!
+    }
+  }
+}
+
+
+  /**
+   * rendertimers renders your list of past timers in the ui.
+   * centralises all the view rendering.
+   */
+   var rendertimers = function() {
+    //  var list = timerlist();
+    //  var byDate = list.slice(0);
+    //  byDate.sort(function(a,b) {
+    //     console.log(b.endtimestamp +" - " +a.endtimestamp)
+    //     return b.endtimestamp - a.endtimestamp;
+    //  });
+     // Add timer to past-timers list using handlebars
+     var raw_template = $('#timer_list_template').html();
+     var template = Handlebars.compile(raw_template);
+     var placeHolder = $("#past-timers");
+     var html = '';
+     var ids = Object.keys(timers);
+     ids.map(function(i){
+       html += template(timers[i]);
+       console.log(" >>> "+i, timers[i]);
+     })
+     placeHolder.html(html);
+     return;
+   }
+
+  /**
+   * transform our timers object of timer objects into an array (list)
+   * of timer ojbects. So we can sort by date... see: sort above
+   */
+   var timerlist = function() {
+     return Object.keys(timers).map(function(id){
+       return timers[id];
+     })
+    //  return arr;
+   }
+
+
 
   /**
    * boot checks if the person has used the app before
@@ -191,12 +238,36 @@ $(document).ready(function(){
       var newdesc = desc.val();
       console.log("Desc WAS: "+active.desc)
       console.log("Description was updated to "+ newdesc);
-      var timer = active;
-      timer.desc = newdesc;
-      timerupsert(timer, function(){
-        console.log("Updated");
+      active.desc = newdesc;
+      timerupsert(active, function(){
+        // console.log("Updated");
       });
     });
+
+    desc.change(function(){
+      if(active.id) { // active timer exists
+        var newdesc = desc.val();
+        console.log("Desc WAS: "+active.desc)
+        console.log("Description was updated to "+ newdesc);
+        active.desc = newdesc;
+        timerupsert(active, function(){
+          console.log("Changed");
+        });
+      }
+    })
+
+
+    // enter key: http://stackoverflow.com/questions/979662
+    // $(document).keypress(function(e) {
+    //   if(e.which == 13) {
+    //     alert('You pressed enter!');
+    //   }
+    // });
+
+
+    $('#start').click(function() {
+      start();
+    })
 
   }
 
