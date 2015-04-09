@@ -52,7 +52,7 @@ p {
     margin: 0 auto;
   }
 
-    .timer-time button {
+    #main button {
       border-radius: 50%;
       background: #464646;
       padding: 1.3em;
@@ -63,7 +63,7 @@ p {
       top: 1.3em;
       right: 0.5em;
     }
-      .timer-time button i{
+      #main button i{
         font-size:1.8em;
       }
 
