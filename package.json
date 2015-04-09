@@ -1,6 +1,6 @@
 {
-  "name": "atimer",
-  "version": "0.1.4",
+  "name": "dwyl",
+  "version": "0.1.5",
   "description": "Track any time-based activity",
   "main": "index.js",
   "scripts": {

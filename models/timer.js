@@ -9,7 +9,7 @@ module.exports = {
     aid:     Joi.string(),
     session: Joi.string().optional(),
     id: Joi.string().optional(),
-    elapsed: Joi.number().optional(),
+    elapsed: Joi.number().optional(), // in miliseconds
     took: Joi.string().optional()
   }
 }

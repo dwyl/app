@@ -1,18 +1,20 @@
 
-$(document).ready(function(){
-  var t = document.getElementById('t');
+$(document).ready(function() {
+  // we re-use these functionally-scoped GLOBALS quite a bit (hence defining here)
+  var t = $('#t'); // document.getElementById('t'); // do we need jQuery?
   var active = {}; // currently active (running) timer
   var counting;    // store timer interval
   var timers = {}; // store timers locally
 
   /**
-   * update updates the description of the timer and
-   * also the end time when people stop the timer.
-   * @param timer {object} (require)
-   * @param callback {function} (required)
+   * timerupsert is our generic API CRUD method which allows us to
+   * CREATE a new timer, UPDATE the description of the timer and
+   * also the END (Update) time when people Stop the timer.
+   * @param timer {object} (require) - the timer we want to CRUD
+   * @param callback {function} (required) - do this after the update
    */
   var timerupsert = function(timer, callback) {
-    console.log(" - - - - - - - - - -  upsert this timer: ")
+    console.log(" - - - - - - - - - -  before upsert: ")
     console.log(timer);
     if(!timer.start) {
       console.log("FAIL!")
@@ -32,8 +34,8 @@ $(document).ready(function(){
         console.log(' - - - - - - - - timerupsert res:')
         console.log(res);
         active = res;   // assign the new/updated timer record to active
-        timers[res.id] = res; // add it to our local db of timers
-        db.set();
+        saveTimer(res); // add it to our local db of timers
+        // db.set();
         callback();
       },
       error: function(xhr, err) {
@@ -42,8 +44,29 @@ $(document).ready(function(){
     });
   }
 
+  /**
+   *
+   */
+  function saveTimer(timer) {
+    if(!timers[timer.id]){
+      timers[timer.id] = {};
+    }
+    for (var k in timer){
+      if(timer.hasOwnProperty(k)){
+        timers[timer.id][k] = timer[k];
+      }
+    }
+    return;
+  }
+
+  /**
+   * Because the validation in API uses the JOI Models, if we send a field
+   * that is NOT allowed in the Model, we will get an error back.
+   * See Open discussion for this: https://github.com/ideaq/time/issues/100
+   */
+
   var removedissalowedfields = function(timer){
-    delete timer.ct;    // client is not allowed to SET/UPDATE ct
+    delete timer.ct;    // see: models/timer.js (ct is not updatable!)
     delete timer.index;
     delete timer.type;
     delete timer.created;
@@ -51,24 +74,74 @@ $(document).ready(function(){
     return timer;
   }
 
+  /**
+   * start a new timer.
+   */
   var start = function() {
-    $('#start').hide();
-    $('#stop').show();
-    var st = new Date();
-    active = { start : st.toISOString() };
-    var timestamp = st.getTime(); // - (200 * 1000);
+    $('#start').hide();     // ensure the start button cant be clicked twice
+    $('#stop').show();      // stop button visible when timer is running
+    var st = new Date();          // start time Date object
+    var timestamp = st.getTime(); // timestamp for calculations below
+    var timer = { 'start' : st.toISOString() }; // set up the new timer record
+
+    var desc = $('#desc').val();  // check if a description was set
+    if(desc) { // only set a description on a new timer if set
+      timer.desc = desc; // add it to the timer record
+    }
     // create a new record:
-    timerupsert(active, function(){
+    timerupsert(timer, function() {
       // console.log("started: "+active.start);
     });
     // console.log("START: "+st);
     counting = setInterval( function() {
-      var now = new Date().getTime()
-      var elapsed = now - timestamp;
-      t.innerHTML = timeformat(elapsed);
-    }, 1000/3);
+      var now = new Date().getTime();  // keep checking what time it is.
+      var elapsed = now - timestamp;   // difference from when we started
+      t.html(timeformat(elapsed));     // set the timer in the UI
+    }, 1000/3); // should we update the view more/less frequently?
   }
 
+  /**
+   *  Stop the currently running timer.
+   *
+   */
+  var stop = function() {
+    clearInterval(counting);
+    var timer = active;
+    timer.desc = $('#desc').val();
+    timer.end = new Date().toISOString();
+    timer.elapsed = new Date(timer.end).getTime() - new Date(timer.start).getTime();
+    timer.took = timeformat(timer.elapsed);
+    timerupsert(timer, function(){
+      console.log("Timer Stopped");
+      clearactive();
+      rendertimers();
+    });
+
+    //hide/show relevant UI elements
+    $('#why').hide();
+    $('#desc').val('');
+    $('#t').text('00:00');
+    $('#stop').fadeOut();
+    $('#start').fadeIn();
+    return;
+  }
+
+  /**
+   *  clearactive unsets the active global object so we can create a fresh timer
+   */
+  var clearactive = function(){
+    // delete the active object's (own) properties
+    for (var k in active){
+      if(active.hasOwnProperty(k)){
+        delete active[k]; // clear the active timer because we stopped it!
+      }
+    }
+  }
+
+
+  /**
+   * timeformat returns a string in the format hh:mm:ss for rendering to UI
+   */
   var timeformat = function(elapsed){
     var h, m, s;
     elapsed = Math.floor(elapsed/1000);
@@ -111,62 +184,34 @@ $(document).ready(function(){
       return ""+h+":" + m +":"+s;
     }
   }
-  /**
-   *  Stop the currently running timer.
-   *
-   */
-  var stop = function() {
-    clearInterval(counting);
-
-    active.desc = $('#desc').val();
-    active.end = new Date().toISOString();
-    active.elapsed = new Date(active.end).getTime() - new Date(active.start).getTime();
-    active.took = timeformat(active.elapsed);
-    timerupsert(active, function(){
-      console.log("Timer Stopped");
-      clearactive();
-      rendertimers();
-    });
-
-    //hide standard text for when there are no timers - change for beta!
-    $('#why').hide();
-    $('#desc').val('');
-    $('#t').text('00:00');
-    $('#stop').fadeOut();
-    $('#start').fadeIn();
-    return;
-  }
-
-var clearactive = function(){
-  // delete the active object's properties
-  for (var k in active){
-    if(active.hasOwnProperty(k)){
-      delete active[k]; // clear the active timer because we stopped it!
-    }
-  }
-}
-
 
   /**
    * rendertimers renders your list of past timers in the ui.
    * centralises all the view rendering.
    */
    var rendertimers = function() {
-    //  var list = timerlist();
-    //  var byDate = list.slice(0);
-    //  byDate.sort(function(a,b) {
-    //     console.log(b.endtimestamp +" - " +a.endtimestamp)
-    //     return b.endtimestamp - a.endtimestamp;
-    //  });
+     // transform the timers object to an arry:
+    var arr = Object.keys(timers).map(function(id) {
+      var timer = timers[id];
+      timer.endtimestamp = new Date(timer.end).getTime(); // used to sort below
+      return timer;
+    });
+     var byDate = arr.sort(function(a,b) {
+        console.log(" >>>>>>>>>>>>> "+ b.endtimestamp +" - " +a.endtimestamp)
+        return b.endtimestamp - a.endtimestamp;
+     });
      // Add timer to past-timers list using handlebars
      var raw_template = $('#timer_list_template').html();
      var template = Handlebars.compile(raw_template);
      var placeHolder = $("#past-timers");
      var html = '';
-     var ids = Object.keys(timers);
-     ids.map(function(i){
-       html += template(timers[i]);
-       console.log(" >>> "+i, timers[i]);
+     console.log(timers);
+    //  var ids = Object.keys(timers);
+     byDate.map(function(i){
+       var timer = i // timers[i]
+       timer.took = timeformat(timer.elapsed); // repetitive ...
+       html += template(timer);
+       console.log(" >>> "+i, timer);
      })
      placeHolder.html(html);
      return;
@@ -211,16 +256,19 @@ var clearactive = function(){
   } // END boot
 
   /**
-   * db is our localstorage "database" (a stringified object)
-   * which allows us to be "offline-first"
+   * db is our localStorage "database" (a stringified object)
+   * which allows us to be "offline-first" for nowdb.get & db.set
+   * are light wrappers around the respective localStorage methods
+   * later on we could chose to use a more gracefully degrating approach
+   * see: http://stackoverflow.com/a/12302790/1148249
    */
    var db = {
-     set : function() {
-       localStorage.setItem('_db', JSON.stringify(timers));
+     set : function(key, value) {
+       localStorage.setItem(key, JSON.stringify(value));
        return;
      },
-     get : function() {
-       return JSON.parse(localStorage.getItem('_db'));
+     get : function(key) {
+       return JSON.parse(localStorage.getItem(key));
      }
    }
 
@@ -234,15 +282,15 @@ var clearactive = function(){
     });
 
     //saves description to the timer
-    desc.blur(function(){
-      var newdesc = desc.val();
-      console.log("Desc WAS: "+active.desc)
-      console.log("Description was updated to "+ newdesc);
-      active.desc = newdesc;
-      timerupsert(active, function(){
-        // console.log("Updated");
-      });
-    });
+    // desc.blur(function(){
+    //   var newdesc = desc.val();
+    //   console.log("Desc WAS: "+active.desc)
+    //   console.log("Description was updated to "+ newdesc);
+    //   active.desc = newdesc;
+    //   timerupsert(active, function(){
+    //     // console.log("Updated");
+    //   });
+    // });
 
     desc.change(function(){
       if(active.id) { // active timer exists
@@ -276,7 +324,6 @@ var clearactive = function(){
     console.log("#stop Clicked!")
     return stop();
   });
-  console.log("hello ines!")
 
   localStorage.clear();
   boot(function(){
