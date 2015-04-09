@@ -6,6 +6,7 @@ module.exports = {
     ct: Joi.forbidden(), // don't allow people to set this!
     start:   Joi.date().iso(),
     end:     Joi.date().iso().optional(),
+    endtimestamp: Joi.string().optional(), // convenience
     aid:     Joi.string(),
     session: Joi.string().optional(),
     id: Joi.string().optional(),

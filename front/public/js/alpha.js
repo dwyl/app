@@ -189,7 +189,7 @@ $(document).ready(function() {
    * rendertimers renders your list of past timers in the ui.
    * centralises all the view rendering.
    */
-  var rendertimers = function() {
+  var rendertimers = function(edit, id) {
     // transform the timers Object to an Array so we can SORT it below:
     var arr = Object.keys(timers).map(function(id) {
     var timer = timers[id];
@@ -202,15 +202,27 @@ $(document).ready(function() {
     // Add timer to past-timers list using handlebars
     var raw_template = $('#timer_list_template').html();
     var template = Handlebars.compile(raw_template);
+    var editor_template_raw = $('#timer_edit_template').html();
+    var editor_template = Handlebars.compile(editor_template_raw);
     var parent = $("#past-timers-list");
     var html = '';
-    byDate.map(function(i){
+    byDate.map(function(i) {
       var timer = i // timers[i]
       timer.took = timeformat(timer.elapsed); // repetitive ...
-      html += template(timer);
-      console.log(" >>> "+i, timer);
+      // show edit form if render called with edit true and an id
+      if(edit && timer.id === id) {
+        html += editor_template(timer);
+      }
+      else {
+        html += template(timer);
+      }
+      // console.log(" >>> "+i, timer);
     })
     parent.html(html); // completely re-write the DOM each time! :-O
+    // attach a listener event to each timer list entry
+    arr.map(function(timer){
+      editlistener(timer.id);
+    });
     return;
   }
 
@@ -301,7 +313,6 @@ $(document).ready(function() {
       }
     })
 
-
     // enter key: http://stackoverflow.com/questions/979662
     // $(document).keypress(function(e) {
     //   if(e.which == 13) {
@@ -314,6 +325,31 @@ $(document).ready(function() {
       start();
     })
 
+  }
+
+  var editlistener = function(id) {
+    console.log(' - - - - - - edit listener - - - - -');
+    var ed = $('#'+id);
+    ed.click(function(e) {
+      rendertimers('edit', this.id);
+      // console.log(e);
+      console.log(this.id);
+      // console.log($(this))
+    });
+    console.log('#'+id+"-save");
+    $('#'+id+"-save").click(function(event){
+      event.stopImmediatePropagation();
+      event.preventDefault();
+      console.log(this);
+      var timer = timers[this.id.replace('-save','')];
+      timer.desc = $('#'+id+"-desc").val();
+      timer.took = $('#'+id+"-took").val();
+      console.log("TIMER EDIT", timer);
+      timerupsert(timer, function(){
+        rendertimers();
+      });
+    })
+    return;
   }
 
   var sb = $("#stop"); // stop button
