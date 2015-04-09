@@ -29,9 +29,9 @@
     </section>
 
     <section id="past-timers">
-      <div id="why">
-        <p>Track your time. Your past timers will appear here.</p>
-      </div>
+      <ul id="past-timers-list">
+        <li id="why">Track your time. Your past timers will appear here.</li>
+      </ul>
     </section>
 
 
@@ -51,11 +51,11 @@
 
 <!-- HANDLEBARS TEMPLATE -->
   <script id="timer_list_template" type="text/x-handlebars-template">
-    <div class="timer-one-line">
+    <li class="timer-one-line" id="\{{id}}">
         <i class="fa fa-check-circle-o"></i>
         <span class="timer-desc">\{{desc}}</span>
         <span class="timer-time">\{{took}}</span>
-    </div>
+    </li>
   </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>

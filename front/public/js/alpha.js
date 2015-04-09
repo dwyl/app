@@ -189,33 +189,30 @@ $(document).ready(function() {
    * rendertimers renders your list of past timers in the ui.
    * centralises all the view rendering.
    */
-   var rendertimers = function() {
-     // transform the timers object to an arry:
+  var rendertimers = function() {
+    // transform the timers Object to an Array so we can SORT it below:
     var arr = Object.keys(timers).map(function(id) {
-      var timer = timers[id];
-      timer.endtimestamp = new Date(timer.end).getTime(); // used to sort below
+    var timer = timers[id];
+    timer.endtimestamp = new Date(timer.end).getTime(); // used to sort below
       return timer;
     });
-     var byDate = arr.sort(function(a,b) {
-        console.log(" >>>>>>>>>>>>> "+ b.endtimestamp +" - " +a.endtimestamp)
-        return b.endtimestamp - a.endtimestamp;
-     });
-     // Add timer to past-timers list using handlebars
-     var raw_template = $('#timer_list_template').html();
-     var template = Handlebars.compile(raw_template);
-     var placeHolder = $("#past-timers");
-     var html = '';
-     console.log(timers);
-    //  var ids = Object.keys(timers);
-     byDate.map(function(i){
-       var timer = i // timers[i]
-       timer.took = timeformat(timer.elapsed); // repetitive ...
-       html += template(timer);
-       console.log(" >>> "+i, timer);
-     })
-     placeHolder.html(html);
-     return;
-   }
+    var byDate = arr.sort(function(a,b) {
+      return b.endtimestamp - a.endtimestamp;
+    });
+    // Add timer to past-timers list using handlebars
+    var raw_template = $('#timer_list_template').html();
+    var template = Handlebars.compile(raw_template);
+    var parent = $("#past-timers-list");
+    var html = '';
+    byDate.map(function(i){
+      var timer = i // timers[i]
+      timer.took = timeformat(timer.elapsed); // repetitive ...
+      html += template(timer);
+      console.log(" >>> "+i, timer);
+    })
+    parent.html(html); // completely re-write the DOM each time! :-O
+    return;
+  }
 
   /**
    * transform our timers object of timer objects into an array (list)
