@@ -108,6 +108,9 @@ $(document).ready(function() {
     clearInterval(counting);
     var timer = active;
     timer.desc = $('#desc').val();
+    if(!timer.desc || timer.desc.length < 1){
+      timer.desc = 'tap/click here to update the description for this timer'
+    }
     timer.end = new Date().toISOString();
     timer.elapsed = new Date(timer.end).getTime() - new Date(timer.start).getTime();
     timer.took = timeformat(timer.elapsed);

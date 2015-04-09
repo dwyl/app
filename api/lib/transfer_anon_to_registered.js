@@ -26,7 +26,7 @@ module.exports = function(req, reply, personid) {
       person: personid
     }
     ES.READ(session, function(ses) {
-      console.log("Anon SESSION :",ses);
+      // console.log("Anon SESSION :",ses);
       var session = ses._source;
       session.index = "time";
       session.type = "session";
@@ -36,7 +36,7 @@ module.exports = function(req, reply, personid) {
       // set the person.id of Existing Session
       ES.UPDATE(session, function(res2) {
         ES.READ(copy, function(res4){
-          console.log("SESSION Updated: ", res4);
+          // console.log("SESSION Updated: ", res4);
           // lookup all the records that were created with the anon session
           var query =  {
             "index": "time",
