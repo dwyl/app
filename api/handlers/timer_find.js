@@ -11,7 +11,7 @@ module.exports = function(req, reply) {
 
   ES.READ(record, function(res) {
     if(res.found) {
-      return reply(res);
+      return reply(res._source);
     }
     else {
       return reply(res).code(404);
