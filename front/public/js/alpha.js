@@ -320,11 +320,48 @@ $(document).ready(function() {
     //   }
     // });
 
+    $('#login').submit(function(event){
+      event.stopImmediatePropagation();
+      event.preventDefault();
+      register();
+    })
 
     $('#start').click(function() {
       start();
     })
 
+  }
+
+  var register = function(){
+    var person = {
+      email: $('#email').val(),
+      password: $('#password').val()
+    };
+
+    var jwt = localStorage.getItem('jwt');
+    $.ajax({
+      type: "POST",
+      headers: {
+        Authorization: jwt
+      },
+      url: "/register",
+      data: person,
+      dataType: "json",
+      success: function(res, status, xhr) {
+        console.log(' - - - - - - - - person register res:')
+        console.log(res);
+        // active = res;   // assign the new/updated timer record to active
+        // saveTimer(res); // add it to our local db of timers
+        // // db.set();
+        // callback();
+        var snd = new Audio("http://www.orangefreesounds.com/wp-content/uploads/2014/08/Mario-coin-sound.mp3"); // buffers automatically when created
+        snd.play();
+        $('#login').fadeOut();
+      },
+      error: function(xhr, err) {
+        console.log(err);
+      }
+    });
   }
 
   var editlistener = function(id) {
@@ -333,18 +370,18 @@ $(document).ready(function() {
     ed.click(function(e) {
       rendertimers('edit', this.id);
       // console.log(e);
-      console.log(this.id);
+      // console.log(this.id);
       // console.log($(this))
     });
-    console.log('#'+id+"-save");
+    // console.log('#'+id+"-save");
     $('#'+id+"-save").click(function(event){
       event.stopImmediatePropagation();
       event.preventDefault();
-      console.log(this);
+      // console.log(this);
       var timer = timers[this.id.replace('-save','')];
       timer.desc = $('#'+id+"-desc").val();
       timer.took = $('#'+id+"-took").val();
-      console.log("TIMER EDIT", timer);
+      // console.log("TIMER EDIT", timer);
       timerupsert(timer, function(){
         rendertimers();
       });
