@@ -226,6 +226,9 @@ $(document).ready(function() {
     arr.map(function(timer){
       editlistener(timer.id);
     });
+    if(id){
+      $('#'+id+'-desc').focus();
+    }
     return;
   }
 
