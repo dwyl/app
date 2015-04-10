@@ -1,11 +1,30 @@
 
 $(document).ready(function() {
+
+  /**
+  * db is our localStorage "database" (a stringified object)
+  * which allows us to be "offline-first". (for now) db.get & db.set
+  * are light wrappers around the respective localStorage methods
+  * later on we could chose to use a more gracefully degrating approach
+  * see: http://stackoverflow.com/a/12302790/1148249
+  */
+  var db = {
+    set : function(key, value) {
+      localStorage.setItem(key, JSON.stringify(value));
+      return;
+    },
+    get : function(key) {
+      return JSON.parse(localStorage.getItem(key));
+    }
+  }
+
   // we re-use these functionally-scoped GLOBALS quite a bit (hence defining here)
   var t = $('#t'); // document.getElementById('t'); // do we need jQuery?
-  var active = {}; // currently active (running) timer
-  var counting;    // store timer interval
-  var timers = {}; // store timers locally
+  var COUNTING;    // store timer interval
+  var TIMERS = db.get('TIMERS') || {};  // store timers locally
+  var ACTIVE = db.get('ACTIVE') || {};  // currently active (running) timer
   var DEFAULTDESC = "Tap/click here to update the description for this timer";
+  var JWT = db.get('jwt'); // if a JWT exists in localStorage use it.
 
   /**
    * timerupsert is our generic API CRUD method which allows us to
@@ -21,8 +40,7 @@ $(document).ready(function() {
       console.log("FAIL!")
       return false;
     }
-    timer = removedissalowedfields(timer);
-    var jwt = localStorage.getItem('jwt');
+    timer = removedisallowedfields(timer);
     $.ajax({
       type: "POST",
       headers: {
@@ -34,9 +52,7 @@ $(document).ready(function() {
       success: function(res, status, xhr) {
         console.log(' - - - - - - - - timerupsert res:')
         console.log(res.desc);
-        active = res;   // assign the new/updated timer record to active
-        saveTimer(res); // add it to our local db of timers
-        // db.set();
+        saveLocal(res); // add it to our local db of timers
         callback();
       },
       error: function(xhr, err) {
@@ -48,25 +64,28 @@ $(document).ready(function() {
   /**
    *
    */
-  function saveTimer(timer) {
-    if(!timers[timer.id]){
-      timers[timer.id] = {};
+  function saveLocal(timer) {
+    if(!TIMERS[timer.id]){
+      TIMERS[timer.id] = {};
     }
     for (var k in timer){
       if(timer.hasOwnProperty(k)){
-        timers[timer.id][k] = timer[k];
+        TIMERS[timer.id][k] = timer[k];
       }
     }
+    ACTIVE = timer;   // assign the new/updated timer record to active
+    db.set('ACTIVE', ACTIVE);
+    db.set('TIMERS', TIMERS);
     return;
   }
 
   /**
-   * Because the validation in API uses the JOI Models, if we send a field
+   * Because the validation in API uses JOI Models, if we send a field
    * that is NOT allowed in the Model, we will get an error back.
    * See Open discussion for this: https://github.com/ideaq/time/issues/100
    */
 
-  var removedissalowedfields = function(timer){
+  var removedisallowedfields = function(timer){
     delete timer.placeholder;
     delete timer.ct;    // see: models/timer.js (ct is not updatable!)
     delete timer.index;
@@ -95,7 +114,7 @@ $(document).ready(function() {
       // console.log("started: "+active.start);
     });
     // console.log("START: "+st);
-    counting = setInterval( function() {
+    COUNTING = setInterval( function() {
       var now = new Date().getTime();  // keep checking what time it is.
       var elapsed = now - timestamp;   // difference from when we started
       t.html(timeformat(elapsed));     // set the timer in the UI
@@ -103,11 +122,20 @@ $(document).ready(function() {
   }
 
   /**
+   * new timer
+   *
+   */
+
+   var newtimer = function() {
+
+   }
+
+  /**
    *  Stop the currently running timer.
    *
    */
   var stop = function() {
-    clearInterval(counting);
+    clearInterval(COUNTING);
     var timer = active;
     timer.desc = $('#desc').val();
     if(!timer.desc || timer.desc.length < 1){
@@ -136,8 +164,8 @@ $(document).ready(function() {
    */
   var clearactive = function(){
     // delete the active object's (own) properties
-    for (var k in active){
-      if(active.hasOwnProperty(k)){
+    for (var k in ACTIVE){
+      if(ACTIVE.hasOwnProperty(k)){
         delete active[k]; // clear the active timer because we stopped it!
       }
     }
@@ -195,10 +223,13 @@ $(document).ready(function() {
    * centralises all the view rendering.
    */
   var rendertimers = function(edit, id) {
+    if(!TIMERS || TIMERS.length === 0){
+      return; // don't try to render zero timers!
+    }
     // transform the timers Object to an Array so we can SORT it below:
-    var arr = Object.keys(timers).map(function(id) {
-    var timer = timers[id];
-    timer.endtimestamp = new Date(timer.end).getTime(); // used to sort below
+    var arr = Object.keys(TIMERS).map(function(id) {
+      var timer = TIMERS[id];
+      timer.endtimestamp = new Date(timer.end).getTime(); // used to sort below
       return timer;
     });
     var byDate = arr.sort(function(a,b) {
@@ -242,45 +273,78 @@ $(document).ready(function() {
    * transform our timers object of timer objects into an array (list)
    * of timer ojbects. So we can sort by date... see: sort above
    */
-   var timerlist = function() {
-     return Object.keys(timers).map(function(id){
-       return timers[id];
-     })
-    //  return arr;
-   }
+  //  var timerlist = function() {
+  //    return Object.keys(timers).map(function(id){
+  //      return timers[id];
+  //    })
+  //   //  return arr;
+  //  }
+
+
 
   /**
-   * db is our localStorage "database" (a stringified object)
-   * which allows us to be "offline-first" for nowdb.get & db.set
-   * are light wrappers around the respective localStorage methods
-   * later on we could chose to use a more gracefully degrating approach
-   * see: http://stackoverflow.com/a/12302790/1148249
+   * boot checks if the person has used the app before
+   * takes a callback
    */
-   var db = {
-     set : function(key, value) {
-       localStorage.setItem(key, JSON.stringify(value));
-       return;
-     },
-     get : function(key) {
-       return JSON.parse(localStorage.getItem(key));
-     }
-   }
+  var boot = function(callback) {
+    // check if the person already has a session
+    if(JWT) {
+      console.log('existing person', JWT);
+      return callback();
+    } else {
+      $.ajax({
+        type: "GET",
+        url: "/anonymous",
+        dataType: "json",
+        success: function(res, status, xhr) {
+          console.log(res);
+          // localStorage.setItem('person', res._id);
+          localStorage.setItem('jwt', xhr.getResponseHeader("authorization"));
+          // alert(xhr.getResponseHeader("authorization"));
+          callback();
+        }
+      });
+    }
+  } // END boot
 
   /**
    *  All event listeners go here
    */
   var listeners = function() {
-    $('#desc').change(function(){
-      if(active.id) { // active timer exists
+    var desc = $('#desc');
+    desc.focus(function(){
+      // are we going to clear the placeholder?
+    });
+
+    //saves description to the timer
+    // desc.blur(function(){
+    //   var newdesc = desc.val();
+    //   console.log("Desc WAS: "+active.desc)
+    //   console.log("Description was updated to "+ newdesc);
+    //   active.desc = newdesc;
+    //   timerupsert(active, function(){
+    //     // console.log("Updated");
+    //   });
+    // });
+
+    desc.change(function(){
+      if(ACTIVE.id) { // active timer exists
         var newdesc = desc.val();
-        console.log("Desc WAS: "+active.desc)
+        console.log("Desc WAS: "+ACTIVE.desc)
         console.log("Description was updated to "+ newdesc);
-        active.desc = newdesc;
-        timerupsert(active, function(){
+        ACTIVE.desc = newdesc;
+        timerupsert(ACTIVE, function(){
           console.log("Changed");
         });
       }
     })
+
+    // enter key: http://stackoverflow.com/questions/979662
+    // $(document).keypress(function(e) {
+    //   if(e.which == 13) {
+    //     alert('You pressed enter!');
+    //   }
+    // });
 
     $('#login').submit(function(event){
       event.stopImmediatePropagation();
@@ -291,11 +355,6 @@ $(document).ready(function() {
     $('#start').click(function() {
       start();
     })
-
-    $("#stop").click( function() {
-      console.log("#stop Clicked!")
-      return stop();
-    });
 
   }
 
@@ -317,6 +376,10 @@ $(document).ready(function() {
       success: function(res, status, xhr) {
         console.log(' - - - - - - - - person register res:')
         console.log(res);
+        // active = res;   // assign the new/updated timer record to active
+        // saveTimer(res); // add it to our local db of timers
+        // // db.set();
+        // callback();
         var snd = new Audio("http://www.orangefreesounds.com/wp-content/uploads/2014/08/Mario-coin-sound.mp3"); // buffers automatically when created
         snd.play();
         $('#login').fadeOut();
@@ -332,14 +395,16 @@ $(document).ready(function() {
     var ed = $('#'+id);
     ed.click(function(e) {
       rendertimers('edit', this.id);
-
+      // console.log(e);
+      // console.log(this.id);
+      // console.log($(this))
     });
     // console.log('#'+id+"-save");
     $('#'+id+"-save").click(function(event){
       event.stopImmediatePropagation();
       event.preventDefault();
       // console.log(this);
-      var timer = timers[this.id.replace('-save','')];
+      var timer = TIMERS[this.id.replace('-save','')];
       timer.desc = $('#'+id+"-desc").val();
       if(timer.desc.trim().length === 0){
         timer.desc = DEFAULTDESC;
@@ -353,38 +418,30 @@ $(document).ready(function() {
     return;
   }
 
-  /**
-   * boot checks if the person has used the app before
-   * takes a callback
-   */
-  var boot = function(callback) {
-    // check if the person already has a session
-    if(localStorage.getItem('jwt')) {
-      console.log('existing person', localStorage.getItem('jwt'));
-      return callback();
-    } else {
-      $.ajax({
-        type: "GET",
-        url: "/anonymous",
-        dataType: "json",
-        success: function(res, status, xhr) {
-          console.log(res);
-          // localStorage.setItem('person', res._id);
-          localStorage.setItem('jwt', xhr.getResponseHeader("authorization"));
-          // alert(xhr.getResponseHeader("authorization"));
-          callback();
-        }
-      });
-    }
-  } // END boot
+  var sb = $("#stop"); // stop button
+  sb.click( function() {
+    console.log("#stop Clicked!")
+    return stop();
+  });
 
-
-  localStorage.clear();
+  // localStorage.clear();
   boot(function(){
+    if(TIMERS && TIMERS.length > 0){
+      rendertimers(); // don't render past timers if there aren't any!
+    }
     console.log('Booted.');
+    if(ACTIVE){
+      // continue
+    }
+    if(JWT) {
+
+    }
     start(); // auto start when the page loads
     listeners();
   });
 
   console.log('working!')
+
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
+
 });
