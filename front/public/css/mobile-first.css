@@ -67,6 +67,10 @@ p {
         font-size:1.8em;
       }
 
+    #start{
+      display: none;
+    }
+
 /*======== Timer description ========*/
   #main .timer-desc{
     display: block;
@@ -237,12 +241,19 @@ p {
   width: 100%;
   position: fixed;
   bottom: 0;
+  display: none; /*To be shown when a person is logged in only */
 }
 
   #profile-button{
     color: white;
     font-size: 1.5em;
     padding: 0.1em 0.2em;
+  }
+
+  #offlinemsg{
+    display: inline-block;
+    font-size: 0.7em;
+    margin: auto 0.5em;
   }
 
 /*==============================

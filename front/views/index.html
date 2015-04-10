@@ -23,7 +23,7 @@
       <button id="stop">
         <i class="fa fa-stop" aria-hidden="true"></i>
       </button>
-      <button id="start" style="display:none;">
+      <button id="start">
         <i class="fa fa-play" aria-hidden="true"></i>
       </button>
     </section>
@@ -47,6 +47,15 @@
         </div>
       </form>
     </section>
+
+    <!-- section hidden until person logs in  -->
+    <section id="nav">
+      <div id="profile-button">
+        <i class="fa fa-user"></i>
+        <p id="offlinemsg"> You are logged in as x/offline</p>
+      </div>
+    </section>
+
 
 <!-- HANDLEBARS TEMPLATE -->
   <script id="timer_list_template" type="text/x-handlebars-template">
