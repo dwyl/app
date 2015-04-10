@@ -315,7 +315,7 @@ $(document).ready(function() {
     $('#login').submit(function(event){
       event.stopImmediatePropagation();
       event.preventDefault();
-      register();
+      login();
     })
 
     $('#start').click(function() {
@@ -400,17 +400,17 @@ $(document).ready(function() {
        headers: {
          Authorization: JWT
        },
-       url: "/register",
+       url: "/login",
        data: person,
        dataType: "json",
        success: function(res, status, xhr) {
-         console.log(' - - - - - - - - person register res:')
+         console.log(' - - - - - - - - LOGIN res:')
          console.log(res);
-         var snd = new Audio("http://www.orangefreesounds.com/wp-content/uploads/2014/08/Mario-coin-sound.mp3"); // buffers automatically when created
-         snd.play();
          $('#login').fadeOut();
+         $('#nav').fadeOut();
        },
        error: function(xhr, err) {
+         console.log(xhr);
          console.log(err);
        }
      });
