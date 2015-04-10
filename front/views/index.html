@@ -29,36 +29,38 @@
     </section>
 
     <section id="past-timers">
-      <ul id="past-timers-list">
-        <li id="why">Track your time. Your past timers will appear here.</li>
-      </ul>
+      <div id="past-timers-list">
+        <div id="why">Track your time. Your past timers will appear here.</div>
+      </div>
     </section>
 
     <section>
       <form id="login">
         <div class="email fa fa-envelope-o">
-            <input type="text" required placeholder="Email Address" name="email" id="email"/>
+            <input type="email" required placeholder="Email Address" name="email" id="email"/>
         </div>
         <div class="pw fa fa-lock">
             <input type="password" placeholder=" Password" name="password" id="password"/>
         </div>
-        <button type="submit" id="login-button">Save your timer</button>
+        <div id="login-button">
+          <button type="submit">Save your timer</button>
+        </div>
       </form>
     </section>
 
 <!-- HANDLEBARS TEMPLATE -->
   <script id="timer_list_template" type="text/x-handlebars-template">
-    <li class="timer-one-line" id="\{{id}}">
+    <div id="\{{id}}" class="timer-one-line">
         <i class="fa fa-check-circle-o"></i>
-        <span class="timer-desc">\{{desc}}</span>
+        <span class="timer-desc" placeholder="Tap/click here to update the description for this timer">\{{desc}}</span>
         <span class="timer-time">\{{took}}</span>
-    </li>
+    </div>
   </script>
 
 <!-- Handlebars form for updating the description of the timer -->
 <script id="timer_edit_template" type="text/x-handlebars-template">
   <form class="timer-one-line" id="\{{id}}-edit">
-      <button type="submit" id="\{{id}}-save" class="fa floppy-o">save</button>
+      <button type="submit" id="\{{id}}-save">save</button>
       <input class="timer-desc" type="text" autocomplete id="\{{id}}-desc" value="\{{desc}}" />
       <!-- <input type class="timer-time" type="text" autocomplete id="\{{id}}-took" value="\{{took}}" /> -->
       <span class="timer-time">\{{took}}</span>

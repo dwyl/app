@@ -102,7 +102,7 @@ p {
 
 /*======== Message when there are no timers ========*/
   #why {
-    font-size: 3em;
+    font-size: 2.5em;
     font-family: 'Open Sans Condensed', sans-serif;
     color: #d3d3d3;
     width: 90%;
@@ -114,17 +114,18 @@ p {
   width: 100%;
   padding:0.7em 0.2em;
   display: table;
+  font-size:1em;
 }
 
   .timer-one-line{
     display: table-row;
     border-bottom: 1px solid #d3d3d3;
+    /*width: 100%;*/
   }
 
   .timer-one-line span, .timer-one-line i{
     display: table-cell;
     padding: 0 0.3em;
-    font-size:1em;
   }
 
   .timer-one-line i{
@@ -138,6 +139,37 @@ p {
     span.timer-time{
       text-align:right;
     }
+
+/*======== Past timer edit mode ========*/
+
+.timer-one-line button{
+  border-radius:0;
+  color: #fff;
+  background: #323232;
+  border: solid 1px #fff;
+  text-transform:uppercase;
+  text-align: center;
+  padding:0.3em;
+  margin: 0 0.5em 0 0;
+  /*font-size:0.8em;*/
+}
+
+  .timer-one-line input{
+    border: 0;
+    border-bottom: solid 1px #403f3f;
+    resize: horizontal;
+    /*margin-left: 0.3em;*/
+    /*width: 90%;*/
+    background:none;
+    font-size:0.9em;
+    font-family: 'Open Sans', sans-serif;
+    color: #403f3f;
+  }
+
+  .timer-one-line input:focus{
+    display: inline-block;
+    outline: 0;
+  }
 
 /*==============================
     Section | LOGIN
@@ -194,7 +226,7 @@ p {
       text-align: center;
       background: none;
       padding:0.5em;
-      margin: 0 0 0.7em;
+      margin: 0 0 0.5em;
     }
 
 /*==============================
