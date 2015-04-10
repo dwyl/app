@@ -5,6 +5,7 @@ $(document).ready(function() {
   var active = {}; // currently active (running) timer
   var counting;    // store timer interval
   var timers = {}; // store timers locally
+  var DEFAULTDESC = "Tap/click here to update the description for this timer";
 
   /**
    * timerupsert is our generic API CRUD method which allows us to
@@ -32,7 +33,7 @@ $(document).ready(function() {
       dataType: "json",
       success: function(res, status, xhr) {
         console.log(' - - - - - - - - timerupsert res:')
-        console.log(res);
+        console.log(res.desc);
         active = res;   // assign the new/updated timer record to active
         saveTimer(res); // add it to our local db of timers
         // db.set();
@@ -66,6 +67,7 @@ $(document).ready(function() {
    */
 
   var removedissalowedfields = function(timer){
+    delete timer.placeholder;
     delete timer.ct;    // see: models/timer.js (ct is not updatable!)
     delete timer.index;
     delete timer.type;
@@ -109,7 +111,7 @@ $(document).ready(function() {
     var timer = active;
     timer.desc = $('#desc').val();
     if(!timer.desc || timer.desc.length < 1){
-      timer.desc = 'tap/click here to update the description for this timer'
+      timer.desc = DEFAULTDESC
     }
     timer.end = new Date().toISOString();
     timer.elapsed = new Date(timer.end).getTime() - new Date(timer.start).getTime();
@@ -213,6 +215,10 @@ $(document).ready(function() {
       var timer = i // timers[i]
       timer.took = timeformat(timer.elapsed); // repetitive ...
       // show edit form if render called with edit true and an id
+      if(timer.desc === DEFAULTDESC && id) {
+        timer.placeholder = DEFAULTDESC;
+        timer.desc = "";
+      }
       if(edit && timer.id === id) {
         html += editor_template(timer);
       }
@@ -386,6 +392,9 @@ $(document).ready(function() {
       // console.log(this);
       var timer = timers[this.id.replace('-save','')];
       timer.desc = $('#'+id+"-desc").val();
+      if(timer.desc.trim().length === 0){
+        timer.desc = DEFAULTDESC;
+      }
       timer.took = $('#'+id+"-took").val();
       // console.log("TIMER EDIT", timer);
       timerupsert(timer, function(){

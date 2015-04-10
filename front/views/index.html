@@ -34,7 +34,7 @@
       </div>
     </section>
 
-    <section>
+    <section id="register-login">
       <form id="login">
         <div class="email fa fa-envelope-o">
             <input type="email" required placeholder="Email Address" name="email" id="email"/>
@@ -52,7 +52,7 @@
   <script id="timer_list_template" type="text/x-handlebars-template">
     <div id="\{{id}}" class="timer-one-line">
         <i class="fa fa-check-circle-o"></i>
-        <span class="timer-desc" placeholder="Tap/click here to update the description for this timer">\{{desc}}</span>
+        <span class="timer-desc">\{{desc}}</span>
         <span class="timer-time">\{{took}}</span>
     </div>
   </script>
@@ -61,7 +61,7 @@
 <script id="timer_edit_template" type="text/x-handlebars-template">
   <form class="timer-one-line" id="\{{id}}-edit">
       <button type="submit" id="\{{id}}-save">save</button>
-      <input class="timer-desc" type="text" autocomplete id="\{{id}}-desc" value="\{{desc}}" />
+      <input class="timer-desc" type="text" autocomplete id="\{{id}}-desc" value="\{{desc}}" placeholder="\{{placeholder}}"/>
       <!-- <input type class="timer-time" type="text" autocomplete id="\{{id}}-took" value="\{{took}}" /> -->
       <span class="timer-time">\{{took}}</span>
   </form>
