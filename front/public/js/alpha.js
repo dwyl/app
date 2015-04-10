@@ -33,8 +33,7 @@ $(document).ready(function() {
       dataType: "json",
       success: function(res, status, xhr) {
         console.log(' - - - - - - - - timerupsert res:')
-        console.log(res.desc);
-        active = res;   // assign the new/updated timer record to active
+        console.log(res);
         saveTimer(res); // add it to our local db of timers
         // db.set();
         callback();
@@ -57,6 +56,9 @@ $(document).ready(function() {
         timers[timer.id][k] = timer[k];
       }
     }
+    active = timer;
+    db.set('active', timer)
+    db.set('timers', timers);
     return;
   }
 
@@ -101,6 +103,24 @@ $(document).ready(function() {
       t.html(timeformat(elapsed));     // set the timer in the UI
     }, 1000/3); // should we update the view more/less frequently?
   }
+
+  /**
+   * continue an existing timer.
+   */
+  var keeptiming = function() {
+    $('#start').hide();     // ensure the start button cant be clicked twice
+    $('#stop').show();      // stop button visible when timer is running
+    var timer = active;     // set up the new timer record
+    // console.log("START: "+st);
+    $('#desc').val(timer.desc);
+    var timestamp = new Date(timer.start).getTime();
+    counting = setInterval( function() {
+      var now = new Date().getTime();  // keep checking what time it is.
+      var elapsed = now - timestamp;   // difference from when we started
+      t.html(timeformat(elapsed));     // set the timer in the UI
+    }, 1000/3); // should we update the view more/less frequently?
+  }
+
 
   /**
    *  Stop the currently running timer.
@@ -195,15 +215,7 @@ $(document).ready(function() {
    * centralises all the view rendering.
    */
   var rendertimers = function(edit, id) {
-    // transform the timers Object to an Array so we can SORT it below:
-    var arr = Object.keys(timers).map(function(id) {
-    var timer = timers[id];
-    timer.endtimestamp = new Date(timer.end).getTime(); // used to sort below
-      return timer;
-    });
-    var byDate = arr.sort(function(a,b) {
-      return b.endtimestamp - a.endtimestamp;
-    });
+    var byDate = timerlist();
     // Add timer to past-timers list using handlebars
     var raw_template = $('#timer_list_template').html();
     var template = Handlebars.compile(raw_template);
@@ -229,11 +241,13 @@ $(document).ready(function() {
     })
     parent.html(html); // completely re-write the DOM each time! :-O
     // attach a listener event to each timer list entry
-    arr.map(function(timer){
-      editlistener(timer.id);
+    byDate.map(function(timer){
+      editlistener(timer.id); // multiple listeners...?
     });
     if(id){
       $('#'+id+'-desc').focus();
+      // cursor at END of input field see: http://stackoverflow.com/a/4609476/1148249
+      $('#'+id+'-desc').val($('#'+id+'-desc').val());
     }
     return;
   }
@@ -243,10 +257,16 @@ $(document).ready(function() {
    * of timer ojbects. So we can sort by date... see: sort above
    */
    var timerlist = function() {
-     return Object.keys(timers).map(function(id){
-       return timers[id];
-     })
-    //  return arr;
+     // transform the timers Object to an Array so we can SORT it below:
+     var arr = Object.keys(timers).map(function(id) {
+       var timer = timers[id];
+       timer.endtimestamp = new Date(timer.end).getTime(); // used to sort below
+       return timer;
+     });
+     var byDate = arr.sort(function(a,b) {
+       return b.endtimestamp - a.endtimestamp;
+     });
+     return byDate;
    }
 
   /**
@@ -270,7 +290,8 @@ $(document).ready(function() {
    *  All event listeners go here
    */
   var listeners = function() {
-    $('#desc').change(function(){
+    var desc = $('#desc');
+    desc.change(function(){
       if(active.id) { // active timer exists
         var newdesc = desc.val();
         console.log("Desc WAS: "+active.desc)
@@ -354,6 +375,30 @@ $(document).ready(function() {
   }
 
   /**
+   * loadtimers fetches existing timers from API
+   *
+   */
+   var loadtimers = function() {
+     // first render the LOCAL timers
+     timers = db.get('timers');
+     active = db.get('active');
+     console.log(' - - - - - - ACTIVE:')
+     console.log(active);
+     console.log(' - - - - - - TIMERS:')
+     console.log(timers);
+
+     if(timers && timers.length !== 0){
+       rendertimers(); // don't render past timers if there aren't any!
+     }
+     if(active) {
+       keeptiming();
+     }
+     else{
+       start(); // auto start when the page loads
+     }
+   }
+
+  /**
    * boot checks if the person has used the app before
    * takes a callback
    */
@@ -372,17 +417,17 @@ $(document).ready(function() {
           // localStorage.setItem('person', res._id);
           localStorage.setItem('jwt', xhr.getResponseHeader("authorization"));
           // alert(xhr.getResponseHeader("authorization"));
-          callback();
+          return callback();
         }
       });
     }
   } // END boot
 
 
-  localStorage.clear();
+  // localStorage.clear();
   boot(function(){
     console.log('Booted.');
-    start(); // auto start when the page loads
+    loadtimers();
     listeners();
   });
 
