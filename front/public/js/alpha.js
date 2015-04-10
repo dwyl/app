@@ -6,7 +6,7 @@ $(document).ready(function() {
   var counting;    // store timer interval
   var timers = {}; // store timers locally
   var DEFAULTDESC = "Tap/click here to update the description for this timer";
-
+  var JWT;
   /**
    * timerupsert is our generic API CRUD method which allows us to
    * CREATE a new timer, UPDATE the description of the timer and
@@ -22,11 +22,10 @@ $(document).ready(function() {
       return false;
     }
     timer = removedissalowedfields(timer);
-    var jwt = localStorage.getItem('jwt');
     $.ajax({
       type: "POST",
       headers: {
-        Authorization: jwt
+        Authorization: JWT
       },
       url: "/timer/upsert",
       data: timer,
@@ -115,7 +114,7 @@ $(document).ready(function() {
     var timer = active;     // set up the new timer record
     // console.log("START: "+st);
     if(timer.desc !== DEFAULTDESC){
-      $('#desc').val(timer.desc);  
+      $('#desc').val(timer.desc);
     }
     var timestamp = new Date(timer.start).getTime();
     counting = setInterval( function() {
@@ -132,6 +131,8 @@ $(document).ready(function() {
    */
   var stop = function() {
     clearInterval(counting);
+    console.log(' - - - - - - ACTIVE:')
+    console.log(active);
     var timer = active;
     timer.desc = $('#desc').val();
     if(!timer.desc || timer.desc.length < 1){
@@ -156,7 +157,7 @@ $(document).ready(function() {
   }
 
   /**
-   *  clearactive unsets the active global object so we can create a fresh timer
+   *  clearactive unsets the active GLOBAL object so we can create a fresh timer
    */
   var clearactive = function(){
     // delete the active object's (own) properties
@@ -165,6 +166,7 @@ $(document).ready(function() {
         delete active[k]; // clear the active timer because we stopped it!
       }
     }
+    return db.set('active', {});
   }
 
 
@@ -333,11 +335,11 @@ $(document).ready(function() {
       password: $('#password').val()
     };
 
-    var jwt = localStorage.getItem('jwt');
+    JWT = localStorage.getItem('JWT');
     $.ajax({
       type: "POST",
       headers: {
-        Authorization: jwt
+        Authorization: JWT
       },
       url: "/register",
       data: person,
@@ -382,6 +384,39 @@ $(document).ready(function() {
   }
 
   /**
+   * login attemps to log the person in using the email address and password
+   * they have entered into the reg/login form. If login succeeds we display
+   * the "nav" informing them of this. else we attempt to register them.
+   */
+   var login = function(){
+     var person = {
+       email: $('#email').val(),
+       password: $('#password').val()
+     };
+
+     JWT = localStorage.getItem('JWT');
+     $.ajax({
+       type: "POST",
+       headers: {
+         Authorization: JWT
+       },
+       url: "/register",
+       data: person,
+       dataType: "json",
+       success: function(res, status, xhr) {
+         console.log(' - - - - - - - - person register res:')
+         console.log(res);
+         var snd = new Audio("http://www.orangefreesounds.com/wp-content/uploads/2014/08/Mario-coin-sound.mp3"); // buffers automatically when created
+         snd.play();
+         $('#login').fadeOut();
+       },
+       error: function(xhr, err) {
+         console.log(err);
+       }
+     });
+   }
+
+  /**
    * loadtimers fetches existing timers from API
    *
    */
@@ -397,7 +432,7 @@ $(document).ready(function() {
      if(timers && timers.length !== 0){
        rendertimers(); // don't render past timers if there aren't any!
      }
-     if(active) {
+     if(active && active.id) {
        keeptiming();
      }
      else{
@@ -411,8 +446,9 @@ $(document).ready(function() {
    */
   var boot = function(callback) {
     // check if the person already has a session
-    if(localStorage.getItem('jwt')) {
-      console.log('existing person', localStorage.getItem('jwt'));
+    JWT = localStorage.getItem('JWT');
+    if(JWT) {
+      console.log('existing person', JWT);
       return callback();
     } else {
       $.ajax({
@@ -422,7 +458,8 @@ $(document).ready(function() {
         success: function(res, status, xhr) {
           console.log(res);
           // localStorage.setItem('person', res._id);
-          localStorage.setItem('jwt', xhr.getResponseHeader("authorization"));
+          localStorage.setItem('JWT', xhr.getResponseHeader("authorization"));
+          JWT = xhr.getResponseHeader("authorization");
           // alert(xhr.getResponseHeader("authorization"));
           return callback();
         }
