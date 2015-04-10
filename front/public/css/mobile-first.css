@@ -241,7 +241,7 @@ p {
   width: 100%;
   position: fixed;
   bottom: 0;
-  display: none; /*To be shown when a person is logged in only */
+  /*display: none; To be shown when a person is logged in only */
 }
 
   #profile-button{

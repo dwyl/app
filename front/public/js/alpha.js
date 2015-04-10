@@ -34,8 +34,9 @@ $(document).ready(function() {
       success: function(res, status, xhr) {
         console.log(' - - - - - - - - timerupsert res:')
         console.log(res);
+        active = res;
+        db.set('active', res)
         saveTimer(res); // add it to our local db of timers
-        // db.set();
         callback();
       },
       error: function(xhr, err) {
@@ -48,6 +49,9 @@ $(document).ready(function() {
    *
    */
   function saveTimer(timer) {
+    if(!timers) {
+      timers = {}
+    }
     if(!timers[timer.id]){
       timers[timer.id] = {};
     }
@@ -56,8 +60,6 @@ $(document).ready(function() {
         timers[timer.id][k] = timer[k];
       }
     }
-    active = timer;
-    db.set('active', timer)
     db.set('timers', timers);
     return;
   }
@@ -112,7 +114,9 @@ $(document).ready(function() {
     $('#stop').show();      // stop button visible when timer is running
     var timer = active;     // set up the new timer record
     // console.log("START: "+st);
-    $('#desc').val(timer.desc);
+    if(timer.desc !== DEFAULTDESC){
+      $('#desc').val(timer.desc);  
+    }
     var timestamp = new Date(timer.start).getTime();
     counting = setInterval( function() {
       var now = new Date().getTime();  // keep checking what time it is.
@@ -223,8 +227,11 @@ $(document).ready(function() {
     var editor_template = Handlebars.compile(editor_template_raw);
     var parent = $("#past-timers-list");
     var html = '';
-    byDate.map(function(i) {
-      var timer = i // timers[i]
+    byDate.map(function(timer) {
+      // don't show active timer in list of past timers
+      if(timer.id === active.id) {
+        return;
+      }
       timer.took = timeformat(timer.elapsed); // repetitive ...
       // show edit form if render called with edit true and an id
       if(timer.desc === DEFAULTDESC && id) {
