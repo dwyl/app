@@ -3,7 +3,7 @@ var server = require("../../web.js");
 var dir    = __dirname.split('/')[__dirname.split('/').length-1];
 var file   = dir + __filename.replace(__dirname, '') + " -> ";
 var token;
-var records = 100;
+var records = 10;
 var countdown = records;
 
 var drop = require('./z_drop');
@@ -83,10 +83,11 @@ test(file + "GET /timer/all to list all timers", function(t) {
   };
   setTimeout(function(){
     server.inject(options, function(res) {
-      // console.log(res.result);
+      console.log(res.result);
       var T = JSON.parse(res.payload);
+      // console.log(T);
       t.equal(res.statusCode, 200, "Find all records for this person");
-      t.true(T.hits.total > 97, "TRAVIS (Free/Slow) ElasticSearch (ONLY) Found: "+T.hits.total);
+      t.true(T.length > 9, "TRAVIS (Free/Slow) ElasticSearch (ONLY) Found: "+T.length);
       server.stop();
       t.end();
     });

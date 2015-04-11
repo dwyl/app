@@ -9,7 +9,7 @@ module.exports = function(req, reply) {
   };
   ES.SEARCH(query, function(res) {
     if(res.hits.total > 0) {
-      return reply(res);
+      return reply(res.hits.hits);
     }
     else {
       return reply(res).code(404);
