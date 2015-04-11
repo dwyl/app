@@ -1,7 +1,7 @@
 var ES = require('esta');
+var JWTSign  = require('../lib/auth_jwt_sign.js'); // used to sign JWTS duh.
 
 module.exports = function timer_find_all(req, reply, statusCode) {
-  var token = req.headers.authorization;
   if(!statusCode || typeof statusCode === 'undefined') {
     statusCode = 404;
   }
@@ -13,7 +13,10 @@ module.exports = function timer_find_all(req, reply, statusCode) {
   };
   ES.SEARCH(query, function(res) {
     if(res.hits.total > 0) {
-      return reply({ timers: res.hits.hits }).header("Authorization", token);
+      // assign a new JWT with the person's ID in it!
+      JWTSign(req, function(token, esres){
+        return reply({ timers: res.hits.hits }).header("Authorization", token);
+      }); // Asynchronous
     }
     else {
       return reply(res).code(statusCode);

@@ -6,7 +6,7 @@ var file  = dir + __filename.replace(__dirname, '') + " -> ";
 
 module.exports = function sign(request, callback) {
   // payload is the object that will be signed by JWT below
-  var payload = { jti:aguid() }; // v4 random UUID used as Session ID below
+  var payload = { jti : aguid() }; // v4 random UUID used as Session ID below
 
   if (request.payload && request.payload.email) {
     payload.person = aguid(request.payload.email);
