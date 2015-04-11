@@ -20,6 +20,12 @@ p {
   margin: 0;
 }
 
+/*prevents iOS from zooming into input fields which people
+have to manually zoom out of*/
+input {
+  font-size: 1em;
+}
+
 /* Making placeholder text disappear when clicked on */
 [placeholder]:focus::-webkit-input-placeholder {
   transition: opacity 0.5s 0.5s ease;
@@ -103,7 +109,6 @@ p {
   }
 
     #active-desc input{
-      font-size: 0.9em;
       font-family: 'Open Sans', sans-serif;
       text-align: center;
       background: none;
@@ -189,7 +194,6 @@ p {
     resize: horizontal;
     border-radius: 0;
     background:none;
-    font-size:0.9em;
     font-family: 'Open Sans', sans-serif;
     color: #403f3f;
   }
