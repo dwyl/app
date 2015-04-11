@@ -35,6 +35,31 @@ p {
 }
 
 /*==============================
+    Feedback triangle
+================================*/
+/*Triangle from: http://callmenick.com/2014/05/03/css-triangles/*/
+#feedback-triangle{
+  position:absolute;
+  top:0;
+  margin: 0;
+  width: 2em;
+  height: 2em;
+  border-top: solid 2.8em #323232; /*or red: #c81e32*/
+  border-left: solid 2.8em #323232;
+  border-right: solid 2.8em transparent;
+  border-bottom: solid 2.8em transparent;
+}
+
+  #feedback-triangle i:before{
+    position:relative;
+    bottom: 1em;
+    right: 1em;
+    color:white;
+    font-size: 2em;
+  }
+
+
+/*==============================
   Section | MAIN (current timer)
 ================================*/
 #main {
@@ -162,8 +187,7 @@ p {
     border: 0;
     border-bottom: solid 1px #403f3f;
     resize: horizontal;
-    /*margin-left: 0.3em;*/
-    /*width: 90%;*/
+    border-radius: 0;
     background:none;
     font-size:0.9em;
     font-family: 'Open Sans', sans-serif;
@@ -171,7 +195,6 @@ p {
   }
 
   .timer-one-line input:focus{
-    display: inline-block;
     outline: 0;
   }
 
