@@ -65,7 +65,7 @@ test(file + "Register new person to create a few timers", function(t) {
     payload : person
   };
   server.inject(options, function(res) {
-    console.log(res.result);
+    // console.log(res.result);
     t.equal(res.statusCode, 200, "Session Created = "+res.result.created);
     token = res.headers.authorization;
     // can't create create functions inside a for loop so no anon callbacks!
@@ -83,11 +83,11 @@ test(file + "GET /timer/all to list all timers", function(t) {
   };
   setTimeout(function(){
     server.inject(options, function(res) {
-      console.log(res.result);
+      // console.log(res.result);
       var T = JSON.parse(res.payload);
       // console.log(T);
       t.equal(res.statusCode, 200, "Find all records for this person");
-      t.true(T.length > 9, "TRAVIS (Free/Slow) ElasticSearch (ONLY) Found: "+T.length);
+      t.true(T.timers.length > 9, "TRAVIS (Free/Slow) ElasticSearch (ONLY) Found: "+T.timers.length);
       server.stop();
       t.end();
     });
@@ -113,9 +113,8 @@ test(file + "GET /timer/all should fail for Timmy no timers", function(t) {
     };
     setTimeout(function(){
       server.inject(options, function(res) {
-        console.log(res.result);
+        // console.log(res.result);
         var T = JSON.parse(res.payload);
-        console.log(T);
         t.equal(res.statusCode, 404, "Timmay! has no timers...");
         // t.equal(T.hits.total, 100, "100 records found");
         server.stop();

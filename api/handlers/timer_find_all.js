@@ -1,6 +1,10 @@
 var ES = require('esta');
 
-module.exports = function(req, reply) {
+module.exports = function timer_find_all(req, reply, statusCode) {
+  var token = req.headers.authorization;
+  if(!statusCode || typeof statusCode === 'undefined') {
+    statusCode = 404;
+  }
   var query =  {
     "index": "time",
     "type": "timer",
@@ -9,10 +13,10 @@ module.exports = function(req, reply) {
   };
   ES.SEARCH(query, function(res) {
     if(res.hits.total > 0) {
-      return reply(res.hits.hits);
+      return reply({ timers: res.hits.hits }).header("Authorization", token);
     }
     else {
-      return reply(res).code(404);
+      return reply(res).code(statusCode);
     }
   });
 }
