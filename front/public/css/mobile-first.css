@@ -46,7 +46,7 @@ p {
 
 
 /*======== Timer time ========*/
-  #main .timer-time {
+  #active-time {
     font-size: 3em;
     display: inline-block;
     margin: 0 auto;
@@ -72,12 +72,12 @@ p {
     }
 
 /*======== Timer description ========*/
-  #main .timer-desc{
+  #active-desc{
     display: block;
     margin: 0 auto;
   }
 
-    #main .timer-desc input{
+    #active-desc input{
       font-size: 0.9em;
       font-family: 'Open Sans', sans-serif;
       text-align: center;
@@ -87,7 +87,7 @@ p {
       border-radius: 0; /*iOS shows curves on border without this*/
     }
 
-      #main .timer-desc input:focus{
+      #active-desc input:focus{
           outline:0;
       }
 
@@ -114,7 +114,7 @@ p {
   }
 
 /*======== Past timer list ========*/
-#past-timers{
+#past-timers-list{
   width: 100%;
   padding:0.7em 0.2em;
   display: table;
