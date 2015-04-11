@@ -6,52 +6,13 @@ var token;
 var records = 10;
 var countdown = records;
 
-var drop = require('./z_drop');
+var helpers = require('./_test_helpers');
 test(file+ "Teardown", function(t) {
-  drop(function(res){
+  helpers.drop(function(res){
     t.equal(res.acknowledged, true, file+"ALL Records DELETED!");
     t.end();
   }).end();
 });
-
-function create(t, callback) {
-  var timer = {
-    "desc" : "My Amazing Timer #"+countdown,
-    "start" : new Date().toISOString()
-  }
-  var options = {
-    method: "POST",
-    url: "/timer/new",
-    payload: timer,
-    headers : { authorization : token }
-  };
-  server.inject(options, function(res) {
-    countdown--;
-    // console.log(" >>> "+countdown + " res.created "+ T.created);
-    if(countdown === 0) {
-      var T = JSON.parse(res.payload);
-      t.equal(res.statusCode, 200, records+ " New timers started! " + T.start);
-      callback(res, t);
-    }
-  });
-}
-
-function finish(res, t){
-  // console.log(res);
-  var T = JSON.parse(res.payload);
-  var tid = T.id;
-  var options = {
-    method: "GET",
-    url: "/timer/"+tid,
-    headers : { authorization : token }
-  };
-
-  server.inject(options, function(res) {
-    t.equal(res.statusCode, 200, "New timer retrieved!"+'\n');
-    server.stop();
-    t.end();
-  });
-}
 
 test(file + "Register new person to create a few timers", function(t) {
   var person = {
@@ -68,10 +29,7 @@ test(file + "Register new person to create a few timers", function(t) {
     // console.log(res.result);
     t.equal(res.statusCode, 200, "Session Created = "+res.result.created);
     token = res.headers.authorization;
-    // can't create create functions inside a for loop so no anon callbacks!
-    for(var i = 0; i < records; i++) {
-      create(t, finish);
-    } // end for
+    helpers.create_many(records, t, token, helpers.finish);
   });
 });
 

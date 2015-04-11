@@ -13,7 +13,7 @@ var find_all = require('../handlers/timer_find_all'); // see: http://git.io/vvf7
 
 module.exports = function(req, reply) {
   var personid = aguid(req.payload.email);
-  console.log(' TRANSFER: - - - - - - - - - - - - - - - - -> '+req.payload.email);
+  // console.log(' TRANSFER: - - - - - - - - - - - - - - - - -> '+req.payload.email);
   var token = req.headers.authorization;
   JWT.verify(token, process.env.JWT_SECRET, function(err, decoded) {
     var session = {
@@ -66,12 +66,12 @@ module.exports = function(req, reply) {
               timer.type = hit._type;
               timer.person = personid; // the whole point of this!
               ES.UPDATE(timer, function(res){
-                console.log("VERSION:",res._version);
+                // console.log("VERSION:",res._version);
                 countdown--;
                 if(countdown === 0) {
                   return find_all(req, reply, 200);
                   // return reply(res).header("Authorization", token);
-                }
+                } else { } // do nothing istanbul!!
               })
             }) // END forEach
             // return reply(res).header("Authorization", token);

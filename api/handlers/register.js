@@ -31,7 +31,7 @@ module.exports = function handler(req, reply) {
             Hoek.assert(res.created, 'Person NOT Registered!'); // only if DB fails!
             // transfer any anonymous timers & session to the person
             if(req.headers.authorization){
-              console.log("AUTH TOKEN:"+req.headers.authorization);
+              // console.log("AUTH TOKEN:"+req.headers.authorization);
               return transfer(req, reply);
             }
             else {
