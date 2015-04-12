@@ -24,7 +24,7 @@ var decoded = JWT.verify(token, process.env.JWT_SECRET);
 // console.log(" - - - - - - - - - - - - - - - - - - - decoded: ")
 // console.log(decoded);
 // console.log(" - - - - - - - - - - - - - - - - - - - ")
-    helpers.create_many(5, t, token, function(res){
+    helpers.create_many(5, t, token, function(res) {
       // console.log(res.result);
       tid = res.result.id;
       t.end();
@@ -44,7 +44,7 @@ test(file + "Transfer records created by anon to registered person", function(t)
       t.equal(res.statusCode, 200, "Person registration is succesful");
       t.end();
     });
-  },400);
+  },1000);
 })
 
 var aguid = require('aguid');
@@ -61,9 +61,9 @@ test(file + "Lookup the timer confirm the person is set", function(t){
     server.inject(options, function(res) {
       // console.log(" - - -  person should not be anonymous anymore")
       // console.log(res.result);
-      t.equal(res.result.person, personid, "Timer");
+      t.equal(res.result.person, personid, "Timer created by "+personid);
       t.end();
       server.stop();
     });
-  },200);
+  },700);
 })

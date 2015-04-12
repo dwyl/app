@@ -9,7 +9,6 @@ $(document).ready(function() {
   var EMAIL;
   var JWT;
   var COIN = new Audio("http://www.orangefreesounds.com/wp-content/uploads/2014/08/Mario-coin-sound.mp3");
-
   /**
    * timerupsert is our generic API CRUD method which allows us to
    * CREATE a new timer, UPDATE the description of the timer and
@@ -36,7 +35,9 @@ $(document).ready(function() {
       success: function(res, status, xhr) {
         console.log(' - - - - - - - - timerupsert res:')
         console.log(res);
-        active = res;
+        if(active && active.id === res.id){
+          active = res;  
+        }
         db.set('active', res)
         saveTimer(res); // add it to our local db of timers
         callback();
@@ -291,11 +292,24 @@ $(document).ready(function() {
    */
    var db = {
      set : function(key, value) {
-       localStorage.setItem(key, JSON.stringify(value));
+       if(typeof value === 'object'){
+         value = JSON.stringify(value);
+       }
+       localStorage.setItem(key, value);
        return;
      },
      get : function(key) {
-       return JSON.parse(localStorage.getItem(key));
+       var value = localStorage.getItem(key);
+      //  console.log(key, value);
+       try{
+         var obj = JSON.parse(value);
+         return obj;
+       }
+       catch(e){
+         console.log(e);
+         // value is not a stringified object
+         return value;
+       }
      }
    }
 
@@ -343,53 +357,27 @@ $(document).ready(function() {
     });
   }
 
-  var register = function(){
-    var person = {
-      email: $('#email').val(),
-      password: $('#password').val()
-    };
-
-    JWT = localStorage.getItem('JWT');
-    $.ajax({
-      type: "POST",
-      headers: {
-        Authorization: JWT
-      },
-      url: "/register",
-      data: person,
-      dataType: "json",
-      success: function(res, status, xhr) {
-        console.log(' - - - - - - - - person register res:')
-        console.log(res);
-        var snd = new Audio("http://www.orangefreesounds.com/wp-content/uploads/2014/08/Mario-coin-sound.mp3"); // buffers automatically when created
-        snd.play();
-        $('#login').fadeOut();
-      },
-      error: function(xhr, err) {
-        console.log(err);
-      }
-    });
-  }
 
   var editlistener = function(id) {
     console.log(' - - - - - - edit listener - - - - -');
     var ed = $('#'+id);
+    // first clear any existing listeners so we aren't doubling up
+    ed.off("click"); // http://stackoverflow.com/a/825193/1148249
+    // add a new listner for the entire li element
     ed.click(function(e) {
       rendertimers('edit', this.id);
 
     });
-    // console.log('#'+id+"-save");
+    // add a listener for clicking save button for this timer.
     $('#'+id+"-save").click(function(event){
-      event.stopImmediatePropagation();
+      event.stopImmediatePropagation(); // don't submit the form just process it
       event.preventDefault();
-      // console.log(this);
-      var timer = timers[this.id.replace('-save','')];
+      var timer = timers[this.id.replace('-save','')]; // get the timer id
       timer.desc = $('#'+id+"-desc").val();
-      if(timer.desc.trim().length === 0){
+      if(timer.desc.trim().length === 0) {
         timer.desc = DEFAULTDESC;
       }
       timer.took = $('#'+id+"-took").val();
-      // console.log("TIMER EDIT", timer);
       timerupsert(timer, function(){
         rendertimers();
       });

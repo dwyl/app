@@ -283,6 +283,11 @@ input {
     margin: auto 0.5em;
   }
 
+  #logout {
+    position:relative;
+    right: 0.5em;
+  }
+
 /*==============================
     Colours
 ================================*/
