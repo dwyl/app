@@ -459,8 +459,12 @@ $(document).ready(function() {
          console.log(res);
          $('#nav').fadeOut();
          $('#login').fadeIn();
-         OUT.play();
-         return clear();
+         clear();
+         boot(function(){
+           OUT.play();
+           $('#why').show();
+           start();
+         })
        },
        error: function(xhr, err) {
          console.log(err);
