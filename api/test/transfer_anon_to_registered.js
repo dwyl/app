@@ -44,7 +44,7 @@ test(file + "Transfer records created by anon to registered person", function(t)
       t.equal(res.statusCode, 200, "Person registration is succesful");
       t.end();
     });
-  },2000);
+  },400);
 })
 
 var aguid = require('aguid');
@@ -65,5 +65,5 @@ test(file + "Lookup the timer confirm the person is set", function(t){
       t.end();
       server.stop();
     });
-  },1000);
+  },200);
 })

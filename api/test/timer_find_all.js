@@ -78,6 +78,6 @@ test(file + "GET /timer/all should fail for Timmy no timers", function(t) {
         server.stop();
         t.end();
       });
-    },1000)
+    },200)
   });
 });

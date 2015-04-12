@@ -10,7 +10,7 @@
     "faster": "node ./node_modules/faster/bin/faster.js",
     "jshint": "./node_modules/jshint/bin/jshint -c .jshintrc --exclude-path .gitignore .",
     "start": "node web.js",
-    "test": "node ./node_modules/tape/bin/tape ./api/test/*.js | node_modules/tap-spec/bin/cmd.js",
+    "test": "./node_modules/.bin/istanbul cover ./node_modules/tape/bin/tape ./api/test/*.js | node_modules/tap-spec/bin/cmd.js",
     "spec": "node ./node_modules/tape/bin/tape ./api/test/*.js | node_modules/tap-spec/bin/cmd.js"
   },
   "repository": {

@@ -15,7 +15,7 @@ module.exports = function(req, reply) {
   var personid = aguid(req.payload.email);
   var token = req.headers.authorization;
   // if we don't have a JWT we don't have a session to transfer so just find_all
-  if(!token || token.indexOf('Basic') > -1){
+  if(!token || token.indexOf('Basic') > -1) {
     return find_all(req, reply, 200); // so just return any past timers!
   }
   else {

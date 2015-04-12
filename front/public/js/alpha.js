@@ -6,6 +6,7 @@ $(document).ready(function() {
   var counting;    // store timer interval
   var timers = {}; // store timers locally
   var DEFAULTDESC = "Tap/click here to update the description for this timer";
+  var EMAIL;
   var JWT;
   /**
    * timerupsert is our generic API CRUD method which allows us to
@@ -166,6 +167,7 @@ $(document).ready(function() {
         delete active[k]; // clear the active timer because we stopped it!
       }
     }
+    clearInterval(counting);
     return db.set('active', {});
   }
 
@@ -263,7 +265,7 @@ $(document).ready(function() {
 
   /**
    * transform our timers object of timer objects into an array (list)
-   * of timer ojbects. So we can sort by date... see: sort above
+   * of timer ojbects. So we can sort by date...
    */
    var timerlist = function() {
      // transform the timers Object to an Array so we can SORT it below:
@@ -279,7 +281,7 @@ $(document).ready(function() {
    }
 
   /**
-   * db is our localStorage "database" (a stringified object)
+   * db is our localStorage "database" stores a string or stringified object
    * which allows us to be "offline-first" for nowdb.get & db.set
    * are light wrappers around the respective localStorage methods
    * later on we could chose to use a more gracefully degrating approach
@@ -315,7 +317,7 @@ $(document).ready(function() {
     $('#login').submit(function(event){
       event.stopImmediatePropagation();
       event.preventDefault();
-      login();
+      login_or_register();
     })
 
     $('#start').click(function() {
@@ -327,6 +329,18 @@ $(document).ready(function() {
       return stop();
     });
 
+    $("#clear").click( function() {
+      localStorage.clear(); // erase all history (client-side only)
+      boot(function(){
+        console.log("#clear localStorage - erase session/JWT & timers");
+        clearactive();
+        timers = {};
+        rendertimers();
+        start();
+        listeners();
+        return;
+      })
+    });
   }
 
   var register = function(){
@@ -388,11 +402,12 @@ $(document).ready(function() {
    * they have entered into the reg/login form. If login succeeds we display
    * the "nav" informing them of this. else we attempt to register them.
    */
-   var login = function(){
+   var login_or_register = function(){
      var person = {
        email: $('#email').val(),
        password: $('#password').val()
      };
+     // >> input validation here!
 
      JWT = localStorage.getItem('JWT');
      $.ajax({
@@ -400,7 +415,7 @@ $(document).ready(function() {
        headers: {
          Authorization: JWT
        },
-       url: "/login",
+       url: "/login-or-register",
        data: person,
        dataType: "json",
        success: function(res, status, xhr) {
@@ -467,8 +482,6 @@ $(document).ready(function() {
     }
   } // END boot
 
-
-  // localStorage.clear();
   boot(function(){
     console.log('Booted.');
     loadtimers();
