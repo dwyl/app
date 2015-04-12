@@ -58,8 +58,8 @@ input {
 
   #feedback-triangle i:before{
     position:relative;
-    bottom: 1em;
-    right: 1em;
+    bottom: 0.9em;
+    right: 1.1em;
     color:white;
     font-size: 2em;
   }
@@ -154,49 +154,50 @@ input {
   .timer-one-line{
     display: table-row;
     border-bottom: 1px solid #d3d3d3;
-    /*width: 100%;*/
+    width: 100%;
   }
 
-  .timer-one-line span, .timer-one-line i{
-    display: table-cell;
-    padding: 0 0.3em;
-  }
-
-  .timer-one-line i{
-    width:1em;
-  }
-
-    span.timer-desc{
-      text-align:left;
+    .timer-one-line span, .timer-one-line i{
+      display: table-cell;
+      padding: 0 0.3em;
     }
 
-    span.timer-time{
-      text-align:right;
+    .timer-one-line i{
+      width:1em;
     }
+
+      span.timer-desc{
+        text-align:left;
+      }
+
+      span.timer-time{
+        text-align:right;
+        width: 3em;
+      }
 
 /*======== Past timer edit mode ========*/
-
 .timer-one-line button{
   border-radius:0;
   color: #fff;
   background: #323232;
-  border: solid 1px #fff;
+  border: none;
   text-transform:uppercase;
   text-align: center;
-  padding:0.3em;
-  margin: 0 0.5em 0 0;
-  /*font-size:0.8em;*/
+  padding:0.3em 0.4em;
+  margin: 0 0.5em 0 0.3em;
 }
 
-  .timer-one-line input{
-    border: 0;
-    border-bottom: solid 1px #403f3f;
-    resize: horizontal;
-    border-radius: 0;
-    background:none;
-    font-family: 'Open Sans', sans-serif;
-    color: #403f3f;
-  }
+.timer-one-line input{
+  border: 0;
+  border-bottom: solid 1px #403f3f;
+  resize: horizontal;
+  border-radius: 0;
+  background:none;
+  font-family: 'OpenSans', sans-serif;
+  color: #403f3f;
+  width: 85%;
+  display: inline-block;
+}
 
   .timer-one-line input:focus{
     outline: 0;
