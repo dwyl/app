@@ -8,6 +8,8 @@ $(document).ready(function() {
   var DEFAULTDESC = "Tap/click here to update the description for this timer";
   var EMAIL;
   var JWT;
+  var COIN = new Audio("http://www.orangefreesounds.com/wp-content/uploads/2014/08/Mario-coin-sound.mp3");
+
   /**
    * timerupsert is our generic API CRUD method which allows us to
    * CREATE a new timer, UPDATE the description of the timer and
@@ -16,8 +18,8 @@ $(document).ready(function() {
    * @param callback {function} (required) - do this after the update
    */
   var timerupsert = function(timer, callback) {
-    console.log(" - - - - - - - - - -  before upsert: ")
-    console.log(timer);
+    // console.log(" - - - - - - - - - -  before upsert: ")
+    // console.log(timer);
     if(!timer.start) {
       console.log("FAIL!")
       return false;
@@ -107,7 +109,7 @@ $(document).ready(function() {
   }
 
   /**
-   * continue an existing timer.
+   * continue an existing timer (e.g. when the page is refreshed or re-opened)
    */
   var keeptiming = function() {
     $('#start').hide();     // ensure the start button cant be clicked twice
@@ -317,11 +319,11 @@ $(document).ready(function() {
     $('#login').submit(function(event){
       event.stopImmediatePropagation();
       event.preventDefault();
-      login_or_register();
+      return login_or_register();
     })
 
     $('#start').click(function() {
-      start();
+      return start();
     })
 
     $("#stop").click( function() {
@@ -334,11 +336,9 @@ $(document).ready(function() {
       boot(function(){
         console.log("#clear localStorage - erase session/JWT & timers");
         clearactive();
-        timers = {};
-        rendertimers();
-        start();
-        listeners();
-        return;
+        timers = {}; // make sure timers are cleared!
+        rendertimers(); // re-render list
+        return start();
       })
     });
   }
@@ -421,8 +421,18 @@ $(document).ready(function() {
        success: function(res, status, xhr) {
          console.log(' - - - - - - - - LOGIN res:')
          console.log(res);
+         if(res.timers && res.timers.length > 0) {
+           console.log(' - - - - - - - - TIMERS:')
+           console.log(res.timers[0])
+           res.timers.map(function(timer){
+             timers[timer._id] = timer._source;
+           })
+           rendertimers();
+         }
+         COIN.play();
+
          $('#login').fadeOut();
-         $('#nav').fadeOut();
+         $('#nav').fadeIn();
        },
        error: function(xhr, err) {
          console.log(xhr);
@@ -444,11 +454,13 @@ $(document).ready(function() {
      console.log(' - - - - - - TIMERS:')
      console.log(timers);
 
-     if(timers && timers.length !== 0){
+     if(timers && timers.length !== 0) {
+       $('#why').hide();
        rendertimers(); // don't render past timers if there aren't any!
      }
      if(active && active.id) {
        keeptiming();
+       $('#desc').val(active.desc);
      }
      else{
        start(); // auto start when the page loads
