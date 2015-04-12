@@ -36,8 +36,8 @@
 
     <section id="past-timers">
       <div id="why">Track your time. Your past timers will appear here.</div>
-      <div id="past-timers-list">
-      </div>
+      <ul id="past-timers-list">
+      </ul>
     </section>
 
     <section id="register-login">
@@ -65,11 +65,11 @@
 
 <!-- HANDLEBARS TEMPLATE -->
   <script id="timer_list_template" type="text/x-handlebars-template">
-    <div id="\{{id}}" class="timer-one-line">
+    <li id="\{{id}}" class="timer-one-line">
         <i class="fa fa-check-circle-o"></i>
         <span class="timer-desc">\{{desc}}</span>
         <span class="timer-time">\{{took}}</span>
-    </div>
+    </li>
   </script>
 
 <!-- Handlebars form for updating the description of the timer -->
