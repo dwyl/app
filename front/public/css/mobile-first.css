@@ -58,8 +58,8 @@ input {
 
   #feedback-triangle i:before{
     position:relative;
-    bottom: 1em;
-    right: 1em;
+    bottom: 0.9em;
+    right: 1.1em;
     color:white;
     font-size: 2em;
   }
@@ -193,7 +193,7 @@ input {
   resize: horizontal;
   border-radius: 0;
   background:none;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'OpenSans', sans-serif;
   color: #403f3f;
   width: 85%;
   display: inline-block;
