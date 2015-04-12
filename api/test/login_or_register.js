@@ -3,7 +3,7 @@ var server = require("../../web.js");
 var dir    = __dirname.split('/')[__dirname.split('/').length-1];
 var file   = dir + __filename.replace(__dirname, '');
 
-var person = { // we will re-use these below ...
+var person = { // we'll be re-using these below ...
   "email"    : Math.random()+".tester@why-do-people-use.org.uk", // lol
   "password" : "PinkFluffyUnicorns"
 }
@@ -27,7 +27,7 @@ test(file+" Bad request to /login-or-register (should fail)", function(t) {
   });
 });
 
-test(file+"Register a new person", function(t) {
+test(file+" Register a new person", function(t) {
   server.inject(options, function(res) {
     t.equal(res.statusCode, 200, "Person registration is succesful");
     t.end();
@@ -35,10 +35,10 @@ test(file+"Register a new person", function(t) {
   });
 });
 
-test(file+"Login with existing person", function(t) {
+test(file+" Login with existing person", function(t) {
 
   server.inject(options, function(res) {
-    console.log(res.result);
+    // console.log(res.result);
     t.equal(res.statusCode, 200, "Everything is Awesome");
     t.end();
     server.stop();

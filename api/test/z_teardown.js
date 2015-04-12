@@ -4,7 +4,7 @@ var test = require('tape');
 var helpers = require('./_test_helpers');
 test("Teardown", function(t) {
   helpers.drop(function(res){
-    console.log(res);
+    // console.log(res);
     t.equal(res.acknowledged, true, "ALL Records DELETED!");
     t.end();
   }).end();

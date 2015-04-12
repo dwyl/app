@@ -8,7 +8,6 @@ var token;
 test(file + "CREATE a NEW Timer without a desc (which we will update below)", function(t) {
   var options = { method : "GET", url : "/anonymous" };
   server.inject(options, function(res) {
-    console.log(res.headers.authorization);
     token = res.headers.authorization;
     // blank timer
     var options = {

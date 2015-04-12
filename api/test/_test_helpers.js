@@ -25,6 +25,38 @@ var drop = function(callback) {
 }
 
 var server = require("../../web.js");
+var COUNTDOWN = 0;
+var N = 0
+/**
+ * create starts a timer for the given session/person.
+ * ALL parameters are required. (non-optional!)
+ * @param {object} t - the tape test context (used to call t.equal & t.end() )
+ * @param {string} token - the Signed JWT we need to make our requests
+ * @param {function} callback - function called once all records created.
+ *   @param {object} res - the last response object from record creation
+ *   @param {object} t - the tape test context we received.
+ */
+function create(t, token, callback) {
+  var timer = {
+    "desc" : "My Amazing Timer #"+COUNTDOWN,
+    "start" : new Date().toISOString()
+  }
+  var options = {
+    method: "POST",
+    url: "/timer/new",
+    payload: timer,
+    headers : { authorization : token }
+  };
+  server.inject(options, function(res) {
+    COUNTDOWN--;
+    // console.log(" >>> "+countdown + " res.created "+ T.created);
+    if(COUNTDOWN === 0) {
+      var T = JSON.parse(res.payload);
+      t.equal(res.statusCode, 200, N+ " New timers started! " + T.start);
+      callback(res, t, token);
+    }
+  });
+}
 
 /**
  * create_many does exactly what its name suggests: creates many records
@@ -37,29 +69,12 @@ var server = require("../../web.js");
  *   @param {object} t - the tape test context we received.
  */
 function create_many(n, t, token, callback) {
-  var countdown = n;
+  COUNTDOWN = N = n;
   for(var i = 0; i < n; i++) {
-    var timer = {
-      "desc" : "My Amazing Timer #"+countdown,
-      "start" : new Date().toISOString()
-    }
-    var options = {
-      method: "POST",
-      url: "/timer/new",
-      payload: timer,
-      headers : { authorization : token }
-    };
-    server.inject(options, function(res) {
-      countdown--;
-      // console.log(" >>> "+countdown + " res.created "+ T.created);
-      if(countdown === 0) {
-        var T = JSON.parse(res.payload);
-        t.equal(res.statusCode, 200, n+ " New timers started! " + T.start);
-        callback(res, t, token);
-      }
-    });
+    create(t, token, callback);
   } // end for
 }
+
 
 /**
  * finish simply finishes the currently running test, not really a
