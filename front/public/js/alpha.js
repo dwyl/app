@@ -3,7 +3,8 @@ $(document).ready(function() {
   // we re-use these functionally-scoped GLOBALS quite a bit (hence defining here)
   var t = $('#t'); // document.getElementById('t'); // do we need jQuery?
   var active = {}; // currently active (running) timer
-  var counting;    // store timer interval
+  var TIMING;    // store timer interval
+  var ON = false;
   var timers = {}; // store timers locally
   var DEFAULTDESC = "Tap/click here to update the description for this timer";
   var EMAIL;
@@ -35,8 +36,9 @@ $(document).ready(function() {
       success: function(res, status, xhr) {
         console.log(' - - - - - - - - timerupsert res:')
         console.log(res);
+        // console.log(active);
         // only update the active timer if response is updating it
-        if(active && active.id === res.id) { // i.e. not for description updates
+        if(active && (active.id === res.id || !active.id && ON)) {
           active = res; // see: https://github.com/ideaq/time/issues/120
           db.set('active', res);
         }
@@ -88,41 +90,36 @@ $(document).ready(function() {
    * start a new timer.
    */
   var start = function() {
-    $('#start').hide();     // ensure the start button cant be clicked twice
-    $('#stop').show();      // stop button visible when timer is running
     var st = new Date();          // start time Date object
-    var timestamp = st.getTime(); // timestamp for calculations below
     var timer = { 'start' : st.toISOString() }; // set up the new timer record
-
+    timing(timer);
     var desc = $('#desc').val();  // check if a description was set
     if(desc) { // only set a description on a new timer if set
       timer.desc = desc; // add it to the timer record
     }
-    // create a new record:
-    timerupsert(timer, function() {
+    return timerupsert(timer, function() { // create a new record:
       // console.log("started: "+active.start);
     });
-    // console.log("START: "+st);
-    counting = setInterval( function() {
-      var now = new Date().getTime();  // keep checking what time it is.
-      var elapsed = now - timestamp;   // difference from when we started
-      t.html(timeformat(elapsed));     // set the timer in the UI
-    }, 1000/3); // should we update the view more/less frequently?
   }
 
   /**
    * continue an existing timer (e.g. when the page is refreshed or re-opened)
    */
   var keeptiming = function() {
-    $('#start').hide();     // ensure the start button cant be clicked twice
-    $('#stop').show();      // stop button visible when timer is running
     var timer = active;     // set up the new timer record
     // console.log("START: "+st);
     if(timer.desc !== DEFAULTDESC){
       $('#desc').val(timer.desc);
     }
+    timing(timer);
+  }
+
+  var timing = function(timer){
+    ON = true; // we use this to set the active timer in timerupsert above
+    $('#start').hide();     // ensure the start button cant be clicked twice
+    $('#stop').show();      // stop button visible when timer is running
     var timestamp = new Date(timer.start).getTime();
-    counting = setInterval( function() {
+    TIMING = setInterval( function() {
       var now = new Date().getTime();  // keep checking what time it is.
       var elapsed = now - timestamp;   // difference from when we started
       t.html(timeformat(elapsed));     // set the timer in the UI
@@ -135,8 +132,7 @@ $(document).ready(function() {
    *
    */
   var stop = function() {
-    clearInterval(counting);
-    console.log(' - - - - - - ACTIVE:')
+    console.log('STOP! - - - - - - ACTIVE:')
     console.log(active);
     var timer = active;
     timer.desc = $('#desc').val();
@@ -171,7 +167,8 @@ $(document).ready(function() {
         delete active[k]; // clear the active timer because we stopped it!
       }
     }
-    clearInterval(counting);
+    clearInterval(TIMING);
+    ON = false;
     return db.set('active', {});
   }
 
@@ -237,7 +234,7 @@ $(document).ready(function() {
     var html = '';
     byDate.map(function(timer) {
       // don't show active timer in list of past timers
-      if(timer.id === active.id) {
+      if(active && active.id && timer.id === active.id) {
         return;
       }
       timer.took = timeformat(timer.elapsed); // repetitive ...
@@ -360,7 +357,7 @@ $(document).ready(function() {
 
 
   var editlistener = function(id) {
-    console.log(' - - - - - - edit listener - - - - -');
+    // console.log(' - - - - - - edit listener - - - - -');
     var ed = $('#'+id);
     // first clear any existing listeners so we aren't doubling up
     ed.off("click"); // http://stackoverflow.com/a/825193/1148249
@@ -375,10 +372,11 @@ $(document).ready(function() {
       event.preventDefault();
       var timer = timers[this.id.replace('-save','')]; // get the timer id
       timer.desc = $('#'+id+"-desc").val();
+      console.log('CLICK #'+id+"-save", timer)
       if(timer.desc.trim().length === 0) {
         timer.desc = DEFAULTDESC;
       }
-      timer.took = $('#'+id+"-took").val();
+      // timer.took = $('#'+id+"-took").val(); // no updating time taken for now
       timerupsert(timer, function(){
         rendertimers();
       });
@@ -452,6 +450,8 @@ $(document).ready(function() {
        $('#desc').val(active.desc);
      }
      else{
+       timers = {};
+       active = {};
        start(); // auto start when the page loads
      }
    }
@@ -472,11 +472,9 @@ $(document).ready(function() {
         url: "/anonymous",
         dataType: "json",
         success: function(res, status, xhr) {
-          console.log(res);
-          // localStorage.setItem('person', res._id);
+          // console.log(res);
           localStorage.setItem('JWT', xhr.getResponseHeader("authorization"));
           JWT = xhr.getResponseHeader("authorization");
-          // alert(xhr.getResponseHeader("authorization"));
           return callback();
         }
       });
