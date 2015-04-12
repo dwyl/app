@@ -9,7 +9,8 @@ $(document).ready(function() {
   var DEFAULTDESC = "Tap/click here to update the description for this timer";
   var EMAIL;
   var JWT;
-  var COIN = new Audio("http://www.orangefreesounds.com/wp-content/uploads/2014/08/Mario-coin-sound.mp3");
+  var COIN = new Audio("http://themushroomkingdom.net/sounds/wav/smb/smb_coin.wav");
+  var OUT  = new Audio('http://themushroomkingdom.net/sounds/wav/smb/smb_mariodie.wav');
   /**
    * timerupsert is our generic API CRUD method which allows us to
    * CREATE a new timer, UPDATE the description of the timer and
@@ -332,11 +333,15 @@ $(document).ready(function() {
       event.stopImmediatePropagation();
       event.preventDefault();
       return login_or_register();
-    })
+    });
+
+    $('#logout').click(function() {
+      return logout();
+    });
 
     $('#start').click(function() {
       return start();
-    })
+    });
 
     $("#stop").click( function() {
       console.log("#stop Clicked!")
@@ -344,15 +349,22 @@ $(document).ready(function() {
     });
 
     $("#clear").click( function() {
-      localStorage.clear(); // erase all history (client-side only)
+      clear();
       boot(function(){
-        console.log("#clear localStorage - erase session/JWT & timers");
-        clearactive();
-        timers = {}; // make sure timers are cleared!
-        rendertimers(); // re-render list
         return start();
       })
     });
+  }
+  /**
+   * clears everyting on the client
+   * used in logout and in dev see: https://github.com/ideaq/time/issues/115
+   */
+  var clear = function(){
+    console.log("#clear localStorage - erase session/JWT & timers");
+    localStorage.clear(); // erase all history (client-side only)
+    $("#past-timers-list").html(''); // clear past timers
+    clearactive();
+    timers = {}; // make sure timers are cleared!
   }
 
 
@@ -395,13 +407,18 @@ $(document).ready(function() {
        password: $('#password').val()
      };
      // >> input validation here!
-
+     db.set('email', person.email);
      JWT = localStorage.getItem('JWT');
+     var head = {}
+     if(JWT) {
+       head = {
+         Authorization: JWT
+       }
+     }
+
      $.ajax({
        type: "POST",
-       headers: {
-         Authorization: JWT
-       },
+       headers : head,
        url: "/login-or-register",
        data: person,
        dataType: "json",
@@ -416,13 +433,36 @@ $(document).ready(function() {
            })
            rendertimers();
          }
+         localStorage.setItem('JWT', xhr.getResponseHeader("authorization"));
+         JWT = xhr.getResponseHeader("authorization");
          COIN.play();
-
          $('#login').fadeOut();
+         $('#loggedinas').html(person.email);
          $('#nav').fadeIn();
        },
        error: function(xhr, err) {
          console.log(xhr);
+         console.log(err);
+       }
+     });
+   }
+
+   var logout = function(){
+     $.ajax({
+       type: "POST",
+       headers: {
+         Authorization: JWT
+       },
+       url: "/logout",
+       success: function(res, status, xhr) {
+         console.log('LOGOUT - - - - - - - res:')
+         console.log(res);
+         $('#nav').fadeOut();
+         $('#login').fadeIn();
+         OUT.play();
+         return clear();
+       },
+       error: function(xhr, err) {
          console.log(err);
        }
      });
@@ -465,6 +505,13 @@ $(document).ready(function() {
     JWT = localStorage.getItem('JWT');
     if(JWT) {
       console.log('existing person', JWT);
+      var email = db.get('email');
+      console.log("EMAIL: "+email);
+      if(email) {
+        $('#login').fadeOut();
+        $('#loggedinas').html(email);
+        $('#nav').fadeIn();
+      }
       return callback();
     } else {
       $.ajax({
