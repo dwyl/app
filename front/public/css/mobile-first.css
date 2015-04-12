@@ -20,6 +20,12 @@ p {
   margin: 0;
 }
 
+/*prevents iOS from zooming into input fields which people
+have to manually zoom out of*/
+input {
+  font-size: 1em;
+}
+
 /* Making placeholder text disappear when clicked on */
 [placeholder]:focus::-webkit-input-placeholder {
   transition: opacity 0.5s 0.5s ease;
@@ -33,6 +39,31 @@ p {
   transition: opacity 0.5s 0.5s ease;
   opacity: 0;
 }
+
+/*==============================
+    Feedback triangle
+================================*/
+/*Triangle from: http://callmenick.com/2014/05/03/css-triangles/*/
+#feedback-triangle{
+  position:absolute;
+  top:0;
+  margin: 0;
+  width: 2em;
+  height: 2em;
+  border-top: solid 2.8em #323232; /*or red: #c81e32*/
+  border-left: solid 2.8em #323232;
+  border-right: solid 2.8em transparent;
+  border-bottom: solid 2.8em transparent;
+}
+
+  #feedback-triangle i:before{
+    position:relative;
+    bottom: 1em;
+    right: 1em;
+    color:white;
+    font-size: 2em;
+  }
+
 
 /*==============================
   Section | MAIN (current timer)
@@ -78,7 +109,6 @@ p {
   }
 
     #active-desc input{
-      font-size: 0.9em;
       font-family: 'Open Sans', sans-serif;
       text-align: center;
       background: none;
@@ -162,16 +192,13 @@ p {
     border: 0;
     border-bottom: solid 1px #403f3f;
     resize: horizontal;
-    /*margin-left: 0.3em;*/
-    /*width: 90%;*/
+    border-radius: 0;
     background:none;
-    font-size:0.9em;
     font-family: 'Open Sans', sans-serif;
     color: #403f3f;
   }
 
   .timer-one-line input:focus{
-    display: inline-block;
     outline: 0;
   }
 
