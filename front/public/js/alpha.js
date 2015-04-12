@@ -47,6 +47,7 @@ $(document).ready(function() {
         callback();
       },
       error: function(xhr, err) {
+        console.log(xhr);
         console.log(err);
       }
     });
@@ -82,6 +83,7 @@ $(document).ready(function() {
     delete timer.ct;    // see: models/timer.js (ct is not updatable!)
     delete timer.index;
     delete timer.type;
+    delete timer.person;
     delete timer.created;
     delete timer.took;
     return timer;
@@ -168,6 +170,7 @@ $(document).ready(function() {
         delete active[k]; // clear the active timer because we stopped it!
       }
     }
+
     clearInterval(TIMING);
     ON = false;
     return db.set('active', {});
@@ -433,9 +436,10 @@ $(document).ready(function() {
            })
            rendertimers();
          }
-         localStorage.setItem('JWT', xhr.getResponseHeader("authorization"));
+         db.set('JWT', xhr.getResponseHeader("authorization"));
          JWT = xhr.getResponseHeader("authorization");
          COIN.play();
+         $('#why').fadeOut();
          $('#login').fadeOut();
          $('#loggedinas').html(person.email);
          $('#nav').fadeIn();
@@ -447,11 +451,11 @@ $(document).ready(function() {
      });
    }
 
-   var logout = function(){
+   var logout = function() {
      $.ajax({
        type: "POST",
        headers: {
-         Authorization: JWT
+         Authorization: db.get('JWT')
        },
        url: "/logout",
        success: function(res, status, xhr) {
@@ -500,6 +504,30 @@ $(document).ready(function() {
      }
    }
 
+   var loadtimers_remote = function() {
+     $.ajax({
+       type: "GET",
+       headers: {
+         Authorization: db.get('JWT')
+       },
+       url: "/timer/all",
+       success: function(res, status, xhr) {
+         console.log('GET /timer/all - - - - - - - res:')
+         console.log(res);
+         if(res.timers){
+           res.timers.forEach(function(timer) {
+             timers[timer._id] = timer._source;
+             db.set('timers',timers);
+             rendertimers();
+           });
+         }
+       },
+       error: function(xhr, err) {
+         console.log(err);
+       }
+     });
+   }
+
   /**
    * boot checks if the person has used the app before
    * takes a callback
@@ -515,6 +543,7 @@ $(document).ready(function() {
         $('#login').fadeOut();
         $('#loggedinas').html(email);
         $('#nav').fadeIn();
+        loadtimers_remote();
       }
       return callback();
     } else {
