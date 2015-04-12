@@ -35,10 +35,11 @@ $(document).ready(function() {
       success: function(res, status, xhr) {
         console.log(' - - - - - - - - timerupsert res:')
         console.log(res);
-        if(active && active.id === res.id){
-          active = res;  
+        // only update the active timer if response is updating it
+        if(active && active.id === res.id) { // i.e. not for description updates
+          active = res; // see: https://github.com/ideaq/time/issues/120
+          db.set('active', res);
         }
-        db.set('active', res)
         saveTimer(res); // add it to our local db of timers
         callback();
       },
