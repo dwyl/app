@@ -59,13 +59,14 @@ Some of our UI open questions _**have**_ to be answered **before the MVP** as th
 * What is the simplest way to deal with [remembering users so they don't have to constantly log in](https://github.com/ideaq/time/issues/45) at MVP or should we be doing this at this stage at all?
 
 Some initial questions **to be answered by the MVP** also surfaced whilst putting together the UI:
-* Should the placeholder text for the timer description disappear as soon as a person is in the input field or remain as a prompt until that person starts typing?
-* How does the user edit the timer description? Tap to edit?
-  * How does the user edit a _past_ timer description? Especially if tapping a past timer restart it.
-* If the description wraps over more than one line, do we show the whole description or do we cut it off and add '...' at the end
+* Should the running/active timer take up so much screen real estate or would this be better utilised for something else?
+* Should the [placeholder text for the timer description disappear as soon as a person is in the input field](https://github.com/ideaq/time/issues/92) or remain as a prompt until that person starts typing?
+* How does someone edit the timer description? Tap to edit?
+  * How does someone [edit a _past_ timer description](https://github.com/ideaq/time/issues/103)? Especially if tapping a past timer restarts it.
+* If the description wraps over more than one line, [do we show the whole description or do we cut it off](https://github.com/ideaq/time/issues/105) and add '...' at the end
 * Should _past_ timers shown on main page show the total time spent on that activity for a period (today or the current week for example) or just the last time the timer was used?
-* Should just today's timers be shown on the main page of the app? Or Today + Yesterday? Or the full week?
+* [Should just today's timers be shown on the main page](https://github.com/ideaq/time/issues/113) of the app? Or Today + Yesterday? Or the full week?
   * Should past timers be shown in reverse chronological order (latest timer to have been stopped at the top/always visible without scrolling)?
 * Should clicking on a _past_ timer on the main page [restart it](https://github.com/ideaq/time/issues/30#issuecomment-75047797)?
-* How do we edit _past_ timer descriptions?
 * Do we need both an email and a password requested on the main screen or just an email?
+* What is the [most intuitive icon for prompting people for feedback](https://github.com/ideaq/time/issues/114#issuecomment-92297303) within the app?
