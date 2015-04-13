@@ -58,8 +58,8 @@ input {
 
   #feedback-triangle i:before{
     position:relative;
-    bottom: 0.9em;
-    right: 1.3em;
+    bottom: 1em;
+    right: 1.2em;
     color:white;
     font-size: 2em;
   }
@@ -93,6 +93,7 @@ input {
       position: absolute;
       top: 1.3em;
       right: 0.5em;
+      outline: 0;
     }
       #main button i{
         font-size:1.8em;
@@ -144,62 +145,77 @@ input {
   }
 
 /*======== Past timer list ========*/
+ul {
+  margin:0;
+}
 #past-timers-list{
   width: 100%;
-  padding:0.7em 0.2em;
-  display: table;
+  /*margin: 0.1em, 0em;*/
+  padding:0em 0.2em;
   font-size:1em;
+  clear: both;
 }
 
   .timer-one-line{
-    display: table-row;
+    /*display: table-row;*/
     border-bottom: 1px solid #d3d3d3;
     width: 100%;
   }
 
-    .timer-one-line span, .timer-one-line i{
-      display: table-cell;
-      padding: 0 0.3em;
-    }
-
     .timer-one-line i{
       width:1em;
+      padding: 0.5em 0 0.5em 0;
     }
 
       span.timer-desc{
         text-align:left;
+        padding: 0.5em 0 0.5em 0;
+        width: 70%;
       }
 
       span.timer-time{
         text-align:right;
-        width: 3em;
+        /*width: 3em;*/
+        float: right;
+        padding-top: 0.4em;
+        /*clear:right;*/
       }
 
 /*======== Past timer edit mode ========*/
-.timer-one-line button{
+.timer-one-line-edit{
+  width: 100%;
+  border-bottom: 1px solid #d3d3d3;
+  /*padding-top: 0.5em;*/
+  margin-bottom: 0em;
+  clear:both;
+}
+
+.timer-one-line-edit button{
   border-radius:0;
   color: #fff;
   background: #323232;
   border: none;
   text-transform:uppercase;
   text-align: center;
-  padding:0.3em 0.4em;
+  padding:0.5em 0.4em;
   margin: 0 0.5em 0 0.3em;
 }
 
-.timer-one-line input{
+.timer-one-line-edit input{
   border: 0;
-  border-bottom: solid 1px #403f3f;
+  border: solid 1px #403f3f;
   resize: horizontal;
   border-radius: 0;
   background:none;
   font-family: 'OpenSans', sans-serif;
   color: #403f3f;
-  width: 85%;
+  width: 75%;
   display: inline-block;
+  margin: 0.4em 0 0.4em 0;
+  padding: 0.2em;
 }
 
-  .timer-one-line input:focus{
+  .timer-one-line-edit input:focus{
     outline: 0;
   }
 
