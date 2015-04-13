@@ -9,8 +9,8 @@ $(document).ready(function() {
   var DEFAULTDESC = "Tap/click here to update the description for this timer";
   var EMAIL;
   var JWT;
-  var COIN = new Audio("http://themushroomkingdom.net/sounds/wav/smb/smb_coin.wav");
-  var OUT  = new Audio('http://themushroomkingdom.net/sounds/wav/smb/smb_mariodie.wav');
+  // var COIN = new Audio("http://themushroomkingdom.net/sounds/wav/smb/smb_coin.wav");
+  // var OUT  = new Audio('http://themushroomkingdom.net/sounds/wav/smb/smb_mariodie.wav');
   /**
    * timerupsert is our generic API CRUD method which allows us to
    * CREATE a new timer, UPDATE the description of the timer and
@@ -435,7 +435,7 @@ $(document).ready(function() {
          }
          db.set('JWT', xhr.getResponseHeader("authorization"));
          JWT = xhr.getResponseHeader("authorization");
-         COIN.play();
+        //  COIN.play();
          $('#why').fadeOut();
          $('#login').fadeOut();
          $('#loggedinas').html(person.email);
@@ -462,7 +462,7 @@ $(document).ready(function() {
          $('#login').fadeIn();
          clear();
          boot(function(){
-           OUT.play();
+          //  OUT.play();
            $('#why').show();
            start();
          })
