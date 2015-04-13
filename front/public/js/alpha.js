@@ -468,7 +468,15 @@ $(document).ready(function() {
          })
        },
        error: function(xhr, err) {
+         console.log('LOGOUT - - - - - - - ERROR:')
+         console.log(xhr);
          console.log(err);
+         clear();
+         return boot(function(){
+           $('#nav').fadeOut();
+           $('#login').fadeIn();
+           $('#why').show();
+         })
        }
      });
    }
