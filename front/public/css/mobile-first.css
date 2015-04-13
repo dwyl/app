@@ -59,7 +59,7 @@ input {
   #feedback-triangle i:before{
     position:relative;
     bottom: 0.9em;
-    right: 1.1em;
+    right: 1.3em;
     color:white;
     font-size: 2em;
   }
@@ -269,25 +269,34 @@ input {
   width: 100%;
   position: fixed;
   bottom: 0;
-  /*display: none; To be shown when a person is logged in only */
+  display: none; /*To be shown when a person is logged in only */
 }
 
-  #profile-button{
+  #nav .fa-user{
     color: white;
     font-size: 1.5em;
-    padding: 0.1em 0.2em;
+    padding: 0.3em 0em 0.3em 0.2em;
   }
 
   #offlinemsg{
-    display: inline-block;
-    font-size: 0.7em;
-    margin: auto 0.5em;
+    display: inline;
+    color: white;
+    font-size: 0.9em;
+    padding: 0.3em;
   }
 
   #logout {
-    position:relative;
-    right: 0.5em;
+    position:absolute;
+    right: 0.4em;
+    bottom: 0.6em;
+    border-radius:0;
+    color: #fff;
+    border: solid 1px #fff;
+    text-align: center;
+    background: none;
+    padding:0.2em;
   }
+
 
 /*==============================
     Colours
