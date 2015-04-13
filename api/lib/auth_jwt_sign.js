@@ -18,7 +18,7 @@ module.exports = function sign(request, callback) {
   var token = JWT.sign(payload, process.env.JWT_SECRET); // http://git.io/xPBn
 
   var session = {   // set up session record for inserting into ES
-    index: "time",
+    index: process.env.ES_INDEX,
     type:  "session",
     id  :  payload.jti,
     person: payload.person,

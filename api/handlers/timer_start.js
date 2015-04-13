@@ -6,7 +6,7 @@ var Hoek  = require('hoek');
 module.exports = function(req, reply) {
   var decoded = req.auth.credentials; //JWT.verify(req.headers.authorization, process.env.JWT_SECRET);
   var timer =  {
-    index: "time",
+    index: process.env.ES_INDEX,
     type: "timer",
     person: decoded.person,
     session: decoded.jti, // session id from JWT

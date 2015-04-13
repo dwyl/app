@@ -6,7 +6,7 @@ module.exports = function timer_find_all(req, reply, statusCode) {
     statusCode = 404;
   }
   var query =  {
-    "index": "time",
+    "index": process.env.ES_INDEX,
     "type": "timer",
     "field": "person",
     "text": req.auth.credentials.person.toString() // using issuer as the person

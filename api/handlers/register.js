@@ -9,7 +9,7 @@ var transfer = require('../lib/transfer_anon_to_registered.js');
 module.exports = function handler(req, reply) {
   var personid = aguid(req.payload.email)
   var person =  {
-    index: "people",
+    index: process.env.ES_INDEX,
     type: "person",
     id: personid,
     email: req.payload.email

@@ -6,7 +6,7 @@ var Hoek  = require('hoek');
 module.exports = function(req, reply) {
   var decoded = req.auth.credentials;
   var timer =  {
-    index:   "time",
+    index:   process.env.ES_INDEX,
     type:    "timer",
     id: req.payload.id
   }

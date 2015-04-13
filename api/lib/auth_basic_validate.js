@@ -5,7 +5,7 @@ var aguid  = require('aguid'); // https://github.com/ideaq/aguid
 module.exports = function validate (email, password, callback) {
 
   var person =  {
-    index: "people",
+    index: process.env.ES_INDEX,
     type: "person",
     id: aguid(email)
   }

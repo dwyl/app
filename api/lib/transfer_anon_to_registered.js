@@ -26,13 +26,13 @@ module.exports = function(req, reply) {
       Hoek.assert(!err, 'Missing JWT!'); // JWT fails
 
       var session = {
-        index : "time",
+        index : process.env.ES_INDEX,
         type  : "session",
         id    : decoded.jti,
         person: personid
       }
       var session_copy = {
-        index : "time",
+        index : process.env.ES_INDEX,
         type  : "session",
         id    : decoded.jti,
         person: personid
@@ -46,7 +46,7 @@ module.exports = function(req, reply) {
       ES.READ(session, function(ses) {
         // console.log("Anon SESSION :",ses);
         var session = ses._source;
-        session.index = "time";
+        session.index = process.env.ES_INDEX;
         session.type = "session";
         session.person = personid;
         session.id = decoded.jti;
@@ -57,7 +57,7 @@ module.exports = function(req, reply) {
             // lookup all the records that were created with the anon session
             // before the person decided to login...
             var query =  {
-              "index": "time",
+              "index": process.env.ES_INDEX,
               "type": "timer",
               "field": "session",
               "text": decoded.jti
