@@ -4,6 +4,7 @@ var Hoek  = require('hoek');
 var JWT   = require('jsonwebtoken'); // https://github.com/docdis/learn-json-web-tokens
 var JWTSign = require('../lib/auth_jwt_sign.js'); // used to sign JWTS duh.
 var find_all = require('../handlers/timer_find_all'); // see: http://git.io/vvf7k
+
 /**
  * The purpose of this method is to transfer the session
  * and all existing timers from an anonymous person to their
@@ -20,6 +21,10 @@ module.exports = function(req, reply) {
   }
   else {
     JWT.verify(token, process.env.JWT_SECRET, function(err, decoded) {
+// we aren't enforcing use of hapi-auth-jwt2 for /login-or-register so we need
+// to do our check manually here! see: https://github.com/ideaq/time/issues/123
+      Hoek.assert(!err, 'Missing JWT!'); // JWT fails
+
       var session = {
         index : "time",
         type  : "session",

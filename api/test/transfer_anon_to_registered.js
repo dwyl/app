@@ -65,5 +65,24 @@ test(file + "Lookup the timer confirm the person is set", function(t){
       t.end();
       server.stop();
     });
-  },700);
-})
+  },1000);
+});
+
+var newemail   = Math.random()+"unregistered@awesome.io";
+var password   = "PinkFluffyUnicorns";
+var authHeader = "Basic " + (new Buffer(newemail + ':' + password, 'utf8')).toString('base64');
+var options    = {
+  method  : "POST",
+  url     : "/login-or-register",
+  headers : { authorization : authHeader }
+};
+
+test(file + " Attempt to /login-or-register fails when no header or payload", function(t){
+  server.inject(options, function(res) {
+    // console.log(" - - -  person should not be anonymous anymore")
+    // console.log(res.result);
+    t.equal(res.statusCode, 400, "Fails (as expected - blocked by JOI)");
+    t.end();
+    server.stop();
+  });
+});

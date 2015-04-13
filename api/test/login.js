@@ -35,6 +35,9 @@ test(file + "Create a new person and log in", function(t) {
       headers : { authorization : authHeader }
     };
     server.inject(options2, function(res) {
+      // console.log(' - - - - - - - - - - - - - - - - - - - - - - ')
+      // console.log(res.result)
+      // console.log(' - - - - - - - - - - - - - - - - - - - - - - ')
       t.equal(res.statusCode, 200, "Login Success!!");
       t.end();
       server.stop();

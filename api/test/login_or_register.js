@@ -36,10 +36,24 @@ test(file+" Register a new person", function(t) {
 });
 
 test(file+" Login with existing person", function(t) {
-
+  var authHeader = "Basic " + (new Buffer(person.email + ':' + person.password, 'utf8')).toString('base64');
+  options.headers = { authorization : authHeader };
   server.inject(options, function(res) {
     // console.log(res.result);
     t.equal(res.statusCode, 200, "Everything is Awesome");
+    t.end();
+    server.stop();
+  });
+});
+
+test(file + "Attempt to /login-or-register without any auth", function(t) {
+  var options    = {
+    method  : "POST",
+    url     : "/login-or-register"
+  };
+  server.inject(options, function(res) {
+    // console.log(res.result)
+    t.equal(res.statusCode, 400, "Fails (as expected) MSG: " + res.result.message);
     t.end();
     server.stop();
   });
