@@ -29,7 +29,7 @@ $(document).ready(function() {
     $.ajax({
       type: "POST",
       headers: {
-        Authorization: JWT
+        Authorization: db.get('JWT')
       },
       url: "/timer/upsert",
       data: timer,
@@ -145,19 +145,17 @@ $(document).ready(function() {
     timer.end = new Date().toISOString();
     timer.elapsed = new Date(timer.end).getTime() - new Date(timer.start).getTime();
     timer.took = timeformat(timer.elapsed);
-    timerupsert(timer, function(){
+    return timerupsert(timer, function(){
       console.log("Timer Stopped");
       clearactive();
       rendertimers();
+      //hide/show relevant UI elements
+      $('#why').hide();
+      $('#desc').val('');
+      $('#t').html('00:00');
+      $('#stop').fadeOut();
+      $('#start').fadeIn();
     });
-
-    //hide/show relevant UI elements
-    $('#why').hide();
-    $('#desc').val('');
-    $('#t').text('00:00');
-    $('#stop').fadeOut();
-    $('#start').fadeIn();
-    return;
   }
 
   /**
@@ -411,14 +409,13 @@ $(document).ready(function() {
      };
      // >> input validation here!
      db.set('email', person.email);
-     JWT = localStorage.getItem('JWT');
+     JWT = db.get('JWT');
      var head = {}
      if(JWT) {
        head = {
          Authorization: JWT
        }
      }
-
      $.ajax({
        type: "POST",
        headers : head,
@@ -534,7 +531,7 @@ $(document).ready(function() {
    */
   var boot = function(callback) {
     // check if the person already has a session
-    JWT = localStorage.getItem('JWT');
+    JWT = db.get('JWT');
     if(JWT) {
       console.log('existing person', JWT);
       var email = db.get('email');
@@ -553,7 +550,7 @@ $(document).ready(function() {
         dataType: "json",
         success: function(res, status, xhr) {
           // console.log(res);
-          localStorage.setItem('JWT', xhr.getResponseHeader("authorization"));
+          db.set('JWT', xhr.getResponseHeader("authorization"));
           JWT = xhr.getResponseHeader("authorization");
           return callback();
         }

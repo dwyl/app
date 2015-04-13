@@ -13,14 +13,14 @@ module.exports = function timer_find_all(req, reply, statusCode) {
   };
   ES.SEARCH(query, function(res) {
     // console.log(res.hits);
-    if(res.hits.total > 0) {
-      // assign a new JWT with the person's ID in it!
-      JWTSign(req, function(token, esres){
+    JWTSign(req, function(token, esres){
+      if(res.hits.total > 0) {
+        // assign a new JWT with the person's ID in it!
         return reply({ timers: res.hits.hits }).header("Authorization", token);
-      }); // Asynchronous
-    }
-    else {
-      return reply(res).code(statusCode);
-    }
+      }
+      else {
+        return reply(res).code(statusCode).header("Authorization", token);
+      }
+    }); // Asynchronous
   });
 }
