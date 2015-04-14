@@ -147,77 +147,82 @@ input {
 /*======== Past timer list ========*/
 ul {
   margin:0;
+  padding: 0;
 }
 #past-timers-list{
   width: 100%;
-  /*margin: 0.1em, 0em;*/
-  padding:0em 0.2em;
+  /*padding:0em 0.2em;
   font-size:1em;
-  clear: both;
+  clear: both;*/
 }
 
   .timer-one-line{
-    /*display: table-row;*/
+    display: flex;
+    flex-direction:row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-item: baseline; /*flex-end*/
+    display: -webkit-flex;
+    -webkit-flex-direction:row;
+    -webkit-flex-wrap: nowrap;
+    -webkit-justify-content: space-between;
+    -webkit-align-item: baseline; /*flex-end*/
     border-bottom: 1px solid #d3d3d3;
     width: 100%;
   }
 
     .timer-one-line i{
-      width:1em;
-      padding: 0.5em 0 0.5em 0;
+      width:1.5em;
+      padding: 0.5em 0.3em 0.5em 0.3em;
+      /*border: 1px solid green;*/
     }
 
       span.timer-desc{
+        flex-grow: 5;
+        -webkit-flex-grow: 5;
         text-align:left;
-        padding: 0.5em 0 0.5em 0;
-        width: 70%;
+        padding: 0.3em 0.4em 0.3em 0.4em;
+        /*border: 1px solid red;*/
       }
-
-      span.timer-time{
+      /*.timer-desc{
+      border: 1px solid red;
+    }*/
+      .timer-time{
+        flex-grow: 1;
+        -webkit-flex-grow: 1;
+        flex-basis:4em;
+        -webkit-flex-basis:4em;
         text-align:right;
-        /*width: 3em;*/
-        float: right;
-        padding-top: 0.4em;
-        /*clear:right;*/
+        padding: 0.3em 0.5em 0.3em 0.5em;
+        /*border: 1px solid blue  ;*/
       }
 
 /*======== Past timer edit mode ========*/
-.timer-one-line-edit{
-  width: 100%;
-  border-bottom: 1px solid #d3d3d3;
-  /*padding-top: 0.5em;*/
-  margin-bottom: 0em;
-  clear:both;
-}
-
-.timer-one-line-edit button{
+.timer-one-line button{
   border-radius:0;
   color: #fff;
   background: #323232;
   border: none;
   text-transform:uppercase;
   text-align: center;
-  padding:0.5em 0.4em;
-  margin: 0 0.5em 0 0.3em;
+  padding: 0 0.3em;
+  margin: 0.3em;
 }
 
-.timer-one-line-edit input{
-  border: 0;
+.timer-one-line input{
+  flex-grow: 5;
+  -webkit-flex-grow: 5;
+  outline: 0;
   border: solid 1px #403f3f;
   resize: horizontal;
   border-radius: 0;
   background:none;
   font-family: 'OpenSans', sans-serif;
   color: #403f3f;
-  width: 75%;
   display: inline-block;
   margin: 0.4em 0 0.4em 0;
   padding: 0.2em;
 }
-
-  .timer-one-line-edit input:focus{
-    outline: 0;
-  }
 
 /*==============================
     Section | LOGIN
@@ -245,7 +250,7 @@ ul {
       margin-left: 0.3em;
       width: 90%;
       background:none;
-      font-size:0.9em;
+      font-size:1em;
       color:white; /*text input by user*/
     }
 

@@ -49,7 +49,7 @@
             <input type="password" placeholder=" Password" name="password" id="password"/>
         </div>
         <div id="login-button">
-          <button type="submit">Save your timer</button>
+          <button type="submit">Save your timers</button>
         </div>
       </form>
     </section>
@@ -64,16 +64,16 @@
 
 <!-- HANDLEBARS TEMPLATE -->
   <script id="timer_list_template" type="text/x-handlebars-template">
-    <li id="\{{id}}" class="timer-one-line">
+    <div id="\{{id}}" class="timer-one-line">
         <i class="fa fa-check-circle-o"></i>
         <span class="timer-desc">\{{desc}}</span>
-        <span class="timer-time">\{{took}}</span>
-    </li>
+        <div class="timer-time">\{{took}}</div>
+    </div>
   </script>
 
 <!-- Handlebars form for updating the description of the timer -->
 <script id="timer_edit_template" type="text/x-handlebars-template">
-  <form class="timer-one-line-edit" id="\{{id}}-edit">
+  <form class="timer-one-line" id="\{{id}}-edit">
       <button type="submit" id="\{{id}}-save">save</button>
       <input class="timer-desc" type="text" autocomplete id="\{{id}}-desc" value="\{{desc}}" placeholder="\{{placeholder}}"/>
       <!-- <input type class="timer-time" type="text" autocomplete id="\{{id}}-took" value="\{{took}}" /> -->
