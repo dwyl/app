@@ -82,7 +82,7 @@ test(file + "START a NEW Timer with start time!", function(t) {
   };
   server.inject(options, function(res) {
     var T = JSON.parse(res.payload);
-    t.equal(res.statusCode, 200, "New timer started! " + T.st+'\n');
+    t.equal(res.statusCode, 200, "New timer started! " + T.start+'\n');
     t.end();
     server.stop();
   });
