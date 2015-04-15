@@ -1,8 +1,9 @@
 var http = require('http');
 
+// we only allow this "MASS DELETE" on localhost hence hard-coding the vars:
 var ESOptions = {
-  host: process.env.ES_HOST,
-  port: process.env.ES_PORT,
+  host: '127.0.0.1',
+  port: '9200',
   path: "/_all", // DELETEs EVERYTHING!!
   method: 'DELETE',
   headers: { 'Content-Type': 'application/json' }

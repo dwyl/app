@@ -16,7 +16,8 @@ server.register([ {register: Basic}, {register: AuthJWT} ], function (err) {
   server.auth.strategy('basic', 'basic', {
     validateFunc: require('./api/lib/auth_basic_validate.js')
   });
-
+  // dont force people to set env vars. https://github.com/ideaq/time/issues/93
+  process.env.JWT_SECRET = process.env.JWT_SECRET || 'not-so-secret';
   server.auth.strategy('jwt', 'jwt', 'required',  {
     key: process.env.JWT_SECRET,
     validateFunc: require('./api/lib/auth_jwt_validate.js')
