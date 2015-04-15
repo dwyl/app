@@ -74,7 +74,9 @@
 <!-- Handlebars form for updating the description of the timer -->
 <script id="timer_edit_template" type="text/x-handlebars-template">
   <form class="timer-one-line" id="\{{id}}-edit">
-      <button type="submit" id="\{{id}}-save">save</button>
+      <div class="save-edit">
+        <button type="submit" id="\{{id}}-save">save</button>
+      </div>
       <input class="timer-desc" type="text" autocomplete id="\{{id}}-desc" value="\{{desc}}" placeholder="\{{placeholder}}"/>
       <!-- <input type class="timer-time" type="text" autocomplete id="\{{id}}-took" value="\{{took}}" /> -->
       <span class="timer-time">\{{took}}</span>
