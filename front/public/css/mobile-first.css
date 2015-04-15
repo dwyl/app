@@ -151,9 +151,7 @@ ul {
 }
 #past-timers-list{
   width: 100%;
-  /*padding:0em 0.2em;
-  font-size:1em;
-  clear: both;*/
+
 }
 
   .timer-one-line{
@@ -174,6 +172,8 @@ ul {
     .timer-one-line i{
       width:1.5em;
       padding: 0.5em 0.3em 0.5em 0.3em;
+      flex: 0 0 auto;
+      -webkit-flex: 0 0 auto;
       /*border: 1px solid green;*/
     }
 
@@ -184,14 +184,10 @@ ul {
         padding: 0.3em 0.4em 0.3em 0.4em;
         /*border: 1px solid red;*/
       }
-      /*.timer-desc{
-      border: 1px solid red;
-    }*/
-      .timer-time{
-        flex-grow: 1;
-        -webkit-flex-grow: 1;
-        flex-basis:4em;
-        -webkit-flex-basis:4em;
+
+      span.timer-time{
+        flex: 1 0 4em;
+        -webkit-flex: 1 0 4em;
         text-align:right;
         padding: 0.3em 0.5em 0.3em 0.5em;
         /*border: 1px solid blue  ;*/
