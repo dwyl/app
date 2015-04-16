@@ -2,9 +2,9 @@ var test   = require('tape');
 var server = require("../../web.js");
 var dir    = __dirname.split('/')[__dirname.split('/').length-1];
 var file   = dir + __filename.replace(__dirname, '');
-
+var email  = 'dwyl.test+login_or_register' +Math.random()+'@gmail.com';
 var person = { // we'll be re-using these below ...
-  "email"    : Math.random()+".tester@why-do-people-use.org.uk", // lol
+  "email"    : email,
   "password" : "PinkFluffyUnicorns"
 }
 var options = {

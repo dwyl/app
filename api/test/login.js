@@ -2,7 +2,7 @@ var test   = require('tape');
 var server = require("../../web.js");
 var dir    = __dirname.split('/')[__dirname.split('/').length-1];
 var file   = dir + __filename.replace(__dirname, '') + " -> ";
-var email  = Math.random()+"auth_basic.tester@awesome.net";
+var email  = 'dwyl.test+auth_basic' +Math.random()+'@gmail.com';
 test(file + "POST /login 401 for un-registered person", function(t) {
   var email      = "unregistered@awesome.io";
   var password   = "PinkFluffyUnicorns";
@@ -19,7 +19,7 @@ test(file + "POST /login 401 for un-registered person", function(t) {
   });
 });
 
-test(file + "Create a new person and log in", function(t) {
+test(file + "Create new person " +email +" and log in", function(t) {
   var password   = "PinkFluffyUnicorns";
   var options = {
     method  : "POST",

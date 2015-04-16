@@ -3,15 +3,17 @@ var JWT    = require('jsonwebtoken');
 var server = require("../../web.js");
 var dir    = __dirname.split('/')[__dirname.split('/').length-1];
 var file   = dir + __filename.replace(__dirname, '') + " -> ";
-var email  = "n"+Math.random()+"@awesome.net"
+var email  = "dwyl.test+transfer_"+Math.random()+"@gmail.com"
 var helpers = require('./_test_helpers');
 
 var person = {
   "email"    : email,
   "password" : "SoCloseTo10kh!"
 }
+
 var token;
 var tid;
+
 test(file + "Anonymous person can creates a timer, then register", function(t) {
   var options    = {
     method  : "GET",

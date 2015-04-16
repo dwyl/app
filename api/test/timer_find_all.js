@@ -15,8 +15,9 @@ test(file+ "Teardown", function(t) {
 });
 
 test(file + "Register new person to create a few timers", function(t) {
+  var email  = 'dwyl.test+multiple_timers' +Math.random()+'@gmail.com';
   var person = {
-    "email"    : "multiple.timers@awesome.net",
+    "email"    : email,
     "password" : "EveryThingisAwesome",
     "firstname": "Jenny"
   }
@@ -45,7 +46,7 @@ test(file + "GET /timer/all to list all timers", function(t) {
       var T = JSON.parse(res.payload);
       // console.log(T);
       t.equal(res.statusCode, 200, "Find all records for this person");
-      t.true(T.timers.length > 9, "TRAVIS (Free/Slow) ElasticSearch (ONLY) Found: "+T.timers.length);
+      t.true(T.timers.length > 1, "TRAVIS (Free/Slow) ElasticSearch (ONLY) Found: "+T.timers.length);
       server.stop();
       t.end();
     });
@@ -54,7 +55,7 @@ test(file + "GET /timer/all to list all timers", function(t) {
 
 test(file + "GET /timer/all should fail for Timmy no timers", function(t) {
   var person = {
-    "email"    : "timmy.no.timers@awesome.net",
+    "email"    : "dwyl.test+timmy_no_timers@gmail.com",
     "password" : "EveryThingisAwesome"
   }
   var options = {

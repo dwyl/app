@@ -1,8 +1,9 @@
 var nodemailer = require('nodemailer');
 var fs         = require('fs');
 var path       = require('path');
-var htmlpath   = path.resolve(__dirname +'/../templates/welcome_html.html');
-var textpath   = path.resolve(__dirname +'/../templates/welcome_text.txt');
+var templatedir = __dirname +'/../email_templates/';
+var htmlpath   = path.resolve(templatedir + 'welcome_html.html');
+var textpath   = path.resolve(templatedir + 'welcome_text.txt');
 var template   = fs.readFileSync(htmlpath, 'utf8')
 var textonly   = fs.readFileSync(textpath, 'utf8')
 // create reusable transporter object using SMTP transport
@@ -19,7 +20,7 @@ var transporter = nodemailer.createTransport({
 
 var email = function(person, callback){
   var mailOptions = {
-    from: '#dwyl do what you love! <welcome.to.dwyl@gmail.com>', // sender address
+    from: '#dwyl do what you love! <welcome.to.dwyl@gmail.com>', // sender
     to: person.email, // list of receivers
     subject: 'Welcome to dwyl!', // Subject line
     text: textonly, // plaintext body
@@ -31,15 +32,5 @@ var email = function(person, callback){
     callback(error, info)
   });
 }
-
-var person = {
-    email : 'dwyl.smith@gmail.com',
-    name  : 'FirstName'
-}
-
-// email(person, function(error,info){
-//   console.log('hello!');
-//     console.log(info);
-// })
 
 module.exports = email;
