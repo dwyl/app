@@ -35,7 +35,8 @@ _**Initial suggestion -**_ Minimal number and content of screens as follows:
 * Main screen:
   * Timer, set to 00:00 to begin with (seconds & minutes, with hours added dynamically when required)
   * Description of timer with placeholder text
-  * Log of today's (?) stopped timers
+    * Ability to edit description (added during alpha build, [issue #95](https://github.com/ideaq/time/issues/95))
+  * Log of stopped timers
   * Simple login area, shown as default unless user is logged in already
 * Additional items required at this point:
   * Some way of [knowing user is logged in](https://github.com/ideaq/time/issues/85)
