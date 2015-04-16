@@ -34,7 +34,7 @@ test(file + "Anonymous people can create timers!", function(t) {
     };
     server.inject(options, function(res) {
       var T = JSON.parse(res.payload);
-      t.equal(res.statusCode, 200, "New timer started! " + T.st);
+      t.equal(res.statusCode, 200, "New timer started! " + T.start);
       t.end();
       server.stop();
     });

@@ -5,6 +5,7 @@ var bcrypt = require('bcrypt'); // see: https://github.com/nelsonic/bcrypt
 var aguid  = require('aguid'); // import the module we are using to create (GU)IDs
 var JWTSign  = require('../lib/auth_jwt_sign.js'); // used to sign JWTS duh.
 var transfer = require('../lib/transfer_anon_to_registered.js');
+var email  = require('../lib/email_welcome');
 
 module.exports = function handler(req, reply) {
   var personid = aguid(req.payload.email)
@@ -30,16 +31,21 @@ module.exports = function handler(req, reply) {
 
             Hoek.assert(res.created, 'Person NOT Registered!'); // only if DB fails!
             // transfer any anonymous timers & session to the person
-            if(req.headers.authorization){
-              // console.log("AUTH TOKEN:"+req.headers.authorization);
-              return transfer(req, reply);
-            }
-            else {
-              JWTSign(req, function(token, esres){
-                return reply(esres).header("Authorization", token);
-              }); // Asynchronous
-            }
-
+            console.log(' - - - - - - - - - - person')
+            console.log(person);
+            console.log(' - - - - - - - - - - email success')
+            email(person, function(err, eres){
+              console.log(eres);
+              if(req.headers.authorization){
+                // console.log("AUTH TOKEN:"+req.headers.authorization);
+                return transfer(req, reply);
+              }
+              else {
+                JWTSign(req, function(token, esres){
+                  return reply(esres).header("Authorization", token);
+                }); // Asynchronous
+              }
+            })
           }); // end ES.CREATE
         }); // end bcrypt.hash
       }); // end bcrypt.genSalt

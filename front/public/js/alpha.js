@@ -306,6 +306,7 @@ $(document).ready(function() {
          return obj;
        }
        catch(e){
+         console.log("DB.GET FAIL: "+key +" | "+value);
          console.log(e);
          // value is not a stringified object
          return value;

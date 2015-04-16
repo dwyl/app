@@ -38,8 +38,7 @@ server.register([ {register: Basic}, {register: AuthJWT} ], function (err) {
 
 });
 
-server.start(function(){
-  console.log('Now Visit: http://' + ip + ':' +port);
-});
+server.start();
+console.log('Now Visit: http://' + ip + ':' +port);
 
 module.exports = server;

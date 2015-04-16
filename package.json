@@ -1,6 +1,6 @@
 {
   "name": "dwyl",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Track any time-based activity",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "faster": "node ./node_modules/faster/bin/faster.js",
     "jshint": "./node_modules/jshint/bin/jshint -c .jshintrc --exclude-path .gitignore .",
     "start": "node web.js",
-    "test": "./node_modules/.bin/istanbul cover ./node_modules/tape/bin/tape ./api/test/*.js | node_modules/tap-spec/bin/cmd.js",
+    "test": "istanbul cover ./node_modules/tape/bin/tape ./api/test/*.js | node_modules/tap-spec/bin/cmd.js",
     "spec": "node ./node_modules/tape/bin/tape ./api/test/*.js | node_modules/tap-spec/bin/cmd.js"
   },
   "repository": {
@@ -41,6 +41,7 @@
     "joi": "^6.1.0",
     "jsonwebtoken": "^5.0.0",
     "lout": "^6.2.1",
+    "nodemailer": "^1.3.4",
     "perma": "^2.0.1",
     "sad": "^1.0.7"
   },
