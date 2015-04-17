@@ -63,23 +63,3 @@ test(file+" Attempt to register with short password (400)", function(t) {
     server.stop();
   });
 });
-
-
-test(file+" Register with bad email should fail (400)", function(t) {
-  var person = {
-    "email"    : 'bad@example.com',
-    "password" : "thiswill400"
-  }
-  var options = {
-    method  : "POST",
-    url     : "/register",
-    payload : person
-  };
-
-  server.inject(options, function(res) {
-    console.log(res.result)
-    t.equal(res.statusCode, 400, "Person register failed (as expected!)");
-    server.stop();
-    t.end();
-  });
-});

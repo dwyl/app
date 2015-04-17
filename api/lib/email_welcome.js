@@ -33,7 +33,7 @@ module.exports = function email(person, callback) {
     };
 
     mandrill_client.messages.send({"message": message}, function(result) {
-        console.log(result);
+        // console.log(result);
         return callback(result);
     }, function(error) {
         // Mandrill returns the error as an object with name and message keys
