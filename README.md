@@ -44,10 +44,8 @@ environment variables are set.
 
 Run the following command to set up your local machine:
 ```sh
-export ES_HOST="127.0.0.1"
-export ES_PORT=9200
 export ES_INDEX=dwyl
-export JWT_SECRET="NeverShareYourSecret"
+export MANDRILL_APIKEY='AskUsForTheKey!'
 
 ```
 See [**.travis.yml**](https://github.com/ideaq/time/blob/master/.travis.yml)
