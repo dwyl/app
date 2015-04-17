@@ -8,7 +8,7 @@ var person = {
   "password" : "PinkFluffyUnicorns"
 }
 
-test(file+"Bad request to /register (should fail - no payload!)", function(t) {
+test(file+" Bad request to /register (should fail - no payload!)", function(t) {
   var options = {
     method  : "POST",
     url     : "/register"
@@ -20,7 +20,7 @@ test(file+"Bad request to /register (should fail - no payload!)", function(t) {
   });
 });
 
-test(file+"Register a new person", function(t) {
+test(file+" Register a new person", function(t) {
 
   var options = {
     method  : "POST",
@@ -34,7 +34,7 @@ test(file+"Register a new person", function(t) {
   });
 });
 
-test(file+"Attempt to register the same person twice", function(t) {
+test(file+" Attempt to register the same person twice", function(t) {
   var options = {
     method  : "POST",
     url     : "/register",
@@ -47,7 +47,7 @@ test(file+"Attempt to register the same person twice", function(t) {
   });
 });
 
-test(file+"Attempt to register with short password", function(t) {
+test(file+" Attempt to register with short password (400)", function(t) {
   var person = {
     "email"    : "dwyl.test+this.will.fail@gmail.com",
     "password" : "123"
@@ -61,5 +61,25 @@ test(file+"Attempt to register with short password", function(t) {
     t.equal(res.statusCode, 400, "Longer password required");
     t.end();
     server.stop();
+  });
+});
+
+
+test(file+" Register with bad email should fail (400)", function(t) {
+  var person = {
+    "email"    : 'bad@example.com',
+    "password" : "thiswill400"
+  }
+  var options = {
+    method  : "POST",
+    url     : "/register",
+    payload : person
+  };
+
+  server.inject(options, function(res) {
+    console.log(res.result)
+    t.equal(res.statusCode, 400, "Person register failed (as expected!)");
+    server.stop();
+    t.end();
   });
 });

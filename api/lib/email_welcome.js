@@ -38,6 +38,7 @@ module.exports = function email(person, callback) {
     }, function(error) {
         // Mandrill returns the error as an object with name and message keys
         console.log('MANDRILL ERROR: ' + error.name + ' - ' + error.message);
+        return callback(error);
         // A mandrill error occurred: Unknown_Subaccount - No subaccount exists with the id 'customer-123'
     });
 
