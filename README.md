@@ -1,6 +1,8 @@
 # time
-[![Build Status](https://travis-ci.org/ideaq/time.png?branch=master)](https://travis-ci.org/ideaq/time) [![Code Climate](https://codeclimate.com/github/ideaq/time.png)](https://codeclimate.com/github/ideaq/time)
-[![Test Coverage](https://codeclimate.com/github/ideaq/time/badges/coverage.svg)](https://codeclimate.com/github/ideaq/time) [![Dependencies](https://david-dm.org/ideaq/time.png?theme=shields.io)](https://david-dm.org/ideaq/time)
+[![Build Status](https://travis-ci.org/ideaq/time.png?branch=master)](https://travis-ci.org/ideaq/time)
+[![Test Coverage](https://codeclimate.com/github/ideaq/time/badges/coverage.svg)](https://codeclimate.com/github/ideaq/time)
+[![Code Climate](https://codeclimate.com/github/ideaq/time.png)](https://codeclimate.com/github/ideaq/time)
+[![bitHound Score](https://www.bithound.io/github/ideaq/time/badges/score.svg?)](https://www.bithound.io/github/ideaq/time) [![Dependencies](https://david-dm.org/ideaq/time.png?theme=shields.io)](https://david-dm.org/ideaq/time)
 [![Node version](https://img.shields.io/node/v/atimer.svg?style=flat)](http://nodejs.org/download/)
 [![HAPI 8.2](http://img.shields.io/badge/hapi-8.2-brightgreen.svg)](http://hapijs.com)
 
@@ -15,7 +17,7 @@
 > “*The **price** of anything is the **amount** of **life** you **exchange for it**.*”
 ~ Henry David Thoreau
 
-Time (a *finite* amount) is one of the few things we *all* have in common.  
+Time (a *finite* amount it) is one of the few things we *all* have in common.  
 Wether we like it or not, we each only have a ***fixed amount***.  
 It is our most precious ***non-renewable*** 'resource'.  
 We need a *much* better way of keeping track of how we spend it.
@@ -35,16 +37,16 @@ A simple way to track activities over time.
 
 > Help us build it! https://github.com/ideaq/time/issues
 
-### *Expected* Environment Variables
+### *Expected* Environment Variables˜
 
 The API server will *not* work unless these
 environment variables are set.
 
 Run the following command to set up your local machine:
 ```sh
-export ES_HOST="127.0.0.1"
-export ES_PORT=9200
-export JWT_SECRET="NeverShareYourSecret"
+export ES_INDEX=dwyl
+export MANDRILL_APIKEY='AskUsForTheKey!'
+
 ```
 See [**.travis.yml**](https://github.com/ideaq/time/blob/master/.travis.yml)
 for [Continuous integration](http://en.wikipedia.org/wiki/Continuous_integration) settings.

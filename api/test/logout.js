@@ -1,14 +1,14 @@
 // Logout https://github.com/ideaq/time/issues/65
 var ES     = require('esta');
 var test   = require('tape');
-var server = require("../../app.js");
+var server = require("../../web.js");
 var dir    = __dirname.split('/')[__dirname.split('/').length-1];
 var file   = dir + __filename.replace(__dirname, '') + " -> ";
 var token;   // used below
 var timerid;
 
 test(file + "/register + login new person", function(t) {
-  var email      = "a"+(Math.floor(Math.random() * 6) + 1) + "@awesome.net";
+  var email  = 'dwyl.test+logout' +Math.random()+'@gmail.com';
   var password   = "PinkFluffyUnicorns";
   var options = {
     method  : "POST",

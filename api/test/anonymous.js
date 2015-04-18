@@ -1,5 +1,5 @@
 var test   = require('tape');
-var server = require("../../app.js");
+var server = require("../../web.js");
 var dir    = __dirname.split('/')[__dirname.split('/').length-1];
 var file   = dir + __filename.replace(__dirname, '') + " -> ";
 
@@ -24,7 +24,7 @@ test(file + "Anonymous people can create timers!", function(t) {
     var token = res.headers.authorization;
     var timer = {
       "desc" : "Anonymous people deserve a voice too!",
-      "st" : new Date().toISOString()
+      "start" : new Date().toISOString()
     }
     var options = {
       method: "POST",
@@ -34,7 +34,7 @@ test(file + "Anonymous people can create timers!", function(t) {
     };
     server.inject(options, function(res) {
       var T = JSON.parse(res.payload);
-      t.equal(res.statusCode, 200, "New timer started! " + T.st);
+      t.equal(res.statusCode, 200, "New timer started! " + T.start);
       t.end();
       server.stop();
     });

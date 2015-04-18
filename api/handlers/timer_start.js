@@ -1,34 +1,37 @@
-var JWT   = require('jsonwebtoken');
+// var JWT   = require('jsonwebtoken');
 var ES    = require('esta');
-var perma = require('perma');
+var aguid = require('aguid');
 var Hoek  = require('hoek');
 
 module.exports = function(req, reply) {
-  // extract the person id from JWT
-  var decoded = JWT.verify(req.headers.authorization, process.env.JWT_SECRET);
-  var person = decoded.person;
-  var created = new Date().toISOString();
-  var id = perma(person+created);
+  var decoded = req.auth.credentials; //JWT.verify(req.headers.authorization, process.env.JWT_SECRET);
   var timer =  {
-    index: "time",
+    index: process.env.ES_INDEX,
     type: "timer",
-    person: person,
+    person: decoded.person,
     session: decoded.jti, // session id from JWT
-    ct: created,
-    id: id
+    ct: new Date().toISOString(),
+    id: aguid()
   }
 
   for (var k in req.payload){
     timer[k] = req.payload[k]; // extract values from payload
   }
-  if(!timer.st) { // client did not define the start time
-    timer.st = created; // set it to the same as created
+  if(!req.payload.start) { // client did not define the start time
+    timer.start = timer.ct; // set it to the same as created
   } else {
     // allow the client to set the started time
   }
 
-  ES.CREATE(timer, function(rec) {
-    Hoek.merge(rec, timer); // http://git.io/Amv6
-    reply(rec);
+  ES.CREATE(timer, function(record) {
+    Hoek.merge(record, timer); // http://git.io/Amv6
+    // delete the useless _prefixed fields returned by ES
+    record.id = record._id;
+    delete record._index;
+    delete record._type;
+    delete record._version;
+    delete record.person;
+    delete record._id
+    reply(record);
   })
 }
