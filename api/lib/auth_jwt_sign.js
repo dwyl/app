@@ -1,6 +1,7 @@
 var JWT   = require('jsonwebtoken');  // used to sign our content
 var aguid = require('aguid');
 var ES    = require('esta');
+var redisClient = require('./redis_connection');
 
 
 module.exports = function sign(request, callback) {
@@ -24,8 +25,10 @@ module.exports = function sign(request, callback) {
     ua: request.headers['user-agent'],
     created: new Date().toISOString()
   }
-
+  redisClient.set(session.id, JSON.stringify(session))
+  redisClient.end();
   ES.CREATE(session, function(esres) {
-    return callback(token, esres);
+    // creating the session in ES as a fallback
   });
+  return callback(token, session);
 }

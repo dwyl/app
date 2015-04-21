@@ -16,7 +16,7 @@ test(file+" Force Fail in Email", function(t) {
   email(person, function(eres) {
     setTimeout(function(){
       console.log(eres);
-      t.equal(eres.status, 'error', "Invalid Mandrill Key");
+      t.equal(eres.status, 'error', "Invalid Mandrill Key (as expected!)");
       process.env.MANDRILL_APIKEY = APIKEY; // restore key for next tests
       uncache('../lib/email_welcome'); // clear cached email module
       t.end();
