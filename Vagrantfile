@@ -36,6 +36,15 @@ sudo ln -s `readlink -f /usr/local/share/elasticsearch/bin/service/elasticsearch
 sudo service elasticsearch start
 # curl http://localhost:9200
 
+# install Redis following http://redis.io/topics/quickstart
+wget http://download.redis.io/redis-stable.tar.gz
+tar xvzf redis-stable.tar.gz
+cd redis-stable
+# sudo make me a sandiwch --> https://xkcd.com/149/
+sudo make
+sudo make install
+redis-server
+
 SCRIPT
 
 
