@@ -26,7 +26,7 @@ module.exports = function sign(request, callback) {
     created: new Date().toISOString()
   }
   redisClient.set(session.id, JSON.stringify(session))
-  redisClient.end();
+  // redisClient.end();
   ES.CREATE(session, function(esres) {
     // creating the session in ES as a fallback
   });

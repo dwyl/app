@@ -4,6 +4,7 @@ var aguid = require('aguid');
 var Hoek  = require('hoek');
 
 module.exports = function(req, reply) {
+  console.log(req.auth);
   var decoded = req.auth.credentials; //JWT.verify(req.headers.authorization, process.env.JWT_SECRET);
   var timer =  {
     index: process.env.ES_INDEX,

@@ -24,7 +24,6 @@ test(file + "Anonymous people can create timers!", function(t) {
     // console.log(res.headers);
     t.equal(res.statusCode, 200, "Session Created = "+res.result.created);
     var token = res.headers.authorization;
-    console.log(' - - - - - - - - - ');
     var decoded = JWT.decode(token, process.env.JWT_SECRET); // http://git.io/xPBn
     var timer = {
       "desc" : "Anonymous people deserve a voice too!",
@@ -36,9 +35,14 @@ test(file + "Anonymous people can create timers!", function(t) {
       payload: timer,
       headers : { authorization : token }
     };
+    console.log(file+' - - - - - - - - - OPTIONS');
     console.log(options);
+
     server.inject(options, function(res) {
-      console.log(res);
+      console.log(' - - - - - - - - - - - - - - - res.payload:')
+      console.log(res.payload);
+      console.log(' - - - - - - - - - - - - - - - - - - - - - -')
+
       var T = JSON.parse(res.payload);
       t.equal(res.statusCode, 200, "New timer started! " + T.start);
       t.end();
