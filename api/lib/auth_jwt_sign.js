@@ -1,8 +1,7 @@
 var JWT   = require('jsonwebtoken');  // used to sign our content
 var aguid = require('aguid');
 var ES    = require('esta');
-var dir   = __dirname.split('/')[__dirname.split('/').length-1];
-var file  = dir + __filename.replace(__dirname, '') + " -> ";
+
 
 module.exports = function sign(request, callback) {
   // payload is the object that will be signed by JWT below
