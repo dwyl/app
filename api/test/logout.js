@@ -5,7 +5,6 @@ var server = require("../../web.js");
 
 // https://nodejs.org/docs/latest/api/globals.html#globals_require_cache
 var uncache = require('./uncache').uncache;
-uncache('../lib/redis_connection'); // uncache redis connection then re-connect
 var redisClient = require('../lib/redis_connection');
 
 var dir    = __dirname.split('/')[__dirname.split('/').length-1];
@@ -36,7 +35,7 @@ test(file + "/register + login new person", function(t) {
     };
     server.inject(options, function(res) {
       var T = JSON.parse(res.payload);
-      t.equal(res.statusCode, 200, "New timer started! " + T.st);
+      t.equal(res.statusCode, 200, "New timer started! " + T.start);
       t.end();
       server.stop();
     });
@@ -49,9 +48,16 @@ test(file + "LOGOUT", function(t) {
     url: "/logout",
     headers : { authorization : token }
   };
+  console.log(options);
   server.inject(options, function(res) {
+    // 
+    // console.log('\n - - - - - - - - - -  res')
+    // console.log(res.result)
+    // console.log(' - - - - - - - - - - - - - - - \n\n')
+
     t.equal(res.statusCode, 200, "/logout worked");
     var ses = { "index":"time", "type":"session", "id":res.result._id }
+
     ES.READ(ses, function(record){
       var options = {
         method: "POST",
@@ -92,6 +98,7 @@ test("test/logout.js -> /timer/:id ... Confirm Logged out person CANNOT ACCESS v
   server.inject(options, function(response) {
     t.equal(response.statusCode, 401, "Invalid JWT (person logged out)");
     redisClient.end();
+    uncache('../lib/redis_connection'); // uncache redis connection!
     server.stop();
     t.end();
   });

@@ -32,7 +32,7 @@
     "aguid": "^1.0.3",
     "bcrypt": "^0.8.2",
     "boom": "^2.7.0",
-    "esta": "^4.0.0",
+    "esta": "^4.0.2",
     "handlebars": "^3.0.0",
     "hapi": "^8.4.0",
     "hapi-auth-basic": "^2.0.0",

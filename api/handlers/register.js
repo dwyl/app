@@ -34,8 +34,8 @@ module.exports = function handler(req, reply) {
             // console.log(' - - - - - - - - - - person')
             // console.log(person);
             email(person, function(emailres){
-              console.log(' - - - - - - - - - - email:')
-              console.log(emailres);
+              // console.log(' - - - - - - - - - - email:')
+              // console.log(emailres);
               if(req.headers.authorization){
                 // console.log("AUTH TOKEN:"+req.headers.authorization);
                 return transfer(req, reply);

@@ -1,9 +1,9 @@
 var test   = require('tape');
 var server = require("../../web.js");
 // https://nodejs.org/docs/latest/api/globals.html#globals_require_cache
-// var uncache = require('./uncache').uncache;
-// uncache('../lib/redis_connection'); // uncache redis connection then re-connect
-// var redisClient = require('../lib/redis_connection');
+var uncache = require('./uncache').uncache;
+var redisClient = require('../lib/redis_connection');
+
 
 var dir    = __dirname.split('/')[__dirname.split('/').length-1];
 var file   = dir + __filename.replace(__dirname, '') + " -> ";
@@ -63,7 +63,8 @@ test(file + "Attempt to /login using incorrect password", function(t) {
   server.inject(options2, function(res) {
     console.log(res.result)
     t.equal(res.statusCode, 401, "Fails (as expected) MSG: " + res.result.message);
-    // redisClient.end();
+    redisClient.end();
+    uncache('../lib/redis_connection'); // uncache redis connection!
     t.end();
     server.stop();
   });
