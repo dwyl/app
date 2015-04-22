@@ -31,11 +31,11 @@ module.exports = function handler(req, reply) {
 
             Hoek.assert(res.created, 'Person NOT Registered!'); // only if DB fails!
             // transfer any anonymous timers & session to the person
-            console.log(' - - - - - - - - - - person')
-            console.log(person);
-            console.log(' - - - - - - - - - - email success')
-            email(person, function(err, eres){
-              console.log(eres);
+            // console.log(' - - - - - - - - - - person')
+            // console.log(person);
+            email(person, function(emailres){
+              console.log(' - - - - - - - - - - email:')
+              console.log(emailres);
               if(req.headers.authorization){
                 // console.log("AUTH TOKEN:"+req.headers.authorization);
                 return transfer(req, reply);

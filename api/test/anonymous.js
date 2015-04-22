@@ -35,13 +35,13 @@ test(file + "Anonymous people can create timers!", function(t) {
       payload: timer,
       headers : { authorization : token }
     };
-    console.log(file+' - - - - - - - - - OPTIONS');
-    console.log(options);
+    // console.log(file+' - - - - - - - - - OPTIONS');
+    // console.log(options);
 
     server.inject(options, function(res) {
-      console.log(' - - - - - - - - - - - - - - - res.payload:')
-      console.log(res.payload);
-      console.log(' - - - - - - - - - - - - - - - - - - - - - -')
+      // console.log(' - - - - - - - - - - - - - - - res.payload:')
+      // console.log(res.payload);
+      // console.log(' - - - - - - - - - - - - - - - - - - - - - -')
 
       var T = JSON.parse(res.payload);
       t.equal(res.statusCode, 200, "New timer started! " + T.start);

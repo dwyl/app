@@ -2,6 +2,12 @@
 var ES     = require('esta');
 var test   = require('tape');
 var server = require("../../web.js");
+
+// https://nodejs.org/docs/latest/api/globals.html#globals_require_cache
+var uncache = require('./uncache').uncache;
+uncache('../lib/redis_connection'); // uncache redis connection then re-connect
+var redisClient = require('../lib/redis_connection');
+
 var dir    = __dirname.split('/')[__dirname.split('/').length-1];
 var file   = dir + __filename.replace(__dirname, '') + " -> ";
 var token;   // used below
@@ -85,7 +91,8 @@ test("test/logout.js -> /timer/:id ... Confirm Logged out person CANNOT ACCESS v
   };
   server.inject(options, function(response) {
     t.equal(response.statusCode, 401, "Invalid JWT (person logged out)");
-    t.end();
+    redisClient.end();
     server.stop();
+    t.end();
   });
 });

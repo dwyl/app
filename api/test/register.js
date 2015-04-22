@@ -1,5 +1,11 @@
 var test   = require('tape');
 var server = require("../../web.js");
+
+// https://nodejs.org/docs/latest/api/globals.html#globals_require_cache
+var uncache = require('./uncache').uncache;
+uncache('../lib/redis_connection'); // uncache redis connection then re-connect
+var redisClient = require('../lib/redis_connection');
+
 var dir   = __dirname.split('/')[__dirname.split('/').length-1];
 var file  = dir + __filename.replace(__dirname, '');
 var email  = 'dwyl.test+auth_basic' +Math.random()+'@gmail.com';
@@ -43,7 +49,6 @@ test(file+" Attempt to register the same person twice", function(t) {
   server.inject(options, function(res) {
     t.equal(res.statusCode, 400, "Person registration fails");
     t.end();
-    server.stop();
   });
 });
 
@@ -58,8 +63,10 @@ test(file+" Attempt to register with short password (400)", function(t) {
     payload : person
   };
   server.inject(options, function(res) {
+    console.log(res.payload)
     t.equal(res.statusCode, 400, "Longer password required");
-    t.end();
     server.stop();
+    redisClient.end();
+    t.end();
   });
 });

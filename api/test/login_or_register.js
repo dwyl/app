@@ -1,7 +1,13 @@
 var test   = require('tape');
 var server = require("../../web.js");
+// https://nodejs.org/docs/latest/api/globals.html#globals_require_cache
+var uncache = require('./uncache').uncache;
+uncache('../lib/redis_connection'); // uncache redis connection then re-connect
+var redisClient = require('../lib/redis_connection');
+
 var dir    = __dirname.split('/')[__dirname.split('/').length-1];
 var file   = dir + __filename.replace(__dirname, '');
+
 var email  = 'dwyl.test+login_or_register' +Math.random()+'@gmail.com';
 var person = { // we'll be re-using these below ...
   "email"    : email,
@@ -54,7 +60,8 @@ test(file + "Attempt to /login-or-register without any auth", function(t) {
   server.inject(options, function(res) {
     // console.log(res.result)
     t.equal(res.statusCode, 400, "Fails (as expected) MSG: " + res.result.message);
-    t.end();
+    redisClient.end();
     server.stop();
+    t.end();
   });
 });

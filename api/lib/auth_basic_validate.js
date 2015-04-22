@@ -11,12 +11,15 @@ module.exports = function validate (email, password, callback) {
   }
 
   ES.READ(person, function(res) {
+    console.log(' auth_basic_validate.js - - - - - - - - - - - - - ES.READ(person)')
+    console.log(res);
+    console.log(' - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ')
     if(res.found) { // compare to bcrypt hash on file
       Bcrypt.compare(password, res._source.password, function (err, isValid) {
-        callback(err, isValid, { id: res._id, email: res._source.email });
+        return callback(err, isValid, { id: res._id, email: res._source.email });
       });
     } else {
-      callback(null, false); // person has not registered
+      return callback(null, false); // person has not registered
     }
   });
 };

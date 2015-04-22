@@ -1,8 +1,15 @@
 var test   = require('tape');
 var server = require("../../web.js");
+// https://nodejs.org/docs/latest/api/globals.html#globals_require_cache
+// var uncache = require('./uncache').uncache;
+// uncache('../lib/redis_connection'); // uncache redis connection then re-connect
+// var redisClient = require('../lib/redis_connection');
+
 var dir    = __dirname.split('/')[__dirname.split('/').length-1];
 var file   = dir + __filename.replace(__dirname, '') + " -> ";
+
 var email  = 'dwyl.test+auth_basic' +Math.random()+'@gmail.com';
+
 test(file + "POST /login 401 for un-registered person", function(t) {
   var email      = "unregistered@awesome.io";
   var password   = "PinkFluffyUnicorns";
@@ -54,8 +61,9 @@ test(file + "Attempt to /login using incorrect password", function(t) {
     headers : { authorization : authHeader }
   };
   server.inject(options2, function(res) {
-    // console.log(res.result)
+    console.log(res.result)
     t.equal(res.statusCode, 401, "Fails (as expected) MSG: " + res.result.message);
+    // redisClient.end();
     t.end();
     server.stop();
   });
