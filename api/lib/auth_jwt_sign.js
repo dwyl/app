@@ -28,7 +28,7 @@ module.exports = function sign(request, callback) {
   redisClient.set(session.id, JSON.stringify(session))
   // redisClient.end();
   ES.CREATE(session, function(esres) {
-    // creating the session in ES as a fallback
+    // creating the session in ES lets us view anonymised sessions in Kibana
   });
   return callback(token, session);
 }

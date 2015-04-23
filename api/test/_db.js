@@ -2,11 +2,14 @@
 // without a database to store records this app is useless...
 var ES = require('esta');
 var test = require('tape');
+var aguid = require('aguid');
+var uncache = require('./uncache').uncache;
+var redisClient = require('../lib/redis_connection');
 
 var record =  {
   index: process.env.ES_INDEX,
   type: "timer",
-  id: Math.floor(Math.random() * (1000000)),
+  id: aguid(),
   start: new Date().toISOString()
 }
 
@@ -39,7 +42,7 @@ test("UPDATE a record", function(t) {
   var record =  {
     index: process.env.ES_INDEX,
     type: "timer",
-    id: Math.floor(Math.random() * (1000000)),
+    id: aguid(),
     start: new Date().getTime()
   }
   var rec = {}; // make a copy of rec for later.
@@ -59,8 +62,6 @@ test("UPDATE a record", function(t) {
     });
   });
 });
-
-var aguid = require('aguid');
 
 var session =  {
   index: process.env.ES_INDEX,
@@ -82,6 +83,8 @@ test("CREATE & READ a SESSION record", function(t) {
   ES.CREATE(session, function(result2) {
     ES.READ(rec2, function(result3) {
       t.equal(result3._source.start, rec2.start, "Record created: "+result3._source.start);
+      redisClient.end();
+      uncache('../lib/redis_connection'); // uncache redis connection!
       t.end();
     });
   });

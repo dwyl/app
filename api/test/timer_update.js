@@ -1,9 +1,12 @@
 var test   = require('tape');
 var server = require("../../web.js");
+var uncache = require('./uncache').uncache;
+var redisClient = require('../lib/redis_connection');
 var dir    = __dirname.split('/')[__dirname.split('/').length-1];
 var file   = dir + __filename.replace(__dirname, '') + " -> ";
 var timer;
 var token;
+var aguid = require('aguid');
 
 test(file + "CREATE a NEW Timer without a desc (which we will update below)", function(t) {
   var options = { method : "GET", url : "/anonymous" };
@@ -51,7 +54,7 @@ test(file + "POST /timer/upsert with a NEW TIMER but NO start (fault tolerance)"
   var options = {
     method: "POST",
     url: "/timer/upsert",
-    payload: {id:"1234"},
+    payload: {id:aguid()},
     headers : { authorization : token }
   };
   server.inject(options, function(response) {
@@ -63,18 +66,21 @@ test(file + "POST /timer/upsert with a NEW TIMER but NO start (fault tolerance)"
   });
 });
 
-test(file + "POST /timer/upsert with a NEW TIMER with start (fault tolerance)", function(t) {
+test(file + "POST /timer/upsert with a NEW timer (fault tolerance)", function(t) {
   var options = {
     method: "POST",
     url: "/timer/upsert",
-    payload: {id:"1234", start: new Date().toISOString() },
+    payload: {id:aguid(), start: new Date().toISOString() },
     headers : { authorization : token }
   };
   server.inject(options, function(response) {
-    // console.log(response.result);
-    t.equal(response.statusCode, 200, "New Timer Created: "+response.result.start);
-    timer = response.result;
-    t.end();
+    console.log(response.result);
+    // var T = JSON.parse(response.result);
+    // console.log(T.error);
+    t.equal(response.statusCode, 200, "New Timer Upserted: "+response.result.start);
     server.stop();
+    redisClient.end();
+    uncache('../lib/redis_connection'); // uncache redis connection!
+    t.end();
   });
 });

@@ -2,6 +2,9 @@ var test   = require('tape');
 var server = require("../../web.js");
 var dir    = __dirname.split('/')[__dirname.split('/').length-1];
 var file   = dir + __filename.replace(__dirname, '') + " -> ";
+// https://nodejs.org/docs/latest/api/globals.html#globals_require_cache
+var uncache = require('./uncache').uncache;
+var redisClient = require('../lib/redis_connection');
 var token;
 
 test(file + "POST /timer/new should FAIL when no Auth Token Sent", function(t) {
@@ -83,7 +86,9 @@ test(file + "START a NEW Timer with start time!", function(t) {
   server.inject(options, function(res) {
     var T = JSON.parse(res.payload);
     t.equal(res.statusCode, 200, "New timer started! " + T.start+'\n');
-    t.end();
     server.stop();
+    redisClient.end();
+    uncache('../lib/redis_connection'); // uncache redis connection!
+    t.end();
   });
 });

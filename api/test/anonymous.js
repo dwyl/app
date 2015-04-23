@@ -1,6 +1,8 @@
 var test   = require('tape');
 var server = require("../../web.js");
 var JWT    = require('jsonwebtoken');
+var uncache = require('./uncache').uncache;
+var redisClient = require('../lib/redis_connection');
 var dir    = __dirname.split('/')[__dirname.split('/').length-1];
 var file   = dir + __filename.replace(__dirname, '') + " -> ";
 
@@ -21,7 +23,10 @@ test(file + "Anonymous people can create timers!", function(t) {
     url     : "/anonymous"
   };
   server.inject(options, function(res) {
-    // console.log(res.headers);
+    console.log(' - - - - - - - - - - - - - - - res.payload:')
+    console.log(res.result);
+    console.log(' - - - - - - - - - - - - - - - - - - - - - -')
+
     t.equal(res.statusCode, 200, "Session Created = "+res.result.created);
     var token = res.headers.authorization;
     var decoded = JWT.decode(token, process.env.JWT_SECRET); // http://git.io/xPBn
@@ -35,18 +40,20 @@ test(file + "Anonymous people can create timers!", function(t) {
       payload: timer,
       headers : { authorization : token }
     };
-    // console.log(file+' - - - - - - - - - OPTIONS');
-    // console.log(options);
+    console.log(file+' - - - - - - - - - OPTIONS');
+    console.log(options);
 
     server.inject(options, function(res) {
-      // console.log(' - - - - - - - - - - - - - - - res.payload:')
-      // console.log(res.payload);
-      // console.log(' - - - - - - - - - - - - - - - - - - - - - -')
+      console.log(' - - - - - - - - - - - - - - - res.payload:')
+      console.log(res.payload);
+      console.log(' - - - - - - - - - - - - - - - - - - - - - -')
 
       var T = JSON.parse(res.payload);
       t.equal(res.statusCode, 200, "New timer started! " + T.start);
-      t.end();
+      redisClient.end();
+      uncache('../lib/redis_connection'); // uncache redis connection!
       server.stop();
+      t.end();
     });
   });
 });

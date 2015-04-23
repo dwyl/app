@@ -1,30 +1,3 @@
-var http = require('http');
-
-// we only allow this "MASS DELETE" on localhost hence hard-coding the vars:
-var ESOptions = {
-  host: '127.0.0.1',
-  port: '9200',
-  path: "/_all", // DELETEs EVERYTHING!!
-  method: 'DELETE',
-  headers: { 'Content-Type': 'application/json' }
-};
-
-var drop = function(callback) {
-  var resStr = '';
-  var req = http.request(ESOptions, function(res) {
-    res.setEncoding('utf8');
-    var resStr = '';
-    res.on('data', function (chunk) {
-      resStr += chunk;
-    }).on('end', function () {
-      callback(JSON.parse(resStr));
-    }).on('error', function(err){
-      console.log("FAIL: "+err);
-    });
-  });
-  return req;
-}
-
 var server = require("../../web.js");
 var COUNTDOWN = 0;
 var N = 0
@@ -103,7 +76,11 @@ function finish(res, t, token){
 
 
 module.exports = {
-  drop: drop,
   create_many: create_many,
   finish: finish
 }
+
+process.on('uncaughtException', function(err) {
+  console.log(__filename+' >> FAIL ' + err);
+  // console.log('Tip: Remember to start the Vagrant VM and Elasticsearch DB!')
+});

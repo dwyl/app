@@ -43,6 +43,10 @@ module.exports = function(req, reply) {
 
 
     ES.UPDATE(timer, function(record) {
+      console.log(' - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ')
+      console.log(record);
+      console.log(' - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ')
+      
       Hoek.merge(record, timer); // http://git.io/Amv6
       record.id = record._id;
       delete record._index;

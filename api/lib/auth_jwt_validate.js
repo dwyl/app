@@ -1,9 +1,9 @@
 // var ES = require('esta');
 var redisClient = require('./redis_connection');
-redisClient.set('redis', 'working');
-redisClient.get('redis', function (err, reply) {
-  console.log('RedisCLOUD is ' +reply.toString());
-});
+// redisClient.set('redis', 'working');
+// redisClient.get('redis', function (err, reply) {
+//   console.log('RedisCLOUD is ' +reply.toString());
+// });
 
 var validateFunc = function (decoded, request, callback) {
 

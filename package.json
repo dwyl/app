@@ -11,7 +11,8 @@
     "jshint": "./node_modules/jshint/bin/jshint -c .jshintrc --exclude-path .gitignore .",
     "start": "node web.js",
     "test": "istanbul cover ./node_modules/tape/bin/tape ./api/test/*.js | node_modules/tap-spec/bin/cmd.js",
-    "spec": "node ./node_modules/tape/bin/tape ./api/test/*.js | node_modules/tap-spec/bin/cmd.js"
+    "spec": "node ./node_modules/tape/bin/tape ./api/test/*.js | node_modules/tap-spec/bin/cmd.js",
+    "fast": "node ./node_modules/tape/bin/tape ./api/test/*.js"
   },
   "repository": {
     "type": "git",

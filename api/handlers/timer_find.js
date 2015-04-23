@@ -1,6 +1,4 @@
 var ES = require('esta');
-var dir    = __dirname.split('/')[__dirname.split('/').length-1];
-var file   = dir + __filename.replace(__dirname, '') + " -> ";
 
 module.exports = function(req, reply) {
   var record =  {

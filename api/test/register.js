@@ -3,7 +3,6 @@ var server = require("../../web.js");
 
 // https://nodejs.org/docs/latest/api/globals.html#globals_require_cache
 var uncache = require('./uncache').uncache;
-uncache('../lib/redis_connection'); // uncache redis connection then re-connect
 var redisClient = require('../lib/redis_connection');
 
 var dir   = __dirname.split('/')[__dirname.split('/').length-1];
@@ -67,6 +66,7 @@ test(file+" Attempt to register with short password (400)", function(t) {
     t.equal(res.statusCode, 400, "Longer password required");
     server.stop();
     redisClient.end();
+    uncache('../lib/redis_connection'); // uncache redis connection!
     t.end();
   });
 });

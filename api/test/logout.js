@@ -50,10 +50,10 @@ test(file + "LOGOUT", function(t) {
   };
   console.log(options);
   server.inject(options, function(res) {
-    // 
-    // console.log('\n - - - - - - - - - -  res')
-    // console.log(res.result)
-    // console.log(' - - - - - - - - - - - - - - - \n\n')
+
+    console.log('\n - - - - - - - - - -  res')
+    console.log(res.result)
+    console.log(' - - - - - - - - - - - - - - - \n')
 
     t.equal(res.statusCode, 200, "/logout worked");
     var ses = { "index":"time", "type":"session", "id":res.result._id }

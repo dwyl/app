@@ -1,5 +1,10 @@
 var test   = require('tape');
 var server = require("../../web.js");
+
+// https://nodejs.org/docs/latest/api/globals.html#globals_require_cache
+var uncache = require('./uncache').uncache;
+var redisClient = require('../lib/redis_connection');
+
 var dir    = __dirname.split('/')[__dirname.split('/').length-1];
 var file   = dir + __filename.replace(__dirname, '') + " -> ";
 var token;
@@ -7,12 +12,12 @@ var records = 10;
 var countdown = records;
 
 var helpers = require('./_test_helpers');
-test(file+ "Teardown", function(t) {
-  helpers.drop(function(res){
-    t.equal(res.acknowledged, true, file+"ALL Records DELETED!");
-    t.end();
-  }).end();
-});
+// test(file+ "Teardown", function(t) {
+//   helpers.drop(function(res){
+//     t.equal(res.acknowledged, true, file+"ALL Records DELETED!");
+//     t.end();
+//   }).end();
+// });
 
 test(file + "Register new person to create a few timers", function(t) {
   var email  = 'dwyl.test+multiple_timers' +Math.random()+'@gmail.com';
@@ -55,7 +60,7 @@ test(file + "GET /timer/all to list all timers", function(t) {
 
 test(file + "GET /timer/all should fail for Timmy no timers", function(t) {
   var person = {
-    "email"    : "dwyl.test+timmy_no_timers@gmail.com",
+    "email"    : "dwyl.test+timmy_no_timers" +Math.random()+"@gmail.com",
     "password" : "EveryThingisAwesome"
   }
   var options = {
@@ -77,6 +82,8 @@ test(file + "GET /timer/all should fail for Timmy no timers", function(t) {
         t.equal(res.statusCode, 404, "Timmay! has no timers...");
         // t.equal(T.hits.total, 100, "100 records found");
         server.stop();
+        redisClient.end();
+        uncache('../lib/redis_connection'); // uncache redis connection!
         t.end();
       });
     },200)

@@ -1,6 +1,8 @@
 var test   = require('tape');
 var JWT    = require('jsonwebtoken');
 var server = require("../../web.js");
+var uncache = require('./uncache').uncache;
+var redisClient = require('../lib/redis_connection');
 var dir    = __dirname.split('/')[__dirname.split('/').length-1];
 var file   = dir + __filename.replace(__dirname, '') + " -> ";
 var email  = "dwyl.test+transfer_"+Math.random()+"@gmail.com"
@@ -84,7 +86,9 @@ test(file + " Attempt to /login-or-register fails when no header or payload", fu
     // console.log(" - - -  person should not be anonymous anymore")
     // console.log(res.result);
     t.equal(res.statusCode, 400, "Fails (as expected - blocked by JOI)");
-    t.end();
     server.stop();
+    redisClient.end();
+    uncache('../lib/redis_connection'); // uncache redis connection!
+    t.end();
   });
 });
