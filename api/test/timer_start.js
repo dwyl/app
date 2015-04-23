@@ -2,9 +2,6 @@ var test   = require('tape');
 var server = require("../../web.js");
 var dir    = __dirname.split('/')[__dirname.split('/').length-1];
 var file   = dir + __filename.replace(__dirname, '') + " -> ";
-// https://nodejs.org/docs/latest/api/globals.html#globals_require_cache
-var uncache = require('./uncache').uncache;
-var redisClient = require('../lib/redis_connection');
 var token;
 
 test(file + "POST /timer/new should FAIL when no Auth Token Sent", function(t) {
@@ -23,7 +20,6 @@ test(file + "POST /timer/new should FAIL when no Auth Token Sent", function(t) {
       t.equal(response.statusCode, 401, "New timer FAILS JTW Auth: "
         + response.result.message+'\n');
       t.end();
-      server.stop();
     });
   });
 });
@@ -42,7 +38,6 @@ test(file + "POST /timer/new should FAIL when supplied VALID token but bad paylo
     t.equal(response.statusCode, 400, "New timer FAILS validation: "
       + response.result.message +'\n');
     t.end();
-    server.stop();
   });
 });
 
@@ -55,9 +50,8 @@ test(file + "START a NEW Timer (no st sent by client)!", function(t) {
     headers : { authorization : token }
   };
   server.inject(options, function(res) {
-    var T = JSON.parse(res.payload);
-    t.equal(res.statusCode, 200, "New timer started! " + T.start);
-    var tid = T.id;
+    t.equal(res.statusCode, 200, "New timer started! " + res.result.start);
+    var tid = res.result.id;
     var options = {
       method: "GET",
       url: "/timer/"+tid,
@@ -67,7 +61,6 @@ test(file + "START a NEW Timer (no st sent by client)!", function(t) {
     server.inject(options, function(res) {
       t.equal(res.statusCode, 200, "New timer retrieved!"+'\n');
       t.end();
-      server.stop();
     });
   });
 });
@@ -84,11 +77,18 @@ test(file + "START a NEW Timer with start time!", function(t) {
     headers : { authorization : token }
   };
   server.inject(options, function(res) {
-    var T = JSON.parse(res.payload);
-    t.equal(res.statusCode, 200, "New timer started! " + T.start+'\n');
-    server.stop();
-    redisClient.end();
-    uncache('../lib/redis_connection'); // uncache redis connection!
+    t.equal(res.statusCode, 200, "Timer started: " + res.result.start);
     t.end();
   });
 });
+
+// tape doesn't have a "after" function. see: http://git.io/vf0BM - - - - - - \\
+// so... we have to add this test to *every* file to tidy up. - - - - - - - - \\
+test(file + " cleanup =^..^= \n", function(t) { // - - - - - - - - - -  - - - \\
+  var uncache = require('./uncache').uncache;   // http://goo.gl/JIjK9Y - - - \\
+  require('../lib/redis_connection').end();     // ensure redis con closed! - \\
+  uncache('../lib/redis_connection');           // uncache redis con  - - - - \\
+  server.stop();                                // stop the mock server.  - - \\
+  uncache('../../web.js');      // uncache web.js to ensure we reload it. - - \\
+  t.end();                      // end the tape test.   - - - - - - - - - - - \\
+}); // tedious but necessary  - - - - - - - - - - - - - - - - - - - - - - - - \\

@@ -1,13 +1,12 @@
 var test   = require('tape');
 var JWT    = require('jsonwebtoken');
 var server = require("../../web.js");
-var uncache = require('./uncache').uncache;
-var redisClient = require('../lib/redis_connection');
-var dir    = __dirname.split('/')[__dirname.split('/').length-1];
-var file   = dir + __filename.replace(__dirname, '') + " -> ";
-var email  = "dwyl.test+transfer_"+Math.random()+"@gmail.com"
 var helpers = require('./_test_helpers');
 
+var dir    = __dirname.split('/')[__dirname.split('/').length-1];
+var file   = dir + __filename.replace(__dirname, '') + " -> ";
+
+var email  = "dwyl.test+transfer_"+Math.random()+"@gmail.com"
 var person = {
   "email"    : email,
   "password" : "SoCloseTo10kh!"
@@ -25,9 +24,6 @@ test(file + "Anonymous person can creates a timer, then register", function(t) {
     t.equal(res.statusCode, 200, "Session Created = "+res.result.created);
     token = res.headers.authorization;
 var decoded = JWT.verify(token, process.env.JWT_SECRET);
-// console.log(" - - - - - - - - - - - - - - - - - - - decoded: ")
-// console.log(decoded);
-// console.log(" - - - - - - - - - - - - - - - - - - - ")
     helpers.create_many(5, t, token, function(res) {
       // console.log(res.result);
       tid = res.result.id;
@@ -67,7 +63,6 @@ test(file + "Lookup the timer confirm the person is set", function(t){
       // console.log(res.result);
       t.equal(res.result.person, personid, "Timer created by "+personid);
       t.end();
-      server.stop();
     });
   },1000);
 });
@@ -86,9 +81,17 @@ test(file + " Attempt to /login-or-register fails when no header or payload", fu
     // console.log(" - - -  person should not be anonymous anymore")
     // console.log(res.result);
     t.equal(res.statusCode, 400, "Fails (as expected - blocked by JOI)");
-    server.stop();
-    redisClient.end();
-    uncache('../lib/redis_connection'); // uncache redis connection!
     t.end();
   });
 });
+
+// tape doesn't have a "after" function. see: http://git.io/vf0BM - - - - - - \\
+// so... we have to add this test to *every* file to tidy up. - - - - - - - - \\
+test(file + " cleanup =^..^= \n", function(t) { // - - - - - - - - - -  - - - \\
+  var uncache = require('./uncache').uncache;   // http://goo.gl/JIjK9Y - - - \\
+  require('../lib/redis_connection').end();     // ensure redis con closed! - \\
+  uncache('../lib/redis_connection');           // uncache redis con  - - - - \\
+  server.stop();                                // stop the mock server.  - - \\
+  uncache('../../web.js');      // uncache web.js to ensure we reload it. - - \\
+  t.end();                      // end the tape test.   - - - - - - - - - - - \\
+}); // tedious but necessary  - - - - - - - - - - - - - - - - - - - - - - - - \\

@@ -1,7 +1,5 @@
 var test   = require('tape');
 var server = require("../../web.js");
-var uncache = require('./uncache').uncache;
-var redisClient = require('../lib/redis_connection');
 var dir    = __dirname.split('/')[__dirname.split('/').length-1];
 var file   = dir + __filename.replace(__dirname, '') + " -> ";
 var timer;
@@ -31,7 +29,6 @@ test(file + "CREATE a NEW Timer without a desc (which we will update below)", fu
 test(file + "POST /timer/upsert to set a description", function(t) {
   var updated = {
     id: timer.id,
-
     desc: "updated now"
   }
   var options = {
@@ -62,7 +59,6 @@ test(file + "POST /timer/upsert with a NEW TIMER but NO start (fault tolerance)"
     t.equal(response.statusCode, 200, "New Timer Created: "+response.result.start);
     timer = response.result;
     t.end();
-    server.stop();
   });
 });
 
@@ -75,12 +71,18 @@ test(file + "POST /timer/upsert with a NEW timer (fault tolerance)", function(t)
   };
   server.inject(options, function(response) {
     console.log(response.result);
-    // var T = JSON.parse(response.result);
-    // console.log(T.error);
-    t.equal(response.statusCode, 200, "New Timer Upserted: "+response.result.start);
-    server.stop();
-    redisClient.end();
-    uncache('../lib/redis_connection'); // uncache redis connection!
+    t.equal(response.statusCode, 200, "Timer Upserted: "+response.result.start);
     t.end();
   });
 });
+
+// tape doesn't have a "after" function. see: http://git.io/vf0BM - - - - - - \\
+// so... we have to add this test to *every* file to tidy up. - - - - - - - - \\
+test(file + " cleanup =^..^= \n", function(t) { // - - - - - - - - - -  - - - \\
+  var uncache = require('./uncache').uncache;   // http://goo.gl/JIjK9Y - - - \\
+  require('../lib/redis_connection').end();     // ensure redis con closed! - \\
+  uncache('../lib/redis_connection');           // uncache redis con  - - - - \\
+  server.stop();                                // stop the mock server.  - - \\
+  uncache('../../web.js');      // uncache web.js to ensure we reload it. - - \\
+  t.end();                      // end the tape test.   - - - - - - - - - - - \\
+}); // tedious but necessary  - - - - - - - - - - - - - - - - - - - - - - - - \\

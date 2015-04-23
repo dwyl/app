@@ -1,10 +1,8 @@
 // This "Test" Just checks we are able to connect to ElasticSearch
 // without a database to store records this app is useless...
-var ES = require('esta');
-var test = require('tape');
+var ES    = require('esta');
+var test  = require('tape');
 var aguid = require('aguid');
-var uncache = require('./uncache').uncache;
-var redisClient = require('../lib/redis_connection');
 
 var record =  {
   index: process.env.ES_INDEX,
@@ -83,12 +81,22 @@ test("CREATE & READ a SESSION record", function(t) {
   ES.CREATE(session, function(result2) {
     ES.READ(rec2, function(result3) {
       t.equal(result3._source.start, rec2.start, "Record created: "+result3._source.start);
-      redisClient.end();
-      uncache('../lib/redis_connection'); // uncache redis connection!
       t.end();
     });
   });
 });
+
+var dir    = __dirname.split('/')[__dirname.split('/').length-1];
+var file   = dir + __filename.replace(__dirname, '') + " -> ";
+
+// tape doesn't have a "after" function. see: http://git.io/vf0BM - - - - - - \\
+// so... we have to add this test to *every* file to tidy up. - - - - - - - - \\
+test(file + " cleanup =^..^= \n", function(t) { // - - - - - - - - - -  - - - \\
+  var uncache = require('./uncache').uncache;   // http://goo.gl/JIjK9Y - - - \\
+  require('../lib/redis_connection').end();     // ensure redis con closed! - \\
+  uncache('../lib/redis_connection');           // uncache redis con  - - - - \\
+  t.end();                      // end the tape test.   - - - - - - - - - - - \\
+}); // tedious but necessary  - - - - - - - - - - - - - - - - - - - - - - - - \\
 
 process.on('uncaughtException', function(err) {
   console.log('Database FAIL ... ' + err);

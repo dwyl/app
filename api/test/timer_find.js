@@ -1,10 +1,6 @@
 var test   = require('tape');
 var server = require("../../web.js");
 
-// https://nodejs.org/docs/latest/api/globals.html#globals_require_cache
-var uncache = require('./uncache').uncache;
-var redisClient = require('../lib/redis_connection');
-
 var dir    = __dirname.split('/')[__dirname.split('/').length-1];
 var file   = dir + __filename.replace(__dirname, '') + " -> ";
 
@@ -55,12 +51,19 @@ test(file + "GET /timer/:id retrieve our timer", function(t) {
 
         var T = JSON.parse(res3.payload);
         t.equal(T.desc, timer.desc, "Found timer by GET: "+options.url);
-
-        redisClient.end();
-        uncache('../lib/redis_connection'); // uncache redis connection!
-        server.stop();
         t.end();
       }); // GET /timer/:id
     });
   });
 });
+
+// tape doesn't have a "after" function. see: http://git.io/vf0BM - - - - - - \\
+// so... we have to add this test to *every* file to tidy up. - - - - - - - - \\
+test(file + " cleanup =^..^= \n", function(t) { // - - - - - - - - - -  - - - \\
+  var uncache = require('./uncache').uncache;   // http://goo.gl/JIjK9Y - - - \\
+  require('../lib/redis_connection').end();     // ensure redis con closed! - \\
+  uncache('../lib/redis_connection');           // uncache redis con  - - - - \\
+  server.stop();                                // stop the mock server.  - - \\
+  uncache('../../web.js');      // uncache web.js to ensure we reload it. - - \\
+  t.end();                      // end the tape test.   - - - - - - - - - - - \\
+}); // tedious but necessary  - - - - - - - - - - - - - - - - - - - - - - - - \\

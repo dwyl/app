@@ -1,12 +1,9 @@
 var test   = require('tape');
 var server = require("../../web.js");
 
-// https://nodejs.org/docs/latest/api/globals.html#globals_require_cache
-var uncache = require('./uncache').uncache;
-var redisClient = require('../lib/redis_connection');
+var dir    = __dirname.split('/')[__dirname.split('/').length-1];
+var file   = dir + __filename.replace(__dirname, '') + " -> ";
 
-var dir   = __dirname.split('/')[__dirname.split('/').length-1];
-var file  = dir + __filename.replace(__dirname, '');
 var email  = 'dwyl.test+auth_basic' +Math.random()+'@gmail.com';
 var person = {
   "email"    : email,
@@ -64,9 +61,17 @@ test(file+" Attempt to register with short password (400)", function(t) {
   server.inject(options, function(res) {
     console.log(res.payload)
     t.equal(res.statusCode, 400, "Longer password required");
-    server.stop();
-    redisClient.end();
-    uncache('../lib/redis_connection'); // uncache redis connection!
     t.end();
   });
 });
+
+// tape doesn't have a "after" function. see: http://git.io/vf0BM - - - - - - \\
+// so... we have to add this test to *every* file to tidy up. - - - - - - - - \\
+test(file + " cleanup =^..^= \n", function(t) { // - - - - - - - - - -  - - - \\
+  var uncache = require('./uncache').uncache;   // http://goo.gl/JIjK9Y - - - \\
+  require('../lib/redis_connection').end();     // ensure redis con closed! - \\
+  uncache('../lib/redis_connection');           // uncache redis con  - - - - \\
+  server.stop();                                // stop the mock server.  - - \\
+  uncache('../../web.js');      // uncache web.js to ensure we reload it. - - \\
+  t.end();                      // end the tape test.   - - - - - - - - - - - \\
+}); // tedious but necessary  - - - - - - - - - - - - - - - - - - - - - - - - \\

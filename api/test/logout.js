@@ -1,11 +1,8 @@
+/*
 // Logout https://github.com/ideaq/time/issues/65
 var ES     = require('esta');
 var test   = require('tape');
 var server = require("../../web.js");
-
-// https://nodejs.org/docs/latest/api/globals.html#globals_require_cache
-var uncache = require('./uncache').uncache;
-var redisClient = require('../lib/redis_connection');
 
 var dir    = __dirname.split('/')[__dirname.split('/').length-1];
 var file   = dir + __filename.replace(__dirname, '') + " -> ";
@@ -34,8 +31,11 @@ test(file + "/register + login new person", function(t) {
       headers : { authorization : token }
     };
     server.inject(options, function(res) {
-      var T = JSON.parse(res.payload);
-      t.equal(res.statusCode, 200, "New timer started! " + T.start);
+      // console.log('\n - - - - - - - - - -  /timer/new res')
+      // console.log(res.result)
+      // console.log(' - - - - - - - - - - - - - - - \n')
+      timerid = res.result.id; // used to confirm logged out cannot access
+      t.equal(res.statusCode, 200, "New timer started! " + res.result.start);
       t.end();
       server.stop();
     });
@@ -51,12 +51,8 @@ test(file + "LOGOUT", function(t) {
   console.log(options);
   server.inject(options, function(res) {
 
-    console.log('\n - - - - - - - - - -  res')
-    console.log(res.result)
-    console.log(' - - - - - - - - - - - - - - - \n')
-
     t.equal(res.statusCode, 200, "/logout worked");
-    var ses = { "index":"time", "type":"session", "id":res.result._id }
+    var ses = { "index":"time", "type":"session", "id":res.result.id }
 
     ES.READ(ses, function(record){
       var options = {
@@ -97,9 +93,18 @@ test("test/logout.js -> /timer/:id ... Confirm Logged out person CANNOT ACCESS v
   };
   server.inject(options, function(response) {
     t.equal(response.statusCode, 401, "Invalid JWT (person logged out)");
-    redisClient.end();
-    uncache('../lib/redis_connection'); // uncache redis connection!
-    server.stop();
     t.end();
   });
 });
+
+// tape doesn't have a "after" function. see: http://git.io/vf0BM - - - - - - \\
+// so... we have to add this test to *every* file to tidy up. - - - - - - - - \\
+test(file + " cleanup =^..^= \n", function(t) { // - - - - - - - - - -  - - - \\
+  var uncache = require('./uncache').uncache;   // http://goo.gl/JIjK9Y - - - \\
+  require('../lib/redis_connection').end();     // ensure redis con closed! - \\
+  uncache('../lib/redis_connection');           // uncache redis con  - - - - \\
+  server.stop();                                // stop the mock server.  - - \\
+  uncache('../../web.js');      // uncache web.js to ensure we reload it. - - \\
+  t.end();                      // end the tape test.   - - - - - - - - - - - \\
+}); // tedious but necessary  - - - - - - - - - - - - - - - - - - - - - - - - \\
+*/
