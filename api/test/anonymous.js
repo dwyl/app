@@ -1,4 +1,4 @@
-/*
+
 var test   = require('tape');
 var server = require("../../web.js");
 var JWT    = require('jsonwebtoken');
@@ -22,8 +22,8 @@ test(file + "Anonymous people can create timers!", function(t) {
     url     : "/anonymous"
   };
   server.inject(options, function(res) {
-    console.log(' - - - - - - - - - - - - - - - res.payload:')
-    console.log(res);
+    console.log(' - - - - - - - - - - - - - - - res.result:')
+    console.log(res.result);
     console.log(' - - - - - - - - - - - - - - - - - - - - - -')
 
     t.equal(res.statusCode, 200, "Session Created = "+res.result.created);
@@ -67,6 +67,4 @@ test(file + " cleanup =^..^= \n", function(t) { // - - - - - - - - - -  - - - \\
 
 process.on('uncaughtException', function(err) {
   console.log(file+' FAIL ... ' + err);
-  // console.log('Tip: Remember to start the Vagrant VM and Elasticsearch DB!')
 });
-*/
