@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html lang=”en-GB”>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>dwyl timer</title>
@@ -24,6 +25,7 @@
         <div id="t">00:00</div>
       </div>
       <div id="active-desc">
+        <label class="sr-only" for="description">What are you timing?</label>
         <input id="desc" placeholder="What are you timing?" type="text" autocomplete="on" />
       </div>
       <button id="stop">
@@ -43,9 +45,11 @@
     <section id="register-login">
       <form id="login">
         <div class="email fa fa-envelope-o">
+            <label class="sr-only" for="email">Email address</label>
             <input type="email" required placeholder="Email Address" name="email" id="email"/>
         </div>
         <div class="pw fa fa-lock">
+            <label class="sr-only" for="password">Password</label>
             <input type="password" placeholder=" Password" name="password" id="password"/>
         </div>
         <div id="login-button">
