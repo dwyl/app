@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html lang=”en-GB”>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>dwyl timer</title>
@@ -9,12 +10,13 @@
     <!--FontAwesome-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <!-- Adding google fonts -->
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300|Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300%7COpen+Sans+Condensed:300' rel='stylesheet' type='text/css'>
   </head>
   <body>
     <!--Icon first, then add mailto-->
     <div id="feedback-triangle">
       <a href="https://github.com/ideaq/time/labels/MVP" target="_blank">
+        <span class="sr-only">Please give us feedback! Opens in new window.</span>
         <i class="fa fa-comments" aria-hidden="true"></i>
       </a>
     </div>
@@ -24,7 +26,8 @@
         <div id="t">00:00</div>
       </div>
       <div id="active-desc">
-        <input id="desc" placeholder="What are you timing?" type="text" autocomplete/>
+        <label class="sr-only" for="desc">What are you timing?</label>
+        <input id="desc" placeholder="What are you timing?" type="text" autocomplete="on" />
       </div>
       <button id="stop">
         <i class="fa fa-stop" aria-hidden="true"></i>
@@ -43,9 +46,11 @@
     <section id="register-login">
       <form id="login">
         <div class="email fa fa-envelope-o">
+            <label class="sr-only" for="email">Email address</label>
             <input type="email" required placeholder="Email Address" name="email" id="email"/>
         </div>
         <div class="pw fa fa-lock">
+            <label class="sr-only" for="password">Password</label>
             <input type="password" placeholder=" Password" name="password" id="password"/>
         </div>
         <div id="login-button">
@@ -77,7 +82,7 @@
       <div class="save-edit">
         <button type="submit" id="\{{id}}-save">save</button>
       </div>
-      <input class="timer-desc" type="text" autocomplete id="\{{id}}-desc" value="\{{desc}}" placeholder="\{{placeholder}}"/>
+      <input class="timer-desc" type="text" autocomplete="on" id="\{{id}}-desc" value="\{{desc}}" placeholder="\{{placeholder}}"/>
       <!-- <input type class="timer-time" type="text" autocomplete id="\{{id}}-took" value="\{{took}}" /> -->
       <span class="timer-time">\{{took}}</span>
   </form>
@@ -90,6 +95,5 @@
 <!-- https://github.com/ideaq/faster -->
 <!-- <script src="https://rawgit.com/ideaq/faster/master/lib/client.js"></script> -->
 
-<i id="clear" class="fa fa-recycle" style="position:fixed; bottom:0.2em; left:10px; z-index:100; color:#BEF202; border: 1px white solid; padding:4px; display: none;"></i>
   </body>
 </html>
