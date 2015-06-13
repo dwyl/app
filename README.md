@@ -1,7 +1,7 @@
 # time
 [![Build Status](https://travis-ci.org/dwyl/time.png?branch=master)](https://travis-ci.org/dwyl/time)
 [![Test Coverage](https://codeclimate.com/github/dwyl/time/badges/gpa.svg)](https://codeclimate.com/github/dwyl/time)
-[![Code Climate](https://codeclimate.com/github/ideaq/time.png)](https://codeclimate.com/github/ideaq/time)
+[![Code Climate](https://codeclimate.com/github/dwyl/time.png)](https://codeclimate.com/github/dwyl/time)
 [![bitHound Score](https://www.bithound.io/github/dwyl/time/badges/score.svg?)](https://www.bithound.io/github/dwyl/time) [![Dependencies](https://david-dm.org/dwyl/time.png?theme=shields.io)](https://david-dm.org/dwyl/time)
 [![Node version](https://img.shields.io/node/v/atimer.svg?style=flat)](http://nodejs.org/download/)
 [![HAPI 8.2](http://img.shields.io/badge/hapi-8.2-brightgreen.svg)](http://hapijs.com)
