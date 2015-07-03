@@ -11,6 +11,10 @@
 
 
 - - -
+You found us, **welcome!**     
+We're currently laying foundations for [an intense summer of building dwyl](https://github.com/dwyl/summer-2015/).
+
+In the meantime, please feel free to [read through our repos](https://github.com/dwyl/start-here) and find out what we're about or [_drop us a line_](https://github.com/dwyl/start-here/issues) with questions, what you'd like to see us focus on, happy thoughts, great articles you've read lately or anything that's on your mind!
 
 ## Why? [![Start with Why](https://img.shields.io/badge/start%20with-why%3F-brightgreen.svg?style=flat)](http://www.ted.com/talks/simon_sinek_how_great_leaders_inspire_action)
 
