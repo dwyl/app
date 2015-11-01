@@ -1,18 +1,16 @@
 # time
 [![Build Status](https://travis-ci.org/dwyl/time.png?branch=master)](https://travis-ci.org/dwyl/time)
-[![Test Coverage](https://codeclimate.com/github/dwyl/time/badges/coverage.svg)](https://codeclimate.com/github/dwyl/time)
-[![Code Climate](https://codeclimate.com/github/dwyl/time.png)](https://codeclimate.com/github/dwyl/time)
-[![bitHound Score](https://www.bithound.io/github/dwyl/time/badges/score.svg?)](https://www.bithound.io/github/dwyl/time) [![Dependencies](https://david-dm.org/dwyl/time.png?theme=shields.io)](https://david-dm.org/dwyl/time)
 [![Node version](https://img.shields.io/node/v/atimer.svg?style=flat)](http://nodejs.org/download/)
-[![HAPI 8.2](http://img.shields.io/badge/hapi-8.2-brightgreen.svg)](http://hapijs.com)
+[![HAPI 11.0.3](http://img.shields.io/badge/hapi-11.0.3-brightgreen.svg)](http://hapijs.com)
 
 
 ![Until we can manage time, we can manage nothing else](http://i.imgur.com/GbTyiib.png)
 
 
 - - -
-You found us, **welcome!**     
-We're currently laying foundations for [an intense summer of building dwyl](https://github.com/dwyl/summer-2015/).
+You *found* us, ***welcome!***     
+We're currently *re-building* the ***Time*** **App** to make it more modular and extensible, if you want to help us ***Beta Test*** it,
+please register your interest on the website: http://www.dwyl.io/
 
 In the meantime, please feel free to [read through our repos](https://github.com/dwyl/start-here) and find out what we're about or [_drop us a line_](https://github.com/dwyl/start-here/issues) with questions, what you'd like to see us focus on, happy thoughts, great articles you've read lately or anything that's on your mind!
 
