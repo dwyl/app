@@ -1,5 +1,5 @@
 var ES    = require('esta');
-var redisClient = require('../lib/redis_connection');
+var redisClient = require('redis-connection')();
 
 module.exports = function logout(req, reply) {
   // console.log(req.auth)

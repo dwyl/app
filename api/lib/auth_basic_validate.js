@@ -13,7 +13,8 @@ module.exports = function validate (email, password, callback) {
   ES.READ(person, function(res) {
     console.log(' auth_basic_validate.js - - - - - - - - - - - - - ES.READ(person)')
     console.log(res);
-    console.log(' - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ')
+    console.log(' - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - callback:')
+    console.log(typeof callback);
     if(res.found) { // compare to bcrypt hash on file
       Bcrypt.compare(password, res._source.password, function (err, isValid) {
         return callback(err, isValid, { id: res._id, email: res._source.email });

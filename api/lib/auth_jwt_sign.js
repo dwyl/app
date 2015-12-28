@@ -1,7 +1,7 @@
 var JWT   = require('jsonwebtoken');  // used to sign our content
 var aguid = require('aguid');
 var ES    = require('esta');
-var redisClient = require('./redis_connection');
+var redisClient = require('redis-connection')();
 
 
 module.exports = function sign(request, callback) {

@@ -1,5 +1,5 @@
 // var ES = require('esta');
-var redisClient = require('./redis_connection');
+var redisClient = require('redis-connection')();
 // redisClient.set('redis', 'working');
 // redisClient.get('redis', function (err, reply) {
 //   console.log('RedisCLOUD is ' +reply.toString());

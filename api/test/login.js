@@ -2,7 +2,7 @@ var test   = require('tape');
 var server = require("../../web.js");
 // https://nodejs.org/docs/latest/api/globals.html#globals_require_cache
 var uncache = require('./uncache').uncache;
-var redisClient = require('../lib/redis_connection');
+var redisClient = require('redis-connection')();
 
 
 var dir    = __dirname.split('/')[__dirname.split('/').length-1];
@@ -21,8 +21,7 @@ test(file + "POST /login 401 for un-registered person", function(t) {
   };
   server.inject(options, function(res) {
     t.equal(res.statusCode, 401, "Unregistered Cannot Login");
-    t.end();
-    server.stop();
+    server.stop(t.end);
   });
 });
 
@@ -46,8 +45,7 @@ test(file + "Create new person " +email +" and log in", function(t) {
       // console.log(res.result)
       // console.log(' - - - - - - - - - - - - - - - - - - - - - - ')
       t.equal(res.statusCode, 200, "Login Success!!");
-      t.end();
-      server.stop();
+      server.stop(t.end);
     });
   });
 });
@@ -63,17 +61,6 @@ test(file + "Attempt to /login using incorrect password", function(t) {
   server.inject(options2, function(res) {
     console.log(res.result)
     t.equal(res.statusCode, 401, "Fails (as expected) MSG: " + res.result.message);
-    t.end();
+    server.stop(t.end);
   });
 });
-
-// tape doesn't have a "after" function. see: http://git.io/vf0BM - - - - - - \\
-// so... we have to add this test to *every* file to tidy up. - - - - - - - - \\
-test(file + " cleanup =^..^= \n", function(t) { // - - - - - - - - - -  - - - \\
-  var uncache = require('./uncache').uncache;   // http://goo.gl/JIjK9Y - - - \\
-  require('../lib/redis_connection').end();     // ensure redis con closed! - \\
-  uncache('../lib/redis_connection');           // uncache redis con  - - - - \\
-  server.stop();                                // stop the mock server.  - - \\
-  uncache('../../web.js');      // uncache web.js to ensure we reload it. - - \\
-  t.end();                      // end the tape test.   - - - - - - - - - - - \\
-}); // tedious but necessary  - - - - - - - - - - - - - - - - - - - - - - - - \\

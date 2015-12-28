@@ -39,12 +39,3 @@ test(file+" Email Successfully Sent ", function(t) {
     t.end();
   })
 });
-
-// tape doesn't have a "after" function. see: http://git.io/vf0BM - - - - - - \\
-// so... we have to add this test to *every* file to tidy up. - - - - - - - - \\
-test(file + " cleanup =^..^= \n", function(t) { // - - - - - - - - - -  - - - \\
-  require('../lib/redis_connection').end();     // ensure redis con closed! - \\
-  uncache('../lib/redis_connection');           // uncache redis con  - - - - \\
-  uncache('../lib/email_welcome');              // clear cache email module - \\
-  t.end();                                      // end the tape test.   - - - \\
-});                                             // tedious but necessary  - - \\

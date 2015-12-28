@@ -75,14 +75,3 @@ test(file + "POST /timer/upsert with a NEW timer (fault tolerance)", function(t)
     t.end();
   });
 });
-
-// tape doesn't have a "after" function. see: http://git.io/vf0BM - - - - - - \\
-// so... we have to add this test to *every* file to tidy up. - - - - - - - - \\
-test(file + " cleanup =^..^= \n", function(t) { // - - - - - - - - - -  - - - \\
-  var uncache = require('./uncache').uncache;   // http://goo.gl/JIjK9Y - - - \\
-  require('../lib/redis_connection').end();     // ensure redis con closed! - \\
-  uncache('../lib/redis_connection');           // uncache redis con  - - - - \\
-  server.stop();                                // stop the mock server.  - - \\
-  uncache('../../web.js');      // uncache web.js to ensure we reload it. - - \\
-  t.end();                      // end the tape test.   - - - - - - - - - - - \\
-}); // tedious but necessary  - - - - - - - - - - - - - - - - - - - - - - - - \\

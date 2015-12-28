@@ -11,7 +11,11 @@ var ip      = require('./api/lib/lanip');
 
 server.connection({ host : ip, port: port, routes: { cors: true } });
 
-server.register([ {register: Basic}, {register: AuthJWT} ], function (err) {
+server.register([ 
+  {register: require('inert')},
+  {register: require('vision')}, 
+  {register: Basic}, 
+  {register: AuthJWT} ], function (err) {
 
   server.auth.strategy('basic', 'basic', {
     validateFunc: require('./api/lib/auth_basic_validate.js')
@@ -38,7 +42,8 @@ server.register([ {register: Basic}, {register: AuthJWT} ], function (err) {
 
 });
 
-server.start();
-console.log('Now Visit: http://' + ip + ':' +port);
+server.start(function(){
+  console.log('Now Visit: http://' + ip + ':' +port);
+});
 
 module.exports = server;

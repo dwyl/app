@@ -40,14 +40,15 @@
     "hapi-auth-jwt2": "^5.0.7",
     "hiredis": "^0.4.1",
     "hoek": "^2.16.1",
+    "inert": "^3.2.0",
     "joi": "^6.7.1",
     "jsonwebtoken": "^5.0.5",
     "lout": "^7.1.0",
     "mandrill-api": "^1.0.45",
     "nodemailer": "^1.4.0",
     "perma": "^2.0.1",
-    "redis": "^1.0.0",
-    "sad": "^1.0.8"
+    "redis-connection": "^4.0.1",
+    "vision": "^4.0.1"
   },
   "devDependencies": {
     "codeclimate-test-reporter": "0.1.1",
