@@ -1,5 +1,5 @@
 var test   = require('tape');
-var server = require("../../app.js");
+var server = require("../../web.js");
 var dir    = __dirname.split('/')[__dirname.split('/').length-1];
 var file   = dir + __filename.replace(__dirname, '') + " -> ";
 

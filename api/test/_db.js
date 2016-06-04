@@ -4,7 +4,7 @@ var ES = require('esta');
 var test = require('tape');
 
 var record =  {
-  index: "time",
+  index: process.env.ES_INDEX,
   type: "timer",
   id: Math.floor(Math.random() * (1000000)),
   start: new Date().toISOString()
@@ -37,7 +37,7 @@ test("CREATE & READ a record", function(t) {
 
 test("UPDATE a record", function(t) {
   var record =  {
-    index: "time",
+    index: process.env.ES_INDEX,
     type: "timer",
     id: Math.floor(Math.random() * (1000000)),
     start: new Date().getTime()
@@ -63,7 +63,7 @@ test("UPDATE a record", function(t) {
 var aguid = require('aguid');
 
 var session =  {
-  index: "time",
+  index: process.env.ES_INDEX,
   type: "session",
   id: aguid(),
   start: new Date().toISOString(),

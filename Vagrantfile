@@ -22,8 +22,9 @@ sudo apt-get install openjdk-7-jre-headless -y
 
 ### Check http://www.elasticsearch.org/download/ for latest version of ElasticSearch and replace wget link below
 
-wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.5.0.deb
-sudo dpkg -i elasticsearch-1.5.0.deb
+wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.5.1.deb
+sudo dpkg -i elasticsearch-1.5.1.deb
+
 
 curl -L http://github.com/elasticsearch/elasticsearch-servicewrapper/tarball/master | tar -xz
 sudo mkdir -p /usr/local/share/elasticsearch/bin/
@@ -35,6 +36,15 @@ sudo ln -s `readlink -f /usr/local/share/elasticsearch/bin/service/elasticsearch
 
 sudo service elasticsearch start
 # curl http://localhost:9200
+
+# install Redis following http://redis.io/topics/quickstart
+wget http://download.redis.io/redis-stable.tar.gz
+tar xvzf redis-stable.tar.gz
+cd redis-stable
+# sudo make me a sandiwch --> https://xkcd.com/149/
+sudo make
+sudo make install
+redis-server
 
 SCRIPT
 

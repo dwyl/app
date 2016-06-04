@@ -1,9 +1,9 @@
-var ES    = require('esta');
+var ES = require('esta');
 
 var validateFunc = function (decoded, request, callback) {
 
   var session = {
-    index : "time",
+    index : process.env.ES_INDEX,
     type  : "session",
     id    : decoded.jti  // use SESSION ID as key for sessions
   } // jti? >> http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html#jtiDef

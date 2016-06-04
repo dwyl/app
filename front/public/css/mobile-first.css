@@ -1,0 +1,350 @@
+/*==============================
+  GENERAL STYLES
+================================*/
+
+/*https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/*/
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body{
+  margin: 0;
+  font-family: 'Open Sans', sans-serif;
+  color: #403f3f;
+}
+
+p {
+  margin: 0;
+}
+
+/*prevents iOS from zooming into input fields which people
+have to manually zoom out of*/
+input {
+  font-size: 1em;
+}
+
+/* Making placeholder text disappear when clicked on */
+[placeholder]:focus::-webkit-input-placeholder {
+  transition: opacity 0.5s 0.5s ease;
+  opacity: 0;
+}
+[placeholder]:focus::-moz-placeholder {
+  transition: opacity 0.5s 0.5s ease;
+  opacity: 0;
+}
+[placeholder]:focus::-ms-input-placeholder  {
+  transition: opacity 0.5s 0.5s ease;
+  opacity: 0;
+}
+
+/*==============================
+    Feedback triangle
+================================*/
+/*Triangle from: http://callmenick.com/2014/05/03/css-triangles/*/
+#feedback-triangle{
+  position:absolute;
+  top:0;
+  margin: 0;
+  width: 2em;
+  height: 2em;
+  border-top: solid 2.8em #323232; /*or red: #c81e32*/
+  border-left: solid 2.8em #323232;
+  border-right: solid 2.8em transparent;
+  border-bottom: solid 2.8em transparent;
+}
+
+  #feedback-triangle i:before{
+    position:relative;
+    bottom: 1em;
+    right: 1.2em;
+    color:white;
+    font-size: 2em;
+  }
+
+
+/*==============================
+  Section | MAIN (current timer)
+================================*/
+#main {
+  width: 100%;
+  padding: 0.5em;
+  background: #EEE8E8;
+  text-align: center;
+}
+
+
+/*======== Timer time ========*/
+  #active-time {
+    font-size: 3em;
+    display: inline-block;
+    margin: 0 auto;
+  }
+
+    #main button {
+      border-radius: 50%;
+      background: #464646;
+      padding: 1.3em;
+      margin: 1em;
+      color: #f5f5f5;
+      border: 2px solid #f5f5f5;
+      position: absolute;
+      top: 1.3em;
+      right: 0.5em;
+      outline: 0;
+    }
+      #main button i{
+        font-size:1.8em;
+      }
+
+    #start{
+      display: none;
+    }
+
+/*======== Timer description ========*/
+  #active-desc{
+    display: block;
+    margin: 0 auto;
+  }
+
+    #active-desc input{
+      font-family: 'Open Sans', sans-serif;
+      text-align: center;
+      background: none;
+      border:0;
+      border-bottom: 1px solid #848484;
+      border-radius: 0; /*iOS shows curves on border without this*/
+    }
+
+      #active-desc input:focus{
+          outline:0;
+      }
+
+   /*Only way to change placeholder text color*/
+    #main ::-webkit-input-placeholder {
+      color: #848484;
+    }
+    #main ::-moz-placeholder {
+      color: #848484;
+    }
+
+
+/*==============================
+    Section | PAST TIMERS
+================================*/
+
+/*======== Message when there are no timers ========*/
+  #why {
+    font-size: 2.5em;
+    font-family: 'Open Sans Condensed', sans-serif;
+    color: #d3d3d3;
+    width: 90%;
+    margin:auto;
+  }
+
+/*======== Past timer list ========*/
+ul {
+  margin:0;
+  padding: 0;
+}
+#past-timers-list{
+  width: 100%;
+
+}
+
+  .timer-one-line{
+    display: flex;
+    flex-direction:row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-item: baseline; /*flex-end*/
+    display: -webkit-flex;
+    -webkit-flex-direction:row;
+    -webkit-flex-wrap: nowrap;
+    -webkit-justify-content: space-between;
+    -webkit-align-item: baseline; /*flex-end*/
+    border-bottom: 1px solid #d3d3d3;
+    width: 100%;
+  }
+
+    .timer-one-line i{
+      width:1.5em;
+      padding: 0.5em 0.3em 0.5em 0.3em;
+      flex: 0 0 auto;
+      -webkit-flex: 0 0 auto;
+      /*border: 1px solid green;*/
+    }
+
+      span.timer-desc{
+        flex-grow: 5;
+        -webkit-flex-grow: 5;
+        text-align:left;
+        padding: 0.3em 0.4em 0.3em 0.4em;
+        /*border: 1px solid red;*/
+      }
+
+      span.timer-time{
+        flex: 1 0 4em;
+        -webkit-flex: 1 0 4em;
+        text-align:right;
+        padding: 0.3em 0.5em 0.3em 0.5em;
+        /*border: 1px solid blue  ;*/
+      }
+
+/*======== Past timer edit mode ========*/
+.save-edit{
+  height: 2em;
+  border-radius:0;
+  /*color: #fff;*/
+  background: #323232;
+  /*border: none;*/
+  /*text-transform:uppercase;*/
+  text-align: center;
+  padding: 0.3em 0;
+  margin: 0.3em;
+}
+
+.save-edit button{
+  /*height: auto;*/
+  /*border-radius:0;*/
+  color: #fff;
+  font-size: 0.8em;
+  background: none;
+  border: none;
+  text-transform:uppercase;
+  text-align: center;
+  padding: 0 0.2em;
+  /*margin: 0.3em;*/
+}
+
+.timer-one-line input{
+  flex-grow: 5;
+  -webkit-flex-grow: 5;
+  outline: 0;
+  border: solid 1px #403f3f;
+  resize: horizontal;
+  border-radius: 0;
+  background:none;
+  font-family: 'OpenSans', sans-serif;
+  color: #403f3f;
+  display: inline-block;
+  margin: 0.4em 0 0.4em 0;
+  padding: 0.2em;
+}
+
+/*==============================
+    Section | LOGIN
+================================*/
+#register-login{
+  background: #323232;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+}
+
+/*======== Input fields ========*/
+  div.email, div.pw {
+    position: relative; /* fa Helps curtail overlap of fa */
+    padding: 0.4em;
+    margin: 0.8em auto;
+    border-bottom: solid 1px #fff;
+    display: block; /*default is inline*/
+    width: 90%;
+  }
+
+    .email input, .pw input{
+      font-family: 'Open Sans', sans-serif;
+      border: 0;
+      margin-left: 0.3em;
+      width: 90%;
+      background:none;
+      font-size:1em;
+      color:white; /*text input by user*/
+    }
+
+      .email input:focus, .pw input:focus{
+        outline: 0;
+      }
+
+  /*fa*/
+  .fa-envelope-o:before, .fa-lock:before{
+    color: #848484;
+  }
+
+/*======== Submit button ========*/
+  #login-button{
+    width: 90%; /*keeps contents in line with other login fields*/
+    text-align:right; /*aligns contents to the right*/
+    margin:auto;
+  }
+
+    #login-button button{
+      border-radius:0;
+      color: #fff;
+      font-size:0.9em;
+      border: solid 1px #fff;
+      text-transform:uppercase;
+      text-align: center;
+      background: none;
+      padding:0.5em;
+      margin: 0 0 0.2em;
+    }
+
+/*==============================
+    Section | NAV
+================================*/
+#nav{
+  background: #323232;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  display: none; /*To be shown when a person is logged in only */
+}
+
+  #nav .fa-user{
+    color: white;
+    font-size: 1.5em;
+    padding: 0.3em 0em 0.3em 0.2em;
+  }
+
+  #offlinemsg{
+    display: inline;
+    color: white;
+    font-size: 0.9em;
+    padding: 0.3em;
+  }
+
+  #logout {
+    position:absolute;
+    right: 0.4em;
+    bottom: 0.6em;
+    border-radius:0;
+    color: #fff;
+    border: solid 1px #fff;
+    text-align: center;
+    background: none;
+    padding:0.2em;
+  }
+
+/*==============================
+  SCREEN READERS
+================================*/
+
+/*Hides labels from sighted-users without hiding from screen readers*/
+.sr-only{
+  position:absolute;
+  width:1px;
+  height:1px;
+  padding:0;
+  margin:-1px;
+  border:0;
+  overflow:hidden;
+  clip: rect(0,0,0,0);
+}
+
+/*==============================
+    Colours
+================================*/
+/*greens: #00ca74 #01a25e #78d123 #93da4f*/

@@ -1,5 +1,3 @@
-
-
 ## Records
 
 ### Timer / Activity
@@ -8,5 +6,5 @@
 + **ct** - *created time* - ISO Date - set by the *server*
 (*cannot* be set by the user/api)
 + **desc** - *description* - String - `Joi.string().optional()`
-+ **et** - *end time* - ISO Date - `Joi.date().iso()`
-+ **st** - *start time* - ISO Date - `Joi.date().iso()`
++ **end** - *end time* - ISO Date - `Joi.date().iso()`
++ **start** - *start time* - ISO Date - `Joi.date().iso()`

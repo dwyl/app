@@ -1,5 +1,5 @@
 var test   = require('tape');
-var server = require("../../app.js");
+var server = require("../../web.js");
 var dir    = __dirname.split('/')[__dirname.split('/').length-1];
 var file   = dir + __filename.replace(__dirname, '') + " -> ";
 var token;
@@ -53,8 +53,8 @@ test(file + "START a NEW Timer (no st sent by client)!", function(t) {
   };
   server.inject(options, function(res) {
     var T = JSON.parse(res.payload);
-    t.equal(res.statusCode, 200, "New timer started! " + T.st);
-    var tid = T._id;
+    t.equal(res.statusCode, 200, "New timer started! " + T.start);
+    var tid = T.id;
     var options = {
       method: "GET",
       url: "/timer/"+tid,
@@ -72,7 +72,7 @@ test(file + "START a NEW Timer (no st sent by client)!", function(t) {
 test(file + "START a NEW Timer with start time!", function(t) {
   var timer = {
     "desc" : "We're going to Ibiza!",
-    "st" : new Date().toISOString()
+    "start" : new Date().toISOString()
   }
   var options = {
     method: "POST",
@@ -82,7 +82,7 @@ test(file + "START a NEW Timer with start time!", function(t) {
   };
   server.inject(options, function(res) {
     var T = JSON.parse(res.payload);
-    t.equal(res.statusCode, 200, "New timer started! " + T.st+'\n');
+    t.equal(res.statusCode, 200, "New timer started! " + T.start+'\n');
     t.end();
     server.stop();
   });

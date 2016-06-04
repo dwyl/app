@@ -35,7 +35,8 @@ _**Initial suggestion -**_ Minimal number and content of screens as follows:
 * Main screen:
   * Timer, set to 00:00 to begin with (seconds & minutes, with hours added dynamically when required)
   * Description of timer with placeholder text
-  * Log of today's (?) stopped timers
+    * Ability to edit description (added during alpha build, [issue #95](https://github.com/ideaq/time/issues/95))
+  * Log of stopped timers
   * Simple login area, shown as default unless user is logged in already
 * Additional items required at this point:
   * Some way of [knowing user is logged in](https://github.com/ideaq/time/issues/85)
@@ -53,16 +54,20 @@ Some of our UI open questions _**have**_ to be answered **before the MVP** as th
 * Does the user need to press anything to submit/confirm the description of the timer?
 * How does the user edit the timer description? Tap to edit?
 * Do we need both an email and a password requested on the main screen or just an email?
+* Should a new timer start automatically once a timer has been stopped?
 * Do we [allow anonymous users to have run more than one timer](https://github.com/ideaq/time/issues/58) before they have to register to save them?
 * What is the best way to [show a user they are logged in](https://github.com/ideaq/time/issues/85)?
 * What is the simplest way to deal with [remembering users so they don't have to constantly log in](https://github.com/ideaq/time/issues/45) at MVP or should we be doing this at this stage at all?
 
 Some initial questions **to be answered by the MVP** also surfaced whilst putting together the UI:
-* How does the user edit the timer description? Tap to edit?
-  * How does the user edit a _past_ timer description? Especially if tapping a past timer restart it.
-* If the description wraps over more than one line, do we show the whole description or do we cut it off and add '...' at the end
+* Should the running/active timer take up so much screen real estate or would this be better utilised for something else?
+* Should the [placeholder text for the timer description disappear as soon as a person is in the input field](https://github.com/ideaq/time/issues/92) or remain as a prompt until that person starts typing?
+* How does someone edit the timer description? Tap to edit?
+  * How does someone [edit a _past_ timer description](https://github.com/ideaq/time/issues/103)? Especially if tapping a past timer restarts it.
+* If the description wraps over more than one line, [do we show the whole description or do we cut it off](https://github.com/ideaq/time/issues/105) and add '...' at the end
 * Should _past_ timers shown on main page show the total time spent on that activity for a period (today or the current week for example) or just the last time the timer was used?
-* Should just today's timers be shown on the main page of the app? Or Today + Yesterday? Or the full week?
+* [Should just today's timers be shown on the main page](https://github.com/ideaq/time/issues/113) of the app? Or Today + Yesterday? Or the full week?
+  * Should past timers be shown in reverse chronological order (latest timer to have been stopped at the top/always visible without scrolling)?
 * Should clicking on a _past_ timer on the main page [restart it](https://github.com/ideaq/time/issues/30#issuecomment-75047797)?
-* How do we edit _past_ timer descriptions?
 * Do we need both an email and a password requested on the main screen or just an email?
+* What is the [most intuitive icon for prompting people for feedback](https://github.com/ideaq/time/issues/114#issuecomment-92297303) within the app?
