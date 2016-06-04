@@ -19,3 +19,4 @@ node_modules
 .vagrant
 test/coverage.html
 coverage/
+.env

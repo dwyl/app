@@ -1,3 +1,6 @@
+var redisClient = require('redis-connection')();
+console.log(process.env);
+console.log(' - - - - - - - - - - - - - - - - - ', __dirname);
 var test   = require('tape');
 var server = require("../../web.js");
 var dir    = __dirname.split('/')[__dirname.split('/').length-1];
@@ -23,16 +26,14 @@ test(file+" Bad request to /login-or-register (should fail)", function(t) {
   server.inject(options, function(res) {
     // console.log(res);
     t.equal(res.statusCode, 400, res.result.message+" (fails JOI Validation)");
-    t.end();
-    server.stop();
+    server.stop(function(){ t.end(); });
   });
 });
 
 test(file+" Register a new person", function(t) {
   server.inject(options, function(res) {
     t.equal(res.statusCode, 200, "Person registration is succesful");
-    t.end();
-    server.stop();
+    server.stop(function(){ t.end(); });
   });
 });
 
@@ -42,8 +43,7 @@ test(file+" Login with existing person", function(t) {
   server.inject(options, function(res) {
     // console.log(res.result);
     t.equal(res.statusCode, 200, "Everything is Awesome");
-    t.end();
-    server.stop();
+    server.stop(function(){ t.end(); });
   });
 });
 
@@ -55,7 +55,11 @@ test(file + "Attempt to /login-or-register without any auth", function(t) {
   server.inject(options, function(res) {
     // console.log(res.result)
     t.equal(res.statusCode, 400, "MSG: " + res.result.message);
-    t.end();
+    server.stop(function(){ t.end(); });
   });
 });
 
+test.onFinish(function () {
+  redisClient.quit();
+  server.stop(function(){});
+})

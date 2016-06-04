@@ -1,3 +1,7 @@
+/**
+ * This will delete your ElasticSearch Database
+ * obviously, only use it in development...
+ */
 var http;
 var ESOptions = {
   host: '127.0.0.1',

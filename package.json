@@ -1,6 +1,6 @@
 {
   "name": "dwyl",
-  "version": "0.1.7",
+  "version": "0.2.0",
   "description": "Track any time-based activity",
   "main": "index.js",
   "scripts": {
@@ -33,6 +33,7 @@
     "aguid": "^1.0.3",
     "bcrypt": "^0.8.5",
     "boom": "^2.8.0",
+    "env2": "^2.1.0",
     "esta": "^4.2.0",
     "handlebars": "^4.0.2",
     "hapi": "^10.0.0",
@@ -47,7 +48,8 @@
     "mandrill-api": "^1.0.45",
     "nodemailer": "^1.4.0",
     "perma": "^2.0.1",
-    "redis-connection": "^4.0.1",
+    "redis-connection": "^4.0.3",
+    "sendemail": "^2.2.1",
     "vision": "^4.0.1"
   },
   "devDependencies": {
@@ -57,7 +59,7 @@
     "jshint": "^2.8.0",
     "pre-commit": "^1.1.1",
     "tap-spec": "^4.1.0",
-    "tape": "^4.2.0"
+    "tape": "^4.5.1"
   },
   "pre-commit": [
     "jshint",

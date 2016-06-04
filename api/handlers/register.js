@@ -5,7 +5,11 @@ var bcrypt = require('bcrypt'); // see: https://github.com/nelsonic/bcrypt
 var aguid  = require('aguid'); // import the module we are using to create (GU)IDs
 var JWTSign  = require('../lib/auth_jwt_sign.js'); // used to sign JWTS duh.
 var transfer = require('../lib/transfer_anon_to_registered.js');
-var email  = require('../lib/email_welcome');
+
+var templatedir = __dirname +'/../email_templates/';
+process.env.TEMPLATE_DIRECTORY = templatedir;
+var email   = require('sendemail'); // no api key
+email.set_template_directory(templatedir);
 
 module.exports = function handler(req, reply) {
   var personid = aguid(req.payload.email)
@@ -33,7 +37,12 @@ module.exports = function handler(req, reply) {
             // transfer any anonymous timers & session to the person
             // console.log(' - - - - - - - - - - person')
             // console.log(person);
-            email(person, function(emailres){
+            var email_params = {
+              name: person.name || 'friend',
+              email: person.email,
+              subject: 'Welcome to DWYL!'
+            };
+            email('welcome', email_params, function(err, emailres){
               // console.log(' - - - - - - - - - - email:')
               // console.log(emailres);
               if(req.headers.authorization){

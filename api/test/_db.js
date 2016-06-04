@@ -1,5 +1,6 @@
 // This "Test" Just checks we are able to connect to ElasticSearch
 // without a database to store records this app is useless...
+require('env2')('.env');
 var ES    = require('esta');
 var test  = require('tape');
 var aguid = require('aguid');
