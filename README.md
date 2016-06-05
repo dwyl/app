@@ -13,7 +13,7 @@
 
 ## Why? [![Start with Why](https://img.shields.io/badge/start%20with-why%3F-brightgreen.svg?style=flat)](http://www.ted.com/talks/simon_sinek_how_great_leaders_inspire_action)
 
-> “*The **price** of anything is the **amount** of **life** you **exchange for it**.*”
+> “_The **price** of anything is the **amount** of **life** you **exchange for it**._”
 ~ Henry David Thoreau
 
 Time (a *finite* amount it) is one of the few things we *all* have in common.  
