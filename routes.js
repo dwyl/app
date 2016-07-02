@@ -1,7 +1,19 @@
 module.exports = [
   {
     path: '/', method: 'GET',
-    config: { auth: false, handler: require('./handlers/home.js') }
+    config: { auth: false, handler: require('./handlers/home')}
+  },
+  {
+    path: '/public/{param*}', method: 'GET',
+    config: {
+      auth: false,
+      handler: {
+          directory: {
+              listing: true,
+              path: require('path').normalize(__dirname + '/public')
+          }
+      }
+    }
   }
   // { path: '/anonymous', method: 'GET',
   //   config: { auth: false, handler: require('./handlers/anonymous.js') } },

@@ -1,6 +1,6 @@
 # time
 [![Build Status](https://travis-ci.org/dwyl/time.png?branch=master)](https://travis-ci.org/dwyl/time)
-[![Node version](https://img.shields.io/node/v/atimer.svg?style=flat)](http://nodejs.org/download/)
+[![Node version](https://img.shields.io/node/v/dwyl.svg?style=flat)](http://nodejs.org/download/)
 [![HAPI 11.0.3](http://img.shields.io/badge/hapi-11.0.3-brightgreen.svg)](http://hapijs.com)
 
 

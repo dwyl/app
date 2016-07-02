@@ -1,19 +1,18 @@
 {
   "name": "dwyl",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "Track any time-based activity",
   "main": "index.js",
   "scripts": {
     "api": "node ./api/server.js",
-    "codeclimate": "CODECLIMATE_REPO_TOKEN=90f8074b0608f5d539502db0d1bd862339f85eaac0e723883df2efdf6b5eec6e ./node_modules/codeclimate-test-reporter/bin/codeclimate.js < ./coverage/lcov.info",
     "coverage": "./node_modules/.bin/istanbul cover ./node_modules/tape/bin/tape ./api/test/*.js | node_modules/tap-spec/bin/cmd.js && ./node_modules/.bin/istanbul check-coverage --statements 100 --functions 100 --lines 100 --branches 100",
     "faster": "node ./node_modules/faster/bin/faster.js",
     "jshint": "./node_modules/jshint/bin/jshint -c .jshintrc --exclude-path .gitignore .",
     "start": "node server.js",
     "dev": "PORT=8000 ./node_modules/.bin/nodemon server.js",
-    "test": "istanbul cover ./node_modules/tape/bin/tape ./api/test/*.js | node_modules/tap-spec/bin/cmd.js",
-    "spec": "node ./node_modules/tape/bin/tape ./api/test/*.js | node_modules/tap-spec/bin/cmd.js",
-    "fast": "node ./node_modules/tape/bin/tape ./api/test/*.js"
+    "test": "istanbul cover ./node_modules/tape/bin/tape ./test/*.js | node_modules/tap-spec/bin/cmd.js",
+    "spec": "node ./node_modules/tape/bin/tape ./test/*.js | node_modules/tap-spec/bin/cmd.js",
+    "fast": "node ./node_modules/tape/bin/tape ./test/*.test.js"
   },
   "repository": {
     "type": "git",
@@ -31,22 +30,17 @@
   },
   "homepage": "https://github.com/nelsonic/time",
   "dependencies": {
-    "aguid": "^1.0.3",
-    "bcrypt": "^0.8.5",
-    "boom": "^2.8.0",
+    "aguid": "^1.0.4",
+    "bcrypt": "^0.8.7",
+    "boom": "^3.2.2",
     "env2": "^2.1.0",
-    "esta": "^4.2.0",
-    "handlebars": "^4.0.2",
-    "hapi": "^10.5.0",
-    "hapi-auth-basic": "^3.0.0",
-    "hapi-auth-jwt2": "^5.0.7",
-    "hiredis": "^0.4.1",
+    "handlebars": "^4.0.5",
+    "hapi": "^13.4.1",
+    "hapi-auth-jwt2": "^7.0.1",
     "hoek": "^2.16.1",
     "inert": "^3.2.0",
-    "joi": "^6.7.1",
+    "joi": "^8.4.2",
     "jsonwebtoken": "^5.0.5",
-    "lout": "^7.1.0",
-    "perma": "^2.0.1",
     "redis-connection": "^4.0.3",
     "sendemail": "^2.2.1",
     "vision": "^4.0.1"
@@ -63,6 +57,6 @@
     "codeclimate"
   ],
   "engines": {
-    "node": ">= 0.12"
+    "node": ">= 4.4.7"
   }
 }
