@@ -5,15 +5,7 @@ module.exports = [
   },
   {
     path: '/public/{param*}', method: 'GET',
-    config: {
-      auth: false,
-      handler: {
-          directory: {
-              listing: true,
-              path: require('path').normalize(__dirname + '/public')
-          }
-      }
-    }
+    config: { auth: false, handler: { directory: { path: './public' } } }
   }
   // { path: '/anonymous', method: 'GET',
   //   config: { auth: false, handler: require('./handlers/anonymous.js') } },

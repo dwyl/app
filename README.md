@@ -37,27 +37,51 @@ A simple way to track activities over time.
 
 ## How? [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/ideaq/time/issues)
 
-> Help us build it! https://github.com/ideaq/time/issues
+> Help us build it! https://github.com/dwyl/time/issues
 
-### _Required_ Environment Variables˜
 
-The API server will *not* work unless these
-environment variables are set.
 
+### Run the Project _Locally_
+
++ Download Node.js: https://nodejs.org/en/download/
++ Download PostgreSQL: https://wiki.postgresql.org/wiki/Detailed_installation_guides
+
+### _Clone_ the Repository
+
+```sh
+git clone https://github.com/dwyl/time.git && cd time
+```
+
+### _Install_ the Dependencies
+
+```sh
+npm install
+```
+
+
+
+
+### _Required_ Environment Variables
+
+The server will *not* work unless these environment variables are set.
+
+We _recommend_ you create a file called `.env`
 Run the following command to set up your local machine:
 ```sh
-export DATABASE_URL=postgres://postgres:@localhost/test
+export DATABASE_URL=postgres://postgres:@localhost/dwyl
 export JWT_SECRET=https://git.io/vaN7A
 ```
 
 See [**.travis.yml**](https://github.com/ideaq/time/blob/master/.travis.yml)
 for [Continuous integration](http://en.wikipedia.org/wiki/Continuous_integration) settings.
 
-### PostgreSQL Database (_Required_)
+### _Create_ PostgreSQL Database
 
 To run this app you will need to have ***PostgreSQL Installed and Running*** on your local machine
 ***before*** you attempt to run this example.
 > see: https://wiki.postgresql.org/wiki/Detailed_installation_guides
+
+
 
 ### No Registration Required
 
