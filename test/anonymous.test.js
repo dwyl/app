@@ -10,7 +10,7 @@ test(file + "GET / Confirm the API server is working", function(t) {
     url: "/"
   };
   server.inject(options, function(response) {
-    t.equal(response.statusCode, 200, "Welcome to Timer Land Anonymous person!");
+    t.equal(response.statusCode, 200, "Welcome Stranger!");
     server.stop(function(){});
     t.end();
   });

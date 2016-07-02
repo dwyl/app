@@ -7,6 +7,5 @@ test("Teardown", function(t) {
 });
 
 test.onFinish(function () {
-  // server.stop(function(){ console.log('Done.'); }); // stop the hapi server
   process.exit();
 });
