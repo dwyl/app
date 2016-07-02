@@ -39,28 +39,25 @@ A simple way to track activities over time.
 
 > Help us build it! https://github.com/ideaq/time/issues
 
-### *Expected* Environment Variables˜
+### _Required_ Environment Variables˜
 
 The API server will *not* work unless these
 environment variables are set.
 
 Run the following command to set up your local machine:
 ```sh
-export ES_INDEX=dwyl
-export MANDRILL_APIKEY='AskUsForTheKey!'
-
+export DATABASE_URL=postgres://postgres:@localhost/test
+export JWT_SECRET=https://git.io/vaN7A
 ```
+
 See [**.travis.yml**](https://github.com/ideaq/time/blob/master/.travis.yml)
 for [Continuous integration](http://en.wikipedia.org/wiki/Continuous_integration) settings.
 
-### Use Vagrant to Run ElasticSearch on your Local Machine
+### PostgreSQL Database (_Required_)
 
-```sh
-vagrant up
-vagrant ssh
-sudo service elasticsearch start
-```
-
+To run this app you will need to have ***PostgreSQL Installed and Running*** on your local machine
+***before*** you attempt to run this example.
+> see: https://wiki.postgresql.org/wiki/Detailed_installation_guides
 
 ### No Registration Required
 
