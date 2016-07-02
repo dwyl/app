@@ -16,11 +16,11 @@ In the meantime, please feel free to [read through our repos](https://github.com
 
 ## Why? [![Start with Why](https://img.shields.io/badge/start%20with-why%3F-brightgreen.svg?style=flat)](http://www.ted.com/talks/simon_sinek_how_great_leaders_inspire_action)
 
-> “*The **price** of anything is the **amount** of **life** you **exchange for it**.*”
+> “*The* ***price*** *of anything is the* ***amount*** *of* ***life*** *you* ***exchange for it***.”
 ~ Henry David Thoreau
 
 Time (a *finite* amount it) is one of the few things we *all* have in common.  
-Wether we like it or not, we each only have a ***fixed amount***.  
+Whether we like it or not, we each only have a ***fixed amount***.  
 It is our most precious ***non-renewable*** 'resource'.  
 We need a *much* better way of keeping track of how we spend it.
 ˜
