@@ -2,6 +2,15 @@ language: node_js
 node_js:
   - "4.4.7"
 sudo: false
+addons:
+  postgresql: "9.4"
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - g++-4.8
+services:
+  - redis-server
 before_script:
   - psql -c 'create database test;' -U postgres
 before_install:
@@ -14,10 +23,3 @@ env:
     - CXX=g++-4.8
     - JWT_SECRET="EverythingIsAwesome!"
     - DATABASE_URL=postgres://postgres:@localhost/test
-addons:
-  postgresql: "9.4"
-  apt:
-    sources:
-    - ubuntu-toolchain-r-test
-    packages:
-    - g++-4.8
