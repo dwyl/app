@@ -1,23 +1,29 @@
 # time
-[![Build Status](https://travis-ci.org/ideaq/time.png?branch=master)](https://travis-ci.org/ideaq/time)
-[![Test Coverage](https://codeclimate.com/github/ideaq/time/badges/coverage.svg)](https://codeclimate.com/github/ideaq/time)
-[![Code Climate](https://codeclimate.com/github/ideaq/time.png)](https://codeclimate.com/github/ideaq/time)
-[![bitHound Score](https://www.bithound.io/github/ideaq/time/badges/score.svg?)](https://www.bithound.io/github/ideaq/time) [![Dependencies](https://david-dm.org/ideaq/time.png?theme=shields.io)](https://david-dm.org/ideaq/time)
+[![Build Status](https://travis-ci.org/dwyl/time.png?branch=master)](https://travis-ci.org/dwyl/time)
 [![Node version](https://img.shields.io/node/v/atimer.svg?style=flat)](http://nodejs.org/download/)
-[![HAPI 8.2](http://img.shields.io/badge/hapi-8.2-brightgreen.svg)](http://hapijs.com)
+[![HAPI 11.0.3](http://img.shields.io/badge/hapi-11.0.3-brightgreen.svg)](http://hapijs.com)
 
 
 ![Until we can manage time, we can manage nothing else](http://i.imgur.com/GbTyiib.png)
 
 - - -
+You *found* us, ***welcome!***     
+We're currently *re-building* the ***Time*** **App** to make it more modular and extensible, if you want to help us ***Beta Test*** it,
+please register your interest on the website: http://www.dwyl.io/
+
+In the meantime, please feel free to [read through our repos](https://github.com/dwyl/start-here) and find out what we're about or [_drop us a line_](https://github.com/dwyl/start-here/issues) with questions, what you'd like to see us focus on, happy thoughts, great articles you've read lately or anything that's on your mind!
 
 ## Why? [![Start with Why](https://img.shields.io/badge/start%20with-why%3F-brightgreen.svg?style=flat)](http://www.ted.com/talks/simon_sinek_how_great_leaders_inspire_action)
 
+<<<<<<< HEAD
 > “_The **price** of anything is the **amount** of **life** you **exchange for it**._”
+=======
+> “*The* ***price*** *of anything is the* ***amount*** *of* ***life*** *you* ***exchange for it***.”
+>>>>>>> master
 ~ Henry David Thoreau
 
 Time (a *finite* amount it) is one of the few things we *all* have in common.  
-Wether we like it or not, we each only have a ***fixed amount***.  
+Whether we like it or not, we each only have a ***fixed amount***.  
 It is our most precious ***non-renewable*** 'resource'.  
 We need a *much* better way of keeping track of how we spend it.
 ˜

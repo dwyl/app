@@ -328,6 +328,21 @@ ul {
     padding:0.2em;
   }
 
+/*==============================
+  SCREEN READERS
+================================*/
+
+/*Hides labels from sighted-users without hiding from screen readers*/
+.sr-only{
+  position:absolute;
+  width:1px;
+  height:1px;
+  padding:0;
+  margin:-1px;
+  border:0;
+  overflow:hidden;
+  clip: rect(0,0,0,0);
+}
 
 /*==============================
     Colours
