@@ -10,7 +10,7 @@
     "jshint": "./node_modules/jshint/bin/jshint -c .jshintrc --exclude-path .gitignore .",
     "start": "node server.js",
     "dev": "PORT=8000 ./node_modules/.bin/nodemon server.js",
-    "test": "istanbul cover ./node_modules/tape/bin/tape ./test/*.js | node_modules/tap-spec/bin/cmd.js",
+    "test": "istanbul cover ./node_modules/tape/bin/tape ./test/*.test.js | node_modules/tap-spec/bin/cmd.js",
     "spec": "node ./node_modules/tape/bin/tape ./test/*.js | node_modules/tap-spec/bin/cmd.js",
     "fast": "node ./node_modules/tape/bin/tape ./test/*.test.js"
   },

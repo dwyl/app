@@ -1,26 +1,21 @@
-/* TEMPORARILY COMMENTING OUT ANON TESTS!
-require('env2')('.env');
-var redisClient = require('redis-connection')();
-
-// console.log(process.env);
-// console.log(' - - - - - - - - - - - - - - - - - ')
 var test   = require('tape');
-var server = require("../../web.js");
-var JWT    = require('jsonwebtoken');
+var server = require("../server.js");
+// var JWT    = require('jsonwebtoken');
 var dir    = __dirname.split('/')[__dirname.split('/').length-1];
 var file   = dir + __filename.replace(__dirname, '') + " -> ";
 
-// test(file + "GET / Confirm the API server is working", function(t) {
-//   var options = {
-//     method: "GET",
-//     url: "/"
-//   };
-//   server.inject(options, function(response) {
-//     t.equal(response.statusCode, 200, "Welcome to Timer Land Anonymous person!");
-//     t.end();
-//   });
-// });
-
+test(file + "GET / Confirm the API server is working", function(t) {
+  var options = {
+    method: "GET",
+    url: "/"
+  };
+  server.inject(options, function(response) {
+    t.equal(response.statusCode, 200, "Welcome to Timer Land Anonymous person!");
+    server.stop(function(){});
+    t.end();
+  });
+});
+/*
 test(file + "Anonymous people can create timers!", function(t) {
   var options    = {
     method  : "GET",
@@ -63,7 +58,7 @@ test(file + "Anonymous people can create timers!", function(t) {
     // });
   });
 });
-
+*/
 test.onFinish(function () {
   server.stop(function(){});
 })
@@ -72,4 +67,3 @@ process.on('uncaughtException', function(err) {
   console.log(file+' FAIL ... ' + err);
   process.exit();
 });
-*/
