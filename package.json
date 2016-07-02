@@ -9,7 +9,8 @@
     "coverage": "./node_modules/.bin/istanbul cover ./node_modules/tape/bin/tape ./api/test/*.js | node_modules/tap-spec/bin/cmd.js && ./node_modules/.bin/istanbul check-coverage --statements 100 --functions 100 --lines 100 --branches 100",
     "faster": "node ./node_modules/faster/bin/faster.js",
     "jshint": "./node_modules/jshint/bin/jshint -c .jshintrc --exclude-path .gitignore .",
-    "start": "node web.js",
+    "start": "node server.js",
+    "dev": "PORT=8000 ./node_modules/.bin/nodemon server.js",
     "test": "istanbul cover ./node_modules/tape/bin/tape ./api/test/*.js | node_modules/tap-spec/bin/cmd.js",
     "spec": "node ./node_modules/tape/bin/tape ./api/test/*.js | node_modules/tap-spec/bin/cmd.js",
     "fast": "node ./node_modules/tape/bin/tape ./api/test/*.js"
@@ -36,7 +37,7 @@
     "env2": "^2.1.0",
     "esta": "^4.2.0",
     "handlebars": "^4.0.2",
-    "hapi": "^10.0.0",
+    "hapi": "^10.5.0",
     "hapi-auth-basic": "^3.0.0",
     "hapi-auth-jwt2": "^5.0.7",
     "hiredis": "^0.4.1",
@@ -51,16 +52,13 @@
     "vision": "^4.0.1"
   },
   "devDependencies": {
-    "codeclimate-test-reporter": "0.1.1",
-    "faster": "^3.4.6",
     "istanbul": "^0.3.20",
-    "jshint": "^2.8.0",
+    "nodemon": "^1.9.2",
     "pre-commit": "^1.1.1",
     "tap-spec": "^4.1.0",
     "tape": "^4.5.1"
   },
   "pre-commit": [
-    "jshint",
     "coverage",
     "codeclimate"
   ],
