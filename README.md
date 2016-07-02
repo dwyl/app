@@ -45,6 +45,7 @@ A simple way to track activities over time.
 
 + Download Node.js: https://nodejs.org/en/download/
 + Download PostgreSQL: https://wiki.postgresql.org/wiki/Detailed_installation_guides
++ Download Redis: https://github.com/dwyl/learn-redis#installation
 
 ### _Clone_ the Repository
 
@@ -57,9 +58,6 @@ git clone https://github.com/dwyl/time.git && cd time
 ```sh
 npm install
 ```
-
-
-
 
 ### _Required_ Environment Variables
 

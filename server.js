@@ -10,10 +10,10 @@ server.register([
   { register: require('hapi-auth-jwt2')}
   ], function (err) {
 
-  server.auth.strategy('jwt', 'jwt', 'required',  {
-    key: process.env.JWT_SECRET,
-    validateFunc: require('./lib/auth_jwt_validate.js')
-  });
+  // server.auth.strategy('jwt', 'jwt', 'required',  {
+  //   key: process.env.JWT_SECRET,
+  //   validateFunc: require('./lib/auth_jwt_validate.js')
+  // });
 
   server.views({
     engines: { html: require('handlebars') },
