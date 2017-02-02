@@ -1,7 +1,25 @@
 language: node_js
 node_js:
-  - 0.12
+  - "4.4.7"
+sudo: false
+addons:
+  postgresql: "9.4"
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - g++-4.8
 services:
-  - elasticsearch
+  - redis-server
+before_script:
+  - psql -c 'create database test;' -U postgres
+before_install:
+  - pip install --user codecov
+  - $CXX --version
+after_success:
+  - codecov --file coverage/lcov.info --disable search
 env:
-  - ES_HOST="127.0.0.1" ES_PORT=9200 ES_INDEX=travis JWT_SECRET="EverythingIsAwesome!"
+  global:
+    - CXX=g++-4.8
+    - JWT_SECRET="EverythingIsAwesome!"
+    - DATABASE_URL=postgres://postgres:@localhost/test

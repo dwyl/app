@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang=”en-GB”>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>dwyl timer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+    <link rel="stylesheet" href="../public/css/mobile-first.css"/>
+    <link rel="shortcut icon" href="/public/favicon.ico"/>
+    <!--FontAwesome-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <!-- Adding google fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300%7COpen+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+  </head>
+  <body>
+    <!--Icon first, then add mailto-->
+    <div id="feedback-triangle">
+      <a href="https://github.com/ideaq/time/labels/MVP" target="_blank">
+        <span class="sr-only">Please give us feedback! Opens in new window.</span>
+        <i class="fa fa-comments" aria-hidden="true"></i>
+      </a>
+    </div>
+
+    <section id="main">
+      <div id="active-time">
+        <div id="t">00:00</div>
+      </div>
+      <div id="active-desc">
+        <label class="sr-only" for="desc">What are you timing?</label>
+        <input id="desc" placeholder="What are you timing?" type="text" autocomplete="on" />
+      </div>
+      <button id="stop">
+        <i class="fa fa-stop" aria-hidden="true"></i>
+      </button>
+      <button id="start">
+        <i class="fa fa-play" aria-hidden="true"></i>
+      </button>
+    </section>
+
+    <section id="past-timers">
+      <div id="why">Track your time. Your past timers will appear here.</div>
+      <ul id="past-timers-list">
+      </ul>
+    </section>
+
+    <section id="register-login">
+      <form id="login">
+        <div class="email fa fa-envelope-o">
+            <label class="sr-only" for="email">Email address</label>
+            <input type="email" required placeholder="Email Address" name="email" id="email"/>
+        </div>
+        <div class="pw fa fa-lock">
+            <label class="sr-only" for="password">Password</label>
+            <input type="password" placeholder=" Password" name="password" id="password"/>
+        </div>
+        <div id="login-button">
+          <button type="submit">Save your timers</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- section hidden until person logs in  -->
+    <section id="nav">
+        <i class="fa fa-user"></i>
+        <p id="offlinemsg"> Logged in as <b id="loggedinas"> </b>&nbsp;</p>
+        <button id="logout"><i class="fa fa-sign-out" ></i>Logout</button>
+    </section>
+
+
+<!-- HANDLEBARS TEMPLATE -->
+  <script id="timer_list_template" type="text/x-handlebars-template">
+    <li id="\{{id}}" class="timer-one-line">
+        <i class="fa fa-check-circle-o"></i>
+        <span class="timer-desc">\{{desc}}</span>
+        <span class="timer-time">\{{took}}</span>
+    </li>
+  </script>
+
+<!-- Handlebars form for updating the description of the timer -->
+<script id="timer_edit_template" type="text/x-handlebars-template">
+  <form class="timer-one-line" id="\{{id}}-edit">
+      <div class="save-edit">
+        <button type="submit" id="\{{id}}-save">save</button>
+      </div>
+      <input class="timer-desc" type="text" autocomplete="on" id="\{{id}}-desc" value="\{{desc}}" placeholder="\{{placeholder}}"/>
+      <!-- <input type class="timer-time" type="text" autocomplete id="\{{id}}-took" value="\{{took}}" /> -->
+      <span class="timer-time">\{{took}}</span>
+  </form>
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="/public/js/alpha.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.min.js"></script>
+
+<!-- https://github.com/ideaq/faster -->
+<!-- <script src="https://rawgit.com/ideaq/faster/master/lib/client.js"></script> -->
+
+  </body>
+</html>
