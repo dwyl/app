@@ -8,10 +8,8 @@ services:
         image: node
         volumes:
           - .:/app
-          - ./node_modules:/node_modules
         environment:
           - PORT=3000
-          - NODE_PATH=/node_modules
         ports:
           - 3000:3000
-        command: bash -c "cd /app && node server.js"
+        command: bash -c "cd /app && ./node_modules/nodemon/bin/nodemon.js server.js"
