@@ -1,0 +1,17 @@
+version: '2'
+services:
+    postgres:
+        image: postgres
+    redis:
+        image: redis
+    app:
+        image: node
+        volumes:
+          - .:/app
+          - ./node_modules:/node_modules
+        environment:
+          - PORT=3000
+          - NODE_PATH=/node_modules
+        ports:
+          - 3000:3000
+        command: bash -c "cd /app && node server.js"
