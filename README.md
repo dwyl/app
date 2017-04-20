@@ -1,4 +1,6 @@
 # time
+
+[![Join the chat at https://gitter.im/dwyl/time](https://badges.gitter.im/dwyl/time.svg)](https://gitter.im/dwyl/time?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://travis-ci.org/dwyl/time.png?branch=master)](https://travis-ci.org/dwyl/time)
 [![Node version](https://img.shields.io/node/v/dwyl.svg?style=flat)](http://nodejs.org/download/)
 [![HAPI 11.0.3](http://img.shields.io/badge/hapi-11.0.3-brightgreen.svg)](http://hapijs.com)
