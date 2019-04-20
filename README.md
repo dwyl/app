@@ -9,7 +9,7 @@
 - - -
 You *found* us, ***welcome!***     
 We're currently *re-building* the ***Time*** **App** to make it more modular and extensible, if you want to help us ***Beta Test*** it,
-please register your interest on the website: http://www.dwyl.io/
+please register your interest on the website: http://www.dwyl.com/
 
 In the meantime, please feel free to [read through our repos](https://github.com/dwyl/start-here) and find out what we're about or [_drop us a line_](https://github.com/dwyl/start-here/issues) with questions, what you'd like to see us focus on, happy thoughts, great articles you've read lately or anything that's on your mind!
 
