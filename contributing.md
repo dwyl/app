@@ -1,4 +1,4 @@
-## Contributing Guide
+# Contributing Guide
 
 These guidelines build upon the dwyl contributing guidelines, which can be
 found at https://github.com/dwyl/contributing
@@ -13,23 +13,29 @@ In time, the whole process will be rewritten for clarity and now that our focus
 has moved away from working with clients.
 
 > The vast majority of the additions here sit in two key areas:
-+ New labels specific to this repo
 + The use of the [Github Project](https://help.github.com/en/github/managing-your-work-on-github/about-project-boards)
 as a kanban board (this is not yet in our main contributing guide)
++ New labels specific to this repo
 
 
-## Part 1: Describe your Question, Idea or User Story in an Issue
+
+## Github project
 
 
-## Part 2: Validate the Need or Issue Exists
+## Workflow
+
+### Part 1: Describe your Question, Idea or User Story in an Issue
+
+
+### Part 2: Validate the Need or Issue Exists
 This section is where the work is performed by those who have write access to the
 repo and is where the ***key changes to the workflow*** will take place.
 
-### Step 1: _Confirm_ the Need in the New Story/Issue
+#### :arrow_ right: Step 1: _Confirm_ the Need in the New Story/Issue
 The Product Owner (PO) will confirm the _need_, but if the issue is confirmed,
 the PO will also:
 
-#### A) Confirm that there is a set of acceptance criteria listed in the issue
+##### A) Confirm that there is a set of acceptance criteria listed in the issue
 + Acceptance Criteria should be in the form of a _checklist_ of items in the
   original post. This way it will appear in the issue list, giving an idea of
   how much of the acceptance criteria has been met when the issue is worked
@@ -44,7 +50,7 @@ the PO will also:
     with what is required
     ![needs-criteria-label-screenshot](https://user-images.githubusercontent.com/4185328/69977426-b2240d80-1522-11ea-95f3-8de79ce516fb.png)
 
-#### B) Confirm that there is a proposed User Interface *(UI)* for the issue
+##### B) Confirm that there is a proposed User Interface *(UI)* for the issue
 
 :label: Similar to `needs-criteria`, a `needs-ui` label should be applied to the issue
 if no UI has been proposed and until a UI is agreed.
@@ -52,7 +58,7 @@ if no UI has been proposed and until a UI is agreed.
 _Note:_ This does not have to be the _final, unchangeable_ UI. Every UI is a
 starting point for testing with people using the app.
 
-### Step 2: Assign a Priority to the Issue
+#### :arrow_ right: Step 2: Assign a Priority to the Issue
 :warning: :label: A priority label should only be used for the issues expected to come up
 in the next 2 sprints or so.
 
