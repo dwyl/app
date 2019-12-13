@@ -1,5 +1,7 @@
 # Contributing Guide
 
+***Thank you for wanting to contribute, we're happy you're here! :sparkles:***
+
 These guidelines build upon the dwyl contributing guidelines, which can be
 found at https://github.com/dwyl/contributing
 
@@ -13,7 +15,7 @@ In time, the whole process will be rewritten for clarity now that our focus
 has moved away from working with clients.
 
 > The vast majority of the additions here sit in two key areas:
-+ The use of the [Github Project](https://help.github.com/en/github/managing-your-work-on-github/about-project-boards)
++ The use of the [Github Project](https://github.com/dwyl/app/projects)
 as a kanban board (this is not yet in our main workflow guide)
 + New labels specific to this repo
 
@@ -34,7 +36,7 @@ _For now_, we are starting with 5 very simple columns:
 + To do
 + In progress
 + Awaiting review
-+ Please testing
++ Please test
 + Done
 
 ![image](https://user-images.githubusercontent.com/4185328/70755571-1bc9c600-1d32-11ea-8340-c62525790329.png)
@@ -52,10 +54,12 @@ column for user testing.
 See https://github.com/dwyl/app/issues/238 for the ongoing discussion on which
 columns have been proposed, accepted or rejected and why.
 
-## Workflow
+## Workflow Updates, including Labels & Github Project
 
 ### Part 1: Describe your Question, Idea or User Story in an Issue
-
+No changes are being made to this section aside from a much stronger emphasis on
+the need for acceptance criteria to be included in the issue before work begins
+in part 3 (more details below).
 
 ### Part 2: Validate the Need or Issue Exists
 This section is where the work is performed by those who have write access to the
@@ -92,12 +96,36 @@ starting point for testing with people using the app.
 :warning: :label: A priority label should only be used for the issues expected to come up
 in the next 2 sprints or so.
 
-All other issues - should a rough priority for them be known at this stage - will
-be put into the `To Do` column of the
-[Github Project](https://github.com/dwyl/app/projects) in prioritised order.
-
 _We are testing whether this is able to prevent the notion that `priority-4` and
 `priority-5` labels are ["where issues go to die"](https://github.com/dwyl/app/issues/239#issuecomment-556105866)_.
 
+:bar_chart: Once an issue **has acceptance criteria, UI (where applicable) and
+a priority label**, it should be be added to the `To Do` column of the
+[Github Project](https://github.com/dwyl/app/projects) where ***issues are kept
+in prioritised order***.
+
+> The `To Do` column of the kanban board should only contain issues that are
+**ready to be worked on**.
+
+
 
 ## Part 3: Do the Work!
+:label: Our process for the application of labels throughout the development work
+will remain [as per our contributing guidelines](https://github.com/dwyl/labels)
+which will not be duplicated here.
+
+:bar_chart: The issue should be moved through the columns of the Github project
+as follows:
++ _Once an issue has been time estimated_ and an 'in-progress' label :label: applied,
+it should be moved to the `In progress` column
++ Once the work has been completed and a PR opened for review with the
+'awaiting-review' label :label: applied to the issue, it can be moved to the
+`Awaiting Review` column
++ Once the PR is reviewed and merged with the changes deployed and a 'please-test'
+label :label: is applied to the issue, it should be moved to the `Please Test` column
++ Once the PR has been tested by the relevant party (usually the PO or the person
+  who opened the issue), the issue is closed, which _automatically_ moves it to
+  the `Done` column
+
+_Currently_, the moving of closed issues to the `Done` column is the only
+_automated_ action in this process, but this will [change in future](https://github.com/dwyl/app/issues/240).
