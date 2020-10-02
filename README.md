@@ -19,10 +19,10 @@ In the meantime, please feel free to [read through our repos](https://github.com
 > “_The **price** of anything is the **amount** of **life** you **exchange for it**._”
 ~ Henry David Thoreau
 
-Time (a *finite* amount it) is one of the few things we *all* have in common.  
-Whether we like it or not, we each only have a ***fixed amount***.  
-It is our most precious ***non-renewable*** 'resource'.  
-We need a *much* better way of keeping track of how we spend it.
+Time (a *finite* amount it) is one of the few valuable things we *all* have in common.  
+Whether we like it or not, each of us only have a ***fixed amount***.  
+It is perhaps the most precious ***non-renewable*** 'resource' we can think of.  
+We need a *much* better and efficient way to keep a track of how we spend and manage it.
 ˜
 
 > More detail: https://github.com/ideaq/time/issues/19
