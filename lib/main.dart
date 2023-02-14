@@ -10,55 +10,143 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'App',
-      theme: ThemeData(
-        primarySwatch: Colors.teal,
-      ),
-      home: Scaffold(
-          appBar: AppBar(
-            title: const Text('DWYL'),
-            centerTitle: true,
-          ),
-          body: Column(
-            children: [
-              const Expanded(
-                child: TextField(
-                  decoration: InputDecoration(
-                      hintText: 'Capture what is on your mind...',
-                      border: OutlineInputBorder()),
-                  maxLines: null,
-                  expands: true,
-                ),
-              ),
-              CheckboxListTile(
-                title: const Text('Item 1'),
-                value: false,
-                onChanged: (bool? v) {},
-                controlAffinity: ListTileControlAffinity.leading,
-              ),
-              CheckboxListTile(
-                title: const Text('Item 2'),
-                value: false,
-                onChanged: (bool? v) {},
-                controlAffinity: ListTileControlAffinity.leading,
-              ),
-              CheckboxListTile(
-                title: const Text('Item 3'),
-                value: false,
-                onChanged: (bool? v) {},
-                controlAffinity: ListTileControlAffinity.leading,
-              )
-            ],
-          )),
-    );
+        title: 'App',
+        theme: ThemeData(
+          primarySwatch: Colors.teal,
+        ),
+        home: Scaffold(
+            appBar: AppBar(
+              title: const Text('DWYL'),
+              centerTitle: true,
+            ),
+            body: const MyTextField()));
   }
 }
 
-class ItemWidget extends StatelessWidget {
-  const ItemWidget({super.key});
+class MyTextField extends StatefulWidget {
+  const MyTextField({super.key});
 
   @override
-  build(BuildContext context) {
-    return const Center(child: Text('hello'));
+  State<MyTextField> createState() => _MyTextFieldState();
+}
+
+class _MyTextFieldState extends State<MyTextField> {
+  int? _maxLines = 1;
+  bool _expands = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Expanded(
+          child: Focus(
+            onFocusChange: (focus) {
+              focus ? extendsFieldText() : minimizeFieldText();
+            },
+            child: TextField(
+              decoration: const InputDecoration(
+                  hintText: 'Capture what is on your mind..!.',
+                  border: OutlineInputBorder()),
+              expands: _expands,
+              maxLines: _maxLines,
+              textAlignVertical: TextAlignVertical.top,
+              keyboardType: TextInputType.multiline,
+            ),
+          ),
+        ),
+        if (_expands)
+          Align(
+            alignment: Alignment.bottomRight,
+            child: ElevatedButton(
+                onPressed: () {
+                  minimizeFieldText();
+                },
+                child: const Text('Save')),
+          ),
+        if (!_expands) const MyItems()
+      ],
+    );
+  }
+
+  void extendsFieldText() {
+    setState(() {
+      _expands = true;
+      _maxLines = null;
+    });
+  }
+
+  void minimizeFieldText() {
+    setState(() {
+      _expands = false;
+      _maxLines = 1;
+    });
+  }
+}
+
+class MyItems extends StatelessWidget {
+  const MyItems({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: ListView(
+        children: [
+          CheckboxListTile(
+            title: const Text('Item 1'),
+            value: false,
+            onChanged: (bool? v) {},
+            controlAffinity: ListTileControlAffinity.leading,
+          ),
+          CheckboxListTile(
+            title: const Text('Item 2'),
+            value: false,
+            onChanged: (bool? v) {},
+            controlAffinity: ListTileControlAffinity.leading,
+          ),
+          CheckboxListTile(
+            title: const Text('Item 3'),
+            value: false,
+            onChanged: (bool? v) {},
+            controlAffinity: ListTileControlAffinity.leading,
+          ),
+          CheckboxListTile(
+            title: const Text('Item 1'),
+            value: false,
+            onChanged: (bool? v) {},
+            controlAffinity: ListTileControlAffinity.leading,
+          ),
+          CheckboxListTile(
+            title: const Text('Item 2'),
+            value: false,
+            onChanged: (bool? v) {},
+            controlAffinity: ListTileControlAffinity.leading,
+          ),
+          CheckboxListTile(
+            title: const Text('Item 3'),
+            value: false,
+            onChanged: (bool? v) {},
+            controlAffinity: ListTileControlAffinity.leading,
+          ),
+          CheckboxListTile(
+            title: const Text('Item 1'),
+            value: false,
+            onChanged: (bool? v) {},
+            controlAffinity: ListTileControlAffinity.leading,
+          ),
+          CheckboxListTile(
+            title: const Text('Item 2'),
+            value: false,
+            onChanged: (bool? v) {},
+            controlAffinity: ListTileControlAffinity.leading,
+          ),
+          CheckboxListTile(
+            title: const Text('Item 3'),
+            value: false,
+            onChanged: (bool? v) {},
+            controlAffinity: ListTileControlAffinity.leading,
+          )
+        ],
+      ),
+    );
   }
 }
