@@ -16,12 +16,55 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.teal,
         ),
-        home: Scaffold(
-            appBar: AppBar(
-              title: const Text('DWYL'),
-              centerTitle: true,
-            ),
-            body: const MyTextField()));
+        home: HomePage());
+  }
+}
+
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  bool showMenu = false;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        key: _scaffoldKey,
+        drawerEnableOpenDragGesture: false,
+        appBar: AppBar(
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset("assets/images/dwyl_logo.png", fit: BoxFit.fitHeight, height: 30),
+            ],
+          ),
+          leading: Container(),
+          backgroundColor: Colors.black,
+          elevation: 0.0,
+          actions: [
+            Visibility(
+              maintainSize: true,
+              maintainAnimation: true,
+              maintainState: true,
+              visible: showMenu,
+              child: IconButton(
+                onPressed: () {
+                  _scaffoldKey.currentState!.openEndDrawer();
+                },
+                icon: const Icon(
+                  Icons.menu,
+                  color: Colors.white,
+                ),
+              ),
+            )
+          ],
+        ),
+        body: const MyTextField());
   }
 }
 
@@ -46,9 +89,7 @@ class _MyTextFieldState extends State<MyTextField> {
               focus ? extendsFieldText() : minimizeFieldText();
             },
             child: TextField(
-              decoration: const InputDecoration(
-                  hintText: 'Capture what is on your mind..!.',
-                  border: OutlineInputBorder()),
+              decoration: const InputDecoration(hintText: 'Capture what is on your mind..!.', border: OutlineInputBorder()),
               expands: _expands,
               maxLines: _maxLines,
               textAlignVertical: TextAlignVertical.top,
