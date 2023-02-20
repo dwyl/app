@@ -63,7 +63,7 @@ class _MyTextFieldState extends State<MyTextField> {
                 },
                 child: const Text('Save')),
           ),
-        if (!_expands) const MyItems()
+        //if (!_expands) const MyItems()
       ],
     );
   }
@@ -103,48 +103,6 @@ class MyItems extends StatelessWidget {
             onChanged: (bool? v) {},
             controlAffinity: ListTileControlAffinity.leading,
           ),
-          CheckboxListTile(
-            title: const Text('Item 3'),
-            value: false,
-            onChanged: (bool? v) {},
-            controlAffinity: ListTileControlAffinity.leading,
-          ),
-          CheckboxListTile(
-            title: const Text('Item 1'),
-            value: false,
-            onChanged: (bool? v) {},
-            controlAffinity: ListTileControlAffinity.leading,
-          ),
-          CheckboxListTile(
-            title: const Text('Item 2'),
-            value: false,
-            onChanged: (bool? v) {},
-            controlAffinity: ListTileControlAffinity.leading,
-          ),
-          CheckboxListTile(
-            title: const Text('Item 3'),
-            value: false,
-            onChanged: (bool? v) {},
-            controlAffinity: ListTileControlAffinity.leading,
-          ),
-          CheckboxListTile(
-            title: const Text('Item 1'),
-            value: false,
-            onChanged: (bool? v) {},
-            controlAffinity: ListTileControlAffinity.leading,
-          ),
-          CheckboxListTile(
-            title: const Text('Item 2'),
-            value: false,
-            onChanged: (bool? v) {},
-            controlAffinity: ListTileControlAffinity.leading,
-          ),
-          CheckboxListTile(
-            title: const Text('Item 3'),
-            value: false,
-            onChanged: (bool? v) {},
-            controlAffinity: ListTileControlAffinity.leading,
-          )
         ],
       ),
     );
