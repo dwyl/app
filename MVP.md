@@ -1,14 +1,19 @@
-#Minimum Viable Product ([MVP](http://theleanstartup.com/principles))
+# Minimum Viable Product ([MVP](http://theleanstartup.com/principles))
 
 We're still working on this document so it should be constantly changing. _**All comments and pull requests welcome!**_
 
-+ [MVP feature set](#MVP-Feature-set)
-+ [Minimum UI](#Minimum UI)
-  + **[Open Questions for MVP & beyond](#open-questions)**
+- [Minimum Viable Product (MVP)](#minimum-viable-product-mvp)
+  - [MVP Feature set](#mvp-feature-set)
+    - [Common points of friction](#common-points-of-friction)
+  - [Minimum UI](#minimum-ui)
+    - [Screens](#screens)
+  - [Open Questions](#open-questions)
+
 
 <br/>
 
-##MVP Feature set
+## MVP Feature set
+
 [**Alpha feature set:**](https://github.com/ideaq/time/issues/67)
 * Log in as a user (to enable timers to be saved)
 * Log out
@@ -17,17 +22,19 @@ We're still working on this document so it should be constantly changing. _**All
 * Give that timer a description
 * Start a new timer
 
-###Common points of friction
+### Common points of friction
+
 Day-to-day time tracking **can't feel like work** or it'll stop being an effective tool [upcoming blog post on this topic!]. What we really want is **the minimum number of steps** to accomplish our task - starting a timer.
 
 So **what are the _biggest_ time wasters** to try and avoid?
 * **Too much initial setup:** If you’re going to ask me to create all of my projects, rates or set up a bunch of timers **_up front, before I can start using the app_** in a useful way, that’s burdensome. I don’t even know _how_ I’m planning on using the app yet!
 * **Too much overhead to start a timer:** Having to type a description and _then_ assign a category and _then_ decide what other options to add to my timer when really, all I want to do is start it and get on with life.
 
-##[Minimum UI](https://github.com/ideaq/time/issues/31)
+## [Minimum UI](https://github.com/ideaq/time/issues/31)
+
 **Minimum solution to points of fiction:** Timer starts automatically when [people](https://github.com/ideaq/time/issues/33) open the app/webpage. Also allow them to start a timer _with **one tap**_ and _without_ the need to add further information to it.
 
-###Screens
+### Screens
 First partial UI sketch, keeping it as simple as possible. _To be iterated over._
 
 _**Initial suggestion -**_ Minimal number and content of screens as follows:
@@ -48,8 +55,9 @@ A few more sketches of potential **MVP alpha** screens to start understanding th
 
 ![User experience screen flows](https://cloud.githubusercontent.com/assets/4185328/6856657/5f501c12-d3f9-11e4-9424-62774075afb2.jpg)
 
-<a name="open-questions"/>
-##Open Questions
+
+## Open Questions
+
 Some of our UI open questions _**have**_ to be answered **before the MVP** as they touch our MVP feature set:
 * Does the user need to press anything to submit/confirm the description of the timer?
 * How does the user edit the timer description? Tap to edit?
