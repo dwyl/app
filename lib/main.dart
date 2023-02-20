@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'menu.dart';
+
 // coverage:ignore-start
 void main() {
   runApp(const MyApp());
@@ -64,7 +66,8 @@ class _HomePageState extends State<HomePage> {
             )
           ],
         ),
-        body: const MyTextField());
+        body: const MyTextField(),
+        endDrawer: SizedBox(width: MediaQuery.of(context).size.width * 1.0, child: const Drawer(child: DrawerMenu())));
   }
 }
 
