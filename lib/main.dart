@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'menu.dart';
 
+const appBarKey = Key('appbar');
+
 // coverage:ignore-start
 void main() {
   runApp(const MyApp());
@@ -39,6 +41,7 @@ class _HomePageState extends State<HomePage> {
         key: _scaffoldKey,
         drawerEnableOpenDragGesture: false,
         appBar: AppBar(
+          key: appBarKey,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
