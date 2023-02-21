@@ -55,39 +55,35 @@ class DrawerMenu extends StatelessWidget {
               margin: const EdgeInsets.only(top: 100),
               padding: const EdgeInsets.only(top: 15, bottom: 15),
               decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.white))),
-              child: ListTile(
+              child: const ListTile(
                 key: tourTileKey,
-                leading: const Icon(
+                leading: Icon(
                   Icons.flag_outlined,
                   color: Colors.white,
                   size: 40,
                 ),
-                title: const Text('Feature Tour',
+                title: Text('Feature Tour',
                     style: TextStyle(
                       fontSize: 25,
                       color: Colors.white,
                     )),
-                onTap: () {
-                },
               ),
             ),
             Container(
               padding: const EdgeInsets.only(top: 15, bottom: 15),
               decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.white))),
-              child: ListTile(
+              child: const ListTile(
                 key: settingsTileKey,
-                leading: const Icon(
+                leading: Icon(
                   Icons.settings,
                   color: Colors.white,
                   size: 40,
                 ),
-                title: const Text('Settings',
+                title: Text('Settings',
                     style: TextStyle(
                       fontSize: 25,
                       color: Colors.white,
                     )),
-                onTap: () {
-                },
               ),
             ),
           ])),

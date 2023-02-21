@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'menu.dart';
 
 const appBarKey = Key('appbar');
+const textfieldKey = Key('textfield');
+const saveButtonKey = Key('save_button');
+const iconKey = Key('menu_icon_button');
 
 // coverage:ignore-start
 void main() {
@@ -32,7 +35,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  bool showMenu = false;
+  bool showMenu = true;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -58,6 +61,7 @@ class _HomePageState extends State<HomePage> {
               maintainState: true,
               visible: showMenu,
               child: IconButton(
+                key: iconKey,
                 onPressed: () {
                   _scaffoldKey.currentState!.openEndDrawer();
                 },
@@ -95,6 +99,7 @@ class _MyTextFieldState extends State<MyTextField> {
               focus ? extendsFieldText() : minimizeFieldText();
             },
             child: TextField(
+              key: textfieldKey,
               decoration: const InputDecoration(hintText: 'Capture what is on your mind..!.', border: OutlineInputBorder()),
               expands: _expands,
               maxLines: _maxLines,
@@ -107,6 +112,7 @@ class _MyTextFieldState extends State<MyTextField> {
           Align(
             alignment: Alignment.bottomRight,
             child: ElevatedButton(
+                key: saveButtonKey,
                 onPressed: () {
                   minimizeFieldText();
                 },
