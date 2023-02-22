@@ -1,11 +1,11 @@
 {
-    "name": "app",
-    "short_name": "app",
+    "name": "Dwyl's Todo App",
+    "short_name": "todo app",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Track any time-based activity.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
