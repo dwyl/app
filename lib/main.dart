@@ -48,7 +48,7 @@ class _HomePageState extends State<HomePage> {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset("assets/images/dwyl_logo.png", fit: BoxFit.fitHeight, height: 30),
+              Image.asset("assets/icon/icon.png", fit: BoxFit.fitHeight, height: 30),
             ],
           ),
           leading: Container(),

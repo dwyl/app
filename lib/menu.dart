@@ -18,7 +18,7 @@ class DrawerMenu extends StatelessWidget {
           backgroundColor: Colors.black,
           leading: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Image.asset("assets/images/dwyl_logo.png", fit: BoxFit.fitHeight, height: 30),
+            child: Image.asset("assets/icon/icon.png", fit: BoxFit.fitHeight, height: 30),
           ),
           actions: [
             IconButton(
