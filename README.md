@@ -1,17 +1,23 @@
-# time
-[![Build Status](https://travis-ci.org/dwyl/time.png?branch=master)](https://travis-ci.org/dwyl/time)
-[![Node version](https://img.shields.io/node/v/dwyl.svg?style=flat)](http://nodejs.org/download/)
-[![HAPI 11.0.3](http://img.shields.io/badge/hapi-11.0.3-brightgreen.svg)](http://hapijs.com)
+<div align="center">
 
+# `app`
 
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/dwyl/app/ci.yml?label=build&style=flat-square&branch=main)
+[![contributions welcome](https://img.shields.io/badge/feedback-welcome-brightgreen.svg?style=flat-square)](https://github.com/dwyl/app/issues)
+[![HitCount](https://hits.dwyl.com/dwyl/app.svg)](https://hits.dwyl.com/dwyl/app)
+
+</div>
+<!--
 ![Until we can manage time, we can manage nothing else](http://i.imgur.com/GbTyiib.png)
-
+-->
 - - -
-You *found* us, ***welcome!***     
-We're currently *re-building* the ***Time*** **App** to make it more modular and extensible, if you want to help us ***Beta Test*** it,
-please register your interest on the website: http://www.dwyl.com/
+You *found* us, ***welcome!*** <br /> 
+We're currently *re-building* the **`App`** 
+to make it _much_ simpler! 
+If you want to help us ***Beta Test*** it,
+please see:
+[github.com/dwyl/mvp](https://github.com/dwyl/mvp/)
 
-In the meantime, please feel free to [read through our repos](https://github.com/dwyl/start-here) and find out what we're about or [_drop us a line_](https://github.com/dwyl/start-here/issues) with questions, what you'd like to see us focus on, happy thoughts, great articles you've read lately or anything that's on your mind!
 
 ## Why? [![Start with Why](https://img.shields.io/badge/start%20with-why%3F-brightgreen.svg?style=flat)](http://www.ted.com/talks/simon_sinek_how_great_leaders_inspire_action)
 
@@ -23,34 +29,38 @@ Time (a *finite* amount it) is one of the few things we *all* have in common.
 Whether we like it or not, we each only have a ***fixed amount***.  
 It is our most precious ***non-renewable*** 'resource'.  
 We need a *much* better way of keeping track of how we spend it.
-˜
 
-> More detail: https://github.com/ideaq/time/issues/19
 
 + Watch: **How Will You *Measure* Your Life?**
 http://youtu.be/tvos4nORf_Y  
-+ and ***Don't waste people's time***: http://ecorner.stanford.edu/authorMaterialInfo.html?mid=3404
+and **Protecting People’s Time**: 
+https://ecorner.stanford.edu/clips/protecting-peoples-time
++ Read ***Time is More Valuable Than Money***: 
+https://ecorner.stanford.edu/articles/time-is-more-valuable-than-money/
+
 
 ## What?
 
-A simple way to track activities over time.
+A simple way to organize your life/work 
+and track activities over time
+so that you focus on what matters
+and don't get distracted by what doesn't.
 
 ## How? [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/ideaq/time/issues)
 
-> Help us build it! https://github.com/dwyl/time/issues
+> Help us build this! Your feedback is very welcome:
+[/github.com/dwyl/app/issues](https://github.com/dwyl/app/issues)
 
 
-
+<!-- uncomment this once it's been updated 
 ### Run the Project _Locally_
 
-+ Download Node.js: https://nodejs.org/en/download/
-+ Download PostgreSQL: https://wiki.postgresql.org/wiki/Detailed_installation_guides
-+ Download Redis: https://github.com/dwyl/learn-redis#installation
+
 
 ### _Clone_ the Repository
 
 ```sh
-git clone https://github.com/dwyl/time.git && cd time
+git clone https://github.com/dwyl/app.git && cd app
 ```
 
 ### _Install_ the Dependencies
@@ -79,6 +89,7 @@ To run this app you will need to have ***PostgreSQL Installed and Running*** on 
 ***before*** you attempt to run this example.
 > see: https://wiki.postgresql.org/wiki/Detailed_installation_guides
 
+-->
 
 
 ### No Registration Required
