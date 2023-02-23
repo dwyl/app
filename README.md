@@ -25,10 +25,13 @@ please see:
 > “_The **price** of anything is the **amount** of **life** you **exchange for it**._”
 ~ Henry David Thoreau
 
-Time (a *finite* amount it) is one of the few things we *all* have in common.  
-Whether we like it or not, we each only have a ***fixed amount***.  
+**Time** (a *finite* amount it) 
+is one of the few things we *all* have in common.  
+Whether we like it or not, 
+we each only have a ***fixed amount***.
 It is our most precious ***non-renewable*** 'resource'.  
-We need a *much* better way of keeping track of how we spend it.
+We need a *much* better way 
+of keeping track of how we spend it.
 
 
 + Watch: **How Will You *Measure* Your Life?**
@@ -45,6 +48,9 @@ A simple way to organize your life/work
 and track activities over time
 so that you focus on what matters
 and don't get distracted by what doesn't.
+
+Way more detail in our 
+[Product Roadmap](https://github.com/dwyl/product-roadmap).
 
 ## How? [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/ideaq/time/issues)
 
