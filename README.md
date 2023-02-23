@@ -10,7 +10,7 @@
 <!--
 ![Until we can manage time, we can manage nothing else](http://i.imgur.com/GbTyiib.png)
 -->
-- - -
+
 You *found* us, ***welcome!*** <br /> 
 We're currently *re-building* the **`App`** 
 to make it _much_ simpler! 
@@ -21,6 +21,15 @@ please see:
 
 ## Why? [![Start with Why](https://img.shields.io/badge/start%20with-why%3F-brightgreen.svg?style=flat)](http://www.ted.com/talks/simon_sinek_how_great_leaders_inspire_action)
 
+We are building an `App` 
+because no tool we have found
+solves our problems. 
+
+More detail in:
+[dwyl/product-roadmap#why-are-we-building-an-app](https://github.com/dwyl/product-roadmap#why-are-we-building-an-app)
+
+
+<!-- don't know what to do with this ...
 
 > “_The **price** of anything is the **amount** of **life** you **exchange for it**._”
 ~ Henry David Thoreau
@@ -40,6 +49,8 @@ and **Protecting People’s Time**:
 https://ecorner.stanford.edu/clips/protecting-peoples-time
 + Read ***Time is More Valuable Than Money***: 
 https://ecorner.stanford.edu/articles/time-is-more-valuable-than-money/
+
+-->
 
 
 ## What?
