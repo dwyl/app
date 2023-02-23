@@ -48,7 +48,8 @@ class _HomePageState extends State<HomePage> {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset("assets/icon/icon.png", fit: BoxFit.fitHeight, height: 30),
+              Image.asset("assets/icon/icon.png",
+                  fit: BoxFit.fitHeight, height: 30),
             ],
           ),
           leading: Container(),
@@ -74,7 +75,9 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         body: const MyTextField(),
-        endDrawer: SizedBox(width: MediaQuery.of(context).size.width * 1.0, child: const Drawer(child: DrawerMenu())));
+        endDrawer: SizedBox(
+            width: MediaQuery.of(context).size.width * 1.0,
+            child: const Drawer(child: DrawerMenu())));
   }
 }
 
@@ -100,7 +103,9 @@ class _MyTextFieldState extends State<MyTextField> {
             },
             child: TextField(
               key: textfieldKey,
-              decoration: const InputDecoration(hintText: 'Capture what is on your mind..!.', border: OutlineInputBorder()),
+              decoration: const InputDecoration(
+                  hintText: 'Capture what is on your mind..!.',
+                  border: OutlineInputBorder()),
               expands: _expands,
               maxLines: _maxLines,
               textAlignVertical: TextAlignVertical.top,
