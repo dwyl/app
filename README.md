@@ -19,7 +19,7 @@ please see:
 [github.com/dwyl/**mvp**](https://github.com/dwyl/mvp/)
 
 
-## Why? [![Start with Why](https://img.shields.io/badge/start%20with-why%3F-brightgreen.svg?style=flat)](http://www.ted.com/talks/simon_sinek_how_great_leaders_inspire_action)
+## Why? [![Start with Why](https://img.shields.io/badge/start%20with-why%3F-brightgreen.svg?style=flat-square)](http://www.ted.com/talks/simon_sinek_how_great_leaders_inspire_action)
 
 We are building an `App` 
 because no tool we found
@@ -63,10 +63,10 @@ and don't get distracted by what doesn't.
 More detail in our 
 [Product Roadmap > What Problem Are We Solving?](https://github.com/dwyl/product-roadmap#what-problem-are-we-solving).
 
-## How? [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/ideaq/time/issues)
+## How? [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat-square)](https://github.com/dwyl/app/issues)
 
-> Help us build this! Your feedback is very welcome:
-[/github.com/dwyl/app/issues](https://github.com/dwyl/app/issues)
+Help us build this! Your feedback is very welcome:
+[dwyl/app/issues](https://github.com/dwyl/app/issues)
 
 
 <!-- uncomment this once it's been updated 
