@@ -108,7 +108,7 @@ To run this app you will need to have ***PostgreSQL Installed and Running*** on 
 
 -->
 
-
+<!--
 ### No Registration Required
 
 Try without registering: https://github.com/ideaq/time/issues/58
@@ -123,7 +123,7 @@ Our core objective is build a ***Great API*** from day one.
 > Here's some research/notes: https://github.com/nelsonic/learn-api-design
 
 
-<!--
+
 ### Sketch
 
 This is the ***sketch*** I did ages ago:
