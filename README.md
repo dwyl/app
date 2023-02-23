@@ -13,20 +13,20 @@
 
 You *found* us, ***welcome!*** <br /> 
 We're currently *re-building* the **`App`** 
-to make it _much_ simpler! 
-If you want to help us ***Beta Test*** it,
+to make it _much_ simpler! <br />
+If you want to help us ***`Beta` Test*** our MVP,
 please see:
-[github.com/dwyl/mvp](https://github.com/dwyl/mvp/)
+[github.com/dwyl/**mvp**](https://github.com/dwyl/mvp/)
 
 
 ## Why? [![Start with Why](https://img.shields.io/badge/start%20with-why%3F-brightgreen.svg?style=flat)](http://www.ted.com/talks/simon_sinek_how_great_leaders_inspire_action)
 
 We are building an `App` 
-because no tool we have found
+because no tool we found
 solves our problems. 
 
 More detail in:
-[dwyl/product-roadmap#why-are-we-building-an-app](https://github.com/dwyl/product-roadmap#why-are-we-building-an-app)
+[Product Roadmap > Why Build an App?](https://github.com/dwyl/product-roadmap#why-are-we-building-an-app)
 
 
 <!-- don't know what to do with this ...
@@ -60,8 +60,8 @@ and track activities over time
 so that you focus on what matters
 and don't get distracted by what doesn't.
 
-Way more detail in our 
-[Product Roadmap](https://github.com/dwyl/product-roadmap).
+More detail in our 
+[Product Roadmap > What Problem Are We Solving?](https://github.com/dwyl/product-roadmap#what-problem-are-we-solving).
 
 ## How? [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/ideaq/time/issues)
 
