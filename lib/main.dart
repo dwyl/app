@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
 
+import 'menu.dart';
+
+const appBarKey = Key('appbar');
+const textfieldKey = Key('textfield');
+const saveButtonKey = Key('save_button');
+const iconKey = Key('menu_icon_button');
+
 // coverage:ignore-start
 void main() {
   runApp(const MyApp());
@@ -16,12 +23,61 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.teal,
         ),
-        home: Scaffold(
-            appBar: AppBar(
-              title: const Text('DWYL'),
-              centerTitle: true,
-            ),
-            body: const MyTextField()));
+        home: const HomePage());
+  }
+}
+
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  bool showMenu = true;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        key: _scaffoldKey,
+        drawerEnableOpenDragGesture: false,
+        appBar: AppBar(
+          key: appBarKey,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset("assets/icon/icon.png",
+                  fit: BoxFit.fitHeight, height: 30),
+            ],
+          ),
+          leading: Container(),
+          backgroundColor: Colors.black,
+          elevation: 0.0,
+          actions: [
+            Visibility(
+              maintainSize: true,
+              maintainAnimation: true,
+              maintainState: true,
+              visible: showMenu,
+              child: IconButton(
+                key: iconKey,
+                onPressed: () {
+                  _scaffoldKey.currentState!.openEndDrawer();
+                },
+                icon: const Icon(
+                  Icons.menu,
+                  color: Colors.white,
+                ),
+              ),
+            )
+          ],
+        ),
+        body: const MyTextField(),
+        endDrawer: SizedBox(
+            width: MediaQuery.of(context).size.width * 1.0,
+            child: const Drawer(child: DrawerMenu())));
   }
 }
 
@@ -46,6 +102,7 @@ class _MyTextFieldState extends State<MyTextField> {
               focus ? extendsFieldText() : minimizeFieldText();
             },
             child: TextField(
+              key: textfieldKey,
               decoration: const InputDecoration(
                   hintText: 'Capture what is on your mind..!.',
                   border: OutlineInputBorder()),
@@ -60,6 +117,7 @@ class _MyTextFieldState extends State<MyTextField> {
           Align(
             alignment: Alignment.bottomRight,
             child: ElevatedButton(
+                key: saveButtonKey,
                 onPressed: () {
                   minimizeFieldText();
                 },
