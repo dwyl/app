@@ -5,14 +5,14 @@ import 'package:app/main.dart';
 void main() {
   testWidgets('Basic setup, showing the main page with appbar', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(const App());
 
     expect(find.byKey(appBarKey).hitTestable(), findsOneWidget);
   });
 
   testWidgets('Expand textfield and tap save', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(const App());
 
     expect(find.byKey(saveButtonKey).hitTestable(), findsNothing);
 
@@ -26,7 +26,7 @@ void main() {
     // Tap on save button
     await tester.tap(find.byKey(saveButtonKey));
     await tester.pumpAndSettle();
-  
+
     expect(find.byKey(saveButtonKey).hitTestable(), findsNothing);
   });
 }

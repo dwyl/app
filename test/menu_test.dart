@@ -6,7 +6,7 @@ import 'package:app/main.dart';
 void main() {
   testWidgets('Open drawer and close it', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(const App());
 
     // Appbar is rendered
     expect(find.byKey(appBarKey).hitTestable(), findsOneWidget);
