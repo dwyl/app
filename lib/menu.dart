@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
+// Widget codes used primarily for testing
 const drawerMenuKey = Key("drawer_menu");
 const todoTileKey = Key("todo_tile");
 const tourTileKey = Key("tour_tile");
 const settingsTileKey = Key("settings_tile");
-
 const closeMenuKey = Key("close_key_icon");
 
+// Drawer menu used for the AppBar with navigation elements
 class DrawerMenu extends StatelessWidget {
   const DrawerMenu({super.key});
 
@@ -14,6 +15,7 @@ class DrawerMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       key: drawerMenuKey,
+
       appBar: AppBar(
           backgroundColor: Colors.black,
           leading: Padding(
@@ -22,6 +24,7 @@ class DrawerMenu extends StatelessWidget {
                 fit: BoxFit.fitHeight, height: 30),
           ),
           actions: [
+            // Button navigate away from the drawer
             IconButton(
               key: closeMenuKey,
               onPressed: () {
@@ -33,12 +36,15 @@ class DrawerMenu extends StatelessWidget {
               ),
             ),
           ]),
+
+      // The body of drawer is list of containers, one for each navigable page.
       body: Container(
           color: Colors.black,
           child: ListView(
               key: todoTileKey,
               padding: const EdgeInsets.only(top: 32),
               children: [
+                // Todo list page route
                 Container(
                   padding: const EdgeInsets.only(top: 15, bottom: 15),
                   decoration: const BoxDecoration(
@@ -58,6 +64,8 @@ class DrawerMenu extends StatelessWidget {
                         )),
                   ),
                 ),
+
+                // Feature tour page route
                 Container(
                   margin: const EdgeInsets.only(top: 100),
                   padding: const EdgeInsets.only(top: 15, bottom: 15),
@@ -77,6 +85,8 @@ class DrawerMenu extends StatelessWidget {
                         )),
                   ),
                 ),
+
+                // Settings page route
                 Container(
                   padding: const EdgeInsets.only(top: 15, bottom: 15),
                   decoration: const BoxDecoration(

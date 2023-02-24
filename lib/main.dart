@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'menu.dart';
 
+// Widget codes used primarily for testing
 const appBarKey = Key('appbar');
 const textfieldKey = Key('textfield');
 const saveButtonKey = Key('save_button');
@@ -9,12 +10,12 @@ const iconKey = Key('menu_icon_button');
 
 // coverage:ignore-start
 void main() {
-  runApp(const MyApp());
+  runApp(const App());
 }
 // coverage:ignore-end
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class App extends StatelessWidget {
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -43,11 +44,14 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
         key: _scaffoldKey,
         drawerEnableOpenDragGesture: false,
+
+        // AppBar with leading icon (a simple `Container` to maintain width).
         appBar: AppBar(
           key: appBarKey,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              // dwyl logo
               Image.asset("assets/icon/icon.png",
                   fit: BoxFit.fitHeight, height: 30),
             ],
@@ -61,6 +65,7 @@ class _HomePageState extends State<HomePage> {
               maintainAnimation: true,
               maintainState: true,
               visible: showMenu,
+              // Actions container with toggle-able menu icon logo
               child: IconButton(
                 key: iconKey,
                 onPressed: () {
@@ -74,7 +79,11 @@ class _HomePageState extends State<HomePage> {
             )
           ],
         ),
+
+        // Body of the page/scaffold
         body: const MyTextField(),
+
+        // Menu drawer (`endDrawer` comes from the right of the screen)
         endDrawer: SizedBox(
             width: MediaQuery.of(context).size.width * 1.0,
             child: const Drawer(child: DrawerMenu())));
@@ -123,7 +132,6 @@ class _MyTextFieldState extends State<MyTextField> {
                 },
                 child: const Text('Save')),
           ),
-        //if (!_expands) const MyItems()
       ],
     );
   }
@@ -143,8 +151,8 @@ class _MyTextFieldState extends State<MyTextField> {
   }
 }
 
-class MyItems extends StatelessWidget {
-  const MyItems({super.key});
+class Items extends StatelessWidget {
+  const Items({super.key});
 
   @override
   Widget build(BuildContext context) {
