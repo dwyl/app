@@ -14,7 +14,6 @@ void main() {
 }
 // coverage:ignore-end
 
-
 class App extends StatelessWidget {
   const App({super.key});
 
@@ -28,7 +27,6 @@ class App extends StatelessWidget {
         home: const HomePage());
   }
 }
-
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -47,16 +45,15 @@ class _HomePageState extends State<HomePage> {
         key: _scaffoldKey,
         drawerEnableOpenDragGesture: false,
 
-        // AppBar with 
-        // - the leading icon (a simple `Container` to maintain width).
-        // - the title container being a simple DWYL logo
-        // - the actions container having a toggleable menu icon logo, that can be visible or not.
+        // AppBar with leading icon (a simple `Container` to maintain width).
         appBar: AppBar(
           key: appBarKey,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset("assets/icon/icon.png", fit: BoxFit.fitHeight, height: 30),
+              // dwyl logo
+              Image.asset("assets/icon/icon.png",
+                  fit: BoxFit.fitHeight, height: 30),
             ],
           ),
           leading: Container(),
@@ -68,6 +65,7 @@ class _HomePageState extends State<HomePage> {
               maintainAnimation: true,
               maintainState: true,
               visible: showMenu,
+              // Actions container with toggle-able menu icon logo
               child: IconButton(
                 key: iconKey,
                 onPressed: () {
@@ -86,7 +84,9 @@ class _HomePageState extends State<HomePage> {
         body: const MyTextField(),
 
         // Menu drawer (`endDrawer` comes from the right of the screen)
-        endDrawer: SizedBox(width: MediaQuery.of(context).size.width * 1.0, child: const Drawer(child: DrawerMenu())));
+        endDrawer: SizedBox(
+            width: MediaQuery.of(context).size.width * 1.0,
+            child: const Drawer(child: DrawerMenu())));
   }
 }
 
@@ -112,7 +112,9 @@ class _MyTextFieldState extends State<MyTextField> {
             },
             child: TextField(
               key: textfieldKey,
-              decoration: const InputDecoration(hintText: 'Capture what is on your mind..!.', border: OutlineInputBorder()),
+              decoration: const InputDecoration(
+                  hintText: 'Capture what is on your mind..!.',
+                  border: OutlineInputBorder()),
               expands: _expands,
               maxLines: _maxLines,
               textAlignVertical: TextAlignVertical.top,
@@ -130,7 +132,6 @@ class _MyTextFieldState extends State<MyTextField> {
                 },
                 child: const Text('Save')),
           ),
-        //if (!_expands) const MyItems()
       ],
     );
   }
