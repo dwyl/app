@@ -57,7 +57,8 @@ jobs:
           channel: 'stable'
 
       - name: Create release build
-        run: flutter build web 
+        # github.com/dwyl/app/issues/315#issuecomment-1443747737
+        run: flutter build web --release --web-renderer html
 
       - uses: superfly/flyctl-actions@1.1
         with:
