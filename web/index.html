@@ -51,28 +51,36 @@
       }
 
       #loading {
+        background-color: #354046;
         align-items: center;
         display: flex;
         flex-direction: column;
-        height: 50%;
         justify-content: center;
-        width: 50%;
+        width: 100%;
+        height: 100%;
       }
 
       #loading span {
-        color: #111; 
+        color: #F2F2F2; 
         font-family: 'Open Sans', sans-serif; 
-        font-size: 30px; 
         font-weight: 300; 
         line-height: 32px;
-        margin: 0 0 72px; 
+        margin-top: 20px;
         text-align: center; 
+      }
+
+      #loading #slogan-text {
+        font-size: 30px;
+      }
+
+      #loading #loading-text {
+        font-size: 15px;
+        opacity: .66;
       }
 
       #loading img {
         animation: 1s ease-in-out 0s infinite alternate breathe;
-        opacity: .66;
-        transition: opacity .4s;
+        height: 80px;
       }
 
       #loading.main_done img {
@@ -105,6 +113,7 @@
       }
     </style>
     <img src="icons/Icon-192.png" alt="Loading indicator..." />
+    <span id="slogan-text">do what you love</span>
     <span id="loading-text">Let's go!</span>
   </div>
   <script>
@@ -113,7 +122,7 @@
       // Showing loading indicator
       var loading = document.querySelector('#loading');
       var loadingText = document.querySelector('#loading-text');
-      loadingText.textContent = "Loading ...";
+      loadingText.textContent = "loading ...";
 
       // Download main.dart.js
       _flutter.loader.loadEntrypoint({
@@ -121,7 +130,7 @@
           serviceWorkerVersion: serviceWorkerVersion,
         },
         onEntrypointLoaded: async function(engineInitializer) {
-          loadingText.textContent = "Initializing engine ...";
+          loadingText.textContent = "initializing engine ...";
           
           let appRunner = await engineInitializer.initializeEngine();
 
