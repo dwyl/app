@@ -79,7 +79,6 @@
       }
 
       #loading img {
-        animation: 1s ease-in-out 0s infinite alternate breathe;
         height: 80px;
       }
 
@@ -90,26 +89,6 @@
       #loading.init_done img {
         animation: .33s ease-in-out 0s 1 forwards zooooom;
         opacity: .05;
-      }
-
-      @keyframes breathe {
-        from {
-          transform: scale(1)
-        }
-
-        to {
-          transform: scale(0.95)
-        }
-      }
-
-      @keyframes zooooom {
-        from {
-          transform: scale(1)
-        }
-
-        to {
-          transform: scale(10)
-        }
       }
     </style>
     <img src="icons/Icon-192.png" alt="Loading indicator..." />
