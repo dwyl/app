@@ -1,19 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
   <base href="$FLUTTER_BASE_HREF">
 
   <meta charset="UTF-8">
@@ -29,7 +16,7 @@
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
 
-  <title>app</title>
+  <title>dwyl app</title>
   <link rel="manifest" href="manifest.json">
 
   <script>
@@ -51,70 +38,41 @@
       }
 
       #loading {
-        background-color: #354046;
         align-items: center;
+        background-color: #354046;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        width: 100%;
         height: 100%;
+        width: 100%;
       }
 
       #loading span {
         color: #F2F2F2; 
         font-family: 'Open Sans', sans-serif; 
+        font-size: 30px;
         font-weight: 300; 
         line-height: 32px;
         margin-top: 20px;
-        text-align: center; 
+        text-align: center;
       }
 
-      #loading #slogan-text {
-        font-size: 30px;
-      }
-
-      #loading #loading-text {
-        font-size: 15px;
-        opacity: .66;
-      }
-
-      #loading img {
-        height: 80px;
-      }
-
-      #loading.main_done img {
-        opacity: 1;
-      }
-
-      #loading.init_done img {
-        animation: .33s ease-in-out 0s 1 forwards zooooom;
-        opacity: .05;
-      }
     </style>
-    <img src="icons/Icon-192.png" alt="Loading indicator..." />
-    <span id="slogan-text">do what you love</span>
-    <span id="loading-text">Let's go!</span>
+    <img src="icons/Icon-192.png" alt="dwyl logo" height="64px" />
+    <span>do what you love</span>
   </div>
   <script>
     window.addEventListener('load', function(ev) {
-
-      // Showing loading indicator
-      var loading = document.querySelector('#loading');
-      var loadingText = document.querySelector('#loading-text');
-      loadingText.textContent = "loading ...";
-
       // Download main.dart.js
       _flutter.loader.loadEntrypoint({
         serviceWorker: {
           serviceWorkerVersion: serviceWorkerVersion,
         },
-        onEntrypointLoaded: async function(engineInitializer) {
-          loadingText.textContent = "initializing engine ...";
-          
-          let appRunner = await engineInitializer.initializeEngine();
-
-          loading.style.display = 'none';
+        onEntrypointLoaded: async function(app) {
+          let appRunner = await app.initializeEngine();
           await appRunner.runApp();
+          // Remove loading screen when App available: 
+          document.querySelector('#loading').remove();
         }
       });
     });
