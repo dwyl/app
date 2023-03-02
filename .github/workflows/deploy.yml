@@ -1,0 +1,34 @@
+name: deploy to Github Pages
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: write
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      # See stackoverflow.com/questions/74164386/flutter-web-shows-blank-page-on-github-deployment.
+      - name: Install and Build 
+        run: flutter build web --release --web-renderer html --base-href /app/ # must be Github's repo name
+
+      - name: Deploy to Github Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages # The branch the action should deploy to.
+          folder: ./build/web # The folder the action should deploy.
