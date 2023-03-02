@@ -25,12 +25,12 @@ jobs:
 
       - name: Install and Build 
         run: flutter build web --release --web-renderer html
-        
-      - name: ls 
-        run: ls
+
+      - name: ls
+        run: ls ./build/web
 
       - name: Deploy to Github Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages # The branch the action should deploy to.
-          folder: build/web # The folder the action should deploy.
+          folder: ./build/web # The folder the action should deploy.
