@@ -22,6 +22,7 @@ jobs:
 
       - name: Build and deploy to Github Pages
         uses: bluefireteam/flutter-gh-pages@v7
+        with:
           webRenderer: html
           targetBranch: gh-pages
 
