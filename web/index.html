@@ -1,21 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
   <base href="$FLUTTER_BASE_HREF">
-
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
   <meta name="description" content="A new Flutter project.">
@@ -29,17 +15,27 @@
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
 
-  <title>app</title>
+  <title>dwyl app</title>
   <link rel="manifest" href="manifest.json">
 
   <script>
-    // The value below is injected by flutter build, do not touch.
+    // Version injected by flutter build, do not touch.
     var serviceWorkerVersion = null;
   </script>
-  <!-- This script adds the flutter initialization JS code -->
+  <!-- Flutter init JS code -->
   <script src="flutter.js" defer></script>
+  <style>
+    /* unminify.com */
+    body{inset:0;overflow:hidden;margin:0;padding:0;position:fixed}
+    #loading{align-items:center;background-color:#354046;display:flex;flex-direction:column;justify-content:center;height:100%;width:100%}
+    #loading h1{color:#f2f2f2;font-family:'Open Sans',sans-serif;font-size:30px;font-weight:300;line-height:32px;margin-top:20px;text-align:center}
+  </style>
 </head>
 <body>
+  <div id="loading">
+    <img src="icons/Icon-192.png" alt="dwyl logo" height="64px" />
+    <h1>do what you love</h1>
+  </div>
   <script>
     window.addEventListener('load', function(ev) {
       // Download main.dart.js
@@ -47,10 +43,11 @@
         serviceWorker: {
           serviceWorkerVersion: serviceWorkerVersion,
         },
-        onEntrypointLoaded: function(engineInitializer) {
-          engineInitializer.initializeEngine().then(function(appRunner) {
-            appRunner.runApp();
-          });
+        onEntrypointLoaded: async function(app) {
+          let appRunner = await app.initializeEngine();
+          await appRunner.runApp();
+          // Remove loading screen when App available: 
+          document.querySelector('#loading').remove();
         }
       });
     });
