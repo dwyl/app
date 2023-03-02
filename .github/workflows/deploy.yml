@@ -25,6 +25,9 @@ jobs:
 
       - name: Install and Build 
         run: flutter build web --release --web-renderer html
+        
+      - name: ls 
+        run: ls
 
       - name: Deploy to Github Pages
         uses: JamesIves/github-pages-deploy-action@v4
