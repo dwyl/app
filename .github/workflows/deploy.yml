@@ -19,7 +19,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
       
       - name: Install Flutter
         uses: subosito/flutter-action@v2
@@ -29,15 +28,9 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      # See stackoverflow.com/questions/74164386/flutter-web-shows-blank-page-on-github-deployment.
+      # See stackoverflow.com/questions/74164386/flutter-web-shows-blank-page-on-github-deployment
       - name: Install and Build 
         run: flutter build web --release --web-renderer html
-
-      - name: Deploy to Github Pages
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          branch: gh-pages # The branch the action should deploy to.
-          folder: ./build/web # The folder the action should deploy.
 
       # Attempt to minify main.dart.js see: issues/326
       - uses: actions/checkout@v3
@@ -47,3 +40,10 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
       - run: node web/build.js
+
+      - name: Deploy to Github Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages # The branch the action should deploy to.
+          folder: ./build/web # The folder the action should deploy.
+
