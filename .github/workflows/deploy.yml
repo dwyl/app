@@ -11,6 +11,11 @@ permissions:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -34,11 +39,7 @@ jobs:
           branch: gh-pages # The branch the action should deploy to.
           folder: ./build/web # The folder the action should deploy.
 
-    strategy:
-      matrix:
-        node-version: [18.x]
-
-    steps:
+      # Attempt to minify main.dart.js see: issues/326
       - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
