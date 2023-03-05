@@ -36,8 +36,11 @@ jobs:
       - name: PWD
         run: pwd
 
-      - name: ls ./build/web (BEFORE)
+      - name: ls ./build/web (BEFORE)s
         run: ls -lath ./build/web
+
+      - name: chmod 777
+        run: chmod 777 ./build/web
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
