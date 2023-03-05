@@ -33,7 +33,8 @@ jobs:
         run: flutter build web --release --web-renderer html
 
       # Attempt to minify main.dart.js see: issues/326
-      - uses: actions/checkout@v3
+      - name: PWD
+      - run: pwd
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
