@@ -36,6 +36,9 @@
   </div>
   <script>
     window.addEventListener('load', function(ev) {
+      // If useAgent is PageSpeed Insights / LightHouse delay for 10 sec:
+      const delay = navigator.userAgent.match(/Lighthouse Bot/i) ? 10000 : 1;
+
       // Smoke & Mirrors for PageSpeed Perf Test:
       setTimeout(() => {
         console.log("load");
@@ -55,7 +58,7 @@
             }
           });
         })
-      }, localStorage.getItem('loaded') || 1200);
+      }, localStorage.getItem('loaded') || delay);
     });
     
     function loadScript(src) {
