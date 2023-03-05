@@ -36,12 +36,18 @@ jobs:
       - name: PWD
         run: pwd
 
+      - name: ls ./build/web (BEFORE)
+        run: ls -lath ./build/web
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
       - run: node ./web/build.js
+
+      - name: ls ./build/web (AFTER)
+        run: ls -lath ./build/web
 
       - name: Deploy to Github Pages
         uses: JamesIves/github-pages-deploy-action@v4
