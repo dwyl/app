@@ -35,12 +35,13 @@ jobs:
       # Attempt to minify main.dart.js see: issues/326
       - name: PWD
       - run: pwd
+      
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
-      - run: node web/build.js
+      - run: node ./web/build.js
 
       - name: Deploy to Github Pages
         uses: JamesIves/github-pages-deploy-action@v4
