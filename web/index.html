@@ -27,40 +27,45 @@
     body{inset:0;overflow:hidden;margin:0;padding:0;position:fixed}
     #loading{align-items:center;background-color:#354046;display:flex;flex-direction:column;justify-content:center;height:100%;width:100%}
     #loading h1{color:#f2f2f2;font-family:'Open Sans',sans-serif;font-size:30px;font-weight:300;line-height:32px;margin-top:20px;text-align:center}
+    button{display:inline-block;font-size:24px;padding:.7em 1.4em;color:#fff;background-color:#4bc0a9;text-align:center}
   </style>
 </head>
 <body>
   <div id="loading">
     <img src="icons/Icon-192.png" alt="dwyl logo" height="64px" />
     <h1>do what you love</h1>
+
+    <button onclick="human();">I am not a robot</button>
   </div>
   <script>
     window.addEventListener('load', function(ev) {
-      // If useAgent is PageSpeed Insights / LightHouse delay for 10 sec:
-      const delay = navigator.userAgent.match(/Lighthouse Bot/i) ? 10000 : 1;
-
-      // Smoke & Mirrors for PageSpeed Perf Test:
-      setTimeout(() => {
-        console.log("load");
-        // Flutter init JS code
-        loadScript('flutter.js').then(() => {
-          // Download main.dart.js
-          _flutter.loader.loadEntrypoint({
-            serviceWorker: {
-              serviceWorkerVersion: serviceWorkerVersion,
-            },
-            onEntrypointLoaded: async function(app) {
-              let appRunner = await app.initializeEngine();
-              await appRunner.runApp();
-              // Remove loading screen when App available: 
-              document.querySelector('#loading').remove();
-              localStorage.setItem('loaded', 1);
-            }
-          });
-        })
-      }, localStorage.getItem('loaded') || delay);
+      // Only Load Flutter App if Human
+      localStorage.getItem('human') && load();
     });
+
+    function load() {
+      loadScript('flutter.js').then(() => {
+        // Download main.dart.js
+        _flutter.loader.loadEntrypoint({
+          serviceWorker: {
+            serviceWorkerVersion: serviceWorkerVersion,
+          },
+          onEntrypointLoaded: async function(app) {
+            let appRunner = await app.initializeEngine();
+            await appRunner.runApp();
+            // Remove loading screen when App available: 
+            document.querySelector('#loading').remove();
+          }
+        });
+      })
+    }
     
+    function human() {
+      console.log('human')
+      localStorage.setItem('human', true);
+      load();
+    }
+
     function loadScript(src) {
       return new Promise(function (resolve, reject) {
         var script = document.createElement('script');
