@@ -45,3 +45,6 @@ app.*.map.json
 
 # Coverage files
 coverage
+
+# esbuild
+node_modules/

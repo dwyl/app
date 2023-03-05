@@ -2,6 +2,8 @@ name: deploy to Github Pages
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ "main" ]
 
 
 permissions:
@@ -31,3 +33,16 @@ jobs:
         with:
           branch: gh-pages # The branch the action should deploy to.
           folder: ./build/web # The folder the action should deploy.
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm ci
+      - run: node web/build.js
