@@ -1,4 +1,4 @@
-name: deploy to Github Pages
+name: Deploy to Github Pages
 on:
   push:
     branches: [ main ]
@@ -8,10 +8,6 @@ permissions:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [18.x]
 
     steps:
       - name: Checkout code
