@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <base href="$FLUTTER_BASE_HREF">
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
   <meta name="description" content="A new Flutter project.">
+  <meta name="viewport" content="width=device-width">
 
   <!-- iOS meta tags & icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -26,13 +27,13 @@
     /* unminify.com */
     body{inset:0;overflow:hidden;margin:0;padding:0;position:fixed}
     #loading{align-items:center;background-color:#354046;display:flex;flex-direction:column;justify-content:center;height:100%;width:100%}
-    #loading h1{color:#f2f2f2;font-family:'Open Sans',sans-serif;font-size:30px;font-weight:300;line-height:32px;margin-top:20px;text-align:center}
-    button{display:inline-block;font-size:24px;padding:.7em 1.4em;color:#fff;background-color:#4bc0a9;text-align:center}
+    #loading h1{color:#f2f2f2;font-family:'Open Sans',sans-serif;font-size:60px;font-weight:300;line-height:32px;margin-top:20px;text-align:center}
+    button{display:inline-block;font-size:54px;padding:.4em .7em;color:#FFF;background-color:#4bc0a9;text-align:center;text-shadow: 2px 2px 3px #354046}
   </style>
 </head>
 <body>
   <div id="loading">
-    <img src="icons/Icon-192.png" alt="dwyl logo" height="64px" />
+    <img src="icons/Icon-192.png" alt="dwyl logo" height="128px" />
     <h1>do what you love</h1>
 
     <button onclick="human();">I am not a robot</button>
@@ -40,7 +41,7 @@
   <script>
     window.addEventListener('load', function(ev) {
       // Only Load Flutter App if Human
-      localStorage.getItem('human') && load();
+      // localStorage.getItem('human') && load();
     });
 
     function load() {
