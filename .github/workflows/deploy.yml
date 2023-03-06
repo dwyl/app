@@ -2,9 +2,6 @@ name: deploy to Github Pages
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ "main", "optimise-js-issue-#325" ]
-
 
 permissions:
   contents: write
@@ -31,26 +28,6 @@ jobs:
       # See stackoverflow.com/questions/74164386/flutter-web-shows-blank-page-on-github-deployment
       - name: Install and Build 
         run: flutter build web --release --web-renderer html
-
-      # Attempt to minify main.dart.js see: issues/326
-      - name: PWD
-        run: pwd
-
-      - name: ls ./build/web (BEFORE)s
-        run: ls -lath ./build/web
-
-      - name: chmod 777
-        run: chmod 777 ./build/web
-
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-      - run: npm ci
-      - run: node ./web/build.js
-
-      - name: ls ./build/web (AFTER)
-        run: ls -lath ./build/web
 
       - name: Deploy to Github Pages
         uses: JamesIves/github-pages-deploy-action@v4
