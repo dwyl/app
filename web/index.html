@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <base href="$FLUTTER_BASE_HREF">
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
   <meta name="description" content="A new Flutter project.">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <!-- iOS meta tags & icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -22,35 +23,59 @@
     // Version injected by flutter build, do not touch.
     var serviceWorkerVersion = null;
   </script>
-  <!-- Flutter init JS code -->
-  <script src="flutter.js" defer></script>
   <style>
     /* unminify.com */
     body{inset:0;overflow:hidden;margin:0;padding:0;position:fixed}
     #loading{align-items:center;background-color:#354046;display:flex;flex-direction:column;justify-content:center;height:100%;width:100%}
-    #loading h1{color:#f2f2f2;font-family:'Open Sans',sans-serif;font-size:30px;font-weight:300;line-height:32px;margin-top:20px;text-align:center}
+    #loading h1{color:#f2f2f2;font-family:'Open Sans',sans-serif;font-size:46px;font-weight:300;line-height:32px;margin-top:20px;text-align:center}
+    button{display:inline-block;font-size:42px;padding:.4em .7em;color:#FFF;background-color:#4bc0a9;text-align:center;text-shadow: 2px 2px 3px #354046; cursor: pointer}
   </style>
 </head>
 <body>
   <div id="loading">
-    <img src="icons/Icon-192.png" alt="dwyl logo" height="64px" />
+    <img src="icons/Icon-192.png" alt="dwyl logo" height="128px" width="128px" />
     <h1>do what you love</h1>
+    <button onclick="human();">I am not a robot</button>
   </div>
   <script>
     window.addEventListener('load', function(ev) {
-      // Download main.dart.js
-      _flutter.loader.loadEntrypoint({
-        serviceWorker: {
-          serviceWorkerVersion: serviceWorkerVersion,
-        },
-        onEntrypointLoaded: async function(app) {
-          let appRunner = await app.initializeEngine();
-          await appRunner.runApp();
-          // Remove loading screen when App available: 
-          document.querySelector('#loading').remove();
-        }
-      });
+      // Only Load Flutter App if Human
+      localStorage.getItem('human') && load();
     });
+
+    function human() {
+      // console.log('human')
+      localStorage.setItem('human', true);
+      load();
+    }
+
+    function load() {
+      loadScript('flutter.js').then(() => {
+        // Download main.dart.js
+        _flutter.loader.loadEntrypoint({
+          serviceWorker: {
+            serviceWorkerVersion: serviceWorkerVersion,
+          },
+          onEntrypointLoaded: async function(app) {
+            let appRunner = await app.initializeEngine();
+            await appRunner.runApp();
+            // Remove loading screen when App available: 
+            document.querySelector('#loading').remove();
+          }
+        });
+      })
+    }
+
+    function loadScript(src) {
+      return new Promise(function (resolve, reject) {
+        var script = document.createElement('script');
+        script.src = src;
+        script.onload = function () { resolve(); };
+        script.onerror = function () { reject(); };
+        document.body.appendChild(script);
+        // console.log('loaded ', src)
+      });
+    }
   </script>
 </body>
 </html>
