@@ -1,16 +1,5 @@
---- flutter_service_worker.js	2023-03-24 18:54:05
-+++ flutter_service_worker2.js	2023-03-24 18:54:48
-@@ -4,8 +4,8 @@
- const CACHE_NAME = 'flutter-app-cache';
- const RESOURCES = {
-   "version.json": "11e1a177d57c5da2bc6e3a6acc3010f4",
--"index.html": "d3fd84181d3707365a646217bf2ca9a3",
--"/": "d3fd84181d3707365a646217bf2ca9a3",
-+"index.html": "387191a7d21de0b6058d395d5ada50ea",
-+"/": "387191a7d21de0b6058d395d5ada50ea",
- "main.dart.js": "c5705716cb1a470ced81fb369fca3ccc",
- "flutter.js": "1cfe996e845b3a8a33f57607e8b09ee4",
- "favicon.png": "0063030f6ef69989a7a1cea69a72bb11",
+--- flutter_service_worker.js	2023-03-24 19:00:29
++++ flutter_service_worker2.js	2023-03-24 19:04:42
 @@ -28,22 +28,10 @@
  
  // The application shell files that are downloaded before a service worker can
@@ -31,18 +20,18 @@
 -  );
 -});
  
-+/* Removed this section because the files are downloaded concurrently, so we don't check */
++// Removed this section because the files are downloaded concurrently, so we don't check
 +
 +
  // During activate, the cache is populated with the temp files downloaded in
  // install. If this service worker is upgrading from one with a saved
  // MANIFEST, then use this to retain unchanged resource files.
-@@ -130,12 +118,24 @@
+@@ -130,10 +118,22 @@
        return cache.match(event.request).then((response) => {
          // Either respond with the cached resource, or perform a fetch and
          // lazily populate the cache only if the resource was successfully fetched.
 -        return response || fetch(event.request).then((response) => {
-+  
++
 +        if (response) {
 +          return response;
 +        }
@@ -55,14 +44,10 @@
            if (response && Boolean(response.ok)) {
 -            cache.put(event.request, response.clone());
 +            cache.put(event.request, response.clone())
-+                .then(() => delete IN_PROCESSING_REQUESTS[key]);
++                 .then(() => delete IN_PROCESSING_REQUESTS[key]);
            }
--          return response;
--        });
 +
 +          IN_PROCESSING_REQUESTS[key] = response.clone();
-+            return response;
-+          });
+           return response;
+         });
        })
-     })
-   );
