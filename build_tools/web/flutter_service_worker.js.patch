@@ -1,0 +1,46 @@
+--- flutter_service_worker.js	2023-03-24 18:27:59
++++ flutter_service_worker2.js	2023-03-24 18:40:42
+@@ -28,11 +28,9 @@
+ 
+ // The application shell files that are downloaded before a service worker can
+ // start.
+-const CORE = [
+-  "main.dart.js",
+-"index.html",
+-"assets/AssetManifest.json",
+-"assets/FontManifest.json"];
++
++/* Removed this section because the files are downloaded concurrently, so we don't check */
++
+ // During install, the TEMP cache is populated with the application shell files.
+ self.addEventListener("install", (event) => {
+   self.skipWaiting();
+@@ -130,12 +128,24 @@
+       return cache.match(event.request).then((response) => {
+         // Either respond with the cached resource, or perform a fetch and
+         // lazily populate the cache only if the resource was successfully fetched.
+-        return response || fetch(event.request).then((response) => {
++  
++        if (response) {
++          return response;
++        }
++
++        if (IN_PROCESSING_REQUESTS[key]) {
++          return IN_PROCESSING_REQUESTS[key].clone();
++        }
++
++        return fetch(event.request).then((response) => {
+           if (response && Boolean(response.ok)) {
+-            cache.put(event.request, response.clone());
++            cache.put(event.request, response.clone())
++                .then(() => delete IN_PROCESSING_REQUESTS[key]);
+           }
+-          return response;
+-        });
++
++          IN_PROCESSING_REQUESTS[key] = response.clone();
++            return response;
++          });
+       })
+     })
+   );
