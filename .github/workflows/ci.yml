@@ -60,6 +60,9 @@ jobs:
         # github.com/dwyl/app/issues/315#issuecomment-1443747737
         run: flutter build web --release --web-renderer html
 
+      - name: ls
+        run: ls
+
       - name: Run post-build script to download files concurrently
         run: | 
           chmod +x ./build_tools/patch_web.sh
