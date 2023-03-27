@@ -32,11 +32,22 @@
   </style>
 </head>
 <body>
+  <div id="loading">
+    <img src="icons/Icon-192.png" alt="dwyl logo" height="128px" width="128px" />
+    <h1>do what you love</h1>
+    <button onclick="human();">I am not a robot</button>
+  </div>
   <script>
     window.addEventListener('load', function(ev) {
       // Only Load Flutter App if Human
-      load();
+      localStorage.getItem('human') && load();
     });
+
+    function human() {
+      // console.log('human')
+      localStorage.setItem('human', true);
+      load();
+    }
 
     function load() {
       loadScript('flutter.js').then(() => {
