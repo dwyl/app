@@ -21,7 +21,7 @@
 
   <script>
     // Version injected by flutter build, do not touch.
-    var serviceWorkerVersion = '3117686285';
+    var serviceWorkerVersion = '520245923';
   </script>
   <style>
     /* unminify.com */
@@ -76,6 +76,12 @@
         // console.log('loaded ', src)
       });
     }
+
+    // Load serviceWorker earlier
+    // see: https://github.com/dwyl/app/issues/326#issuecomment-1478314967
+    const serviceWorkerActivation = navigator.serviceWorker.register(
+      "flutter_service_worker.js?v=" + serviceWorkerVersion
+    );
   </script>
 </body>
 </html>
