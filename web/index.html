@@ -77,7 +77,8 @@
       });
     }
 
-    // load serviceworker earlier
+    // Load serviceWorker earlier
+    // see: https://github.com/dwyl/app/issues/326#issuecomment-1478314967
     const serviceWorkerActivation = navigator.serviceWorker.register(
       "flutter_service_worker.js?v=" + serviceWorkerVersion
     );

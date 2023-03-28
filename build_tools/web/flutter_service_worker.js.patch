@@ -2,8 +2,9 @@
 +++ flutter_service_worker2.js	2023-03-24 19:04:42
 @@ -28,22 +28,10 @@
  
- // The application shell files that are downloaded before a service worker can
- // start.
+// Patched flutter_service_worker.js splits up the loading of files so they are parallel. 
+// see: https://github.com/dwyl/app/issues/326#issuecomment-1478314967
+// Application shell files that are downloaded before a service worker can start.
 -const CORE = [
 -  "main.dart.js",
 -"index.html",

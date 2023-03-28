@@ -1,6 +1,8 @@
 --- flutter.js	2023-03-24 18:27:43
 +++ flutter2.js	2023-03-24 18:37:08
 @@ -353,7 +353,15 @@
+// This script is needed to patch the flutter.js and flutter_service_worker.js so they load faster 
+// see: https://github.com/dwyl/app/issues/326#issuecomment-1478314967
        // Install the `didCreateEngineInitializer` listener where Flutter web expects it to be.
        this.didCreateEngineInitializer =
          entrypointLoader.didCreateEngineInitializer.bind(entrypointLoader);
