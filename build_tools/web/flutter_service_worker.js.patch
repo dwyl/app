@@ -3,7 +3,7 @@ see: https://github.com/dwyl/app/issues/326#issuecomment-1478314967
 
 --- flutter_service_worker.js	2023-03-24 19:00:29
 +++ flutter_service_worker2.js	2023-03-24 19:04:42
-@@ -28,22 +28,10 @@
+@@ -28,22 +28,11 @@
  
  // The application shell files that are downloaded before a service worker can
  // start.
@@ -25,13 +25,12 @@ see: https://github.com/dwyl/app/issues/326#issuecomment-1478314967
  
 +// Removed this section because the files are downloaded concurrently, so we don't check
 +
-+
 +var IN_PROCESSING_REQUESTS = {};
 +
  // During activate, the cache is populated with the temp files downloaded in
  // install. If this service worker is upgrading from one with a saved
  // MANIFEST, then use this to retain unchanged resource files.
-@@ -130,10 +118,22 @@
+@@ -130,10 +119,22 @@
        return cache.match(event.request).then((response) => {
          // Either respond with the cached resource, or perform a fetch and
          // lazily populate the cache only if the resource was successfully fetched.
