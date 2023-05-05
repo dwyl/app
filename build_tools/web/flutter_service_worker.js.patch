@@ -27,6 +27,7 @@ see: https://github.com/dwyl/app/issues/326#issuecomment-1478314967
 +
 +
 +var IN_PROCESSING_REQUESTS = {};
++
  // During activate, the cache is populated with the temp files downloaded in
  // install. If this service worker is upgrading from one with a saved
  // MANIFEST, then use this to retain unchanged resource files.
