@@ -7,7 +7,7 @@ repository: https://github.com/dwyl/app
 issue_tracker: https://github.com/dwyl/app/issues
 
 environment:
-  sdk: '>=2.19.2 <3.0.0'
+  sdk: '>=2.19.2 <4.0.0'
 
 dependencies:
   flutter:
