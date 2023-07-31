@@ -4,13 +4,13 @@ abstract class TodoEvent extends Equatable {
   const TodoEvent();
 }
 
-// Event to kick start the todo list event
+/// Event to kick start the todo list event
 class TodoListStarted extends TodoEvent {
   @override
   List<Object> get props => [];
 }
 
-// AddTodo event when an item is added
+/// AddTodo event when an item is added
 class AddTodoEvent extends TodoEvent {
   final Item todoObj;
 
@@ -20,7 +20,7 @@ class AddTodoEvent extends TodoEvent {
   List<Object> get props => [todoObj];
 }
 
-// RemoveTodo event when an item is removed
+/// RemoveTodo event when an item is removed
 class RemoveTodoEvent extends TodoEvent {
   final Item todoObj;
 
@@ -30,7 +30,7 @@ class RemoveTodoEvent extends TodoEvent {
   List<Object> get props => [todoObj];
 }
 
-// RemoveTodo event when an item is toggled
+/// RemoveTodo event when an item is toggled
 class ToggleTodoEvent extends TodoEvent {
   final Item todoObj;
 

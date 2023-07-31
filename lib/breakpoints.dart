@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
+// Breakpoints for each device.
 const kMobileBreakpoint = 425.0;
 const kTabletBreakpoint = 768.0;
 const kDesktopBreakpoint = 1024.0;
 const kDesktopLargeBreakpoint = 1440.0;
 
+/// Widget which will change the children rendered according to the device dimensions.
 class ResponsiveLayout extends StatelessWidget {
   final Widget mobileBody;
   final Widget? tabletBody;

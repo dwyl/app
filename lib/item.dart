@@ -59,7 +59,7 @@ class Item {
   }
 }
 
-// Timer class
+/// Timer class
 class ItemTimer {
   final DateTime start;
   DateTime? end;

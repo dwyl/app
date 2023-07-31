@@ -1,5 +1,5 @@
-// Stopwatch wrapper that allows stopwatch to be restarted
-// Check https://github.com/dwyl/flutter-stopwatch-tutorial#persisting-between-sessions-and-extending-stopwatch-capabilities.
+/// Stopwatch wrapper that allows stopwatch to be restarted.
+/// Check https://github.com/dwyl/flutter-stopwatch-tutorial#persisting-between-sessions-and-extending-stopwatch-capabilities.
 class TimerEx {
   final Stopwatch _stopWatch = Stopwatch();
 

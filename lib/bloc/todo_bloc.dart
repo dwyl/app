@@ -5,8 +5,8 @@ import 'package:todo/item.dart';
 part 'todo_event.dart';
 part 'todo_state.dart';
 
-// This is the TodoBloc,
-// the bloc that manages the list of todos.
+/// This is the TodoBloc,
+/// the bloc that manages the list of todos.
 class TodoBloc extends Bloc<TodoEvent, TodoState> {
   // Bloc constructor and adding event handlers
   TodoBloc() : super(TodoInitialState()) {
