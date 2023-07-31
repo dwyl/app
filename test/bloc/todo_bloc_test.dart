@@ -3,7 +3,6 @@ import 'package:dwyl_todo/bloc/todo_bloc.dart';
 import 'package:dwyl_todo/models/item.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-
 void main() {
   group('TodoBloc', () {
     // List of items to mock

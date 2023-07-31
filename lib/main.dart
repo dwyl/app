@@ -23,10 +23,9 @@ void main() {
 }
 // coverage:ignore-end
 
-
 /// The main class of the app.
 /// It will create the state manager with `BlocProvider` and make it available along the widget tree.
-/// 
+///
 /// The `TodoListStarted` event is instantly spawned when the app starts.
 /// This is because we've yet have the need to fetch information from third-party APIs before initializing the app.
 class MainApp extends StatelessWidget {
@@ -41,9 +40,8 @@ class MainApp extends StatelessWidget {
   }
 }
 
-
 /// App's home page.
-/// The person will be able to create a new todo item 
+/// The person will be able to create a new todo item
 /// and view a list of previously created ones.
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -52,7 +50,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
 
-        // Top navigation bar 
+        // Top navigation bar
         appBar: NavigationBar(
           givenContext: context,
         ),
@@ -75,12 +73,15 @@ class HomePage extends StatelessWidget {
                           controller: TextEditingController(),
                           keyboardType: TextInputType.none,
                           onTap: () {
-                            Navigator.of(context).push(navigateToNewTodoItemPage());
+                            Navigator.of(context)
+                                .push(navigateToNewTodoItemPage());
                           },
                           maxLines: 2,
                           style: const TextStyle(fontSize: 20),
                           decoration: const InputDecoration(
-                              border: OutlineInputBorder(borderRadius: BorderRadius.zero), hintText: 'Capture more things on your mind...'),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.zero),
+                              hintText: 'Capture more things on your mind...'),
                           textAlignVertical: TextAlignVertical.top),
 
                       // On tablet and up
@@ -89,12 +90,15 @@ class HomePage extends StatelessWidget {
                           controller: TextEditingController(),
                           keyboardType: TextInputType.none,
                           onTap: () {
-                            Navigator.of(context).push(navigateToNewTodoItemPage());
+                            Navigator.of(context)
+                                .push(navigateToNewTodoItemPage());
                           },
                           maxLines: 2,
                           style: const TextStyle(fontSize: 30),
                           decoration: const InputDecoration(
-                              border: OutlineInputBorder(borderRadius: BorderRadius.zero), hintText: 'Capture more things on your mind...'),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.zero),
+                              hintText: 'Capture more things on your mind...'),
                           textAlignVertical: TextAlignVertical.top),
                     ),
 
@@ -109,7 +113,8 @@ class HomePage extends StatelessWidget {
                           for (var i = 0; i < items.length; i++) ...[
                             if (i > 0) const Divider(height: 0),
                             Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 8.0),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
                               child: ItemCard(item: items[i]),
                             )
                           ],
@@ -135,7 +140,8 @@ class HomePage extends StatelessWidget {
 /// Transition handler that navigates the route to the `NewTodo` item page.
 Route navigateToNewTodoItemPage() {
   return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => const NewTodoPage(),
+    pageBuilder: (context, animation, secondaryAnimation) =>
+        const NewTodoPage(),
     transitionDuration: Duration.zero,
     reverseTransitionDuration: Duration.zero,
   );
@@ -181,7 +187,10 @@ class _NewTodoPageState extends State<NewTodoPage> {
                         maxLines: null,
                         autofocus: true,
                         style: const TextStyle(fontSize: 20),
-                        decoration: const InputDecoration(border: OutlineInputBorder(borderRadius: BorderRadius.zero), hintText: 'start typing'),
+                        decoration: const InputDecoration(
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.zero),
+                            hintText: 'start typing'),
                         textAlignVertical: TextAlignVertical.top,
                       ),
 
@@ -193,7 +202,10 @@ class _NewTodoPageState extends State<NewTodoPage> {
                         maxLines: null,
                         autofocus: true,
                         style: const TextStyle(fontSize: 30),
-                        decoration: const InputDecoration(border: OutlineInputBorder(borderRadius: BorderRadius.zero), hintText: 'start typing'),
+                        decoration: const InputDecoration(
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.zero),
+                            hintText: 'start typing'),
                         textAlignVertical: TextAlignVertical.top,
                       ),
                     ),
@@ -206,15 +218,18 @@ class _NewTodoPageState extends State<NewTodoPage> {
                     child: ElevatedButton(
                       key: saveButtonKey,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromARGB(255, 75, 192, 169),
-                        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+                        backgroundColor:
+                            const Color.fromARGB(255, 75, 192, 169),
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.zero),
                       ),
                       onPressed: () {
                         final value = txtFieldController.text;
                         if (value.isNotEmpty) {
                           // Create new item and create AddTodo event
                           Item newTodoItem = Item(description: value);
-                          BlocProvider.of<TodoBloc>(context).add(AddTodoEvent(newTodoItem));
+                          BlocProvider.of<TodoBloc>(context)
+                              .add(AddTodoEvent(newTodoItem));
 
                           // Clear textfield
                           txtFieldController.clear();
@@ -250,7 +265,8 @@ class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
   // Build context for the "go back" button works
   final BuildContext givenContext;
 
-  const NavigationBar({super.key, required this.givenContext, this.showGoBackButton = false});
+  const NavigationBar(
+      {super.key, required this.givenContext, this.showGoBackButton = false});
 
   @override
   Widget build(BuildContext context) {
@@ -265,7 +281,8 @@ class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
             },
             child:
                 // dwyl logo
-                Image.asset("assets/icon/icon.png", key: logoKey, fit: BoxFit.fitHeight, height: 30),
+                Image.asset("assets/icon/icon.png",
+                    key: logoKey, fit: BoxFit.fitHeight, height: 30),
           ),
         ],
       ),
@@ -391,8 +408,8 @@ class _ItemCardState extends State<ItemCard> {
           // If the stopwatch is not running, we mark toggle it
           if (!_stopwatch.isRunning) {
             context.read<TodoBloc>().add(ToggleTodoEvent(widget.item));
-          } 
-          
+          }
+
           // If the stopwatch is running, we toggle the item but also stop the timer
           else {
             context.read<TodoBloc>().add(ToggleTodoEvent(widget.item));
@@ -434,17 +451,29 @@ class _ItemCardState extends State<ItemCard> {
                   mobileBody: Text(widget.item.description,
                       style: TextStyle(
                           fontSize: 20,
-                          decoration: widget.item.completed ? TextDecoration.lineThrough : TextDecoration.none,
-                          fontStyle: widget.item.completed ? FontStyle.italic : FontStyle.normal,
-                          color: widget.item.completed ? const Color.fromARGB(255, 126, 121, 121) : Colors.black)),
+                          decoration: widget.item.completed
+                              ? TextDecoration.lineThrough
+                              : TextDecoration.none,
+                          fontStyle: widget.item.completed
+                              ? FontStyle.italic
+                              : FontStyle.normal,
+                          color: widget.item.completed
+                              ? const Color.fromARGB(255, 126, 121, 121)
+                              : Colors.black)),
 
                   // On tablet
                   tabletBody: Text(widget.item.description,
                       style: TextStyle(
                           fontSize: 25,
-                          decoration: widget.item.completed ? TextDecoration.lineThrough : TextDecoration.none,
-                          fontStyle: widget.item.completed ? FontStyle.italic : FontStyle.normal,
-                          color: widget.item.completed ? const Color.fromARGB(255, 126, 121, 121) : Colors.black)),
+                          decoration: widget.item.completed
+                              ? TextDecoration.lineThrough
+                              : TextDecoration.none,
+                          fontStyle: widget.item.completed
+                              ? FontStyle.italic
+                              : FontStyle.normal,
+                          color: widget.item.completed
+                              ? const Color.fromARGB(255, 126, 121, 121)
+                              : Colors.black)),
                 ),
               ),
             ),
@@ -454,11 +483,15 @@ class _ItemCardState extends State<ItemCard> {
               children: [
                 ResponsiveLayout(
                   // On mobile
-                  mobileBody: Text(formatTime(_stopwatch.elapsedMilliseconds), maxLines: 1, style: const TextStyle(color: Colors.black54)),
+                  mobileBody: Text(formatTime(_stopwatch.elapsedMilliseconds),
+                      maxLines: 1,
+                      style: const TextStyle(color: Colors.black54)),
 
                   // On tablet
-                  tabletBody:
-                      Text(formatTime(_stopwatch.elapsedMilliseconds), maxLines: 1, style: const TextStyle(color: Colors.black54, fontSize: 18)),
+                  tabletBody: Text(formatTime(_stopwatch.elapsedMilliseconds),
+                      maxLines: 1,
+                      style:
+                          const TextStyle(color: Colors.black54, fontSize: 18)),
                 ),
 
                 // If the item is completed, we hide the button
@@ -471,7 +504,8 @@ class _ItemCardState extends State<ItemCard> {
                         style: ElevatedButton.styleFrom(
                             backgroundColor: _renderButtonBackground(),
                             elevation: 0,
-                            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero)),
+                            shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.zero)),
                         onPressed: _handleButtonClick,
                         child: Text(
                           _renderButtonText(),
@@ -485,7 +519,8 @@ class _ItemCardState extends State<ItemCard> {
                         style: ElevatedButton.styleFrom(
                             backgroundColor: _renderButtonBackground(),
                             elevation: 0,
-                            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero)),
+                            shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.zero)),
                         onPressed: _handleButtonClick,
                         child: Text(
                           _renderButtonText(),

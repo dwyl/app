@@ -3,7 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:dwyl_todo/main.dart';
 
 void main() {
-  testWidgets('Build correctly setup and is loaded', (WidgetTester tester) async {
+  testWidgets('Build correctly setup and is loaded',
+      (WidgetTester tester) async {
     await tester.pumpWidget(const MainApp());
     await tester.pump();
 
@@ -11,7 +12,8 @@ void main() {
     expect(find.byKey(textfieldKey), findsOneWidget);
   });
 
-  testWidgets('Adding a new todo item shows a card', (WidgetTester tester) async {
+  testWidgets('Adding a new todo item shows a card',
+      (WidgetTester tester) async {
     await tester.pumpWidget(const MainApp());
     await tester.pumpAndSettle();
 
@@ -52,10 +54,12 @@ void main() {
     expect(find.byKey(itemCardWidgetKey), findsOneWidget);
   });
 
-  testWidgets('Adding a new todo item shows a card (on mobile screen)', (WidgetTester tester) async {
+  testWidgets('Adding a new todo item shows a card (on mobile screen)',
+      (WidgetTester tester) async {
     // Ensure binding is initialized to setup camera size
 
-    final TestWidgetsFlutterBinding binding = TestWidgetsFlutterBinding.ensureInitialized();
+    final TestWidgetsFlutterBinding binding =
+        TestWidgetsFlutterBinding.ensureInitialized();
     binding.window.physicalSizeTestValue = const Size(400, 600);
     binding.window.devicePixelRatioTestValue = 1.0;
 
@@ -102,9 +106,11 @@ void main() {
     addTearDown(tester.binding.window.clearPhysicalSizeTestValue);
   });
 
-  testWidgets('Adding a new todo item shows a card (on tablet screen)', (WidgetTester tester) async {
+  testWidgets('Adding a new todo item shows a card (on tablet screen)',
+      (WidgetTester tester) async {
     // Ensure binding is initialized to setup camera size
-    final TestWidgetsFlutterBinding binding = TestWidgetsFlutterBinding.ensureInitialized();
+    final TestWidgetsFlutterBinding binding =
+        TestWidgetsFlutterBinding.ensureInitialized();
     binding.window.physicalSizeTestValue = const Size(600, 600);
     binding.window.devicePixelRatioTestValue = 1.0;
 
@@ -151,7 +157,8 @@ void main() {
     addTearDown(tester.binding.window.clearPhysicalSizeTestValue);
   });
 
-  testWidgets('Adding a new todo item and checking it as done', (WidgetTester tester) async {
+  testWidgets('Adding a new todo item and checking it as done',
+      (WidgetTester tester) async {
     await tester.pumpWidget(const MainApp());
     await tester.pumpAndSettle();
 
@@ -175,7 +182,8 @@ void main() {
     expect(find.byKey(itemCardWidgetKey), findsOneWidget);
 
     // Getting widget to test its value
-    Finder checkboxFinder = find.descendant(of: find.byKey(itemCardWidgetKey), matching: find.byType(Icon));
+    Finder checkboxFinder = find.descendant(
+        of: find.byKey(itemCardWidgetKey), matching: find.byType(Icon));
     Icon checkboxWidget = tester.firstWidget<Icon>(checkboxFinder);
 
     expect(checkboxWidget.icon, Icons.check_box_outline_blank);
@@ -189,7 +197,9 @@ void main() {
     expect(checkboxWidget.icon, Icons.check_box);
   });
 
-  testWidgets('Adding a new todo item and clicking timer button and marking it as done while it\'s running', (WidgetTester tester) async {
+  testWidgets(
+      'Adding a new todo item and clicking timer button and marking it as done while it\'s running',
+      (WidgetTester tester) async {
     await tester.pumpWidget(const MainApp());
     await tester.pumpAndSettle();
 
@@ -213,7 +223,8 @@ void main() {
     expect(find.byKey(itemCardWidgetKey), findsOneWidget);
 
     // Getting widget to test its value
-    ElevatedButton buttonWidget = tester.firstWidget<ElevatedButton>(find.byKey(itemCardTimerButtonKey));
+    ElevatedButton buttonWidget =
+        tester.firstWidget<ElevatedButton>(find.byKey(itemCardTimerButtonKey));
 
     // Button should be stopped
     Text buttonText = buttonWidget.child as Text;
@@ -225,7 +236,8 @@ void main() {
     await tester.pumpAndSettle();
 
     // Updating widget and button should be ongoing
-    buttonWidget = tester.firstWidget<ElevatedButton>(find.byKey(itemCardTimerButtonKey));
+    buttonWidget =
+        tester.firstWidget<ElevatedButton>(find.byKey(itemCardTimerButtonKey));
     buttonText = buttonWidget.child as Text;
     expect(buttonText.data, "Stop");
 
@@ -235,7 +247,8 @@ void main() {
     await tester.pumpAndSettle();
 
     // Updating widget and button should be stopped
-    buttonWidget = tester.firstWidget<ElevatedButton>(find.byKey(itemCardTimerButtonKey));
+    buttonWidget =
+        tester.firstWidget<ElevatedButton>(find.byKey(itemCardTimerButtonKey));
     buttonText = buttonWidget.child as Text;
     expect(buttonText.data, "Resume");
 
@@ -245,7 +258,8 @@ void main() {
     await tester.pumpAndSettle();
 
     // Updating widget and button should be ongoing
-    buttonWidget = tester.firstWidget<ElevatedButton>(find.byKey(itemCardTimerButtonKey));
+    buttonWidget =
+        tester.firstWidget<ElevatedButton>(find.byKey(itemCardTimerButtonKey));
     buttonText = buttonWidget.child as Text;
     expect(buttonText.data, "Stop");
 
@@ -254,7 +268,8 @@ void main() {
     await tester.pumpAndSettle();
 
     // Item card should be marked as done
-    Finder checkboxFinder = find.descendant(of: find.byKey(itemCardWidgetKey), matching: find.byType(Icon));
+    Finder checkboxFinder = find.descendant(
+        of: find.byKey(itemCardWidgetKey), matching: find.byType(Icon));
     Icon checkboxWidget = tester.firstWidget<Icon>(checkboxFinder);
     checkboxWidget = tester.firstWidget<Icon>(checkboxFinder);
     expect(checkboxWidget.icon, Icons.check_box);
