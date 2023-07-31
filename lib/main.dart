@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/bloc/todo_bloc.dart';
 import 'package:todo/breakpoints.dart';
-import 'package:todo/stopwatch.dart';
+import 'package:todo/models/stopwatch.dart';
 import 'package:todo/models/item.dart';
 
 // Keys used for testing
