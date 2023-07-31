@@ -66,6 +66,14 @@ More detail in our
 
 ## How? [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat-square)](https://github.com/dwyl/app/issues)
 
+We are using `Flutter` to develop our application,
+both for browser and mobile devices.
+If you are new to `Flutter`, 
+we recommend you reading https://github.com/dwyl/learn-flutter for a primer.
+Similarly, it is suggested to follow along https://github.com/dwyl/flutter-bloc-tutorial
+to better understand `BLoC`,
+the app's main state management system.
+
 Help us build this! Your feedback is very welcome:
 [dwyl/app/issues](https://github.com/dwyl/app/issues)
 
