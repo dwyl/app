@@ -57,11 +57,9 @@ void main() {
   testWidgets('Adding a new todo item shows a card (on mobile screen)',
       (WidgetTester tester) async {
     // Ensure binding is initialized to setup camera size
-
-    final TestWidgetsFlutterBinding binding =
-        TestWidgetsFlutterBinding.ensureInitialized();
-    binding.window.physicalSizeTestValue = const Size(400, 600);
-    binding.window.devicePixelRatioTestValue = 1.0;
+    TestWidgetsFlutterBinding.ensureInitialized();
+    tester.view.physicalSize = const Size(400, 600);
+    tester.view.devicePixelRatio  = 1.0;
 
     await tester.pumpWidget(const MainApp());
     await tester.pumpAndSettle();
@@ -103,16 +101,15 @@ void main() {
     expect(find.byKey(itemCardWidgetKey), findsOneWidget);
 
     // Resetting camera size to normal
-    addTearDown(tester.binding.window.clearPhysicalSizeTestValue);
+    addTearDown(tester.view.resetPhysicalSize);
   });
 
   testWidgets('Adding a new todo item shows a card (on tablet screen)',
       (WidgetTester tester) async {
     // Ensure binding is initialized to setup camera size
-    final TestWidgetsFlutterBinding binding =
-        TestWidgetsFlutterBinding.ensureInitialized();
-    binding.window.physicalSizeTestValue = const Size(600, 600);
-    binding.window.devicePixelRatioTestValue = 1.0;
+    TestWidgetsFlutterBinding.ensureInitialized();
+    tester.view.physicalSize = const Size(400, 600);
+    tester.view.devicePixelRatio  = 1.0;
 
     await tester.pumpWidget(const MainApp());
     await tester.pumpAndSettle();
@@ -154,7 +151,7 @@ void main() {
     expect(find.byKey(itemCardWidgetKey), findsOneWidget);
 
     // Resetting camera size to normal
-    addTearDown(tester.binding.window.clearPhysicalSizeTestValue);
+    addTearDown(tester.view.resetPhysicalSize);
   });
 
   testWidgets('Adding a new todo item and checking it as done',
