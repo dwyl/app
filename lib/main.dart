@@ -23,6 +23,12 @@ void main() {
 }
 // coverage:ignore-end
 
+
+/// The main class of the app.
+/// It will create the state manager with `BlocProvider` and make it available along the widget tree.
+/// 
+/// The `TodoListStarted` event is instantly spawned when the app starts.
+/// This is because we've yet have the need to fetch information from third-party APIs before initializing the app.
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
 
@@ -35,15 +41,24 @@ class MainApp extends StatelessWidget {
   }
 }
 
+
+/// App's home page.
+/// The person will be able to create a new todo item 
+/// and view a list of previously created ones.
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
+        // Top navigation bar 
         appBar: NavigationBar(
           givenContext: context,
         ),
+
+        // Body of the page.
+        // It is responsive and change style according to the device.
         body: BlocBuilder<TodoBloc, TodoState>(
           builder: (context, state) {
             // If the list is loaded
@@ -68,7 +83,7 @@ class HomePage extends StatelessWidget {
                               border: OutlineInputBorder(borderRadius: BorderRadius.zero), hintText: 'Capture more things on your mind...'),
                           textAlignVertical: TextAlignVertical.top),
 
-                      // On tablet
+                      // On tablet and up
                       tabletBody: TextField(
                           key: textfieldKey,
                           controller: TextEditingController(),
@@ -117,6 +132,7 @@ class HomePage extends StatelessWidget {
 
 // PAGES ----------------------------
 
+/// Transition handler that navigates the route to the `NewTodo` item page.
 Route navigateToNewTodoItemPage() {
   return PageRouteBuilder(
     pageBuilder: (context, animation, secondaryAnimation) => const NewTodoPage(),
@@ -125,7 +141,7 @@ Route navigateToNewTodoItemPage() {
   );
 }
 
-// Page that shows a textfield expanded to create a new todo item
+/// Page that shows a textfield expanded to create a new todo item.
 class NewTodoPage extends StatefulWidget {
   const NewTodoPage({super.key});
 
@@ -169,7 +185,7 @@ class _NewTodoPageState extends State<NewTodoPage> {
                         textAlignVertical: TextAlignVertical.top,
                       ),
 
-                      // On tablet
+                      // On tablet and up
                       tabletBody: TextField(
                         key: textfieldOnNewPageKey,
                         controller: txtFieldController,
@@ -226,7 +242,8 @@ class _NewTodoPageState extends State<NewTodoPage> {
 
 // WIDGETS --------------------------
 
-// Widget for the navigation bar
+/// Navigation bar widget.
+/// It needs to receive a context to dynamically elements.
 class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
   // Boolean that tells the bar to have a button to go to the previous page
   final bool showGoBackButton;
@@ -270,7 +287,8 @@ class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(50);
 }
 
-// Widget that controls the item card
+/// Widget pertaining to an item card.
+/// It shows its info and changes state according to its progress.
 class ItemCard extends StatefulWidget {
   final Item item;
 
