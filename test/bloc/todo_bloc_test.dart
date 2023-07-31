@@ -1,7 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:todo/bloc/todo_bloc.dart';
-import 'package:todo/item.dart';
+import 'package:todo/models/item.dart';
 
 void main() {
   group('TodoBloc', () {
