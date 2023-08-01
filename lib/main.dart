@@ -143,7 +143,8 @@ class HomePage extends StatelessWidget {
 /// Transition handler that navigates the route to the `NewTodo` item page.
 Route navigateToNewTodoItemPage() {
   return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => const NewTodoPage(),
+    pageBuilder: (context, animation, secondaryAnimation) =>
+        const NewTodoPage(),
     transitionDuration: Duration.zero,
     reverseTransitionDuration: Duration.zero,
   );
@@ -234,7 +235,8 @@ class _NewTodoPageState extends State<NewTodoPage> {
                     if (value.isNotEmpty) {
                       // Create new item and create AddTodo event
                       var newTodoItem = Item(description: value);
-                      BlocProvider.of<TodoBloc>(context).add(AddTodoEvent(newTodoItem));
+                      BlocProvider.of<TodoBloc>(context)
+                          .add(AddTodoEvent(newTodoItem));
 
                       // Clear textfield
                       txtFieldController.clear();
@@ -342,7 +344,8 @@ class _ItemCardState extends State<ItemCard> {
     super.initState();
     WidgetsFlutterBinding.ensureInitialized();
 
-    _stopwatch = TimerStopwatch(initialOffset: widget.item.getCumulativeDuration());
+    _stopwatch =
+        TimerStopwatch(initialOffset: widget.item.getCumulativeDuration());
 
     // Timer to rerender the page so the text shows the seconds passing by
     _timer = Timer.periodic(const Duration(milliseconds: 200), (timer) {
@@ -467,9 +470,15 @@ class _ItemCardState extends State<ItemCard> {
                     widget.item.description,
                     style: TextStyle(
                       fontSize: 20,
-                      decoration: widget.item.completed ? TextDecoration.lineThrough : TextDecoration.none,
-                      fontStyle: widget.item.completed ? FontStyle.italic : FontStyle.normal,
-                      color: widget.item.completed ? const Color.fromARGB(255, 126, 121, 121) : Colors.black,
+                      decoration: widget.item.completed
+                          ? TextDecoration.lineThrough
+                          : TextDecoration.none,
+                      fontStyle: widget.item.completed
+                          ? FontStyle.italic
+                          : FontStyle.normal,
+                      color: widget.item.completed
+                          ? const Color.fromARGB(255, 126, 121, 121)
+                          : Colors.black,
                     ),
                   ),
 
@@ -478,9 +487,15 @@ class _ItemCardState extends State<ItemCard> {
                     widget.item.description,
                     style: TextStyle(
                       fontSize: 25,
-                      decoration: widget.item.completed ? TextDecoration.lineThrough : TextDecoration.none,
-                      fontStyle: widget.item.completed ? FontStyle.italic : FontStyle.normal,
-                      color: widget.item.completed ? const Color.fromARGB(255, 126, 121, 121) : Colors.black,
+                      decoration: widget.item.completed
+                          ? TextDecoration.lineThrough
+                          : TextDecoration.none,
+                      fontStyle: widget.item.completed
+                          ? FontStyle.italic
+                          : FontStyle.normal,
+                      color: widget.item.completed
+                          ? const Color.fromARGB(255, 126, 121, 121)
+                          : Colors.black,
                     ),
                   ),
                 ),

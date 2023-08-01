@@ -65,8 +65,9 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
       if (indexToChange != -1) {
         var itemToChange = items[indexToChange];
         var updatedItem = Item(
-            description: itemToChange.description,
-            completed: !itemToChange.completed,);
+          description: itemToChange.description,
+          completed: !itemToChange.completed,
+        );
 
         items[indexToChange] = updatedItem;
       }

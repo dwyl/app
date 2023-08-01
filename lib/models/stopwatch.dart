@@ -5,7 +5,8 @@ class TimerStopwatch extends Stopwatch {
 
   final Duration _initialOffset;
 
-  TimerStopwatch({Duration initialOffset = Duration.zero}) : _initialOffset = initialOffset;
+  TimerStopwatch({Duration initialOffset = Duration.zero})
+      : _initialOffset = initialOffset;
 
   @override
   void start() => _stopWatch.start();
@@ -13,7 +14,10 @@ class TimerStopwatch extends Stopwatch {
   @override
   void stop() => _stopWatch.stop();
 
+  @override
   bool get isRunning => _stopWatch.isRunning;
 
-  int get elapsedMilliseconds => _stopWatch.elapsedMilliseconds + _initialOffset.inMilliseconds;
+  @override
+  int get elapsedMilliseconds =>
+      _stopWatch.elapsedMilliseconds + _initialOffset.inMilliseconds;
 }

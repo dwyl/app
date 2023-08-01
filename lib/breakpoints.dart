@@ -12,21 +12,27 @@ class ResponsiveLayout extends StatelessWidget {
   final Widget? tabletBody;
   final Widget? desktopBody;
 
-  const ResponsiveLayout(
-      {super.key, required this.mobileBody, this.tabletBody, this.desktopBody,});
+  const ResponsiveLayout({
+    super.key,
+    required this.mobileBody,
+    this.tabletBody,
+    this.desktopBody,
+  });
 
   @override
   Widget build(BuildContext context) {
     var deviceWidth = MediaQuery.of(context).size.width;
 
-    return LayoutBuilder(builder: (_, __) {
-      if (deviceWidth < kMobileBreakpoint) {
-        return mobileBody;
-      } else if (deviceWidth < kTabletBreakpoint) {
-        return tabletBody ?? mobileBody;
-      } else {
-        return desktopBody ?? tabletBody ?? mobileBody;
-      }
-    },);
+    return LayoutBuilder(
+      builder: (_, __) {
+        if (deviceWidth < kMobileBreakpoint) {
+          return mobileBody;
+        } else if (deviceWidth < kTabletBreakpoint) {
+          return tabletBody ?? mobileBody;
+        } else {
+          return desktopBody ?? tabletBody ?? mobileBody;
+        }
+      },
+    );
   }
 }
