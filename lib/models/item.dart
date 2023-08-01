@@ -21,7 +21,7 @@ class Item {
     if (_timersList.isEmpty) {
       _timersList.add(ItemTimer(null, start: DateTime.now()));
     } else {
-      ItemTimer lastTimer = _timersList.last;
+      var lastTimer = _timersList.last;
 
       // Only create a new timer if the last one is finished
       if (lastTimer.end != null) {
@@ -33,7 +33,7 @@ class Item {
   // Stop the timer that is at the end of the list
   stopTimer() {
     if (_timersList.isNotEmpty) {
-      ItemTimer lastTimer = _timersList.last;
+      var lastTimer = _timersList.last;
 
       // Only stop last timer if the end is null
       if (lastTimer.end == null) {
@@ -43,12 +43,12 @@ class Item {
     }
   }
 
-  getCumulativeDuration() {
+  Duration getCumulativeDuration() {
     if (_timersList.isEmpty) return Duration.zero;
 
     // Accumulate the duration of every timer
-    Duration accumulativeDuration = const Duration();
-    for (ItemTimer timer in _timersList) {
+    var accumulativeDuration = const Duration();
+    for (var timer in _timersList) {
       final stop = timer.end;
       if (stop != null) {
         accumulativeDuration += stop.difference(timer.start);

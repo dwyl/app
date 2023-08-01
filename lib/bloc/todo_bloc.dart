@@ -17,7 +17,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
     on<ToggleTodoEvent>(_toggleTodo);
   }
 
-  _onStart(TodoListStarted event, Emitter<TodoState> emit) {
+  void _onStart(TodoListStarted event, Emitter<TodoState> emit) {
     // You could do stuff here like:
     // 1. emit "loading state"
     // 2. fetch todos from API
@@ -27,7 +27,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
   }
 
   // AddTodo event handler which emits TodoAdded state
-  _addTodo(AddTodoEvent event, Emitter<TodoState> emit) {
+  void _addTodo(AddTodoEvent event, Emitter<TodoState> emit) {
     final state = this.state;
 
     // Check if list is loaded
@@ -37,12 +37,12 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
   }
 
   // RemoveTodo event handler which emits TodoDeleted state
-  _removeTodo(RemoveTodoEvent event, Emitter<TodoState> emit) {
+  void _removeTodo(RemoveTodoEvent event, Emitter<TodoState> emit) {
     final state = this.state;
 
     // Check if list is loaded
     if (state is TodoListLoadedState) {
-      List<Item> items = state.items;
+      var items = state.items;
       items.removeWhere((element) => element.id == event.todoObj.id);
 
       emit(TodoListLoadedState(items: items));
@@ -50,21 +50,21 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
   }
 
   // ToggleTodo event handler which emits a TodoToggled state
-  _toggleTodo(ToggleTodoEvent event, Emitter<TodoState> emit) {
+  void _toggleTodo(ToggleTodoEvent event, Emitter<TodoState> emit) {
     final state = this.state;
 
     // Check if list is loaded
     if (state is TodoListLoadedState) {
       // You have to create a new object because the items list needs to be new so Bloc knows it needs to re-render
       // https://stackoverflow.com/questions/65379743/flutter-bloc-cant-update-my-list-of-boolean
-      List<Item> items = List.from(state.items);
-      int indexToChange =
+      var items = List<Item>.from(state.items);
+      var indexToChange =
           items.indexWhere((element) => element.id == event.todoObj.id);
 
       // If the element is found, we create a copy of the element with the `completed` field toggled.
       if (indexToChange != -1) {
-        Item itemToChange = items[indexToChange];
-        Item updatedItem = Item(
+        var itemToChange = items[indexToChange];
+        var updatedItem = Item(
             description: itemToChange.description,
             completed: !itemToChange.completed);
 

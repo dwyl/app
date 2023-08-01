@@ -59,7 +59,7 @@ void main() {
     // Ensure binding is initialized to setup camera size
     TestWidgetsFlutterBinding.ensureInitialized();
     tester.view.physicalSize = const Size(400, 600);
-    tester.view.devicePixelRatio  = 1.0;
+    tester.view.devicePixelRatio = 1.0;
 
     await tester.pumpWidget(const MainApp());
     await tester.pumpAndSettle();
@@ -109,7 +109,7 @@ void main() {
     // Ensure binding is initialized to setup camera size
     TestWidgetsFlutterBinding.ensureInitialized();
     tester.view.physicalSize = const Size(400, 600);
-    tester.view.devicePixelRatio  = 1.0;
+    tester.view.devicePixelRatio = 1.0;
 
     await tester.pumpWidget(const MainApp());
     await tester.pumpAndSettle();
@@ -179,9 +179,9 @@ void main() {
     expect(find.byKey(itemCardWidgetKey), findsOneWidget);
 
     // Getting widget to test its value
-    Finder checkboxFinder = find.descendant(
+    var checkboxFinder = find.descendant(
         of: find.byKey(itemCardWidgetKey), matching: find.byType(Icon));
-    Icon checkboxWidget = tester.firstWidget<Icon>(checkboxFinder);
+    var checkboxWidget = tester.firstWidget<Icon>(checkboxFinder);
 
     expect(checkboxWidget.icon, Icons.check_box_outline_blank);
 
@@ -220,11 +220,11 @@ void main() {
     expect(find.byKey(itemCardWidgetKey), findsOneWidget);
 
     // Getting widget to test its value
-    ElevatedButton buttonWidget =
+    var buttonWidget =
         tester.firstWidget<ElevatedButton>(find.byKey(itemCardTimerButtonKey));
 
     // Button should be stopped
-    Text buttonText = buttonWidget.child as Text;
+    var buttonText = buttonWidget.child as Text;
     expect(buttonText.data, "Start");
 
     // Tap on timer button.
@@ -265,9 +265,9 @@ void main() {
     await tester.pumpAndSettle();
 
     // Item card should be marked as done
-    Finder checkboxFinder = find.descendant(
+    var checkboxFinder = find.descendant(
         of: find.byKey(itemCardWidgetKey), matching: find.byType(Icon));
-    Icon checkboxWidget = tester.firstWidget<Icon>(checkboxFinder);
+    var checkboxWidget = tester.firstWidget<Icon>(checkboxFinder);
     checkboxWidget = tester.firstWidget<Icon>(checkboxFinder);
     expect(checkboxWidget.icon, Icons.check_box);
   });

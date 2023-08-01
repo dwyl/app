@@ -8,9 +8,9 @@ class TimerEx {
   TimerEx({Duration initialOffset = Duration.zero})
       : _initialOffset = initialOffset;
 
-  start() => _stopWatch.start();
+  void start() => _stopWatch.start();
 
-  stop() => _stopWatch.stop();
+  void stop() => _stopWatch.stop();
 
   bool get isRunning => _stopWatch.isRunning;
 

@@ -17,7 +17,7 @@ class ResponsiveLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double deviceWidth = MediaQuery.of(context).size.width;
+    var deviceWidth = MediaQuery.of(context).size.width;
 
     return LayoutBuilder(builder: (_, __) {
       if (deviceWidth < kMobileBreakpoint) {

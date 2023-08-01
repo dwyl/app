@@ -61,7 +61,7 @@ class HomePage extends StatelessWidget {
           builder: (context, state) {
             // If the list is loaded
             if (state is TodoListLoadedState) {
-              List<Item> items = state.items;
+              var items = state.items;
 
               return SafeArea(
                 child: Column(
@@ -227,7 +227,7 @@ class _NewTodoPageState extends State<NewTodoPage> {
                         final value = txtFieldController.text;
                         if (value.isNotEmpty) {
                           // Create new item and create AddTodo event
-                          Item newTodoItem = Item(description: value);
+                          var newTodoItem = Item(description: value);
                           BlocProvider.of<TodoBloc>(context)
                               .add(AddTodoEvent(newTodoItem));
 
@@ -377,7 +377,7 @@ class _ItemCardState extends State<ItemCard> {
   }
 
   // Set proper background to timer button according to status of stopwatch
-  _renderButtonBackground() {
+  Color _renderButtonBackground() {
     if (_stopwatch.elapsedMilliseconds == 0) {
       return const Color.fromARGB(255, 75, 192, 169);
     } else {
@@ -386,7 +386,7 @@ class _ItemCardState extends State<ItemCard> {
   }
 
   // Set button text according to status of stopwatch
-  _renderButtonText() {
+  String _renderButtonText() {
     if (_stopwatch.elapsedMilliseconds == 0) {
       return "Start";
     } else {
@@ -396,9 +396,9 @@ class _ItemCardState extends State<ItemCard> {
 
   @override
   Widget build(BuildContext context) {
-    double deviceWidth = MediaQuery.of(context).size.width;
+    var deviceWidth = MediaQuery.of(context).size.width;
 
-    double checkboxSize = deviceWidth > 425 ? 30 : 20;
+    var checkboxSize = deviceWidth > 425.0 ? 30.0 : 20.0;
 
     return Container(
       key: itemCardWidgetKey,

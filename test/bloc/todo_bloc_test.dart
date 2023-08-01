@@ -6,7 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('TodoBloc', () {
     // List of items to mock
-    Item newItem = Item(description: "todo description");
+    var newItem = Item(description: "todo description");
 
     blocTest(
       'emits [] when nothing is added',
@@ -31,7 +31,7 @@ void main() {
       'emits [TodoListLoadedState] when RemoveTodoEvent is created',
       build: () => TodoBloc()..add(TodoListStarted()),
       act: (bloc) {
-        Item newItem = Item(description: "todo description");
+        var newItem = Item(description: "todo description");
         bloc
           ..add(AddTodoEvent(newItem))
           ..add(RemoveTodoEvent(newItem)); // add and remove
@@ -46,7 +46,7 @@ void main() {
       'emits [TodoListLoadedState] when ToggleTodoEvent is created',
       build: () => TodoBloc()..add(TodoListStarted()),
       act: (bloc) {
-        Item newItem = Item(description: "todo description");
+        var newItem = Item(description: "todo description");
         bloc
           ..add(AddTodoEvent(newItem))
           ..add(ToggleTodoEvent(newItem));
