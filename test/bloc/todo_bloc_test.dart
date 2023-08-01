@@ -23,7 +23,7 @@ void main() {
       expect: () => <TodoState>[
         const TodoListLoadedState(items: []), // when the todo bloc was loaded
         TodoListLoadedState(
-            items: [newItem]) // when the todo bloc was added an event
+            items: [newItem],) // when the todo bloc was added an event
       ],
     );
 

@@ -32,7 +32,7 @@ void main() {
           of: find.byKey(textfieldOnNewPageKey),
           matching: find.text('new todo'),
         ),
-        findsOneWidget);
+        findsOneWidget,);
 
     // Tap "Save" button to add new todo item
     await tester.tap(find.byKey(saveButtonKey));
@@ -79,7 +79,7 @@ void main() {
           of: find.byKey(textfieldOnNewPageKey),
           matching: find.text('new todo'),
         ),
-        findsOneWidget);
+        findsOneWidget,);
 
     // Tap "Save" button to add new todo item
     await tester.tap(find.byKey(saveButtonKey));
@@ -129,7 +129,7 @@ void main() {
           of: find.byKey(textfieldOnNewPageKey),
           matching: find.text('new todo'),
         ),
-        findsOneWidget);
+        findsOneWidget,);
 
     // Tap "Save" button to add new todo item
     await tester.tap(find.byKey(saveButtonKey));
@@ -180,7 +180,7 @@ void main() {
 
     // Getting widget to test its value
     var checkboxFinder = find.descendant(
-        of: find.byKey(itemCardWidgetKey), matching: find.byType(Icon));
+        of: find.byKey(itemCardWidgetKey), matching: find.byType(Icon),);
     var checkboxWidget = tester.firstWidget<Icon>(checkboxFinder);
 
     expect(checkboxWidget.icon, Icons.check_box_outline_blank);
@@ -266,7 +266,7 @@ void main() {
 
     // Item card should be marked as done
     var checkboxFinder = find.descendant(
-        of: find.byKey(itemCardWidgetKey), matching: find.byType(Icon));
+        of: find.byKey(itemCardWidgetKey), matching: find.byType(Icon),);
     var checkboxWidget = tester.firstWidget<Icon>(checkboxFinder);
     checkboxWidget = tester.firstWidget<Icon>(checkboxFinder);
     expect(checkboxWidget.icon, Icons.check_box);
