@@ -1,7 +1,7 @@
 import 'package:uuid/uuid.dart';
 
 // Uuid to generate Ids for the todos
-Uuid uuid = const Uuid();
+const uuid = Uuid();
 
 /// Todo class.
 /// Each `Todo` has an `id`, `description` and `completed` boolean field.
@@ -17,7 +17,7 @@ class Item {
   });
 
   // Adds a new timer that starts on current time
-  startTimer() {
+  void startTimer() {
     if (_timersList.isEmpty) {
       _timersList.add(ItemTimer(null, start: DateTime.now()));
     } else {
@@ -31,7 +31,7 @@ class Item {
   }
 
   // Stop the timer that is at the end of the list
-  stopTimer() {
+  void stopTimer() {
     if (_timersList.isNotEmpty) {
       var lastTimer = _timersList.last;
 
