@@ -559,7 +559,7 @@ class _ItemCardState extends State<ItemCard> {
                         formatTime(_stopwatch.elapsedMilliseconds),
                         maxLines: 1,
                         style: const TextStyle(
-                            color: Colors.black54, fontSize: 18),
+                            color: Colors.black54, fontSize: 18,),
                       );
                     }
                   }()),
