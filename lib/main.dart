@@ -9,13 +9,13 @@ import 'models/item.dart';
 import 'models/stopwatch.dart';
 
 // Keys used for testing
-final textfieldKey = UniqueKey();
-final textfieldOnNewPageKey = UniqueKey();
-final saveButtonKey = UniqueKey();
-final itemCardWidgetKey = UniqueKey();
-final itemCardTimerButtonKey = UniqueKey();
-final backButtonKey = UniqueKey();
-final logoKey = UniqueKey();
+const textfieldKey = Key("textfieldKey");
+const textfieldOnNewPageKey = Key('textfieldOnNewPageKey');
+const saveButtonKey = Key('saveButtonKey');
+const itemCardWidgetKey = Key('itemCardWidgetKey');
+const itemCardTimerButtonKey = Key('itemCardTimerButtonKey');
+const backButtonKey = Key('backButtonKey');
+const logoKey = Key('logoKey');
 
 // coverage:ignore-start
 void main() {
@@ -49,89 +49,92 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // Top navigation bar
+      appBar: NavigationBar(
+        givenContext: context,
+      ),
 
-        // Top navigation bar
-        appBar: NavigationBar(
-          givenContext: context,
-        ),
+      // Body of the page.
+      // It is responsive and change style according to the device.
+      body: BlocBuilder<TodoBloc, TodoState>(
+        builder: (context, state) {
+          // If the list is loaded
+          if (state is TodoListLoadedState) {
+            var items = state.items;
 
-        // Body of the page.
-        // It is responsive and change style according to the device.
-        body: BlocBuilder<TodoBloc, TodoState>(
-          builder: (context, state) {
-            // If the list is loaded
-            if (state is TodoListLoadedState) {
-              var items = state.items;
-
-              return SafeArea(
-                child: Column(
-                  children: [
-                    ResponsiveLayout(
-                      // On mobile
-                      mobileBody: TextField(
-                          key: textfieldKey,
-                          controller: TextEditingController(),
-                          keyboardType: TextInputType.none,
-                          onTap: () {
-                            Navigator.of(context)
-                                .push(navigateToNewTodoItemPage());
-                          },
-                          maxLines: 2,
-                          style: const TextStyle(fontSize: 20),
-                          decoration: const InputDecoration(
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.zero,),
-                              hintText: 'Capture more things on your mind...',),
-                          textAlignVertical: TextAlignVertical.top,),
-
-                      // On tablet and up
-                      tabletBody: TextField(
-                          key: textfieldKey,
-                          controller: TextEditingController(),
-                          keyboardType: TextInputType.none,
-                          onTap: () {
-                            Navigator.of(context)
-                                .push(navigateToNewTodoItemPage());
-                          },
-                          maxLines: 2,
-                          style: const TextStyle(fontSize: 30),
-                          decoration: const InputDecoration(
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.zero,),
-                              hintText: 'Capture more things on your mind...',),
-                          textAlignVertical: TextAlignVertical.top,),
-                    ),
-
-                    // List of items
-                    Expanded(
-                      child: ListView(
-                        padding: const EdgeInsets.only(top: 40),
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        children: [
-                          if (items.isNotEmpty) const Divider(height: 0),
-                          for (var i = 0; i < items.length; i++) ...[
-                            if (i > 0) const Divider(height: 0),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 8.0),
-                              child: ItemCard(item: items[i]),
-                            )
-                          ],
-                        ],
+            return SafeArea(
+              child: Column(
+                children: [
+                  ResponsiveLayout(
+                    // On mobile
+                    mobileBody: TextField(
+                      key: textfieldKey,
+                      controller: TextEditingController(),
+                      keyboardType: TextInputType.none,
+                      onTap: () {
+                        Navigator.of(context).push(navigateToNewTodoItemPage());
+                      },
+                      maxLines: 2,
+                      style: const TextStyle(fontSize: 20),
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.zero,
+                        ),
+                        hintText: 'Capture more things on your mind...',
                       ),
+                      textAlignVertical: TextAlignVertical.top,
                     ),
-                  ],
-                ),
-              );
-            }
 
-            // If the state of the TodoItemList is not loaded, we show error.ˆ
-            else {
-              return const Center(child: Text("Error loading items list."));
-            }
-          },
-        ),);
+                    // On tablet and up
+                    tabletBody: TextField(
+                      key: textfieldKey,
+                      controller: TextEditingController(),
+                      keyboardType: TextInputType.none,
+                      onTap: () {
+                        Navigator.of(context).push(navigateToNewTodoItemPage());
+                      },
+                      maxLines: 2,
+                      style: const TextStyle(fontSize: 30),
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.zero,
+                        ),
+                        hintText: 'Capture more things on your mind...',
+                      ),
+                      textAlignVertical: TextAlignVertical.top,
+                    ),
+                  ),
+
+                  // List of items
+                  Expanded(
+                    child: ListView(
+                      padding: const EdgeInsets.only(top: 40),
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      children: [
+                        if (items.isNotEmpty) const Divider(height: 0),
+                        for (var i = 0; i < items.length; i++) ...[
+                          if (i > 0) const Divider(height: 0),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: ItemCard(item: items[i]),
+                          )
+                        ],
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }
+
+          // If the state of the TodoItemList is not loaded, we show error.ˆ
+          else {
+            return const Center(child: Text("Error loading items list."));
+          }
+        },
+      ),
+    );
   }
 }
 
@@ -140,8 +143,7 @@ class HomePage extends StatelessWidget {
 /// Transition handler that navigates the route to the `NewTodo` item page.
 Route navigateToNewTodoItemPage() {
   return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) =>
-        const NewTodoPage(),
+    pageBuilder: (context, animation, secondaryAnimation) => const NewTodoPage(),
     transitionDuration: Duration.zero,
     reverseTransitionDuration: Duration.zero,
   );
@@ -168,90 +170,96 @@ class _NewTodoPageState extends State<NewTodoPage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: Scaffold(
-            appBar: NavigationBar(
-              givenContext: context,
-              showGoBackButton: true,
-            ),
-            body: SafeArea(
-              child: Column(
-                children: [
-                  // Textfield that is expanded and borderless
-                  Expanded(
-                    child: ResponsiveLayout(
-                      // On mobile
-                      mobileBody: TextField(
-                        key: textfieldOnNewPageKey,
-                        controller: txtFieldController,
-                        expands: true,
-                        maxLines: null,
-                        autofocus: true,
-                        style: const TextStyle(fontSize: 20),
-                        decoration: const InputDecoration(
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.zero,),
-                            hintText: 'start typing',),
-                        textAlignVertical: TextAlignVertical.top,
+      home: Scaffold(
+        appBar: NavigationBar(
+          givenContext: context,
+          showGoBackButton: true,
+        ),
+        body: SafeArea(
+          child: Column(
+            children: [
+              // Textfield that is expanded and borderless
+              Expanded(
+                child: ResponsiveLayout(
+                  // On mobile
+                  mobileBody: TextField(
+                    key: textfieldOnNewPageKey,
+                    controller: txtFieldController,
+                    expands: true,
+                    maxLines: null,
+                    autofocus: true,
+                    style: const TextStyle(fontSize: 20),
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.zero,
                       ),
-
-                      // On tablet and up
-                      tabletBody: TextField(
-                        key: textfieldOnNewPageKey,
-                        controller: txtFieldController,
-                        expands: true,
-                        maxLines: null,
-                        autofocus: true,
-                        style: const TextStyle(fontSize: 30),
-                        decoration: const InputDecoration(
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.zero,),
-                            hintText: 'start typing',),
-                        textAlignVertical: TextAlignVertical.top,
-                      ),
+                      hintText: 'start typing',
                     ),
+                    textAlignVertical: TextAlignVertical.top,
                   ),
 
-                  // Save button.
-                  // When submitted, it adds a new todo item, clears the controller and navigates back
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: ElevatedButton(
-                      key: saveButtonKey,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            const Color.fromARGB(255, 75, 192, 169),
-                        shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.zero,),
+                  // On tablet and up
+                  tabletBody: TextField(
+                    key: textfieldOnNewPageKey,
+                    controller: txtFieldController,
+                    expands: true,
+                    maxLines: null,
+                    autofocus: true,
+                    style: const TextStyle(fontSize: 30),
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.zero,
                       ),
-                      onPressed: () {
-                        final value = txtFieldController.text;
-                        if (value.isNotEmpty) {
-                          // Create new item and create AddTodo event
-                          var newTodoItem = Item(description: value);
-                          BlocProvider.of<TodoBloc>(context)
-                              .add(AddTodoEvent(newTodoItem));
-
-                          // Clear textfield
-                          txtFieldController.clear();
-
-                          // Go back to home page
-                          Navigator.pop(context);
-                        }
-                      },
-                      child: const ResponsiveLayout(
-                          mobileBody: Text(
-                            'Save',
-                            style: TextStyle(fontSize: 24),
-                          ),
-                          tabletBody: Text(
-                            'Save',
-                            style: TextStyle(fontSize: 40),
-                          ),),
+                      hintText: 'start typing',
                     ),
+                    textAlignVertical: TextAlignVertical.top,
                   ),
-                ],
+                ),
               ),
-            ),),);
+
+              // Save button.
+              // When submitted, it adds a new todo item, clears the controller and navigates back
+              Align(
+                alignment: Alignment.bottomRight,
+                child: ElevatedButton(
+                  key: saveButtonKey,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 75, 192, 169),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.zero,
+                    ),
+                  ),
+                  onPressed: () {
+                    final value = txtFieldController.text;
+                    if (value.isNotEmpty) {
+                      // Create new item and create AddTodo event
+                      var newTodoItem = Item(description: value);
+                      BlocProvider.of<TodoBloc>(context).add(AddTodoEvent(newTodoItem));
+
+                      // Clear textfield
+                      txtFieldController.clear();
+
+                      // Go back to home page
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: const ResponsiveLayout(
+                    mobileBody: Text(
+                      'Save',
+                      style: TextStyle(fontSize: 24),
+                    ),
+                    tabletBody: Text(
+                      'Save',
+                      style: TextStyle(fontSize: 40),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 
@@ -265,8 +273,11 @@ class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
   // Build context for the "go back" button works
   final BuildContext givenContext;
 
-  const NavigationBar(
-      {super.key, required this.givenContext, this.showGoBackButton = false,});
+  const NavigationBar({
+    super.key,
+    required this.givenContext,
+    this.showGoBackButton = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -281,8 +292,12 @@ class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
             },
             child:
                 // dwyl logo
-                Image.asset("assets/icon/icon.png",
-                    key: logoKey, fit: BoxFit.fitHeight, height: 30,),
+                Image.asset(
+              "assets/icon/icon.png",
+              key: logoKey,
+              fit: BoxFit.fitHeight,
+              height: 30,
+            ),
           ),
         ],
       ),
@@ -317,7 +332,7 @@ class ItemCard extends StatefulWidget {
 
 class _ItemCardState extends State<ItemCard> {
   // Timer to be displayed
-  late TimerEx _stopwatch;
+  late TimerStopwatch _stopwatch;
 
   // Used to re-render the text showing the timer
   late Timer _timer;
@@ -327,7 +342,7 @@ class _ItemCardState extends State<ItemCard> {
     super.initState();
     WidgetsFlutterBinding.ensureInitialized();
 
-    _stopwatch = TimerEx(initialOffset: widget.item.getCumulativeDuration());
+    _stopwatch = TimerStopwatch(initialOffset: widget.item.getCumulativeDuration());
 
     // Timer to rerender the page so the text shows the seconds passing by
     _timer = Timer.periodic(const Duration(milliseconds: 200), (timer) {
@@ -448,32 +463,26 @@ class _ItemCardState extends State<ItemCard> {
                 margin: const EdgeInsets.only(right: 16.0),
                 child: ResponsiveLayout(
                   // On mobile
-                  mobileBody: Text(widget.item.description,
-                      style: TextStyle(
-                          fontSize: 20,
-                          decoration: widget.item.completed
-                              ? TextDecoration.lineThrough
-                              : TextDecoration.none,
-                          fontStyle: widget.item.completed
-                              ? FontStyle.italic
-                              : FontStyle.normal,
-                          color: widget.item.completed
-                              ? const Color.fromARGB(255, 126, 121, 121)
-                              : Colors.black,),),
+                  mobileBody: Text(
+                    widget.item.description,
+                    style: TextStyle(
+                      fontSize: 20,
+                      decoration: widget.item.completed ? TextDecoration.lineThrough : TextDecoration.none,
+                      fontStyle: widget.item.completed ? FontStyle.italic : FontStyle.normal,
+                      color: widget.item.completed ? const Color.fromARGB(255, 126, 121, 121) : Colors.black,
+                    ),
+                  ),
 
                   // On tablet
-                  tabletBody: Text(widget.item.description,
-                      style: TextStyle(
-                          fontSize: 25,
-                          decoration: widget.item.completed
-                              ? TextDecoration.lineThrough
-                              : TextDecoration.none,
-                          fontStyle: widget.item.completed
-                              ? FontStyle.italic
-                              : FontStyle.normal,
-                          color: widget.item.completed
-                              ? const Color.fromARGB(255, 126, 121, 121)
-                              : Colors.black,),),
+                  tabletBody: Text(
+                    widget.item.description,
+                    style: TextStyle(
+                      fontSize: 25,
+                      decoration: widget.item.completed ? TextDecoration.lineThrough : TextDecoration.none,
+                      fontStyle: widget.item.completed ? FontStyle.italic : FontStyle.normal,
+                      color: widget.item.completed ? const Color.fromARGB(255, 126, 121, 121) : Colors.black,
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -483,51 +492,58 @@ class _ItemCardState extends State<ItemCard> {
               children: [
                 ResponsiveLayout(
                   // On mobile
-                  mobileBody: Text(formatTime(_stopwatch.elapsedMilliseconds),
-                      maxLines: 1,
-                      style: const TextStyle(color: Colors.black54),),
+                  mobileBody: Text(
+                    formatTime(_stopwatch.elapsedMilliseconds),
+                    maxLines: 1,
+                    style: const TextStyle(color: Colors.black54),
+                  ),
 
                   // On tablet
-                  tabletBody: Text(formatTime(_stopwatch.elapsedMilliseconds),
-                      maxLines: 1,
-                      style:
-                          const TextStyle(color: Colors.black54, fontSize: 18),),
+                  tabletBody: Text(
+                    formatTime(_stopwatch.elapsedMilliseconds),
+                    maxLines: 1,
+                    style: const TextStyle(color: Colors.black54, fontSize: 18),
+                  ),
                 ),
 
                 // If the item is completed, we hide the button
                 if (!widget.item.completed)
                   ResponsiveLayout(
-
-                      // On mobile
-                      mobileBody: ElevatedButton(
-                        key: itemCardTimerButtonKey,
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: _renderButtonBackground(),
-                            elevation: 0,
-                            shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.zero,),),
-                        onPressed: _handleButtonClick,
-                        child: Text(
-                          _renderButtonText(),
-                          maxLines: 1,
+                    // On mobile
+                    mobileBody: ElevatedButton(
+                      key: itemCardTimerButtonKey,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: _renderButtonBackground(),
+                        elevation: 0,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.zero,
                         ),
                       ),
+                      onPressed: _handleButtonClick,
+                      child: Text(
+                        _renderButtonText(),
+                        maxLines: 1,
+                      ),
+                    ),
 
-                      // On tablet
-                      tabletBody: ElevatedButton(
-                        key: itemCardTimerButtonKey,
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: _renderButtonBackground(),
-                            elevation: 0,
-                            shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.zero,),),
-                        onPressed: _handleButtonClick,
-                        child: Text(
-                          _renderButtonText(),
-                          maxLines: 1,
-                          style: const TextStyle(fontSize: 20),
+                    // On tablet
+                    tabletBody: ElevatedButton(
+                      key: itemCardTimerButtonKey,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: _renderButtonBackground(),
+                        elevation: 0,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.zero,
                         ),
-                      ),),
+                      ),
+                      onPressed: _handleButtonClick,
+                      child: Text(
+                        _renderButtonText(),
+                        maxLines: 1,
+                        style: const TextStyle(fontSize: 20),
+                      ),
+                    ),
+                  ),
               ],
             )
           ],
