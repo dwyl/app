@@ -356,7 +356,7 @@ class _ItemCardState extends State<ItemCard> {
   }
 
   // Start and stop timer button handler
-  _handleButtonClick() {
+  void _handleButtonClick() {
     // If timer is ongoing, we stop the stopwatch and the timer in the todo item.
     if (_stopwatch.isRunning) {
       widget.item.stopTimer();
