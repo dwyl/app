@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 const backButtonKey = Key('backButtonKey');
@@ -57,4 +56,3 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(50);
 }
-

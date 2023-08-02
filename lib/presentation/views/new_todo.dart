@@ -3,7 +3,7 @@ import 'package:responsive_framework/responsive_framework.dart';
 
 import '../../blocs/blocs.dart';
 import '../../models/models.dart';
-import '../widgets/navigationBar.dart';
+import '../widgets/navbar.dart';
 
 const textfieldOnNewPageKey = Key('textfieldOnNewPageKey');
 const saveButtonKey = Key('saveButtonKey');

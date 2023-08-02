@@ -6,10 +6,8 @@ import 'package:responsive_framework/responsive_framework.dart';
 import '../../blocs/blocs.dart';
 import '../../models/models.dart';
 
-
 const itemCardWidgetKey = Key('itemCardWidgetKey');
 const itemCardTimerButtonKey = Key('itemCardTimerButtonKey');
-
 
 /// Widget pertaining to an item card.
 /// It shows its info and changes state according to its progress.
@@ -216,7 +214,9 @@ class _ItemCardState extends State<ItemCard> {
                         formatTime(_stopwatch.elapsedMilliseconds),
                         maxLines: 1,
                         style: const TextStyle(
-                            color: Colors.black54, fontSize: 18,),
+                          color: Colors.black54,
+                          fontSize: 18,
+                        ),
                       );
                     }
                   }()),

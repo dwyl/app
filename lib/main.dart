@@ -1,13 +1,9 @@
-import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 import 'blocs/blocs.dart';
 import 'presentation/views/views.dart';
-import 'presentation/widgets/widgets.dart';
-
-
 
 // coverage:ignore-start
 void main() {
