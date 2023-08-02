@@ -12,8 +12,7 @@ import 'presentation/widgets/widgets.dart';
 const textfieldKey = Key("textfieldKey");
 const textfieldOnNewPageKey = Key('textfieldOnNewPageKey');
 const saveButtonKey = Key('saveButtonKey');
-const backButtonKey = Key('backButtonKey');
-const logoKey = Key('logoKey');
+
 
 // coverage:ignore-start
 void main() {
@@ -60,7 +59,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       // Top navigation bar
-      appBar: NavigationBar(
+      appBar: NavBar(
         givenContext: context,
       ),
 
@@ -190,7 +189,7 @@ class _NewTodoPageState extends State<NewTodoPage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: NavigationBar(
+        appBar: NavBar(
           givenContext: context,
           showGoBackButton: true,
         ),
@@ -295,60 +294,3 @@ class _NewTodoPageState extends State<NewTodoPage> {
     );
   }
 }
-
-// WIDGETS --------------------------
-
-/// Navigation bar widget.
-/// It needs to receive a context to dynamically elements.
-class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
-  // Boolean that tells the bar to have a button to go to the previous page
-  final bool showGoBackButton;
-  // Build context for the "go back" button works
-  final BuildContext givenContext;
-
-  const NavigationBar({
-    super.key,
-    required this.givenContext,
-    this.showGoBackButton = false,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      title: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          GestureDetector(
-            onTap: () {
-              Navigator.pop(givenContext);
-            },
-            child:
-                // dwyl logo
-                Image.asset(
-              "assets/icon/icon.png",
-              key: logoKey,
-              fit: BoxFit.fitHeight,
-              height: 30,
-            ),
-          ),
-        ],
-      ),
-      backgroundColor: const Color.fromARGB(255, 81, 72, 72),
-      elevation: 0.0,
-      centerTitle: true,
-      leading: showGoBackButton
-          ? BackButton(
-              key: backButtonKey,
-              onPressed: () {
-                Navigator.pop(givenContext);
-              },
-            )
-          : null,
-    );
-  }
-
-  @override
-  Size get preferredSize => const Size.fromHeight(50);
-}
-
