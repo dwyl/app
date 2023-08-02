@@ -4,9 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 import 'blocs/blocs.dart';
+import 'models/models.dart';
 
-import 'models/item.dart';
-import 'models/stopwatch.dart';
 
 // Keys used for testing
 const textfieldKey = Key("textfieldKey");
