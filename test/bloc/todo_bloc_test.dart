@@ -1,5 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:dwyl_todo/bloc/todo_bloc.dart';
+import 'package:dwyl_todo/blocs/blocs.dart';
 import 'package:dwyl_todo/models/item.dart';
 import 'package:flutter_test/flutter_test.dart';
 

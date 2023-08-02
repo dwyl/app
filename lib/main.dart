@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
-import 'bloc/todo_bloc.dart';
+import 'blocs/blocs.dart';
+
 import 'models/item.dart';
 import 'models/stopwatch.dart';
 
