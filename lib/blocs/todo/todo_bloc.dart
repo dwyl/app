@@ -57,7 +57,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
     if (state is TodoListLoadedState) {
       // You have to create a new object because the items list needs to be new so Bloc knows it needs to re-render
       // https://stackoverflow.com/questions/65379743/flutter-bloc-cant-update-my-list-of-boolean
-      var items = List<Item>.from(state.items);
+      final items = List<Item>.from(state.items);
       var indexToChange =
           items.indexWhere((element) => element.id == event.todoObj.id);
 

@@ -6,7 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('TodoBloc', () {
     // List of items to mock
-    var newItem = Item(description: "todo description");
+    final newItem = Item(description: "todo description");
 
     blocTest(
       'emits [] when nothing is added',
