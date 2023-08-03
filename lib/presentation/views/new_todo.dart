@@ -106,7 +106,7 @@ class _NewTodoPageState extends State<NewTodoPage> {
                     final value = txtFieldController.text;
                     if (value.isNotEmpty) {
                       // Create new item and create AddTodo event
-                      var newTodoItem = Item(description: value);
+                      final newTodoItem = Item(description: value);
                       BlocProvider.of<TodoBloc>(context)
                           .add(AddTodoEvent(newTodoItem));
 

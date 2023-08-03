@@ -54,10 +54,10 @@ class _ItemCardState extends State<ItemCard> {
   // Formats milliseconds to human-readable time
   // https://itnext.io/create-a-stopwatch-app-with-flutter-f0dc6a176b8a
   String formatTime(int milliseconds) {
-    var secs = milliseconds ~/ 1000;
-    var hours = (secs ~/ 3600).toString().padLeft(2, '0');
-    var minutes = ((secs % 3600) ~/ 60).toString().padLeft(2, '0');
-    var seconds = (secs % 60).toString().padLeft(2, '0');
+    final secs = milliseconds ~/ 1000;
+    final hours = (secs ~/ 3600).toString().padLeft(2, '0');
+    final minutes = ((secs % 3600) ~/ 60).toString().padLeft(2, '0');
+    final seconds = (secs % 60).toString().padLeft(2, '0');
     return "$hours:$minutes:$seconds";
   }
 
@@ -102,9 +102,9 @@ class _ItemCardState extends State<ItemCard> {
 
   @override
   Widget build(BuildContext context) {
-    var deviceWidth = MediaQuery.of(context).size.width;
+    final deviceWidth = MediaQuery.of(context).size.width;
 
-    var checkboxSize = deviceWidth > 425.0 ? 30.0 : 20.0;
+    final checkboxSize = deviceWidth > 425.0 ? 30.0 : 20.0;
 
     return Container(
       key: itemCardWidgetKey,

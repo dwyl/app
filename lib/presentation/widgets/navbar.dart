@@ -12,8 +12,7 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
   final BuildContext givenContext;
 
   const NavBar({
-    super.key,
-    required this.givenContext,
+    required this.givenContext, super.key,
     this.showGoBackButton = false,
   });
 
