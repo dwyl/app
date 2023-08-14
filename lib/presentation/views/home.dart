@@ -5,7 +5,7 @@ import '../../blocs/blocs.dart';
 import '../widgets/widgets.dart';
 import 'new_todo.dart';
 
-const textfieldKey = Key("textfieldKey");
+const textfieldKey = Key('textfieldKey');
 
 /// App's home page.
 /// The person will be able to create a new todo item
@@ -105,7 +105,7 @@ class HomePage extends StatelessWidget {
 
           // If the state of the TodoItemList is not loaded, we show error.ˆ
           else {
-            return const Center(child: Text("Error loading items list."));
+            return const Center(child: Text('Error loading items list.'));
           }
         },
       ),

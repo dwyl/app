@@ -30,7 +30,7 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
             child:
                 // dwyl logo
                 Image.asset(
-              "assets/icon/icon.png",
+              'assets/icon/icon.png',
               key: logoKey,
               fit: BoxFit.fitHeight,
               height: 30,

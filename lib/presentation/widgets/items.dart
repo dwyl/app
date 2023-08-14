@@ -58,7 +58,7 @@ class _ItemCardState extends State<ItemCard> {
     final hours = (secs ~/ 3600).toString().padLeft(2, '0');
     final minutes = ((secs % 3600) ~/ 60).toString().padLeft(2, '0');
     final seconds = (secs % 60).toString().padLeft(2, '0');
-    return "$hours:$minutes:$seconds";
+    return '$hours:$minutes:$seconds';
   }
 
   // Start and stop timer button handler
@@ -94,9 +94,9 @@ class _ItemCardState extends State<ItemCard> {
   // Set button text according to status of stopwatch
   String _renderButtonText() {
     if (_stopwatch.elapsedMilliseconds == 0) {
-      return "Start";
+      return 'Start';
     } else {
-      return _stopwatch.isRunning ? "Stop" : "Resume";
+      return _stopwatch.isRunning ? 'Stop' : 'Resume';
     }
   }
 
