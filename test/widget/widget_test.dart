@@ -182,7 +182,7 @@ void main() {
     expect(find.byKey(itemCardWidgetKey), findsOneWidget);
 
     // Getting widget to test its value
-    var checkboxFinder = find.descendant(
+    final checkboxFinder = find.descendant(
       of: find.byKey(itemCardWidgetKey),
       matching: find.byType(Icon),
     );
@@ -270,7 +270,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Item card should be marked as done
-    var checkboxFinder = find.descendant(
+    final checkboxFinder = find.descendant(
       of: find.byKey(itemCardWidgetKey),
       matching: find.byType(Icon),
     );

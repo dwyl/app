@@ -21,7 +21,7 @@ class Item {
     if (_timersList.isEmpty) {
       _timersList.add(ItemTimer(null, start: DateTime.now()));
     } else {
-      var lastTimer = _timersList.last;
+      final lastTimer = _timersList.last;
 
       // Only create a new timer if the last one is finished
       if (lastTimer.end != null) {
@@ -33,7 +33,7 @@ class Item {
   // Stop the timer that is at the end of the list
   void stopTimer() {
     if (_timersList.isNotEmpty) {
-      var lastTimer = _timersList.last;
+      final lastTimer = _timersList.last;
 
       // Only stop last timer if the end is null
       if (lastTimer.end == null) {
