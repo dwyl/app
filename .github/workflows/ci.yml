@@ -41,7 +41,7 @@ jobs:
   # https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/
   flutter_deploy:
     name: Deploy Flutter app
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     needs: [build]
     # https://stackoverflow.com/questions/58139406/only-run-job-on-specific-branch-with-github-actions
