@@ -7,7 +7,7 @@ void main() {
   test(
       'Cumulative duration after starting and stopping timer should be more than 0',
       () {
-    const description = "description";
+    const description = 'description';
 
     final item = Item(description: description);
 
@@ -29,7 +29,7 @@ void main() {
   });
 
   test('Start timer multiple times and stopping timer will not error out', () {
-    const description = "description";
+    const description = 'description';
 
     final item = Item(description: description);
 
