@@ -230,7 +230,7 @@ void main() {
 
     // Button should be stopped
     var buttonText = buttonWidget.child as Text;
-    expect(buttonText.data, "Start");
+    expect(buttonText.data, 'Start');
 
     // Tap on timer button.
     await tester.tap(find.byKey(itemCardTimerButtonKey));
@@ -241,7 +241,7 @@ void main() {
     buttonWidget =
         tester.firstWidget<ElevatedButton>(find.byKey(itemCardTimerButtonKey));
     buttonText = buttonWidget.child as Text;
-    expect(buttonText.data, "Stop");
+    expect(buttonText.data, 'Stop');
 
     // Tap on timer button AGAIN
     await tester.tap(find.byKey(itemCardTimerButtonKey));
@@ -252,7 +252,7 @@ void main() {
     buttonWidget =
         tester.firstWidget<ElevatedButton>(find.byKey(itemCardTimerButtonKey));
     buttonText = buttonWidget.child as Text;
-    expect(buttonText.data, "Resume");
+    expect(buttonText.data, 'Resume');
 
     // Tap on timer button AGAIN x2
     await tester.tap(find.byKey(itemCardTimerButtonKey));
@@ -263,7 +263,7 @@ void main() {
     buttonWidget =
         tester.firstWidget<ElevatedButton>(find.byKey(itemCardTimerButtonKey));
     buttonText = buttonWidget.child as Text;
-    expect(buttonText.data, "Stop");
+    expect(buttonText.data, 'Stop');
 
     // Tap on item card while its ongoing
     await tester.tap(find.byKey(itemCardWidgetKey));

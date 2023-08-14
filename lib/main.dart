@@ -9,7 +9,7 @@ import 'models/item.dart';
 import 'models/stopwatch.dart';
 
 // Keys used for testing
-const textfieldKey = Key("textfieldKey");
+const textfieldKey = Key('textfieldKey');
 const textfieldOnNewPageKey = Key('textfieldOnNewPageKey');
 const saveButtonKey = Key('saveButtonKey');
 const itemCardWidgetKey = Key('itemCardWidgetKey');
@@ -150,7 +150,7 @@ class HomePage extends StatelessWidget {
 
           // If the state of the TodoItemList is not loaded, we show error.ˆ
           else {
-            return const Center(child: Text("Error loading items list."));
+            return const Center(child: Text('Error loading items list.'));
           }
         },
       ),
@@ -327,7 +327,7 @@ class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
             child:
                 // dwyl logo
                 Image.asset(
-              "assets/icon/icon.png",
+              'assets/icon/icon.png',
               key: logoKey,
               fit: BoxFit.fitHeight,
               height: 30,
@@ -402,7 +402,7 @@ class _ItemCardState extends State<ItemCard> {
     final hours = (secs ~/ 3600).toString().padLeft(2, '0');
     final minutes = ((secs % 3600) ~/ 60).toString().padLeft(2, '0');
     final seconds = (secs % 60).toString().padLeft(2, '0');
-    return "$hours:$minutes:$seconds";
+    return '$hours:$minutes:$seconds';
   }
 
   // Start and stop timer button handler
@@ -438,9 +438,9 @@ class _ItemCardState extends State<ItemCard> {
   // Set button text according to status of stopwatch
   String _renderButtonText() {
     if (_stopwatch.elapsedMilliseconds == 0) {
-      return "Start";
+      return 'Start';
     } else {
-      return _stopwatch.isRunning ? "Stop" : "Resume";
+      return _stopwatch.isRunning ? 'Stop' : 'Resume';
     }
   }
 
