@@ -56,6 +56,12 @@ jobs:
         with:
           channel: 'stable'
 
+      # Your project will need to have tests in test/ and a dependency on
+      # package:test for this step to succeed. Note that Flutter projects will
+      # want to change this to 'flutter test'.
+      - name: Check build
+        run: flutter analyze
+
       - name: Create release build
         # github.com/dwyl/app/issues/315#issuecomment-1443747737
         run: flutter build web --release --web-renderer html
