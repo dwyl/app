@@ -1,8 +1,8 @@
-import 'package:bloc/bloc.dart';
 import 'package:dwyl_todo/blocs/todo/todo_bloc.dart';
 import 'package:dwyl_todo/logging/logging.dart';
 import 'package:dwyl_todo/models/item.dart';
-import 'package:test/test.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 // This is similar to Bloc's testing.
 // See https://github.com/felangel/bloc/blob/master/packages/bloc/test/bloc_observer_test.dart.
@@ -11,9 +11,9 @@ void main() {
   final error = Exception();
   const stackTrace = StackTrace.empty;
   const event = AddTodoEvent;
-  final change = Change(currentState: [], nextState: [Item(description: 'description')]);
+  final change = Change(currentState: const [], nextState: [Item(description: 'description')]);
   final transition = Transition(
-    currentState: [],
+    currentState: const [],
     event: AddTodoEvent,
     nextState: [Item(description: 'description')],
   );
