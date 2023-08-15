@@ -19,13 +19,13 @@ class Item {
   // Adds a new timer that starts on current time
   void startTimer() {
     if (_timersList.isEmpty) {
-      _timersList.add(ItemTimer(null, start: DateTime.now()));
+      _timersList.add(ItemTimer(start: DateTime.now()));
     } else {
       final lastTimer = _timersList.last;
 
       // Only create a new timer if the last one is finished
       if (lastTimer.end != null) {
-        _timersList.add(ItemTimer(null, start: DateTime.now()));
+        _timersList.add(ItemTimer(start: DateTime.now()));
       }
     }
   }
@@ -64,5 +64,5 @@ class ItemTimer {
   final DateTime start;
   DateTime? end;
 
-  ItemTimer(this.end, {required this.start});
+  ItemTimer({required this.start, this.end});
 }

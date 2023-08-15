@@ -1,12 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:dwyl_todo/models/item.dart';
+import 'package:dwyl_app/models/item.dart';
 
 void main() {
-  test(
-      'Cumulative duration after starting and stopping timer should be more than 0',
-      () {
+  test('Cumulative duration after starting and stopping timer should be more than 0', () {
     const description = 'description';
 
     final item = Item(description: description);

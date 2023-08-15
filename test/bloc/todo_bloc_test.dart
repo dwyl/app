@@ -1,6 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:dwyl_todo/bloc/todo_bloc.dart';
-import 'package:dwyl_todo/models/item.dart';
+import 'package:dwyl_app/blocs/blocs.dart';
+import 'package:dwyl_app/models/item.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -37,10 +37,7 @@ void main() {
           ..add(AddTodoEvent(newItem))
           ..add(RemoveTodoEvent(newItem)); // add and remove
       },
-      expect: () => <TodoState>[
-        const TodoListLoadedState(items: []),
-        const TodoListLoadedState(items: [])
-      ],
+      expect: () => <TodoState>[const TodoListLoadedState(items: []), const TodoListLoadedState(items: [])],
     );
 
     blocTest(
@@ -54,10 +51,8 @@ void main() {
       },
       expect: () => [
         isA<TodoListLoadedState>(),
-        isA<TodoListLoadedState>()
-            .having((obj) => obj.items.first.completed, 'completed', false),
-        isA<TodoListLoadedState>()
-            .having((obj) => obj.items.first.completed, 'completed', true)
+        isA<TodoListLoadedState>().having((obj) => obj.items.first.completed, 'completed', false),
+        isA<TodoListLoadedState>().having((obj) => obj.items.first.completed, 'completed', true)
       ],
     );
   });

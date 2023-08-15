@@ -1,10 +1,11 @@
+import 'package:dwyl_app/presentation/views/views.dart';
+import 'package:dwyl_app/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:dwyl_todo/main.dart';
+import 'package:dwyl_app/main.dart';
 
 void main() {
-  testWidgets('Build correctly setup and is loaded',
-      (WidgetTester tester) async {
+  testWidgets('Build correctly setup and is loaded', (WidgetTester tester) async {
     await tester.pumpWidget(const MainApp());
     await tester.pump();
 
@@ -12,8 +13,7 @@ void main() {
     expect(find.byKey(textfieldKey), findsOneWidget);
   });
 
-  testWidgets('Adding a new todo item shows a card',
-      (WidgetTester tester) async {
+  testWidgets('Adding a new todo item shows a card', (WidgetTester tester) async {
     await tester.pumpWidget(const MainApp());
     await tester.pumpAndSettle();
 
@@ -55,8 +55,7 @@ void main() {
     expect(find.byKey(itemCardWidgetKey), findsOneWidget);
   });
 
-  testWidgets('Adding a new todo item shows a card (on mobile screen)',
-      (WidgetTester tester) async {
+  testWidgets('Adding a new todo item shows a card (on mobile screen)', (WidgetTester tester) async {
     // Ensure binding is initialized to setup camera size
     TestWidgetsFlutterBinding.ensureInitialized();
     tester.view.physicalSize = const Size(400, 600);
@@ -106,8 +105,7 @@ void main() {
     addTearDown(tester.view.resetPhysicalSize);
   });
 
-  testWidgets('Adding a new todo item shows a card (on tablet screen)',
-      (WidgetTester tester) async {
+  testWidgets('Adding a new todo item shows a card (on tablet screen)', (WidgetTester tester) async {
     // Ensure binding is initialized to setup camera size
     TestWidgetsFlutterBinding.ensureInitialized();
     tester.view.physicalSize = const Size(400, 600);
@@ -157,8 +155,7 @@ void main() {
     addTearDown(tester.view.resetPhysicalSize);
   });
 
-  testWidgets('Adding a new todo item and checking it as done',
-      (WidgetTester tester) async {
+  testWidgets('Adding a new todo item and checking it as done', (WidgetTester tester) async {
     await tester.pumpWidget(const MainApp());
     await tester.pumpAndSettle();
 
@@ -199,9 +196,7 @@ void main() {
     expect(checkboxWidget.icon, Icons.check_box);
   });
 
-  testWidgets(
-      'Adding a new todo item and clicking timer button and marking it as done while it\'s running',
-      (WidgetTester tester) async {
+  testWidgets('Adding a new todo item and clicking timer button and marking it as done while it\'s running', (WidgetTester tester) async {
     await tester.pumpWidget(const MainApp());
     await tester.pumpAndSettle();
 
@@ -225,8 +220,7 @@ void main() {
     expect(find.byKey(itemCardWidgetKey), findsOneWidget);
 
     // Getting widget to test its value
-    var buttonWidget =
-        tester.firstWidget<ElevatedButton>(find.byKey(itemCardTimerButtonKey));
+    var buttonWidget = tester.firstWidget<ElevatedButton>(find.byKey(itemCardTimerButtonKey));
 
     // Button should be stopped
     var buttonText = buttonWidget.child as Text;
@@ -238,8 +232,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Updating widget and button should be ongoing
-    buttonWidget =
-        tester.firstWidget<ElevatedButton>(find.byKey(itemCardTimerButtonKey));
+    buttonWidget = tester.firstWidget<ElevatedButton>(find.byKey(itemCardTimerButtonKey));
     buttonText = buttonWidget.child as Text;
     expect(buttonText.data, 'Stop');
 
@@ -249,8 +242,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Updating widget and button should be stopped
-    buttonWidget =
-        tester.firstWidget<ElevatedButton>(find.byKey(itemCardTimerButtonKey));
+    buttonWidget = tester.firstWidget<ElevatedButton>(find.byKey(itemCardTimerButtonKey));
     buttonText = buttonWidget.child as Text;
     expect(buttonText.data, 'Resume');
 
@@ -260,8 +252,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Updating widget and button should be ongoing
-    buttonWidget =
-        tester.firstWidget<ElevatedButton>(find.byKey(itemCardTimerButtonKey));
+    buttonWidget = tester.firstWidget<ElevatedButton>(find.byKey(itemCardTimerButtonKey));
     buttonText = buttonWidget.child as Text;
     expect(buttonText.data, 'Stop');
 
