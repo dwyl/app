@@ -17,6 +17,8 @@ dependencies:
   equatable: ^2.0.5
   uuid: ^3.0.7
   responsive_framework: ^1.1.0
+  lumberdash: ^3.0.0
+  colorize_lumberdash: ^3.0.0
 
 dev_dependencies:
   flutter_test:

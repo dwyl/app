@@ -17,6 +17,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.13.0"
+  ansicolor:
+    dependency: transitive
+    description:
+      name: ansicolor
+      sha256: "607f8fa9786f392043f169898923e6c59b4518242b68b8862eb8a8b7d9c30b4a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.1"
   args:
     dependency: transitive
     description:
@@ -81,6 +89,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.17.1"
+  colorize_lumberdash:
+    dependency: "direct main"
+    description:
+      name: colorize_lumberdash
+      sha256: "6069ad908445caab046e93738c4f941536b6266076f2998b4ac6c012355eb1ba"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
   convert:
     dependency: transitive
     description:
@@ -227,6 +243,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
+  lumberdash:
+    dependency: "direct main"
+    description:
+      name: lumberdash
+      sha256: "1bc3750c094adb7f213a61883ca9878ba052fde52d9974b9039598c651fe096c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
   matcher:
     dependency: transitive
     description:
