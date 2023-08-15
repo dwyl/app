@@ -16,7 +16,7 @@ class GlobalLogBlocObserver extends BlocObserver {
   @override
   void onTransition(Bloc bloc, Transition transition) {
     super.onTransition(bloc, transition);
-    logMessage('${bloc.runtimeType} transition: Event ${transition.event} was dispatched. Transition occurred from ${transition.currentState} to ${transition.nextState}');
+    logMessage('${bloc.runtimeType} transition: Event ${transition.event} was dispatched. ${transition.currentState} → ${transition.nextState}');
   }
 
   @override

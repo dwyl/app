@@ -1,4 +1,4 @@
-
+import 'package:dwyl_todo/logging/logging.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
@@ -21,6 +21,11 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
+    // Setting global log bloc observer and Lumberdash
+    Bloc.observer = GlobalLogBlocObserver();
+    putLumberdashToWork(withClients: [ColorizeLumberdash()]);
+
     return BlocProvider(
       create: (context) => TodoBloc()..add(TodoListStarted()),
       child: MaterialApp(
