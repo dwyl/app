@@ -69,8 +69,11 @@ More detail in our
 We are using `Flutter` to develop our application,
 both for browser and mobile devices.
 If you are new to `Flutter`, 
-we recommend you reading https://github.com/dwyl/learn-flutter for a primer.
-Similarly, it is suggested to follow along https://github.com/dwyl/flutter-bloc-tutorial
+we recommend you reading 
+[dwyl/learn-flutter](https://github.com/dwyl/learn-flutter )
+for a primer.
+Similarly, it is suggested to follow along 
+[dwyl/flutter-bloc-tutorial](https://github.com/dwyl/flutter-bloc-tutorial)
 to better understand `BLoC`,
 the app's main state management system.
 
@@ -78,12 +81,7 @@ Help us build this! Your feedback is very welcome:
 [dwyl/app/issues](https://github.com/dwyl/app/issues)
 
 
-<!-- uncomment this once it's been updated 
-### Run the Project _Locally_
-
-
-
-### _Clone_ the Repository
+### _Clone_ & Run the App _Locally_
 
 ```sh
 git clone https://github.com/dwyl/app.git && cd app
@@ -92,9 +90,12 @@ git clone https://github.com/dwyl/app.git && cd app
 ### _Install_ the Dependencies
 
 ```sh
-npm install
+flutter upgrade
+flutter pub get
+flutter run
 ```
 
+<!--
 ### _Required_ Environment Variables
 
 The server will *not* work unless these environment variables are set.
@@ -117,7 +118,7 @@ To run this app you will need to have ***PostgreSQL Installed and Running*** on 
 
 -->
 
-<!--
+
 ### No Registration Required
 
 Try without registering: https://github.com/ideaq/time/issues/58
