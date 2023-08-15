@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:dwyl_todo/blocs/blocs.dart';
+import 'package:dwyl_app/blocs/blocs.dart';
 
 void main() {
   group('TodoState', () {

@@ -1,6 +1,6 @@
-import 'package:dwyl_todo/blocs/todo/todo_bloc.dart';
-import 'package:dwyl_todo/logging/logging.dart';
-import 'package:dwyl_todo/models/item.dart';
+import 'package:dwyl_app/blocs/todo/todo_bloc.dart';
+import 'package:dwyl_app/logging/logging.dart';
+import 'package:dwyl_app/models/item.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 
