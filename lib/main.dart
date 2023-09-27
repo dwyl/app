@@ -1,4 +1,6 @@
+import 'package:dwyl_app/blocs/cubit/app_cubit.dart';
 import 'package:dwyl_app/logging/logging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
@@ -25,8 +27,11 @@ class MainApp extends StatelessWidget {
     Bloc.observer = GlobalLogBlocObserver();
     putLumberdashToWork(withClients: [ColorizeLumberdash()]);
 
-    return BlocProvider(
-      create: (context) => TodoBloc()..add(TodoListStarted()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<TodoBloc>(create: (context) => TodoBloc()..add(TodoListStarted())),
+        BlocProvider<AppCubit>(create: (context) => AppCubit(isWeb: kIsWeb)),
+      ],
       child: MaterialApp(
         home: const HomePage(),
         builder: (context, child) => ResponsiveBreakpoints.builder(
