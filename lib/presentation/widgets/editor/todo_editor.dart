@@ -77,9 +77,6 @@ class DeltaTodoEditorState extends State<DeltaTodoEditor> {
         });
         return false;
       },
-      onTapUp: (details, p1) {
-        return _onTripleClickSelection();
-      },
       customStyles: DefaultStyles(
         h1: DefaultTextBlockStyle(
           const TextStyle(
@@ -139,9 +136,6 @@ class DeltaTodoEditorState extends State<DeltaTodoEditor> {
         placeholder: 'Add content',
         expands: false,
         padding: const EdgeInsets.only(top: 16.0),
-        onTapUp: (details, p1) {
-          return _onTripleClickSelection();
-        },
         customStyles: DefaultStyles(
           h1: DefaultTextBlockStyle(
             const TextStyle(
@@ -286,47 +280,6 @@ class DeltaTodoEditorState extends State<DeltaTodoEditor> {
         ],
       ),
     );
-  }
-
-  /// Callback called whenever the person taps on the text.
-  /// It will select nothing, then the word if another tap is detected
-  /// and then the whole text if another tap is detected (triple).
-  bool _onTripleClickSelection() {
-    final controller = widget.editorController;
-
-    // If nothing is selected, selection type is `none`
-    if (controller.selection.isCollapsed) {
-      _selectionType = _SelectionType.none;
-    }
-
-    // If nothing is selected, selection type becomes `word
-    if (_selectionType == _SelectionType.none) {
-      _selectionType = _SelectionType.word;
-      return false;
-    }
-
-    // If the word is selected, select all text
-    if (_selectionType == _SelectionType.word) {
-      final child = controller.document.queryChild(
-        controller.selection.baseOffset,
-      );
-      final offset = child.node?.documentOffset ?? 0;
-      final length = child.node?.length ?? 0;
-
-      final selection = TextSelection(
-        baseOffset: offset,
-        extentOffset: offset + length,
-      );
-
-      // Select all text and make next selection to `none`
-      controller.updateSelection(selection, ChangeSource.REMOTE);
-
-      _selectionType = _SelectionType.none;
-
-      return true;
-    }
-
-    return false;
   }
 
   /// Callback called whenever the person taps on the emoji button in the toolbar.
