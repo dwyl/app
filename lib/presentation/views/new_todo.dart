@@ -1,3 +1,5 @@
+import 'package:dwyl_app/blocs/cubit/app_cubit.dart';
+import 'package:dwyl_app/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
@@ -11,8 +13,7 @@ const saveButtonKey = Key('saveButtonKey');
 /// Transition handler that navigates the route to the `NewTodo` item page.
 Route navigateToNewTodoItemPage() {
   return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) =>
-        const NewTodoPage(),
+    pageBuilder: (context, animation, secondaryAnimation) => const NewTodoPage(),
     transitionDuration: Duration.zero,
     reverseTransitionDuration: Duration.zero,
   );
@@ -38,56 +39,28 @@ class _NewTodoPageState extends State<NewTodoPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isWeb = BlocProvider.of<AppCubit>(context).state.isWeb;
+
     return MaterialApp(
       home: Scaffold(
         appBar: NavBar(
           givenContext: context,
           showGoBackButton: true,
+          onTap: () {
+            // Dismiss the keyboard
+            final currentFocus = FocusScope.of(context);
+
+            if (!currentFocus.hasPrimaryFocus) {
+              currentFocus.unfocus();
+            }
+          },
         ),
         body: SafeArea(
           child: Column(
             children: [
               // Textfield that is expanded and borderless
               Expanded(
-                child: (() {
-                  // On mobile
-                  if (ResponsiveBreakpoints.of(context).isMobile) {
-                    return TextField(
-                      key: textfieldOnNewPageKey,
-                      controller: txtFieldController,
-                      expands: true,
-                      maxLines: null,
-                      autofocus: true,
-                      style: const TextStyle(fontSize: 20),
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.zero,
-                        ),
-                        hintText: 'start typing',
-                      ),
-                      textAlignVertical: TextAlignVertical.top,
-                    );
-                  }
-
-                  // On tablet and up
-                  else {
-                    return TextField(
-                      key: textfieldOnNewPageKey,
-                      controller: txtFieldController,
-                      expands: true,
-                      maxLines: null,
-                      autofocus: true,
-                      style: const TextStyle(fontSize: 30),
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.zero,
-                        ),
-                        hintText: 'start typing',
-                      ),
-                      textAlignVertical: TextAlignVertical.top,
-                    );
-                  }
-                }()),
+                child: DeltaTodoEditor(isWeb: isWeb)
               ),
 
               // Save button.
@@ -107,8 +80,7 @@ class _NewTodoPageState extends State<NewTodoPage> {
                     if (value.isNotEmpty) {
                       // Create new item and create AddTodo event
                       final newTodoItem = Item(description: value);
-                      BlocProvider.of<TodoBloc>(context)
-                          .add(AddTodoEvent(newTodoItem));
+                      BlocProvider.of<TodoBloc>(context).add(AddTodoEvent(newTodoItem));
 
                       // Clear textfield
                       txtFieldController.clear();

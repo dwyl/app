@@ -21,7 +21,6 @@ import 'web_embeds/web_embeds.dart';
 const quillEditorKey = Key('quillEditorKey');
 const emojiButtonKey = Key('emojiButtonKey');
 
-
 /// Types of selection that person can make when triple clicking
 enum _SelectionType {
   none,
@@ -76,21 +75,11 @@ class DeltaTodoEditorState extends State<DeltaTodoEditor> {
   Widget build(BuildContext context) {
     /// Loading widget if controller's not loaded
     if (_controller == null) {
-      return const Scaffold(body: Center(child: Text('Loading...')));
+      return const Center(child: Text('Loading editor..'));
     }
 
     /// Returning scaffold with editor as body
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        centerTitle: false,
-        title: const Text(
-          'Flutter Quill',
-        ),
-      ),
-      body: _buildEditor(context),
-    );
+    return _buildEditor(context);
   }
 
   /// Callback called whenever the person taps on the text.
@@ -177,7 +166,7 @@ class DeltaTodoEditorState extends State<DeltaTodoEditor> {
       placeholder: 'Write what\'s on your mind.',
       enableSelectionToolbar: isMobile(),
       expands: false,
-      padding: EdgeInsets.zero,
+      padding: const EdgeInsets.only(top: 16.0),
       onTapDown: (details, p1) {
         // When the person taps on the text, we want to hide the emoji picker
         // so only the keyboard is shown
@@ -247,7 +236,7 @@ class DeltaTodoEditorState extends State<DeltaTodoEditor> {
         readOnly: false,
         placeholder: 'Add content',
         expands: false,
-        padding: EdgeInsets.zero,
+        padding: const EdgeInsets.only(top: 16.0),
         onTapUp: (details, p1) {
           return _onTripleClickSelection();
         },
@@ -315,6 +304,7 @@ class DeltaTodoEditorState extends State<DeltaTodoEditor> {
     // Instantiating the toolbar
     final toolbar = QuillToolbar(
       afterButtonPressed: _focusNode.requestFocus,
+      multiRowsDisplay: false,
       children: [
         CustomButton(
           key: emojiButtonKey,
