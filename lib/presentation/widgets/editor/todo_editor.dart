@@ -29,10 +29,15 @@ enum _SelectionType {
 
 /// Home page with the `flutter-quill` editor
 class DeltaTodoEditor extends StatefulWidget {
+  /// Is the platform web-based?
   final bool isWeb;
+
+  /// Editor controller. Must be a `QuillController` object.
+  final QuillController editorController;
 
   const DeltaTodoEditor({
     required this.isWeb,
+    required this.editorController,
     super.key,
   });
 
@@ -41,8 +46,6 @@ class DeltaTodoEditor extends StatefulWidget {
 }
 
 class DeltaTodoEditorState extends State<DeltaTodoEditor> {
-  /// `flutter-quill` editor controller
-  QuillController? _controller;
 
   /// Focus node used to obtain keyboard focus and events
   final FocusNode _focusNode = FocusNode();
@@ -56,28 +59,10 @@ class DeltaTodoEditorState extends State<DeltaTodoEditor> {
   @override
   void initState() {
     super.initState();
-    _initializeText();
-  }
-
-  /// Initializing the [Delta](https://quilljs.com/docs/delta/) document with sample text.
-  Future<void> _initializeText() async {
-    // final doc = Document()..insert(0, 'Just a friendly empty text :)');
-    final doc = Document();
-    setState(() {
-      _controller = QuillController(
-        document: doc,
-        selection: const TextSelection.collapsed(offset: 0),
-      );
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    /// Loading widget if controller's not loaded
-    if (_controller == null) {
-      return const Center(child: Text('Loading editor..'));
-    }
-
     /// Returning scaffold with editor as body
     return _buildEditor(context);
   }
@@ -86,7 +71,7 @@ class DeltaTodoEditorState extends State<DeltaTodoEditor> {
   /// It will select nothing, then the word if another tap is detected
   /// and then the whole text if another tap is detected (triple).
   bool _onTripleClickSelection() {
-    final controller = _controller!;
+    final controller = widget.editorController;
 
     // If nothing is selected, selection type is `none`
     if (controller.selection.isCollapsed) {
@@ -157,7 +142,7 @@ class DeltaTodoEditorState extends State<DeltaTodoEditor> {
   Widget _buildEditor(BuildContext context) {
     // Default editor (for mobile devices)
     Widget quillEditor = QuillEditor(
-      controller: _controller!,
+      controller: widget.editorController,
       scrollController: ScrollController(),
       scrollable: true,
       focusNode: _focusNode,
@@ -228,7 +213,7 @@ class DeltaTodoEditorState extends State<DeltaTodoEditor> {
     // Alternatively, the web editor version is shown  (with the web embeds)
     if (widget.isWeb) {
       quillEditor = QuillEditor(
-        controller: _controller!,
+        controller: widget.editorController,
         scrollController: ScrollController(),
         scrollable: true,
         focusNode: _focusNode,
@@ -315,17 +300,17 @@ class DeltaTodoEditorState extends State<DeltaTodoEditor> {
         HistoryButton(
           icon: Icons.undo_outlined,
           iconSize: toolbarIconSize,
-          controller: _controller!,
+          controller: widget.editorController,
           undo: true,
         ),
         HistoryButton(
           icon: Icons.redo_outlined,
           iconSize: toolbarIconSize,
-          controller: _controller!,
+          controller: widget.editorController,
           undo: false,
         ),
         SelectHeaderStyleButton(
-          controller: _controller!,
+          controller: widget.editorController,
           axis: Axis.horizontal,
           iconSize: toolbarIconSize,
           attributes: const [Attribute.h1, Attribute.h2, Attribute.h3],
@@ -334,32 +319,32 @@ class DeltaTodoEditorState extends State<DeltaTodoEditor> {
           attribute: Attribute.bold,
           icon: Icons.format_bold,
           iconSize: toolbarIconSize,
-          controller: _controller!,
+          controller: widget.editorController,
         ),
         ToggleStyleButton(
           attribute: Attribute.italic,
           icon: Icons.format_italic,
           iconSize: toolbarIconSize,
-          controller: _controller!,
+          controller: widget.editorController,
         ),
         ToggleStyleButton(
           attribute: Attribute.underline,
           icon: Icons.format_underline,
           iconSize: toolbarIconSize,
-          controller: _controller!,
+          controller: widget.editorController,
         ),
         ToggleStyleButton(
           attribute: Attribute.strikeThrough,
           icon: Icons.format_strikethrough,
           iconSize: toolbarIconSize,
-          controller: _controller!,
+          controller: widget.editorController,
         ),
         LinkStyleButton(
-          controller: _controller!,
+          controller: widget.editorController,
           iconSize: toolbarIconSize,
           linkRegExp: RegExp(r'(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.]+'),
         ),
-        for (final builder in embedButtons) builder(_controller!, toolbarIconSize, null, null),
+        for (final builder in embedButtons) builder(widget.editorController, toolbarIconSize, null, null),
       ],
     );
 
@@ -380,7 +365,7 @@ class DeltaTodoEditorState extends State<DeltaTodoEditor> {
           Container(child: toolbar),
           OffstageEmojiPicker(
             offstageEmojiPicker: _offstageEmojiPickerOffstage,
-            quillController: _controller,
+            quillController: widget.editorController,
           ),
         ],
       ),

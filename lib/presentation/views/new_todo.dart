@@ -1,6 +1,7 @@
 import 'package:dwyl_app/blocs/cubit/app_cubit.dart';
 import 'package:dwyl_app/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:responsive_framework/responsive_framework.dart';
 
 import '../../blocs/blocs.dart';
@@ -28,12 +29,14 @@ class NewTodoPage extends StatefulWidget {
 }
 
 class _NewTodoPageState extends State<NewTodoPage> {
-  // https://stackoverflow.com/questions/61425969/is-it-okay-to-use-texteditingcontroller-in-statelesswidget-in-flutter
-  TextEditingController txtFieldController = TextEditingController();
+  final _controller = QuillController(
+    document: Document(),
+    selection: const TextSelection.collapsed(offset: 0),
+  );
 
   @override
   void dispose() {
-    txtFieldController.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
@@ -63,7 +66,11 @@ class _NewTodoPageState extends State<NewTodoPage> {
           child: Column(
             children: [
               // Textfield that is expanded and borderless
-              Expanded(child: DeltaTodoEditor(isWeb: isWeb)),
+              Expanded(
+                  child: DeltaTodoEditor(
+                isWeb: isWeb,
+                editorController: _controller,
+              )),
 
               // Save button.
               // When submitted, it adds a new todo item, clears the controller and navigates back
@@ -78,14 +85,14 @@ class _NewTodoPageState extends State<NewTodoPage> {
                     ),
                   ),
                   onPressed: () {
-                    final value = txtFieldController.text;
+                    final value = _controller.document.toPlainText();
                     if (value.isNotEmpty) {
                       // Create new item and create AddTodo event
                       final newTodoItem = Item(description: value);
                       BlocProvider.of<TodoBloc>(context).add(AddTodoEvent(newTodoItem));
 
                       // Clear textfield
-                      txtFieldController.clear();
+                      _controller.clear();
 
                       // Go back to home page
                       Navigator.pop(context);
