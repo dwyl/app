@@ -14,12 +14,6 @@ import 'web_embeds/web_embeds.dart';
 const quillEditorKey = Key('quillEditorKey');
 const emojiButtonKey = Key('emojiButtonKey');
 
-/// Types of selection that person can make when triple clicking
-enum _SelectionType {
-  none,
-  word,
-}
-
 /// Home page with the `flutter-quill` editor
 class DeltaTodoEditor extends StatefulWidget {
   /// Is the platform web-based?
@@ -41,9 +35,6 @@ class DeltaTodoEditor extends StatefulWidget {
 class DeltaTodoEditorState extends State<DeltaTodoEditor> {
   /// Focus node used to obtain keyboard focus and events
   final FocusNode _focusNode = FocusNode();
-
-  /// Selection types for triple clicking
-  final _SelectionType _selectionType = _SelectionType.none;
 
   /// Show emoji picker
   bool _offstageEmojiPickerOffstage = true;
