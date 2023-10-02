@@ -1,3 +1,4 @@
+import 'package:dwyl_app/blocs/blocs.dart';
 import 'package:dwyl_app/presentation/views/views.dart';
 import 'package:dwyl_app/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -7,13 +8,24 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:dwyl_app/main.dart';
 
 void main() {
+  /// Bootstraps a sample main application, whether it [isWeb] or not.
+  Widget initializeMainApp({required bool isWeb}) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<TodoBloc>(create: (context) => TodoBloc()..add(TodoListStarted())),
+        BlocProvider<AppCubit>(create: (context) => AppCubit(isWeb: isWeb)),
+      ],
+      child: const MainApp(),
+    );
+  }
 
   setUpAll(() {
     TestWidgetsFlutterBinding.ensureInitialized();
   });
 
   testWidgets('Build correctly setup and is loaded', (WidgetTester tester) async {
-    await tester.pumpWidget(const MainApp());
+    final app = initializeMainApp(isWeb: false);
+    await tester.pumpWidget(app);
     await tester.pump();
 
     // Find the text input and string stating 0 todos created
@@ -21,7 +33,8 @@ void main() {
   });
 
   testWidgets('Adding a new todo item shows a card', (WidgetTester tester) async {
-    await tester.pumpWidget(const MainApp());
+    final app = initializeMainApp(isWeb: false);
+    await tester.pumpWidget(app);
     await tester.pumpAndSettle();
 
     // Find the text input and string stating 0 todos created
@@ -56,7 +69,8 @@ void main() {
     tester.view.physicalSize = const Size(400, 600);
     tester.view.devicePixelRatio = 1.0;
 
-    await tester.pumpWidget(const MainApp());
+    final app = initializeMainApp(isWeb: false);
+    await tester.pumpWidget(app);
     await tester.pumpAndSettle();
 
     // Find the text input and string stating 0 todos created
@@ -94,7 +108,47 @@ void main() {
     tester.view.physicalSize = const Size(400, 900);
     tester.view.devicePixelRatio = 1.0;
 
-    await tester.pumpWidget(const MainApp());
+    final app = initializeMainApp(isWeb: false);
+    await tester.pumpWidget(app);
+    await tester.pumpAndSettle();
+
+    // Find the text input and string stating 0 todos created
+    expect(find.byKey(textfieldKey), findsOneWidget);
+    expect(find.byKey(itemCardWidgetKey), findsNothing);
+
+    // Tap textfield to open new page to create todo item
+    await tester.tap(find.byKey(textfieldKey));
+    await tester.pumpAndSettle(const Duration(seconds: 2));
+
+    final editor = find.byType(QuillEditor);
+
+    // Type text into todo input
+    await tester.tap(editor);
+    await tester.quillEnterText(editor, 'new todo\n');
+    await tester.pumpAndSettle();
+
+    // Tap "Save" button to add new todo item
+    await tester.tap(find.byKey(saveButtonKey));
+    await tester.pumpAndSettle(const Duration(seconds: 2));
+
+    // Pump the widget so it renders the new item
+    await tester.pumpAndSettle(const Duration(seconds: 2));
+
+    // Expect to find at least one widget, pertaining to the one that was added
+    expect(find.byKey(itemCardWidgetKey), findsOneWidget);
+
+    // Resetting camera size to normal
+    addTearDown(tester.view.resetPhysicalSize);
+  });
+
+  testWidgets('Adding a new todo item shows a card (on web platform)', (WidgetTester tester) async {
+    // Ensure binding is initialized to setup camera size
+    TestWidgetsFlutterBinding.ensureInitialized();
+    tester.view.physicalSize = const Size(400, 600);
+    tester.view.devicePixelRatio = 1.0;
+
+    final app = initializeMainApp(isWeb: true);
+    await tester.pumpWidget(app);
     await tester.pumpAndSettle();
 
     // Find the text input and string stating 0 todos created
@@ -127,7 +181,8 @@ void main() {
   });
 
   testWidgets('Adding a new todo item and checking it as done', (WidgetTester tester) async {
-    await tester.pumpWidget(const MainApp());
+    final app = initializeMainApp(isWeb: false);
+    await tester.pumpWidget(app);
     await tester.pumpAndSettle();
 
     // Find the text input and string stating 0 todos created
@@ -170,7 +225,8 @@ void main() {
   });
 
   testWidgets('Adding a new todo item and clicking timer button and marking it as done while it\'s running', (WidgetTester tester) async {
-    await tester.pumpWidget(const MainApp());
+    final app = initializeMainApp(isWeb: false);
+    await tester.pumpWidget(app);
     await tester.pumpAndSettle();
 
     // Find the text input and string stating 0 todos created
@@ -246,7 +302,8 @@ void main() {
   });
 
   testWidgets('Navigate to new page and go back', (WidgetTester tester) async {
-    await tester.pumpWidget(const MainApp());
+    final app = initializeMainApp(isWeb: false);
+    await tester.pumpWidget(app);
     await tester.pumpAndSettle();
 
     // Find the text input and string stating 0 todos created

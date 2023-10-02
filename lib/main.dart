@@ -8,7 +8,19 @@ import 'presentation/views/views.dart';
 
 // coverage:ignore-start
 void main() {
-  runApp(const MainApp());
+  // Setting global log bloc observer and Lumberdash
+  Bloc.observer = GlobalLogBlocObserver();
+  putLumberdashToWork(withClients: [ColorizeLumberdash()]);
+
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider<TodoBloc>(create: (context) => TodoBloc()..add(TodoListStarted())),
+        BlocProvider<AppCubit>(create: (context) => AppCubit(isWeb: kIsWeb)),
+      ],
+      child: const MainApp(),
+    ),
+  );
 }
 // coverage:ignore-end
 
@@ -22,27 +34,17 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Setting global log bloc observer and Lumberdash
-    Bloc.observer = GlobalLogBlocObserver();
-    putLumberdashToWork(withClients: [ColorizeLumberdash()]);
-
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<TodoBloc>(create: (context) => TodoBloc()..add(TodoListStarted())),
-        BlocProvider<AppCubit>(create: (context) => AppCubit(isWeb: kIsWeb)),
-      ],
-      child: MaterialApp(
-        home: const HomePage(),
-        builder: (context, child) => ResponsiveBreakpoints.builder(
-          child: child!,
-          breakpoints: [
-            const Breakpoint(start: 0, end: 425, name: MOBILE),
-            const Breakpoint(start: 426, end: 768, name: TABLET),
-            const Breakpoint(start: 769, end: 1024, name: DESKTOP),
-            const Breakpoint(start: 1025, end: 1440, name: 'LARGE_DESKTOP'),
-            const Breakpoint(start: 1441, end: double.infinity, name: '4K'),
-          ],
-        ),
+    return MaterialApp(
+      home: const HomePage(),
+      builder: (context, child) => ResponsiveBreakpoints.builder(
+        child: child!,
+        breakpoints: [
+          const Breakpoint(start: 0, end: 425, name: MOBILE),
+          const Breakpoint(start: 426, end: 768, name: TABLET),
+          const Breakpoint(start: 769, end: 1024, name: DESKTOP),
+          const Breakpoint(start: 1025, end: 1440, name: 'LARGE_DESKTOP'),
+          const Breakpoint(start: 1441, end: double.infinity, name: '4K'),
+        ],
       ),
     );
   }
