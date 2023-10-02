@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:dwyl_app/presentation/widgets/editor/emoji_picker.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_quill/extensions.dart';
@@ -44,7 +43,7 @@ class DeltaTodoEditorState extends State<DeltaTodoEditor> {
   final FocusNode _focusNode = FocusNode();
 
   /// Selection types for triple clicking
-  _SelectionType _selectionType = _SelectionType.none;
+  final _SelectionType _selectionType = _SelectionType.none;
 
   /// Show emoji picker
   bool _offstageEmojiPickerOffstage = true;
