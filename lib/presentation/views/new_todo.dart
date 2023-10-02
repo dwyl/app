@@ -37,6 +37,17 @@ class _NewTodoPageState extends State<NewTodoPage> {
     super.dispose();
   }
 
+  /// Dismisses the keyboard when the user taps on the navbar.
+  ///
+  /// See https://flutterigniter.com/dismiss-keyboard-form-lose-focus/ for more implementation details.
+  void _onTapNavbar(BuildContext context) {
+    final currentFocus = FocusScope.of(context);
+
+    if (!currentFocus.hasPrimaryFocus) {
+      currentFocus.unfocus();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final isWeb = BlocProvider.of<AppCubit>(context).state.isWeb;
@@ -46,22 +57,13 @@ class _NewTodoPageState extends State<NewTodoPage> {
         appBar: NavBar(
           givenContext: context,
           showGoBackButton: true,
-          onTap: () {
-            // Dismiss the keyboard
-            final currentFocus = FocusScope.of(context);
-
-            if (!currentFocus.hasPrimaryFocus) {
-              currentFocus.unfocus();
-            }
-          },
+          onTap: () => _onTapNavbar(context),
         ),
         body: SafeArea(
           child: Column(
             children: [
               // Textfield that is expanded and borderless
-              Expanded(
-                child: DeltaTodoEditor(isWeb: isWeb)
-              ),
+              Expanded(child: DeltaTodoEditor(isWeb: isWeb)),
 
               // Save button.
               // When submitted, it adds a new todo item, clears the controller and navigates back
