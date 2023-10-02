@@ -1,3 +1,4 @@
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:uuid/uuid.dart';
 
 // Uuid to generate Ids for the todos
@@ -5,15 +6,18 @@ const uuid = Uuid();
 
 /// Todo class.
 /// Each `Todo` has an `id`, `description` and `completed` boolean field.
+/// Optionally, a `document` can be associated to the item. This [Document] is a rich text document.
 class Item {
   final String id = uuid.v4();
   final String description;
   final bool completed;
+  final Document? document;
   final List<ItemTimer> _timersList = [];
 
   Item({
     required this.description,
     this.completed = false,
+    this.document
   });
 
   // Adds a new timer that starts on current time

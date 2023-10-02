@@ -85,10 +85,18 @@ class _NewTodoPageState extends State<NewTodoPage> {
                     ),
                   ),
                   onPressed: () {
-                    final value = _controller.document.toPlainText();
-                    if (value.isNotEmpty) {
+                    final document = _controller.document;
+                    var text = document.toPlainText();
+
+                    // Remove last newline from text (document.toPlainText() adds this at the end of the text)
+                    if (text.isNotEmpty) {
+                      final lastChar = text[text.length - 1];
+                      text = lastChar == '\n' ? text.substring(0, text.length - 1) : text;
+                    }
+
+                    if (text.isNotEmpty) {
                       // Create new item and create AddTodo event
-                      final newTodoItem = Item(description: value);
+                      final newTodoItem = Item(description: text, document: document);
                       BlocProvider.of<TodoBloc>(context).add(AddTodoEvent(newTodoItem));
 
                       // Clear textfield
