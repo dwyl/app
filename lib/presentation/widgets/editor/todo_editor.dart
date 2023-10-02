@@ -16,6 +16,7 @@ import 'package:http/http.dart' as http;
 import 'package:mime/mime.dart';
 import 'package:http_parser/http_parser.dart';
 
+import 'image_callbacks.dart';
 import 'web_embeds/web_embeds.dart';
 
 const quillEditorKey = Key('quillEditorKey');
@@ -197,10 +198,10 @@ class DeltaTodoEditorState extends State<DeltaTodoEditor> {
       showImageButton: true,
 
       // `onImagePickCallback` is called after image is picked on mobile platforms
-      onImagePickCallback: _onImagePickCallback,
+      onImagePickCallback: onImagePickCallback,
 
       // `webImagePickImpl` is called after image is picked on the web
-      webImagePickImpl: _webImagePickImpl,
+      webImagePickImpl: webImagePickImpl,
 
       // defining the selector (we only want to open the gallery whenever the person wants to upload an image)
       mediaPickSettingSelector: (context) {
@@ -363,61 +364,6 @@ class DeltaTodoEditorState extends State<DeltaTodoEditor> {
         _offstageEmojiPickerOffstage = false;
       });
     }
-  }
-
-  /// Renders the image picked by imagePicker from local file storage
-  /// You can also upload the picked image to any server (eg : AWS s3
-  /// or Firebase) and then return the uploaded image URL.
-  ///
-  /// It's only called on mobile platforms.
-  Future<String> _onImagePickCallback(File file) async {
-    final appDocDir = await getApplicationDocumentsDirectory();
-    final copiedFile = await file.copy('${appDocDir.path}/${basename(file.path)}');
-    return copiedFile.path.toString();
-  }
-
-  /// Callback that is called after an image is picked whilst on the web platform.
-  /// Returns the URL of the image.
-  /// Returns null if an error occurred uploading the file or the image was not picked.
-  Future<String?> _webImagePickImpl(OnImagePickCallback onImagePickCallback) async {
-    // Lets the user pick one file; files with any file extension can be selected
-    final result = await ImageFilePicker().pickImage();
-
-    // The result will be null, if the user aborted the dialog
-    if (result == null || result.files.isEmpty) {
-      return null;
-    }
-
-    // Read file as bytes (https://github.com/miguelpruivo/flutter_file_picker/wiki/FAQ#q-how-do-i-access-the-path-on-web)
-    final platformFile = result.files.first;
-    final bytes = platformFile.bytes;
-
-    if (bytes == null) {
-      return null;
-    }
-
-    // Make HTTP request to upload the image to the file
-    const apiURL = 'https://imgup.fly.dev/api/images';
-    final request = http.MultipartRequest('POST', Uri.parse(apiURL));
-
-    final httpImage = http.MultipartFile.fromBytes(
-      'image',
-      bytes,
-      contentType: MediaType.parse(lookupMimeType('', headerBytes: bytes)!),
-      filename: platformFile.name,
-    );
-    request.files.add(httpImage);
-
-    // Check the response and handle accordingly
-    return http.Client().send(request).then((response) async {
-      if (response.statusCode != 200) {
-        return null;
-      }
-
-      final responseStream = await http.Response.fromStream(response);
-      final responseData = json.decode(responseStream.body);
-      return responseData['url'];
-    });
   }
 }
 
