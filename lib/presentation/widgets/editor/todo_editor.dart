@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
 
-import 'package:dwyl_app/presentation/widgets/editor/emoji_picker_widget.dart';
+import 'package:dwyl_app/presentation/widgets/editor/emoji_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
