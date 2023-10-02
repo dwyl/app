@@ -46,7 +46,6 @@ class DeltaTodoEditor extends StatefulWidget {
 }
 
 class DeltaTodoEditorState extends State<DeltaTodoEditor> {
-
   /// Focus node used to obtain keyboard focus and events
   final FocusNode _focusNode = FocusNode();
 
@@ -63,83 +62,6 @@ class DeltaTodoEditorState extends State<DeltaTodoEditor> {
 
   @override
   Widget build(BuildContext context) {
-    /// Returning scaffold with editor as body
-    return _buildEditor(context);
-  }
-
-  /// Callback called whenever the person taps on the text.
-  /// It will select nothing, then the word if another tap is detected
-  /// and then the whole text if another tap is detected (triple).
-  bool _onTripleClickSelection() {
-    final controller = widget.editorController;
-
-    // If nothing is selected, selection type is `none`
-    if (controller.selection.isCollapsed) {
-      _selectionType = _SelectionType.none;
-    }
-
-    // If nothing is selected, selection type becomes `word
-    if (_selectionType == _SelectionType.none) {
-      _selectionType = _SelectionType.word;
-      return false;
-    }
-
-    // If the word is selected, select all text
-    if (_selectionType == _SelectionType.word) {
-      final child = controller.document.queryChild(
-        controller.selection.baseOffset,
-      );
-      final offset = child.node?.documentOffset ?? 0;
-      final length = child.node?.length ?? 0;
-
-      final selection = TextSelection(
-        baseOffset: offset,
-        extentOffset: offset + length,
-      );
-
-      // Select all text and make next selection to `none`
-      controller.updateSelection(selection, ChangeSource.REMOTE);
-
-      _selectionType = _SelectionType.none;
-
-      return true;
-    }
-
-    return false;
-  }
-
-  /// Callback called whenever the person taps on the emoji button in the toolbar.
-  /// It shows/hides the emoji picker and focus/unfocusses the keyboard accordingly.
-  void _onEmojiButtonPressed(BuildContext context) {
-    final isEmojiPickerShown = !_offstageEmojiPickerOffstage;
-
-    // If emoji picker is being shown, we show the keyboard and hide the emoji picker.
-    if (isEmojiPickerShown) {
-      _focusNode.requestFocus();
-      setState(() {
-        _offstageEmojiPickerOffstage = true;
-      });
-    }
-
-    // Otherwise, we do the inverse.
-    else {
-      // Unfocusing when the person clicks away. This is to hide the keyboard.
-      // See https://flutterigniter.com/dismiss-keyboard-form-lose-focus/
-      // and https://www.youtube.com/watch?v=MKrEJtheGPk&t=40s&ab_channel=HeyFlutter%E2%80%A4com.
-      final currentFocus = FocusScope.of(context);
-      if (!currentFocus.hasPrimaryFocus) {
-        SystemChannels.textInput.invokeMethod('TextInput.hide');
-        //currentFocus.unfocus();
-      }
-
-      setState(() {
-        _offstageEmojiPickerOffstage = false;
-      });
-    }
-  }
-
-  /// Build the `flutter-quill` editor to be shown on screen.
-  Widget _buildEditor(BuildContext context) {
     // Default editor (for mobile devices)
     Widget quillEditor = QuillEditor(
       controller: widget.editorController,
@@ -365,11 +287,82 @@ class DeltaTodoEditorState extends State<DeltaTodoEditor> {
           Container(child: toolbar),
           OffstageEmojiPicker(
             offstageEmojiPicker: _offstageEmojiPickerOffstage,
-            quillController: widget.editorController,
+            editorController: widget.editorController,
           ),
         ],
       ),
     );
+  }
+
+  /// Callback called whenever the person taps on the text.
+  /// It will select nothing, then the word if another tap is detected
+  /// and then the whole text if another tap is detected (triple).
+  bool _onTripleClickSelection() {
+    final controller = widget.editorController;
+
+    // If nothing is selected, selection type is `none`
+    if (controller.selection.isCollapsed) {
+      _selectionType = _SelectionType.none;
+    }
+
+    // If nothing is selected, selection type becomes `word
+    if (_selectionType == _SelectionType.none) {
+      _selectionType = _SelectionType.word;
+      return false;
+    }
+
+    // If the word is selected, select all text
+    if (_selectionType == _SelectionType.word) {
+      final child = controller.document.queryChild(
+        controller.selection.baseOffset,
+      );
+      final offset = child.node?.documentOffset ?? 0;
+      final length = child.node?.length ?? 0;
+
+      final selection = TextSelection(
+        baseOffset: offset,
+        extentOffset: offset + length,
+      );
+
+      // Select all text and make next selection to `none`
+      controller.updateSelection(selection, ChangeSource.REMOTE);
+
+      _selectionType = _SelectionType.none;
+
+      return true;
+    }
+
+    return false;
+  }
+
+  /// Callback called whenever the person taps on the emoji button in the toolbar.
+  /// It shows/hides the emoji picker and focus/unfocusses the keyboard accordingly.
+  void _onEmojiButtonPressed(BuildContext context) {
+    final isEmojiPickerShown = !_offstageEmojiPickerOffstage;
+
+    // If emoji picker is being shown, we show the keyboard and hide the emoji picker.
+    if (isEmojiPickerShown) {
+      _focusNode.requestFocus();
+      setState(() {
+        _offstageEmojiPickerOffstage = true;
+      });
+    }
+
+    // Otherwise, we do the inverse.
+    else {
+      // Unfocusing when the person clicks away. This is to hide the keyboard.
+      // See https://flutterigniter.com/dismiss-keyboard-form-lose-focus/
+      // and https://www.youtube.com/watch?v=MKrEJtheGPk&t=40s&ab_channel=HeyFlutter%E2%80%A4com.
+      final currentFocus = FocusScope.of(context);
+      if (!currentFocus.hasPrimaryFocus) {
+        SystemChannels.textInput.invokeMethod('TextInput.hide');
+        //currentFocus.unfocus();
+      }
+
+      setState(() {
+        _offstageEmojiPickerOffstage = false;
+      });
+    }
   }
 
   /// Renders the image picked by imagePicker from local file storage

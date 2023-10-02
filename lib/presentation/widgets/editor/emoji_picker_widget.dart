@@ -9,12 +9,12 @@ const emojiPickerWidgetKey = Key('emojiPickerWidgetKey');
 /// Shows an emoji picker when [offstageEmojiPicker] is `false`.
 class OffstageEmojiPicker extends StatefulWidget {
   /// `QuillController` controller that is passed so the controller document is changed when emojis are inserted.
-  final QuillController? quillController;
+  final QuillController? editorController;
 
   /// Determines if the emoji picker is offstage or not.
   final bool offstageEmojiPicker;
 
-  const OffstageEmojiPicker({required this.offstageEmojiPicker, this.quillController, super.key});
+  const OffstageEmojiPicker({required this.offstageEmojiPicker, this.editorController, super.key});
 
   @override
   State<OffstageEmojiPicker> createState() => _OffstageEmojiPickerState();
@@ -47,13 +47,13 @@ class _OffstageEmojiPickerState extends State<OffstageEmojiPicker> {
         child: EmojiPicker(
           key: emojiPickerWidgetKey,
           onEmojiSelected: (category, emoji) {
-            if (widget.quillController != null) {
+            if (widget.editorController != null) {
               // Get pointer selection and insert emoji there
-              final selection = widget.quillController?.selection;
-              widget.quillController?.document.insert(selection!.end, emoji.emoji);
+              final selection = widget.editorController?.selection;
+              widget.editorController?.document.insert(selection!.end, emoji.emoji);
 
               // Update the pointer after the emoji we've just inserted
-              widget.quillController?.updateSelection(TextSelection.collapsed(offset: selection!.end + emoji.emoji.length), ChangeSource.REMOTE);
+              widget.editorController?.updateSelection(TextSelection.collapsed(offset: selection!.end + emoji.emoji.length), ChangeSource.REMOTE);
             }
           },
           config: _buildEmojiPickerConfig(context),
