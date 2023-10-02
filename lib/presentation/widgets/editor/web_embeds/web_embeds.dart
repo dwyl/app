@@ -1,12 +1,11 @@
-import 'package:dwyl_app/blocs/cubit/app_cubit.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_quill_extensions/flutter_quill_extensions.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:universal_html/html.dart' as html;
 
 // Conditionally importing the PlatformViewRegistry class according to the platform
+import '../../../../blocs/blocs.dart';
 import 'mobile_platform_registry.dart' if (dart.library.html) 'web_platform_registry.dart' as ui_instance;
 
 /// Class used to conditionally register the view factory.
