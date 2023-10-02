@@ -58,6 +58,7 @@ class DeltaTodoEditorState extends State<DeltaTodoEditor> {
   Widget build(BuildContext context) {
     // Default editor (for mobile devices)
     Widget quillEditor = QuillEditor(
+      key: quillEditorKey,
       controller: widget.editorController,
       scrollController: ScrollController(),
       scrollable: true,
@@ -272,7 +273,6 @@ class DeltaTodoEditorState extends State<DeltaTodoEditor> {
           Expanded(
             flex: 15,
             child: Container(
-              key: quillEditorKey,
               color: Colors.white,
               padding: const EdgeInsets.only(left: 16, right: 16),
               child: quillEditor,
@@ -359,10 +359,3 @@ class DeltaTodoEditorState extends State<DeltaTodoEditor> {
     }
   }
 }
-
-// coverage:ignore-start
-/// Image file picker wrapper class
-class ImageFilePicker {
-  Future<FilePickerResult?> pickImage() => FilePicker.platform.pickFiles(type: FileType.image);
-}
-// coverage:ignore-end

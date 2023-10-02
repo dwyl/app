@@ -7,7 +7,6 @@ import 'package:responsive_framework/responsive_framework.dart';
 import '../../blocs/blocs.dart';
 import '../../models/models.dart';
 
-const textfieldOnNewPageKey = Key('textfieldOnNewPageKey');
 const saveButtonKey = Key('saveButtonKey');
 
 /// Transition handler that navigates the route to the `NewTodo` item page.

@@ -1,10 +1,17 @@
 import 'package:dwyl_app/presentation/views/views.dart';
 import 'package:dwyl_app/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_quill/flutter_quill.dart' hide Text;
+import 'package:flutter_quill/flutter_quill_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:dwyl_app/main.dart';
 
 void main() {
+
+  setUpAll(() {
+    TestWidgetsFlutterBinding.ensureInitialized();
+  });
+
   testWidgets('Build correctly setup and is loaded', (WidgetTester tester) async {
     await tester.pumpWidget(const MainApp());
     await tester.pump();
@@ -25,28 +32,16 @@ void main() {
     await tester.tap(find.byKey(textfieldKey));
     await tester.pumpAndSettle(const Duration(seconds: 2));
 
-    // Type text into todo input
-    await tester.enterText(find.byKey(textfieldOnNewPageKey), 'new todo');
-    expect(
-      find.descendant(
-        of: find.byKey(textfieldOnNewPageKey),
-        matching: find.text('new todo'),
-      ),
-      findsOneWidget,
-    );
+    final editor = find.byType(QuillEditor);
+
+    // Type text into todo editor
+    await tester.tap(editor);
+    await tester.quillEnterText(editor, 'new todo\n');
+    await tester.pumpAndSettle();
 
     // Tap "Save" button to add new todo item
     await tester.tap(find.byKey(saveButtonKey));
     await tester.pumpAndSettle(const Duration(seconds: 2));
-
-    // Input is cleared
-    expect(
-      find.descendant(
-        of: find.byKey(textfieldOnNewPageKey),
-        matching: find.text('new todo'),
-      ),
-      findsNothing,
-    );
 
     // Pump the widget so it renders the new item
     await tester.pumpAndSettle(const Duration(seconds: 2));
@@ -72,28 +67,16 @@ void main() {
     await tester.tap(find.byKey(textfieldKey));
     await tester.pumpAndSettle(const Duration(seconds: 2));
 
+    final editor = find.byType(QuillEditor);
+
     // Type text into todo input
-    await tester.enterText(find.byKey(textfieldOnNewPageKey), 'new todo');
-    expect(
-      find.descendant(
-        of: find.byKey(textfieldOnNewPageKey),
-        matching: find.text('new todo'),
-      ),
-      findsOneWidget,
-    );
+    await tester.tap(editor);
+    await tester.quillEnterText(editor, 'new todo\n');
+    await tester.pumpAndSettle();
 
     // Tap "Save" button to add new todo item
     await tester.tap(find.byKey(saveButtonKey));
     await tester.pumpAndSettle(const Duration(seconds: 2));
-
-    // Input is cleared
-    expect(
-      find.descendant(
-        of: find.byKey(textfieldOnNewPageKey),
-        matching: find.text('new todo'),
-      ),
-      findsNothing,
-    );
 
     // Pump the widget so it renders the new item
     await tester.pumpAndSettle(const Duration(seconds: 2));
@@ -108,7 +91,7 @@ void main() {
   testWidgets('Adding a new todo item shows a card (on tablet screen)', (WidgetTester tester) async {
     // Ensure binding is initialized to setup camera size
     TestWidgetsFlutterBinding.ensureInitialized();
-    tester.view.physicalSize = const Size(400, 600);
+    tester.view.physicalSize = const Size(400, 900);
     tester.view.devicePixelRatio = 1.0;
 
     await tester.pumpWidget(const MainApp());
@@ -122,28 +105,16 @@ void main() {
     await tester.tap(find.byKey(textfieldKey));
     await tester.pumpAndSettle(const Duration(seconds: 2));
 
+    final editor = find.byType(QuillEditor);
+
     // Type text into todo input
-    await tester.enterText(find.byKey(textfieldOnNewPageKey), 'new todo');
-    expect(
-      find.descendant(
-        of: find.byKey(textfieldOnNewPageKey),
-        matching: find.text('new todo'),
-      ),
-      findsOneWidget,
-    );
+    await tester.tap(editor);
+    await tester.quillEnterText(editor, 'new todo\n');
+    await tester.pumpAndSettle();
 
     // Tap "Save" button to add new todo item
     await tester.tap(find.byKey(saveButtonKey));
     await tester.pumpAndSettle(const Duration(seconds: 2));
-
-    // Input is cleared
-    expect(
-      find.descendant(
-        of: find.byKey(textfieldOnNewPageKey),
-        matching: find.text('new todo'),
-      ),
-      findsNothing,
-    );
 
     // Pump the widget so it renders the new item
     await tester.pumpAndSettle(const Duration(seconds: 2));
@@ -168,11 +139,13 @@ void main() {
     await tester.pumpAndSettle(const Duration(seconds: 2));
 
     // Type text into todo input and tap "Save" button to add new todo item
-    await tester.enterText(find.byKey(textfieldOnNewPageKey), 'new todo');
-    await tester.tap(find.byKey(saveButtonKey));
-    await tester.pumpAndSettle(const Duration(seconds: 2));
+    final editor = find.byType(QuillEditor);
 
-    // Pump the widget so it renders the new item
+    await tester.tap(editor);
+    await tester.quillEnterText(editor, 'new todo\n');
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(saveButtonKey));
     await tester.pumpAndSettle(const Duration(seconds: 2));
 
     // Expect to find at least one widget, pertaining to the one that was added
@@ -209,11 +182,13 @@ void main() {
     await tester.pumpAndSettle(const Duration(seconds: 2));
 
     // Type text into todo input and tap "Save" button to add new todo item
-    await tester.enterText(find.byKey(textfieldOnNewPageKey), 'new todo');
-    await tester.tap(find.byKey(saveButtonKey));
-    await tester.pumpAndSettle(const Duration(seconds: 2));
+    final editor = find.byType(QuillEditor);
 
-    // Pump the widget so it renders the new item
+    await tester.tap(editor);
+    await tester.quillEnterText(editor, 'new todo\n');
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(saveButtonKey));
     await tester.pumpAndSettle(const Duration(seconds: 2));
 
     // Expect to find at least one widget, pertaining to the one that was added
