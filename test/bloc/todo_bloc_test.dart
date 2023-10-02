@@ -24,7 +24,7 @@ void main() {
         const TodoListLoadedState(items: []), // when the todo bloc was loaded
         TodoListLoadedState(
           items: [newItem],
-        ) // when the todo bloc was added an event
+        ), // when the todo bloc was added an event
       ],
     );
 
@@ -52,7 +52,7 @@ void main() {
       expect: () => [
         isA<TodoListLoadedState>(),
         isA<TodoListLoadedState>().having((obj) => obj.items.first.completed, 'completed', false),
-        isA<TodoListLoadedState>().having((obj) => obj.items.first.completed, 'completed', true)
+        isA<TodoListLoadedState>().having((obj) => obj.items.first.completed, 'completed', true),
       ],
     );
   });

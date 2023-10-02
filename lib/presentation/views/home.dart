@@ -93,7 +93,7 @@ class HomePage extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8.0),
                             child: ItemCard(item: items[i]),
-                          )
+                          ),
                         ],
                       ],
                     ),

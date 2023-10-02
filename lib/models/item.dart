@@ -17,7 +17,7 @@ class Item {
   Item({
     required this.description,
     this.completed = false,
-    this.document
+    this.document,
   });
 
   // Adds a new timer that starts on current time

@@ -6,7 +6,6 @@ import 'package:responsive_framework/responsive_framework.dart';
 
 import '../../blocs/blocs.dart';
 import '../../models/models.dart';
-import '../widgets/navbar.dart';
 
 const textfieldOnNewPageKey = Key('textfieldOnNewPageKey');
 const saveButtonKey = Key('saveButtonKey');
@@ -70,7 +69,7 @@ class _NewTodoPageState extends State<NewTodoPage> {
                   child: DeltaTodoEditor(
                 isWeb: isWeb,
                 editorController: _controller,
-              )),
+              ),),
 
               // Save button.
               // When submitted, it adds a new todo item, clears the controller and navigates back
