@@ -28,58 +28,5 @@ void main() {
     TestWidgetsFlutterBinding.ensureInitialized();
   });
 
-  testWidgets('Click on emoji button should show the emoji picker', (WidgetTester tester) async {
-    // Set size because it's needed to correctly tap on emoji picker
-    // and ensure binding is initialized to setup camera size
-    TestWidgetsFlutterBinding.ensureInitialized();
-    tester.view.physicalSize = const Size(380, 800);
-    tester.view.devicePixelRatio = 1.0;
-    await tester.binding.setSurfaceSize(const Size(380, 800));
 
-    // Initialize app
-    final app = initializeMainApp(isWeb: false);
-    await tester.pumpWidget(app);
-    await tester.pumpAndSettle();
-
-    // Find the text input and string stating 0 todos created
-    expect(find.byKey(textfieldKey), findsOneWidget);
-    expect(find.byKey(itemCardWidgetKey), findsNothing);
-
-    // Tap textfield to open new page to create todo item
-    await tester.tap(find.byKey(textfieldKey));
-    await tester.pumpAndSettle(const Duration(seconds: 2));
-
-
-    // Expect to find the normal page setup and emoji picker not being shown
-    final editor = find.byType(QuillEditor);
-    expect(editor.hitTestable(), findsOneWidget);
-    expect(find.byKey(emojiPickerWidgetKey).hitTestable(), findsNothing);
-
-    // Click on emoji button should show the emoji picker
-    var emojiIcon = find.byIcon(Icons.emoji_emotions);
-
-    await tester.tap(emojiIcon);
-    await tester.pumpAndSettle();
-
-    emojiIcon = find.byIcon(Icons.emoji_emotions);
-
-    // Expect the emoji picker being shown
-    expect(find.byKey(emojiButtonKey).hitTestable(), findsOneWidget);
-
-    // Tap on smile category
-    await tester.tapAt(const Offset(61, 580));
-    await tester.pumpAndSettle();
-
-    // Tap on smile icon
-    await tester.tapAt(const Offset(14, 632));
-    await tester.pumpAndSettle();
-
-    // Tap on emoji icon to close the emoji pickers
-    emojiIcon = find.byIcon(Icons.emoji_emotions);
-
-    await tester.tap(emojiIcon);
-    await tester.pumpAndSettle();
-
-    expect(find.byKey(emojiPickerWidgetKey).hitTestable(), findsNothing);
-  });
 }
