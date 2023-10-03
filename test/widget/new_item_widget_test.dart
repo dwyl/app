@@ -1,11 +1,8 @@
 import 'package:dwyl_app/blocs/blocs.dart';
 import 'package:dwyl_app/presentation/views/views.dart';
-import 'package:dwyl_app/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
-import 'package:flutter_quill/flutter_quill_test.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:dwyl_app/main.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 void main() {
