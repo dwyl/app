@@ -1,10 +1,13 @@
+import 'package:cross_file/cross_file.dart';
 import 'package:dwyl_app/blocs/blocs.dart';
 import 'package:dwyl_app/presentation/views/views.dart';
 import 'package:dwyl_app/presentation/widgets/editor/emoji_picker.dart';
 import 'package:dwyl_app/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:flutter_quill/flutter_quill_test.dart';
+import 'package:flutter_quill_extensions/embeds/toolbar/image_button.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:dwyl_app/main.dart';
 
@@ -307,7 +310,7 @@ void main() {
   });
 
   group('Emoji picker', () {
-    testWidgets('should shown when clicking in the emoji button.', (WidgetTester tester) async {
+    testWidgets('should be shown when clicking in the emoji button.', (WidgetTester tester) async {
       // Set size because it's needed to correctly tap on emoji picker
       // and ensure binding is initialized to setup camera size
       TestWidgetsFlutterBinding.ensureInitialized();
@@ -359,6 +362,78 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.byKey(emojiPickerWidgetKey).hitTestable(), findsNothing);
+    });
+
+    testWidgets('should lose focus of keyboard when double tapped', (WidgetTester tester) async {
+      // Set size because it's needed to correctly tap on emoji picker
+      // and ensure binding is initialized to setup camera size
+      TestWidgetsFlutterBinding.ensureInitialized();
+      tester.view.physicalSize = const Size(380, 800);
+      tester.view.devicePixelRatio = 1.0;
+      await tester.binding.setSurfaceSize(const Size(380, 800));
+
+      // Initialize app
+      final app = initializeMainApp(isWeb: false);
+      await tester.pumpWidget(app);
+      await tester.pumpAndSettle();
+
+      // Find the text input and string stating 0 items created
+      expect(find.byKey(textfieldKey), findsOneWidget);
+      expect(find.byKey(itemCardWidgetKey), findsNothing);
+
+      // Tap textfield to open new page to create item
+      await tester.tap(find.byKey(textfieldKey));
+      await tester.pumpAndSettle(const Duration(seconds: 2));
+
+      // Expect to find the normal page setup and emoji picker not being shown
+      final editor = find.byType(QuillEditor);
+      expect(editor.hitTestable(), findsOneWidget);
+      expect(find.byKey(emojiPickerWidgetKey).hitTestable(), findsNothing);
+
+      // Tap on editor to gain focus
+      await tester.tap(editor);
+      await tester.pumpAndSettle();
+
+      // Click on emoji button should show the emoji picker
+      var emojiIcon = find.byIcon(Icons.emoji_emotions);
+      await tester.tap(emojiIcon);
+      await tester.pumpAndSettle();
+
+      expect(find.byKey(emojiPickerWidgetKey).hitTestable(), findsOneWidget);
+    });
+  });
+
+  group('Image picker', () {
+    testWidgets('should show and select image', (WidgetTester tester) async {
+      // Mock image
+      // mockImagePicker(tester);
+
+      // Build our app and trigger a frame.
+      final app = initializeMainApp(isWeb: false);
+      await tester.pumpWidget(app);
+      await tester.pumpAndSettle();
+
+      // Tap textfield to open new page to create item
+      await tester.tap(find.byKey(textfieldKey));
+      await tester.pumpAndSettle(const Duration(seconds: 2));
+
+      // Should show editor and toolbar
+      final editor = find.byType(QuillEditor);
+      final toolbar = find.byType(QuillToolbar);
+      expect(editor.hitTestable(), findsOneWidget);
+      expect(toolbar.hitTestable(), findsOneWidget);
+
+      // Drag toolbar to the right
+      await tester.drag(toolbar, const Offset(-500, 0));
+      await tester.pump(const Duration(minutes: 1));
+
+      // Press image button
+      final imageButton = find.byType(ImageButton);
+      await tester.tap(imageButton);
+      await tester.pumpAndSettle();
+
+      // TODO can't choose image.
+      // Check https://github.com/singerdmx/flutter-quill/issues/1389.
     });
   });
 
