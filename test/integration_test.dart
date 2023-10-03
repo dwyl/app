@@ -87,10 +87,6 @@ void main() {
 
       final editor = find.byType(QuillEditor);
 
-      // Lose focus
-      // await tester.tap(find.byKey(navBarInNewTodoPageKey));
-      // await tester.pumpAndSettle();
-
       // Type text into item input
       await tester.tap(editor);
       await tester.quillEnterText(editor, 'Make lunch\n');

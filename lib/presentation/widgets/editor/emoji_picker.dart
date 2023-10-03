@@ -24,18 +24,18 @@ class _OffstageEmojiPickerState extends State<OffstageEmojiPicker> {
   /// Returns the emoji picker configuration according to screen size.
   Config _buildEmojiPickerConfig(BuildContext context) {
     if (ResponsiveBreakpoints.of(context).smallerOrEqualTo(MOBILE)) {
-      return const Config(emojiSizeMax: 32.0, columns: 7);
+      return const Config(emojiSizeMax: 32.0, columns: 7, recentTabBehavior: RecentTabBehavior.NONE);
     }
 
     if (ResponsiveBreakpoints.of(context).equals(TABLET)) {
-      return const Config(emojiSizeMax: 24.0, columns: 10);
+      return const Config(emojiSizeMax: 24.0, columns: 10, recentTabBehavior: RecentTabBehavior.NONE);
     }
 
     if (ResponsiveBreakpoints.of(context).equals(DESKTOP)) {
-      return const Config(emojiSizeMax: 16.0, columns: 15);
+      return const Config(emojiSizeMax: 16.0, columns: 15, recentTabBehavior: RecentTabBehavior.NONE);
     }
 
-    return const Config(emojiSizeMax: 16.0, columns: 30);
+    return const Config(emojiSizeMax: 16.0, columns: 30, recentTabBehavior: RecentTabBehavior.NONE);
   }
 
   @override
