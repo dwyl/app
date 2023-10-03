@@ -7,6 +7,7 @@ import '../../blocs/blocs.dart';
 import '../../models/models.dart';
 
 const saveButtonKey = Key('saveButtonKey');
+const newItemPageNavbarKey = Key('newItemPageNavbarKey');
 
 /// Transition handler that navigates the route to the `NewTodo` item page.
 Route navigateToCreateNewItemPage() {
@@ -55,6 +56,7 @@ class _NewItemPageState extends State<NewItemPage> {
     return MaterialApp(
       home: Scaffold(
         appBar: NavBar(
+          key: newItemPageNavbarKey,
           givenContext: context,
           showGoBackButton: true,
           onTap: () => _onTapNavbar(context),
