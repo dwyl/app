@@ -24,9 +24,9 @@ Future<String> onImagePickCallback(File file) async {
 /// Upon picking an image, it is uploaded and the URL of where the image is hosted is returned.
 /// 
 /// Returns `null` if no image was picked or the image was not correctly uploaded.
-Future<String?> webImagePickImpl(OnImagePickCallback onImagePickCallback) async {
+Future<String?> webImagePickImpl(http.Client client, ImageFilePicker filePicker, OnImagePickCallback onImagePickCallback) async {
   // Lets the user pick one file; files with any file extension can be selected
-  final result = await ImageFilePicker().pickImage();
+  final result = await filePicker.pickImage();
 
   // The result will be null, if the user aborted the dialog
   if (result == null || result.files.isEmpty) {
@@ -53,7 +53,7 @@ Future<String?> webImagePickImpl(OnImagePickCallback onImagePickCallback) async 
   request.files.add(httpImage);
 
   // Check the response and handle accordingly
-  return http.Client().send(request).then((response) async {
+  return client.send(request).then((response) async {
     if (response.statusCode != 200) {
       return null;
     }

@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_quill/extensions.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:flutter_quill_extensions/flutter_quill_extensions.dart';
+import 'package:http/http.dart' as http;
 
 import 'image_callbacks.dart';
 import 'web_embeds/web_embeds.dart';
@@ -179,7 +180,7 @@ class DeltaTodoEditorState extends State<DeltaTodoEditor> {
       onImagePickCallback: onImagePickCallback,
 
       // `webImagePickImpl` is called after image is picked on the web
-      webImagePickImpl: webImagePickImpl,
+      webImagePickImpl: (onImagePickCallback) => webImagePickImpl(http.Client(), ImageFilePicker(), onImagePickCallback),
 
       // defining the selector (we only want to open the gallery whenever the person wants to upload an image)
       mediaPickSettingSelector: (context) {

@@ -1,10 +1,8 @@
-import 'package:cross_file/cross_file.dart';
 import 'package:dwyl_app/blocs/blocs.dart';
 import 'package:dwyl_app/presentation/views/views.dart';
 import 'package:dwyl_app/presentation/widgets/editor/emoji_picker.dart';
 import 'package:dwyl_app/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:flutter_quill/flutter_quill_test.dart';
 import 'package:flutter_quill_extensions/embeds/toolbar/image_button.dart';
@@ -395,7 +393,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Click on emoji button should show the emoji picker
-      var emojiIcon = find.byIcon(Icons.emoji_emotions);
+      final emojiIcon = find.byIcon(Icons.emoji_emotions);
       await tester.tap(emojiIcon);
       await tester.pumpAndSettle();
 
