@@ -2,22 +2,22 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:dwyl_app/blocs/blocs.dart';
 
 void main() {
-  group('TodoState', () {
-    group('TodoInitialState', () {
+  group('ItemState', () {
+    group('ItemInitialState', () {
       test('supports value comparison', () {
-        expect(TodoInitialState(), TodoInitialState());
+        expect(ItemInitialState(), ItemInitialState());
       });
     });
 
-    group('TodoListLoadedState', () {
+    group('ItemListLoadedState', () {
       test('supports value comparison', () {
-        expect(const TodoListLoadedState(), const TodoListLoadedState());
+        expect(const ItemListLoadedState(), const ItemListLoadedState());
       });
     });
 
-    group('TodoListErrorState', () {
+    group('ItemListErrorState', () {
       test('supports value comparison', () {
-        expect(TodoListErrorState(), TodoListErrorState());
+        expect(ItemListErrorState(), ItemListErrorState());
       });
     });
   });

@@ -32,8 +32,7 @@ class _ItemCardState extends State<ItemCard> {
     super.initState();
     WidgetsFlutterBinding.ensureInitialized();
 
-    _stopwatch =
-        TimerStopwatch(initialOffset: widget.item.getCumulativeDuration());
+    _stopwatch = TimerStopwatch(initialOffset: widget.item.getCumulativeDuration());
 
     // Timer to rerender the page so the text shows the seconds passing by
     _timer = Timer.periodic(const Duration(milliseconds: 200), (timer) {
@@ -63,7 +62,7 @@ class _ItemCardState extends State<ItemCard> {
 
   // Start and stop timer button handler
   void _handleButtonClick() {
-    // If timer is ongoing, we stop the stopwatch and the timer in the todo item.
+    // If timer is ongoing, we stop the stopwatch and the timer in the item.
     if (_stopwatch.isRunning) {
       widget.item.stopTimer();
       _stopwatch.stop();
@@ -72,7 +71,7 @@ class _ItemCardState extends State<ItemCard> {
       setState(() {});
     }
 
-    // If we are to start timer, start the timer in todo item and stopwatch.
+    // If we are to start timer, start the timer in item and stopwatch.
     else {
       widget.item.startTimer();
       _stopwatch.start();
@@ -113,12 +112,12 @@ class _ItemCardState extends State<ItemCard> {
         onTap: () {
           // If the stopwatch is not running, we mark toggle it
           if (!_stopwatch.isRunning) {
-            context.read<TodoBloc>().add(ToggleTodoEvent(widget.item));
+            context.read<ItemBloc>().add(ToggleItemEvent(widget.item));
           }
 
           // If the stopwatch is running, we toggle the item but also stop the timer
           else {
-            context.read<TodoBloc>().add(ToggleTodoEvent(widget.item));
+            context.read<ItemBloc>().add(ToggleItemEvent(widget.item));
             widget.item.stopTimer();
             _stopwatch.stop();
 
@@ -148,7 +147,7 @@ class _ItemCardState extends State<ItemCard> {
 
         title: Row(
           children: [
-            // Todo item description
+            // Item description
             Expanded(
               child: Container(
                 margin: const EdgeInsets.only(right: 16.0),
@@ -159,15 +158,9 @@ class _ItemCardState extends State<ItemCard> {
                       widget.item.description,
                       style: TextStyle(
                         fontSize: 20,
-                        decoration: widget.item.completed
-                            ? TextDecoration.lineThrough
-                            : TextDecoration.none,
-                        fontStyle: widget.item.completed
-                            ? FontStyle.italic
-                            : FontStyle.normal,
-                        color: widget.item.completed
-                            ? const Color.fromARGB(255, 126, 121, 121)
-                            : Colors.black,
+                        decoration: widget.item.completed ? TextDecoration.lineThrough : TextDecoration.none,
+                        fontStyle: widget.item.completed ? FontStyle.italic : FontStyle.normal,
+                        color: widget.item.completed ? const Color.fromARGB(255, 126, 121, 121) : Colors.black,
                       ),
                     );
                   }
@@ -178,15 +171,9 @@ class _ItemCardState extends State<ItemCard> {
                       widget.item.description,
                       style: TextStyle(
                         fontSize: 25,
-                        decoration: widget.item.completed
-                            ? TextDecoration.lineThrough
-                            : TextDecoration.none,
-                        fontStyle: widget.item.completed
-                            ? FontStyle.italic
-                            : FontStyle.normal,
-                        color: widget.item.completed
-                            ? const Color.fromARGB(255, 126, 121, 121)
-                            : Colors.black,
+                        decoration: widget.item.completed ? TextDecoration.lineThrough : TextDecoration.none,
+                        fontStyle: widget.item.completed ? FontStyle.italic : FontStyle.normal,
+                        color: widget.item.completed ? const Color.fromARGB(255, 126, 121, 121) : Colors.black,
                       ),
                     );
                   }

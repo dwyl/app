@@ -15,7 +15,7 @@ void main() {
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider<TodoBloc>(create: (context) => TodoBloc()..add(TodoListStarted())),
+        BlocProvider<ItemBloc>(create: (context) => ItemBloc()..add(ItemListStarted())),
         BlocProvider<AppCubit>(create: (context) => AppCubit(isWeb: kIsWeb)),
       ],
       child: const MainApp(),
@@ -27,7 +27,7 @@ void main() {
 /// The main class of the app.
 /// It will create the state manager with `BlocProvider` and make it available along the widget tree.
 ///
-/// The `TodoListStarted` event is instantly spawned when the app starts.
+/// The `ItemListStarted` event is instantly spawned when the app starts.
 /// This is because we've yet have the need to fetch information from third-party APIs before initializing the app.
 class MainApp extends StatelessWidget {
   const MainApp({super.key});

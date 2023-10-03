@@ -9,23 +9,23 @@ import '../../models/models.dart';
 const saveButtonKey = Key('saveButtonKey');
 
 /// Transition handler that navigates the route to the `NewTodo` item page.
-Route navigateToNewTodoItemPage() {
+Route navigateToCreateNewItemPage() {
   return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => const NewTodoPage(),
+    pageBuilder: (context, animation, secondaryAnimation) => const NewItemPage(),
     transitionDuration: Duration.zero,
     reverseTransitionDuration: Duration.zero,
   );
 }
 
-/// Page that shows a textfield expanded to create a new todo item.
-class NewTodoPage extends StatefulWidget {
-  const NewTodoPage({super.key});
+/// Page that shows a textfield expanded to create a new item.
+class NewItemPage extends StatefulWidget {
+  const NewItemPage({super.key});
 
   @override
-  State<NewTodoPage> createState() => _NewTodoPageState();
+  State<NewItemPage> createState() => _NewItemPageState();
 }
 
-class _NewTodoPageState extends State<NewTodoPage> {
+class _NewItemPageState extends State<NewItemPage> {
   final _controller = QuillController(
     document: Document(),
     selection: const TextSelection.collapsed(offset: 0),
@@ -64,13 +64,14 @@ class _NewTodoPageState extends State<NewTodoPage> {
             children: [
               // Textfield that is expanded and borderless
               Expanded(
-                  child: DeltaTodoEditor(
-                isWeb: isWeb,
-                editorController: _controller,
-              ),),
+                child: DeltaTodoEditor(
+                  isWeb: isWeb,
+                  editorController: _controller,
+                ),
+              ),
 
               // Save button.
-              // When submitted, it adds a new todo item, clears the controller and navigates back
+              // When submitted, it adds a new item, clears the controller and navigates back
               Align(
                 alignment: Alignment.bottomRight,
                 child: ElevatedButton(
@@ -94,7 +95,7 @@ class _NewTodoPageState extends State<NewTodoPage> {
                     if (text.isNotEmpty) {
                       // Create new item and create AddTodo event
                       final newTodoItem = Item(description: text, document: document);
-                      BlocProvider.of<TodoBloc>(context).add(AddTodoEvent(newTodoItem));
+                      BlocProvider.of<ItemBloc>(context).add(AddItemEvent(newTodoItem));
 
                       // Clear textfield
                       _controller.clear();

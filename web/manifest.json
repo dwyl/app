@@ -1,6 +1,6 @@
 {
-    "name": "Dwyl's Todo App",
-    "short_name": "todo app",
+    "name": "Dwyl's App",
+    "short_name": "dwyl app",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

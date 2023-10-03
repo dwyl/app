@@ -4,55 +4,55 @@ import 'package:dwyl_app/models/item.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  group('TodoBloc', () {
+  group('ItemBloc', () {
     // List of items to mock
-    final newItem = Item(description: 'todo description');
+    final newItem = Item(description: 'Item description');
 
     blocTest(
       'emits [] when nothing is added',
-      build: () => TodoBloc(),
+      build: () => ItemBloc(),
       expect: () => [],
     );
 
     blocTest(
-      'emits [TodoListLoadedState] when AddTodoEvent is created',
-      build: () => TodoBloc()..add(TodoListStarted()),
+      'emits [ItemListLoadedState] when AddItemEvent is created',
+      build: () => ItemBloc()..add(ItemListStarted()),
       act: (bloc) {
-        bloc.add(AddTodoEvent(newItem));
+        bloc.add(AddItemEvent(newItem));
       },
-      expect: () => <TodoState>[
-        const TodoListLoadedState(items: []), // when the todo bloc was loaded
-        TodoListLoadedState(
+      expect: () => <ItemState>[
+        const ItemListLoadedState(items: []), // when the item bloc was loaded
+        ItemListLoadedState(
           items: [newItem],
-        ), // when the todo bloc was added an event
+        ), // when the item bloc was added an event
       ],
     );
 
     blocTest(
-      'emits [TodoListLoadedState] when RemoveTodoEvent is created',
-      build: () => TodoBloc()..add(TodoListStarted()),
+      'emits [ItemListLoadedState] when RemoveItemEvent is created',
+      build: () => ItemBloc()..add(ItemListStarted()),
       act: (bloc) {
-        final newItem = Item(description: 'todo description');
+        final newItem = Item(description: 'Item description');
         bloc
-          ..add(AddTodoEvent(newItem))
-          ..add(RemoveTodoEvent(newItem)); // add and remove
+          ..add(AddItemEvent(newItem))
+          ..add(RemoveItemEvent(newItem)); // add and remove
       },
-      expect: () => <TodoState>[const TodoListLoadedState(items: []), const TodoListLoadedState(items: [])],
+      expect: () => <ItemState>[const ItemListLoadedState(items: []), const ItemListLoadedState(items: [])],
     );
 
     blocTest(
-      'emits [TodoListLoadedState] when ToggleTodoEvent is created',
-      build: () => TodoBloc()..add(TodoListStarted()),
+      'emits [ItemListLoadedState] when ToggleItemEvent is created',
+      build: () => ItemBloc()..add(ItemListStarted()),
       act: (bloc) {
-        final newItem = Item(description: 'todo description');
+        final newItem = Item(description: 'Item description');
         bloc
-          ..add(AddTodoEvent(newItem))
-          ..add(ToggleTodoEvent(newItem));
+          ..add(AddItemEvent(newItem))
+          ..add(ToggleItemEvent(newItem));
       },
       expect: () => [
-        isA<TodoListLoadedState>(),
-        isA<TodoListLoadedState>().having((obj) => obj.items.first.completed, 'completed', false),
-        isA<TodoListLoadedState>().having((obj) => obj.items.first.completed, 'completed', true),
+        isA<ItemListLoadedState>(),
+        isA<ItemListLoadedState>().having((obj) => obj.items.first.completed, 'completed', false),
+        isA<ItemListLoadedState>().having((obj) => obj.items.first.completed, 'completed', true),
       ],
     );
   });

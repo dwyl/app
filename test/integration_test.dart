@@ -13,7 +13,7 @@ void main() {
   Widget initializeMainApp({required bool isWeb}) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<TodoBloc>(create: (context) => TodoBloc()..add(TodoListStarted())),
+        BlocProvider<ItemBloc>(create: (context) => ItemBloc()..add(ItemListStarted())),
         BlocProvider<AppCubit>(create: (context) => AppCubit(isWeb: isWeb)),
       ],
       child: const MainApp(),
@@ -30,33 +30,33 @@ void main() {
       await tester.pumpWidget(app);
       await tester.pump();
 
-      // Find the text input and string stating 0 todos created
+      // Find the text input and string stating 0 items created
       expect(find.byKey(textfieldKey), findsOneWidget);
     });
   });
 
-  group('Adding a new todo item', () {
+  group('Adding a new item', () {
     testWidgets('shows a card', (WidgetTester tester) async {
       final app = initializeMainApp(isWeb: false);
       await tester.pumpWidget(app);
       await tester.pumpAndSettle();
 
-      // Find the text input and string stating 0 todos created
+      // Find the text input and string stating 0 items created
       expect(find.byKey(textfieldKey), findsOneWidget);
       expect(find.byKey(itemCardWidgetKey), findsNothing);
 
-      // Tap textfield to open new page to create todo item
+      // Tap textfield to open new page to create item
       await tester.tap(find.byKey(textfieldKey));
       await tester.pumpAndSettle(const Duration(seconds: 2));
 
       final editor = find.byType(QuillEditor);
 
-      // Type text into todo editor
+      // Type text into item editor
       await tester.tap(editor);
-      await tester.quillEnterText(editor, 'new todo\n');
+      await tester.quillEnterText(editor, 'Make lunch\n');
       await tester.pumpAndSettle();
 
-      // Tap "Save" button to add new todo item
+      // Tap "Save" button to add new item
       await tester.tap(find.byKey(saveButtonKey));
       await tester.pumpAndSettle(const Duration(seconds: 2));
 
@@ -77,11 +77,11 @@ void main() {
       await tester.pumpWidget(app);
       await tester.pumpAndSettle();
 
-      // Find the text input and string stating 0 todos created
+      // Find the text input and string stating 0 items created
       expect(find.byKey(textfieldKey), findsOneWidget);
       expect(find.byKey(itemCardWidgetKey), findsNothing);
 
-      // Tap textfield to open new page to create todo item
+      // Tap textfield to open new page to create item
       await tester.tap(find.byKey(textfieldKey));
       await tester.pumpAndSettle(const Duration(seconds: 2));
 
@@ -91,12 +91,12 @@ void main() {
       // await tester.tap(find.byKey(navBarInNewTodoPageKey));
       // await tester.pumpAndSettle();
 
-      // Type text into todo input
+      // Type text into item input
       await tester.tap(editor);
-      await tester.quillEnterText(editor, 'new todo\n');
+      await tester.quillEnterText(editor, 'Make lunch\n');
       await tester.pumpAndSettle();
 
-      // Tap "Save" button to add new todo item
+      // Tap "Save" button to add new item
       await tester.tap(find.byKey(saveButtonKey));
       await tester.pumpAndSettle(const Duration(seconds: 2));
 
@@ -120,22 +120,22 @@ void main() {
       await tester.pumpWidget(app);
       await tester.pumpAndSettle();
 
-      // Find the text input and string stating 0 todos created
+      // Find the text input and string stating 0 items created
       expect(find.byKey(textfieldKey), findsOneWidget);
       expect(find.byKey(itemCardWidgetKey), findsNothing);
 
-      // Tap textfield to open new page to create todo item
+      // Tap textfield to open new page to create item
       await tester.tap(find.byKey(textfieldKey));
       await tester.pumpAndSettle(const Duration(seconds: 2));
 
       final editor = find.byType(QuillEditor);
 
-      // Type text into todo input
+      // Type text into item input
       await tester.tap(editor);
-      await tester.quillEnterText(editor, 'new todo\n');
+      await tester.quillEnterText(editor, 'Make lunch\n');
       await tester.pumpAndSettle();
 
-      // Tap "Save" button to add new todo item
+      // Tap "Save" button to add new item
       await tester.tap(find.byKey(saveButtonKey));
       await tester.pumpAndSettle(const Duration(seconds: 2));
 
@@ -159,22 +159,22 @@ void main() {
       await tester.pumpWidget(app);
       await tester.pumpAndSettle();
 
-      // Find the text input and string stating 0 todos created
+      // Find the text input and string stating 0 items created
       expect(find.byKey(textfieldKey), findsOneWidget);
       expect(find.byKey(itemCardWidgetKey), findsNothing);
 
-      // Tap textfield to open new page to create todo item
+      // Tap textfield to open new page to create item
       await tester.tap(find.byKey(textfieldKey));
       await tester.pumpAndSettle(const Duration(seconds: 2));
 
       final editor = find.byType(QuillEditor);
 
-      // Type text into todo input
+      // Type text into item input
       await tester.tap(editor);
-      await tester.quillEnterText(editor, 'new todo\n');
+      await tester.quillEnterText(editor, 'Make lunch\n');
       await tester.pumpAndSettle();
 
-      // Tap "Save" button to add new todo item
+      // Tap "Save" button to add new item
       await tester.tap(find.byKey(saveButtonKey));
       await tester.pumpAndSettle(const Duration(seconds: 2));
 
@@ -193,19 +193,19 @@ void main() {
       await tester.pumpWidget(app);
       await tester.pumpAndSettle();
 
-      // Find the text input and string stating 0 todos created
+      // Find the text input and string stating 0 items created
       expect(find.byKey(textfieldKey), findsOneWidget);
       expect(find.byKey(itemCardWidgetKey), findsNothing);
 
-      // Tap textfield to open new page to create todo item
+      // Tap textfield to open new page to create item
       await tester.tap(find.byKey(textfieldKey));
       await tester.pumpAndSettle(const Duration(seconds: 2));
 
-      // Type text into todo input and tap "Save" button to add new todo item
+      // Type text into item input and tap "Save" button to add new item
       final editor = find.byType(QuillEditor);
 
       await tester.tap(editor);
-      await tester.quillEnterText(editor, 'new todo\n');
+      await tester.quillEnterText(editor, 'Make lunch\n');
       await tester.pumpAndSettle();
 
       await tester.tap(find.byKey(saveButtonKey));
@@ -237,19 +237,19 @@ void main() {
       await tester.pumpWidget(app);
       await tester.pumpAndSettle();
 
-      // Find the text input and string stating 0 todos created
+      // Find the text input and string stating 0 items created
       expect(find.byKey(textfieldKey), findsOneWidget);
       expect(find.byKey(itemCardWidgetKey), findsNothing);
 
-      // Tap textfield to open new page to create todo item
+      // Tap textfield to open new page to create item
       await tester.tap(find.byKey(textfieldKey));
       await tester.pumpAndSettle(const Duration(seconds: 2));
 
-      // Type text into todo input and tap "Save" button to add new todo item
+      // Type text into item input and tap "Save" button to add new item
       final editor = find.byType(QuillEditor);
 
       await tester.tap(editor);
-      await tester.quillEnterText(editor, 'new todo\n');
+      await tester.quillEnterText(editor, 'Make lunch\n');
       await tester.pumpAndSettle();
 
       await tester.tap(find.byKey(saveButtonKey));
@@ -324,11 +324,11 @@ void main() {
       await tester.pumpWidget(app);
       await tester.pumpAndSettle();
 
-      // Find the text input and string stating 0 todos created
+      // Find the text input and string stating 0 items created
       expect(find.byKey(textfieldKey), findsOneWidget);
       expect(find.byKey(itemCardWidgetKey), findsNothing);
 
-      // Tap textfield to open new page to create todo item
+      // Tap textfield to open new page to create item
       await tester.tap(find.byKey(textfieldKey));
       await tester.pumpAndSettle(const Duration(seconds: 2));
 
@@ -372,11 +372,11 @@ void main() {
       await tester.pumpWidget(app);
       await tester.pumpAndSettle();
 
-      // Find the text input and string stating 0 todos created
+      // Find the text input and string stating 0 items created
       expect(find.byKey(textfieldKey), findsOneWidget);
       expect(find.byKey(itemCardWidgetKey), findsNothing);
 
-      // Tap textfield to open new page to create todo item
+      // Tap textfield to open new page to create item
       await tester.tap(find.byKey(textfieldKey));
       await tester.pumpAndSettle(const Duration(seconds: 2));
 
@@ -389,7 +389,7 @@ void main() {
       // User went back to the home page
       expect(find.byKey(textfieldKey), findsOneWidget);
 
-      // Tap textfield again to open new page to create todo item
+      // Tap textfield again to open new page to create item
       await tester.tap(find.byKey(textfieldKey));
       await tester.pumpAndSettle(const Duration(seconds: 2));
 

@@ -1,11 +1,11 @@
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:uuid/uuid.dart';
 
-// Uuid to generate Ids for the todos
+// Uuid to generate UUIDs for the items
 const uuid = Uuid();
 
-/// Todo class.
-/// Each `Todo` has an `id`, `description` and `completed` boolean field.
+/// Item class.
+/// Each [Item] has an [id], [description] and [completed] boolean field.
 /// Optionally, a `document` can be associated to the item. This [Document] is a rich text document.
 class Item {
   final String id = uuid.v4();
