@@ -8,14 +8,17 @@ const logoKey = Key('logoKey');
 class NavBar extends StatelessWidget implements PreferredSizeWidget {
   /// Boolean that tells the bar to have a button to go to the previous page
   final bool showGoBackButton;
+
   /// Build context for the "go back" button works
   final BuildContext givenContext;
+
   /// Callback for when the user taps on the navbar
   final VoidCallback? onTap;
 
   const NavBar({
-    required this.givenContext, super.key,
-    this.showGoBackButton = false, 
+    required this.givenContext,
+    super.key,
+    this.showGoBackButton = false,
     this.onTap,
   });
 
@@ -30,7 +33,10 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
           children: [
             GestureDetector(
               onTap: () {
-                Navigator.pop(givenContext);
+                // Check if we can pop and are not at the end of the stack.
+                if (Navigator.of(context).canPop()) {
+                  Navigator.pop(givenContext);
+                }
               },
               child:
                   // dwyl logo

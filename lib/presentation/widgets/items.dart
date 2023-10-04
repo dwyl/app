@@ -101,12 +101,11 @@ class _ItemCardState extends State<ItemCard> {
 
   @override
   Widget build(BuildContext context) {
-    final deviceWidth = MediaQuery.of(context).size.width;
-
-    final checkboxSize = deviceWidth > 425.0 ? 30.0 : 20.0;
-
     // Text shown in the item
     final textToShow = widget.item.description.split('\n').first;
+
+    // Checkbox size according to view
+    final checkboxSize = ResponsiveBreakpoints.of(context).largerOrEqualTo(TABLET) ? 30.0 : 20.0;
 
     return Container(
       key: itemCardWidgetKey,
