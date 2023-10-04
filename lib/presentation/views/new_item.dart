@@ -53,82 +53,80 @@ class _NewItemPageState extends State<NewItemPage> {
   Widget build(BuildContext context) {
     final isWeb = BlocProvider.of<AppCubit>(context).state.isWeb;
 
-    return MaterialApp(
-      home: Scaffold(
-        appBar: NavBar(
-          key: newItemPageNavbarKey,
-          givenContext: context,
-          showGoBackButton: true,
-          onTap: () => _onTapNavbar(context),
-        ),
-        body: SafeArea(
-          child: Column(
-            children: [
-              // Textfield that is expanded and borderless
-              Expanded(
-                child: DeltaTodoEditor(
-                  isWeb: isWeb,
-                  editorController: _controller,
-                ),
+    return Scaffold(
+      appBar: NavBar(
+        key: newItemPageNavbarKey,
+        givenContext: context,
+        showGoBackButton: true,
+        onTap: () => _onTapNavbar(context),
+      ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            // Textfield that is expanded and borderless
+            Expanded(
+              child: DeltaTodoEditor(
+                isWeb: isWeb,
+                editorController: _controller,
               ),
+            ),
 
-              // Save button.
-              // When submitted, it adds a new item, clears the controller and navigates back
-              Align(
-                alignment: Alignment.bottomRight,
-                child: ElevatedButton(
-                  key: saveButtonKey,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 75, 192, 169),
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.zero,
-                    ),
-                  ),
-                  onPressed: () {
-                    final document = _controller.document;
-                    var text = document.toPlainText();
-
-                    // Remove last newline from text (document.toPlainText() adds this at the end of the text)
-                    if (text.isNotEmpty) {
-                      final lastChar = text[text.length - 1];
-                      text = lastChar == '\n' ? text.substring(0, text.length - 1) : text;
-                    }
-
-                    if (text.isNotEmpty) {
-                      // Create new item and create AddTodo event
-                      final newTodoItem = Item(description: text, document: document);
-                      BlocProvider.of<ItemBloc>(context).add(AddItemEvent(newTodoItem));
-
-                      // Clear textfield
-                      _controller.clear();
-
-                      // Go back to home page
-                      Navigator.pop(context);
-                    }
-                  },
-                  child: SizedBox(
-                    child: (() {
-                      // On mobile
-                      if (ResponsiveBreakpoints.of(context).isMobile) {
-                        return const Text(
-                          'Save',
-                          style: TextStyle(fontSize: 24),
-                        );
-                      }
-
-                      // On tablet and up
-                      else {
-                        return const Text(
-                          'Save',
-                          style: TextStyle(fontSize: 40),
-                        );
-                      }
-                    }()),
+            // Save button.
+            // When submitted, it adds a new item, clears the controller and navigates back
+            Align(
+              alignment: Alignment.bottomRight,
+              child: ElevatedButton(
+                key: saveButtonKey,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 75, 192, 169),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.zero,
                   ),
                 ),
+                onPressed: () {
+                  final document = _controller.document;
+                  var text = document.toPlainText();
+
+                  // Remove last newline from text (document.toPlainText() adds this at the end of the text)
+                  if (text.isNotEmpty) {
+                    final lastChar = text[text.length - 1];
+                    text = lastChar == '\n' ? text.substring(0, text.length - 1) : text;
+                  }
+
+                  if (text.isNotEmpty) {
+                    // Create new item and create AddTodo event
+                    final newTodoItem = Item(description: text, document: document);
+                    BlocProvider.of<ItemBloc>(context).add(AddItemEvent(newTodoItem));
+
+                    // Clear textfield
+                    _controller.clear();
+
+                    // Go back to home page
+                    Navigator.pop(context);
+                  }
+                },
+                child: SizedBox(
+                  child: (() {
+                    // On mobile
+                    if (ResponsiveBreakpoints.of(context).isMobile) {
+                      return const Text(
+                        'Save',
+                        style: TextStyle(fontSize: 24),
+                      );
+                    }
+
+                    // On tablet and up
+                    else {
+                      return const Text(
+                        'Save',
+                        style: TextStyle(fontSize: 40),
+                      );
+                    }
+                  }()),
+                ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

@@ -33,10 +33,7 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
           children: [
             GestureDetector(
               onTap: () {
-                // Check if we can pop and are not at the end of the stack.
-                if (Navigator.of(context).canPop()) {
-                  Navigator.pop(givenContext);
-                }
+                Navigator.of(givenContext).maybePop();
               },
               child:
                   // dwyl logo
