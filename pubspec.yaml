@@ -50,9 +50,11 @@ dev_dependencies:
 
   cross_file: ^0.3.3+5
   path_provider_platform_interface: ^2.1.1
+  image_picker_platform_interface: ^2.9.1
 
 flutter:
   uses-material-design: true
 
   assets:
     - assets/icon/
+    - assets/

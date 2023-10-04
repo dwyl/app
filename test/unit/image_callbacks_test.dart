@@ -17,7 +17,7 @@ class FakePathProviderPlatform extends PathProviderPlatform implements Fake {
   @override
   Future<String?> getApplicationDocumentsPath() async {
     // Make sure is the same folder used in the tests.
-    return 'test';
+    return 'assets';
   }
 }
 
@@ -45,11 +45,11 @@ void main() {
   });
 
   test('`onImagePickCallback` should return path of a given file.', () async {
-    final file = File('test/sample.jpeg');
+    final file = File('assets/sample.jpeg');
     final path = await onImagePickCallback(file);
 
     // Some time must have passed
-    expect(path == 'test/sample.jpeg', true);
+    expect(path == 'assets/sample.jpeg', true);
   });
 
   testWidgets('`webImagePickImpl` should return the URL of the uploaded image on success (200).', (WidgetTester tester) async {

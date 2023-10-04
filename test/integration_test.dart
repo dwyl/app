@@ -3,11 +3,49 @@ import 'package:dwyl_app/presentation/views/views.dart';
 import 'package:dwyl_app/presentation/widgets/editor/emoji_picker.dart';
 import 'package:dwyl_app/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:flutter_quill/flutter_quill_test.dart';
 import 'package:flutter_quill_extensions/embeds/toolbar/image_button.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:dwyl_app/main.dart';
+import 'package:image_picker_platform_interface/image_picker_platform_interface.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:universal_io/io.dart';
+
+class FakeImagePicker extends ImagePickerPlatform {
+  @override
+  Future<XFile?> getImageFromSource({
+    required ImageSource source,
+    ImagePickerOptions options = const ImagePickerOptions(),
+  }) async {
+    final data = await rootBundle.load('assets/sample.jpeg');
+    final bytes = data.buffer.asUint8List();
+    final tempDir = await getTemporaryDirectory();
+    final file = await File(
+      '${tempDir.path}/doc.png',
+    ).writeAsBytes(bytes);
+
+    return XFile(file.path);
+  }
+
+  @override
+  Future<List<XFile>> getMultiImageWithOptions({
+    MultiImagePickerOptions options = const MultiImagePickerOptions(),
+  }) async {
+    final data = await rootBundle.load('assets/sample.jpeg');
+    final bytes = data.buffer.asUint8List();
+    final tempDir = await getTemporaryDirectory();
+    final file = await File(
+      '${tempDir.path}/sample.png',
+    ).writeAsBytes(bytes);
+    return <XFile>[
+      XFile(
+        file.path,
+      ),
+    ];
+  }
+}
 
 void main() {
   /// Bootstraps a sample main application, whether it [isWeb] or not.
@@ -21,8 +59,10 @@ void main() {
     );
   }
 
+  // See https://stackoverflow.com/questions/76586920/mocking-imagepicker-in-flutter-integration-tests-not-working for context.
   setUpAll(() {
     TestWidgetsFlutterBinding.ensureInitialized();
+    ImagePickerPlatform.instance = FakeImagePicker();
   });
 
   group('Normal build', () {
@@ -403,9 +443,6 @@ void main() {
 
   group('Image picker', () {
     testWidgets('should show and select image', (WidgetTester tester) async {
-      // Mock image
-      // mockImagePicker(tester);
-
       // Build our app and trigger a frame.
       final app = initializeMainApp(isWeb: false);
       await tester.pumpWidget(app);
@@ -426,12 +463,46 @@ void main() {
       await tester.pump(const Duration(minutes: 1));
 
       // Press image button
+      // Because of the override, should embed image.
       final imageButton = find.byType(ImageButton);
       await tester.tap(imageButton);
       await tester.pumpAndSettle();
 
-      // TODO can't choose image.
-      // Check https://github.com/singerdmx/flutter-quill/issues/1389.
+      // Image correctly added, editor should be visible again.
+      expect(editor.hitTestable(), findsOneWidget);
+    });
+
+
+    // TODO does not work because inside ImageButton, there is a `kIsWeb`. 
+    // This can't be mockable, unless we use a custom button to recreate this behaviour.
+    testWidgets('should show and select image (on the web - uploads image to the web)', (WidgetTester tester) async {
+      // Build our app and trigger a frame.
+      final app = initializeMainApp(isWeb: true);
+      await tester.pumpWidget(app);
+      await tester.pumpAndSettle();
+
+      // Tap textfield to open new page to create item
+      await tester.tap(find.byKey(textfieldKey));
+      await tester.pumpAndSettle(const Duration(seconds: 2));
+
+      // Should show editor and toolbar
+      final editor = find.byType(QuillEditor);
+      final toolbar = find.byType(QuillToolbar);
+      expect(editor.hitTestable(), findsOneWidget);
+      expect(toolbar.hitTestable(), findsOneWidget);
+
+      // Drag toolbar to the right
+      await tester.drag(toolbar, const Offset(-500, 0));
+      await tester.pump(const Duration(minutes: 1));
+
+      // Press image button
+      // Because of the override, should embed image.
+      final imageButton = find.byType(ImageButton);
+      await tester.tap(imageButton);
+      await tester.pumpAndSettle();
+
+      // Image correctly added, editor should be visible again.
+      expect(editor.hitTestable(), findsOneWidget);
     });
   });
 
