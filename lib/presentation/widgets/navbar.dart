@@ -33,6 +33,7 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
           children: [
             GestureDetector(
               onTap: () {
+                // https://stackoverflow.com/questions/53723294/flutter-navigator-popcontext-returning-a-black-screen
                 Navigator.of(givenContext).maybePop();
               },
               child:
