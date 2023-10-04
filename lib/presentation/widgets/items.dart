@@ -105,6 +105,9 @@ class _ItemCardState extends State<ItemCard> {
 
     final checkboxSize = deviceWidth > 425.0 ? 30.0 : 20.0;
 
+    // Text shown in the item
+    final textToShow = widget.item.description.split('\n').first;
+
     return Container(
       key: itemCardWidgetKey,
       constraints: const BoxConstraints(minHeight: 70),
@@ -155,7 +158,7 @@ class _ItemCardState extends State<ItemCard> {
                   // On mobile
                   if (ResponsiveBreakpoints.of(context).isMobile) {
                     return Text(
-                      widget.item.description,
+                      textToShow,
                       style: TextStyle(
                         fontSize: 20,
                         decoration: widget.item.completed ? TextDecoration.lineThrough : TextDecoration.none,
@@ -168,7 +171,7 @@ class _ItemCardState extends State<ItemCard> {
                   // On tablet and up
                   else {
                     return Text(
-                      widget.item.description,
+                      textToShow,
                       style: TextStyle(
                         fontSize: 25,
                         decoration: widget.item.completed ? TextDecoration.lineThrough : TextDecoration.none,
