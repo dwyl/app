@@ -2,13 +2,11 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:dwyl_app/data/repositories/repositories.dart';
+import 'package:dwyl_app/logging/logging.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_quill_extensions/flutter_quill_extensions.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-
-/// The URL endpoint in which the images will be uploaded and hosted.
-const apiEndpointURL = 'http://localhost:4000/api/images';
 
 /// Receives a file [file], copies it to the app's documents directory and returns the path of the copied file.
 Future<String> onImagePickCallback(File file) async {
@@ -40,7 +38,10 @@ Future<String?> webImagePickImpl(ImageRepository imageRepository, ImageFilePicke
 
   final uploadRet = await imageRepository.uploadImage(bytes, platformFile.name);
   return uploadRet.fold(
-    (error) => null,
+    (error) {
+      logError('Error uploading image: \n${error.toString()}');
+      return null;
+    },
     (r) => r,
   );
 }
