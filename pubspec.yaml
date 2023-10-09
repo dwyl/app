@@ -37,6 +37,7 @@ dependencies:
   # Logging
   lumberdash: ^3.0.0
   colorize_lumberdash: ^3.0.0
+  dartz: ^0.10.1
 
 dev_dependencies:
   integration_test:

@@ -11,7 +11,7 @@ import 'package:mime/mime.dart';
 import 'package:http_parser/http_parser.dart';
 
 /// The URL endpoint in which the images will be uploaded and hosted.
-const apiEndpointURL = 'https://imgup.fly.dev/api/images';
+const apiEndpointURL = 'http://localhost:4000/api/images';
 
 /// Receives a file [file], copies it to the app's documents directory and returns the path of the copied file.
 Future<String> onImagePickCallback(File file) async {
