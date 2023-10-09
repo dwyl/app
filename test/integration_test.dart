@@ -1,4 +1,5 @@
 import 'package:dwyl_app/blocs/blocs.dart';
+import 'package:dwyl_app/core/core.dart';
 import 'package:dwyl_app/presentation/views/views.dart';
 import 'package:dwyl_app/presentation/widgets/editor/emoji_picker.dart';
 import 'package:dwyl_app/presentation/widgets/widgets.dart';
@@ -8,7 +9,6 @@ import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:flutter_quill/flutter_quill_test.dart';
 import 'package:flutter_quill_extensions/embeds/toolbar/image_button.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:dwyl_app/main.dart';
 import 'package:image_picker_platform_interface/image_picker_platform_interface.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:universal_io/io.dart';

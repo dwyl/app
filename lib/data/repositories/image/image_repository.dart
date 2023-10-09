@@ -13,8 +13,12 @@ abstract class ImageRepository {
 /// Meant to be invoked by the application layer (presentation and blocs),
 /// it will call the appropriate Image Data Provider to deal with images.
 class ImgupRepository implements ImageRepository {
+  final http.Client client;
+
+  ImgupRepository({required this.client});
+
   @override
   Future<Either<RequestError, void>> uploadImage(Uint8List bytes, String filename) async {
-    return providers.ImageProvider(client: http.Client()).uploadImage(bytes, filename);
+    return providers.ImageProvider(client: client).uploadImage(bytes, filename);
   }
 }
