@@ -2,7 +2,7 @@
 
 # `app`
 
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/dwyl/app/ci.yml?label=build&style=flat-square&branch=main)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/dwyl/app/ci.yml?label=build&style=flat-square&branch=main)](https://github.com/dwyl/app/actions/workflows/ci.yml)
 [![codecov.io](https://img.shields.io/codecov/c/github/dwyl/app/main.svg?style=flat-square)](https://codecov.io/github/dwyl/app?branch=main)
 [![contributions welcome](https://img.shields.io/badge/feedback-welcome-brightgreen.svg?style=flat-square)](https://github.com/dwyl/app/issues)
 [![HitCount](https://hits.dwyl.com/dwyl/app.svg)](https://hits.dwyl.com/dwyl/app)
@@ -116,7 +116,6 @@ To run this app you will need to have ***PostgreSQL Installed and Running*** on 
 ***before*** you attempt to run this example.
 > see: https://wiki.postgresql.org/wiki/Detailed_installation_guides
 
--->
 
 
 ### No Registration Required
