@@ -1,12 +1,12 @@
-import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:dartz/dartz.dart';
+import 'package:dwyl_app/data/repositories/repositories.dart';
 import 'package:dwyl_app/presentation/widgets/editor/image_callbacks.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
-import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
 import 'package:path_provider_platform_interface/path_provider_platform_interface.dart';
 
@@ -36,7 +36,7 @@ class FileMock extends MockFile {
   String get path => 'some_path.png';
 }
 
-@GenerateMocks([http.Client, ImageFilePicker, File])
+@GenerateMocks([ImageRepository, ImageFilePicker, File])
 void main() {
   /// Check for context: https://stackoverflow.com/questions/60671728/unable-to-load-assets-in-flutter-tests
   setUp(() async {
@@ -58,7 +58,7 @@ void main() {
     IOOverrides.runZoned(
       () async {
         // Mocks
-        final clientMock = MockClient();
+        final imageRepoMock = MockImageRepository();
         final filePickerMock = MockImageFilePicker();
 
         // Set mock behaviour for `filePickerMock` with jpeg magic number byte array https://gist.github.com/leommoore/f9e57ba2aa4bf197ebc5
@@ -69,14 +69,12 @@ void main() {
         // Set mock behaviour for image returned from the picker
         when(filePickerMock.pickImage()).thenAnswer((_) async => Future<FilePickerResult?>.value(FilePickerResult(listMockFiles)));
 
-        // Set mock behaviour for `requestMock`
-        const body = '{"url":"return_url"}';
-        final bodyBytes = utf8.encode(body);
-        when(clientMock.send(any)).thenAnswer((_) async => http.StreamedResponse(Stream<List<int>>.fromIterable([bodyBytes]), 200));
+        // Set mock behaviour for `imageRepoMock`
+        when(imageRepoMock.uploadImage(any, any)).thenAnswer((_) async => const Right('return_url'));
 
         // With the request being "200", we should expect the return URL be the same as the one defined in the mock body.
         final urlResponse = await webImagePickImpl(
-          clientMock,
+          imageRepoMock,
           filePickerMock,
           (file) => Future.value(''),
         );

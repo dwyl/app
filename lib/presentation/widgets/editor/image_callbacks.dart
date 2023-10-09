@@ -1,14 +1,11 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 
+import 'package:dwyl_app/data/repositories/repositories.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_quill_extensions/flutter_quill_extensions.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:http/http.dart' as http;
-import 'package:mime/mime.dart';
-import 'package:http_parser/http_parser.dart';
 
 /// The URL endpoint in which the images will be uploaded and hosted.
 const apiEndpointURL = 'http://localhost:4000/api/images';
@@ -20,11 +17,11 @@ Future<String> onImagePickCallback(File file) async {
   return copiedFile.path.toString();
 }
 
-/// Opens gallery (on mobile) or file explorer (on web). 
+/// Opens gallery (on mobile) or file explorer (on web).
 /// Upon picking an image, it is uploaded and the URL of where the image is hosted is returned.
-/// 
+///
 /// Returns `null` if no image was picked or the image was not correctly uploaded.
-Future<String?> webImagePickImpl(http.Client client, ImageFilePicker filePicker, OnImagePickCallback onImagePickCallback) async {
+Future<String?> webImagePickImpl(ImageRepository imageRepository, ImageFilePicker filePicker, OnImagePickCallback onImagePickCallback) async {
   // Lets the user pick one file; files with any file extension can be selected
   final result = await filePicker.pickImage();
 
@@ -41,27 +38,11 @@ Future<String?> webImagePickImpl(http.Client client, ImageFilePicker filePicker,
     return null;
   }
 
-  // Make HTTP request to upload the image to the file
-  final request = http.MultipartRequest('POST', Uri.parse(apiEndpointURL));
-
-  final httpImage = http.MultipartFile.fromBytes(
-    'image',
-    bytes,
-    contentType: MediaType.parse(lookupMimeType('', headerBytes: bytes)!),
-    filename: platformFile.name,
+  final uploadRet = await imageRepository.uploadImage(bytes, platformFile.name);
+  return uploadRet.fold(
+    (error) => null,
+    (r) => r,
   );
-  request.files.add(httpImage);
-
-  // Check the response and handle accordingly
-  return client.send(request).then((response) async {
-    if (response.statusCode != 200) {
-      return null;
-    }
-
-    final responseStream = await http.Response.fromStream(response);
-    final responseData = json.decode(responseStream.body);
-    return responseData['url'];
-  });
 }
 
 // coverage:ignore-start

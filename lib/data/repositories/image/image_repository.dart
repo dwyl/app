@@ -6,7 +6,7 @@ import 'package:dwyl_app/models/models.dart';
 import 'package:http/http.dart' as http;
 
 abstract class ImageRepository {
-  Future<Either<RequestError, void>> uploadImage(Uint8List bytes, String filename);
+  Future<Either<RequestError, String>> uploadImage(Uint8List bytes, String filename);
 }
 
 /// Image repository (part of Domain Layer)
@@ -18,7 +18,7 @@ class ImgupRepository implements ImageRepository {
   ImgupRepository({required this.client});
 
   @override
-  Future<Either<RequestError, void>> uploadImage(Uint8List bytes, String filename) async {
+  Future<Either<RequestError, String>> uploadImage(Uint8List bytes, String filename) async {
     return providers.ImageProvider(client: client).uploadImage(bytes, filename);
   }
 }

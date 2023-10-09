@@ -1,5 +1,3 @@
-import 'package:dwyl_app/blocs/blocs.dart';
-import 'package:dwyl_app/core/data_layer.dart';
 import 'package:dwyl_app/presentation/views/home.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';

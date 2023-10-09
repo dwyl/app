@@ -1,13 +1,14 @@
 import 'dart:async';
 import 'dart:ui';
 
+import 'package:dwyl_app/blocs/blocs.dart';
+import 'package:dwyl_app/blocs/data/data_cubit.dart';
 import 'package:dwyl_app/presentation/widgets/editor/emoji_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_quill/extensions.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:flutter_quill_extensions/flutter_quill_extensions.dart';
-import 'package:http/http.dart' as http;
 
 import 'image_callbacks.dart';
 import 'web_embeds/web_embeds.dart';
@@ -180,7 +181,7 @@ class DeltaTodoEditorState extends State<DeltaTodoEditor> {
       onImagePickCallback: onImagePickCallback,
 
       // `webImagePickImpl` is called after image is picked on the web
-      webImagePickImpl: (onImagePickCallback) => webImagePickImpl(http.Client(), ImageFilePicker(), onImagePickCallback),
+      webImagePickImpl: (onImagePickCallback) => webImagePickImpl(BlocProvider.of<DataCubit>(context).state.imageRepository, ImageFilePicker(), onImagePickCallback),
 
       // defining the selector (we only want to open the gallery whenever the person wants to upload an image)
       mediaPickSettingSelector: (context) {

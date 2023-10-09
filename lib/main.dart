@@ -4,10 +4,8 @@ import 'package:dwyl_app/data/repositories/repositories.dart';
 import 'package:dwyl_app/logging/logging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:responsive_framework/responsive_framework.dart';
 
 import 'blocs/blocs.dart';
-import 'presentation/views/views.dart';
 
 // coverage:ignore-start
 void main() {
