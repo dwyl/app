@@ -3,31 +3,31 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:dwyl_app/models/item.dart';
 
 void main() {
-  group('TodoEvent', () {
-    group('TodoListStarted', () {
+  group('ItemEvent', () {
+    group('ItemListStarted', () {
       test('supports value comparison', () {
-        expect(TodoListStarted(), TodoListStarted());
+        expect(ItemListStarted(), ItemListStarted());
       });
     });
 
-    group('AddTodoEvent', () {
+    group('AddItemEvent', () {
       final item = Item(description: 'description');
       test('supports value comparison', () {
-        expect(AddTodoEvent(item), AddTodoEvent(item));
+        expect(AddItemEvent(item), AddItemEvent(item));
       });
     });
 
-    group('RemoveTodoEvent', () {
+    group('RemoveItemEvent', () {
       final item = Item(description: 'description');
       test('supports value comparison', () {
-        expect(RemoveTodoEvent(item), RemoveTodoEvent(item));
+        expect(RemoveItemEvent(item), RemoveItemEvent(item));
       });
     });
 
-    group('ToggleTodoEvent', () {
+    group('ToggleItemEvent', () {
       final item = Item(description: 'description');
       test('supports value comparison', () {
-        expect(ToggleTodoEvent(item), ToggleTodoEvent(item));
+        expect(ToggleItemEvent(item), ToggleItemEvent(item));
       });
     });
   });

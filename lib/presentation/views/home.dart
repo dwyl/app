@@ -3,12 +3,12 @@ import 'package:responsive_framework/responsive_framework.dart';
 
 import '../../blocs/blocs.dart';
 import '../widgets/widgets.dart';
-import 'new_todo.dart';
+import 'new_item.dart';
 
 const textfieldKey = Key('textfieldKey');
 
 /// App's home page.
-/// The person will be able to create a new todo item
+/// The person will be able to create a new item item
 /// and view a list of previously created ones.
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -23,10 +23,10 @@ class HomePage extends StatelessWidget {
 
       // Body of the page.
       // It is responsive and change style according to the device.
-      body: BlocBuilder<TodoBloc, TodoState>(
+      body: BlocBuilder<ItemBloc, ItemState>(
         builder: (context, state) {
           // If the list is loaded
-          if (state is TodoListLoadedState) {
+          if (state is ItemListLoadedState) {
             final items = state.items;
 
             return SafeArea(
@@ -41,8 +41,7 @@ class HomePage extends StatelessWidget {
                           controller: TextEditingController(),
                           keyboardType: TextInputType.none,
                           onTap: () {
-                            Navigator.of(context)
-                                .push(navigateToNewTodoItemPage());
+                            Navigator.of(context).push(navigateToCreateNewItemPage());
                           },
                           maxLines: 2,
                           style: const TextStyle(fontSize: 20),
@@ -63,8 +62,7 @@ class HomePage extends StatelessWidget {
                           controller: TextEditingController(),
                           keyboardType: TextInputType.none,
                           onTap: () {
-                            Navigator.of(context)
-                                .push(navigateToNewTodoItemPage());
+                            Navigator.of(context).push(navigateToCreateNewItemPage());
                           },
                           maxLines: 2,
                           style: const TextStyle(fontSize: 30),
@@ -93,7 +91,7 @@ class HomePage extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8.0),
                             child: ItemCard(item: items[i]),
-                          )
+                          ),
                         ],
                       ],
                     ),
@@ -103,7 +101,7 @@ class HomePage extends StatelessWidget {
             );
           }
 
-          // If the state of the TodoItemList is not loaded, we show error.ˆ
+          // If the state of the ItemList is not loaded, we show error.ˆ
           else {
             return const Center(child: Text('Error loading items list.'));
           }
