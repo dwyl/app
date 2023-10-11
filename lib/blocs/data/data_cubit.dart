@@ -1,4 +1,4 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dwyl_app/data/repositories/repositories.dart';
 import 'package:equatable/equatable.dart';
 
