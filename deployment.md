@@ -19,7 +19,16 @@ So, let's start!
         - [Adding a launcher icon](#adding-a-launcher-icon)
         - [Reviewing the `AndroidManifest` file](#reviewing-the-androidmanifest-file)
         - [Reviewing the `Gradle` build configuration](#reviewing-the-gradle-build-configuration)
+    - [1. Signing the application](#1-signing-the-application)
+      - [Creating an upload keystore](#creating-an-upload-keystore)
+      - [Reference the keystore from the app](#reference-the-keystore-from-the-app)
 
+
+> [!WARNING]
+>
+> This guide assumes you have `Flutter` installed.
+> If you don't, please check https://github.com/dwyl/learn-flutter
+> for more information.
 
 ## 🤖 Google `PlayStore`
 
@@ -213,3 +222,163 @@ is more recent than another.
 - `versionName`, version number of the app shown to users.
 - `compileSdkVersion`, specifying the API level `Gradle` should use to compile the app.
 Defaults to `flutter.compileSdkVersion`.
+
+
+
+### 1. Signing the application
+
+To publish on the `Play Store`,
+you need to give the app a digital signature.
+
+
+#### Creating an upload keystore
+
+On `Android`, there are two different signing keys:
+- **deployment key** - end-users that download the [`.apk` file](https://en.wikipedia.org/wiki/Apk_(file_format))
+will have this key embedded. 
+- **upload key** - is used to authenticate the uploaded `.apk` by developers
+onto the `Play Store` 
+and is *re-signed with the deployment key* once in the `Play Store`.
+
+So let's create our **upload keystore**!
+If you have one, skip this step.
+If you *don't*, you have two ways of doing this:
+
+- following the [Android Studio key generation steps](https://developer.android.com/studio/publish/app-signing#sign-apk).
+- or running the following commands.
+
+```shell
+keytool -genkey -v -keystore ~/upload-keystore.jks -keyalg RSA \
+        -keysize 2048 -validity 10000 -alias upload
+
+```
+
+> [!NOTE]
+>
+> If you're on Windows, run this in `Powershell`.
+>
+> ```shell
+>   keytool -genkey -v -keystore %userprofile%\upload-keystore.jks ^
+>          -storetype JKS -keyalg RSA -keysize 2048 -validity 10000 ^
+>          -alias upload
+> ```
+
+You may run into this error when running the command.
+
+```
+The operation couldn’t be completed. Unable to locate a Java Runtime.
+Please visit http://www.java.com for information on installing Java.
+```
+
+This means that the `Java` binary needed to run the command
+is not in your path.
+To fix this, run  `flutter doctor -v` and locate the path that is printed
+after `"Java binary at:"`.
+After this, **use this path** and replace `java` with `keytool`.
+
+```shell
+/Applications/Android\ Studio.app/Contents/jre/Contents/Home/bin/keytool
+```
+
+> [!WARNING]
+>
+> If your path includes space-separated names, 
+> such as `Program Files`, use platform-appropriate notation for the names. 
+> For example, on Mac/Linux use `Program\ Files`, and on Windows use `"Program Files"`.
+
+Instead of `keytool`, use the path above to run the command. 
+You will be prompted to create a password (make sure to remember it!)
+and will ask you for some information about yourself.
+
+After this, the keystore should be created
+and now it should work 😊.
+
+Running this command will store the `upload-keystore.jks` file in your home directory.
+**Do not check this file into public source control**. 
+It is meant to be private.
+
+
+#### Reference the keystore from the app
+
+With the keystore created, 
+we need to reference it from the app.
+Create a file in `android` called `key.properties`
+with the following information.
+
+Fill in the placeholder properties with your own.
+
+```properties
+storePassword=<password-from-previous-step>
+keyPassword=<password-from-previous-step>
+keyAlias=upload
+storeFile=<keystore-file-location>
+```
+
+The keystore file location,
+as it was previously mentioned,
+is by default in your homepage.
+Check `/Users/<user>/upload-keystore.jks` for it.
+
+**Do not check this file into source control**.
+Add it to your `.ignorefile` if it's not already.
+
+
+Now that we've created our `key.properties` files
+with references to our upload keystore,
+we need to *use it in our app*.
+To do so, 
+head over to `android/app/build.gradle` and:
+
+- Add the keystore information from the `key.properties` file
+**before the `android` block**.
+
+```gradle
+   def keystoreProperties = new Properties()
+   def keystorePropertiesFile = rootProject.file('key.properties')
+   if (keystorePropertiesFile.exists()) {
+       keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+   }
+
+   android {
+         ...
+   }
+```
+
+- Find the `buildTypes` block.
+
+```gradle
+   buildTypes {
+       release {
+           // TODO: Add your own signing config for the release build.
+           // Signing with the debug keys for now,
+           // so `flutter run --release` works.
+           signingConfig signingConfigs.debug
+       }
+   }
+```
+
+And replace it with the following.
+
+```gradle
+   signingConfigs {
+       release {
+           keyAlias keystoreProperties['keyAlias']
+           keyPassword keystoreProperties['keyPassword']
+           storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+           storePassword keystoreProperties['storePassword']
+       }
+   }
+   buildTypes {
+       release {
+           signingConfig signingConfigs.release
+       }
+   }
+```
+
+Congratulations! 
+Release builds of your app will now be signed automatically! 🥳
+
+For good measure, 
+run `flutter clean` after making these changes.
+Some cached builds might linger from before these changes,
+so we want to clear that possibility straight away.
