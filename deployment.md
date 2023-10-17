@@ -2,7 +2,7 @@
 
 This guide will help you through deploying a `Flutter` application
 into the two main app stores in the mobile ecosystem: 
-`iOS AppStore` and `Android PlayStore`.
+`iOS AppStore` and `Google Play Store`.
 
 Because we are using `Flutter`,
 the way one builds, packages and ships an application
@@ -11,7 +11,7 @@ will differ from the native way.
 So, let's start!
 
 - [Deployment Guide 📩](#deployment-guide-)
-  - [🤖 Google `PlayStore`](#-google-playstore)
+  - [🤖 Google `Play Store`](#-google-play-store)
     - [0. Pre-requisites](#0-pre-requisites)
       - [Creating a `Google Play` account](#creating-a-google-play-account)
       - [Review your app files](#review-your-app-files)
@@ -22,6 +22,10 @@ So, let's start!
     - [1. Signing the application](#1-signing-the-application)
       - [Creating an upload keystore](#creating-an-upload-keystore)
       - [Reference the keystore from the app](#reference-the-keystore-from-the-app)
+    - [2. Building app for release](#2-building-app-for-release)
+      - [Build an `app bundle`](#build-an-app-bundle)
+      - [Build an `APK`](#build-an-apk)
+    - [3. Publishing to `Play Store`](#3-publishing-to-play-store)
 
 
 > [!WARNING]
@@ -30,9 +34,9 @@ So, let's start!
 > If you don't, please check https://github.com/dwyl/learn-flutter
 > for more information.
 
-## 🤖 Google `PlayStore`
+## 🤖 Google `Play Store`
 
-Let's start with Google's `PlayStore`!
+Let's start with Google's `Play Store`!
 
 
 ### 0. Pre-requisites
@@ -201,7 +205,6 @@ Two important changes include:
 [permission](https://developer.android.com/guide/topics/manifest/uses-permission-element)
 will be needed if the app needs internet access.
 
-
 ##### Reviewing the `Gradle` build configuration
 
 Next up, checking if the [`Gradle build file`](https://developer.android.com/studio/build/#module-level)
@@ -223,7 +226,11 @@ is more recent than another.
 - `compileSdkVersion`, specifying the API level `Gradle` should use to compile the app.
 Defaults to `flutter.compileSdkVersion`.
 
-
+> [!NOTE]
+>
+> In `Flutter`, most of these are using default settings from the `Flutter` version.
+> In the case of the version names and integers,
+> they are fetched from the `pubspec.yaml` file.
 
 ### 1. Signing the application
 
@@ -382,3 +389,139 @@ For good measure,
 run `flutter clean` after making these changes.
 Some cached builds might linger from before these changes,
 so we want to clear that possibility straight away.
+
+
+### 2. Building app for release
+
+With our signing keystore ready to go,
+we can now create **release bundles**.
+
+At this stage, before creating a release bundle,
+you may want to consider [obfuscating your Dart source code](https://docs.flutter.dev/deployment/obfuscate)
+to make it difficult to reverse engineer.
+
+This can bring security benefits,
+prevent competitors, hackers or malicious actors from reverse-engineering your app
+and safeguard proprietary algorithms or paid features from being copied or used.
+It can additionally reduce the size of the Flutter app,
+which is always a plus ➕.
+
+To do this, we only just need to add a couple of flags
+to the build command,
+and maintain additional files to de-obfuscate stack traces
+in case the app crashes.
+
+> [!NOTE]
+>
+> For more information on how to de-obfuscate a stack trace,
+> check https://docs.flutter.dev/deployment/obfuscate#read-an-obfuscated-stack-trace.
+> It will explain the `flutter symbolize` command that is used for this effect.
+
+
+Now can release our app in two formats to later be published to the `Play Store`:
+
+- **`app bundle`** (recommended).
+- **`APK`**.
+
+
+Let's go over each one.
+
+> [!NOTE]
+>
+> Before making the bundle release,
+> you need to increase the `version` of the app
+> in the `pubspec.yaml` file.
+
+
+#### Build an `app bundle`
+
+If you are keen in knowing *why* releasing `app bundles` is better,
+follow https://developer.android.com/guide/app-bundle.
+Making long story short, you're deferring APK generation 
+and signing to Google Play.
+They will optimize your app for you for each device,
+making this much easier on our side.
+
+In fact, from August 2021, `Google Play` **requires** apps
+to be published in this format.
+
+Let's create our `app bundle`!
+
+Go to your project folder, and simply run:
+
+```shell
+flutter build appbundle
+```
+
+> [!NOTE]
+>
+> If you want to obfuscate your code, run:
+> ```shell
+> flutter build appbundle --obfuscate --split-debug-info=/<project-name>/<directory>
+> ```
+
+This will show the output of the `aab` file,
+the app bundle.
+
+Now, if we want to test this bundle tool, 
+we can do so in two ways:
+
+- **offline**, by using the [`bundletool`](https://github.com/google/bundletool) command.
+After installing this, you will **generate `apk` files which you can run**
+to test the application.
+For this, simply run `bundletool build-apks --bundle=<path_of_aab> output=<output_folder>`.
+For example,
+
+```shell
+bundletool build-apks --bundle build/app/outputs/bundle/release/app-release.aab --output build_aab_apks/app-release.apks
+```
+
+This will create a folder `build_aab_apks` with the `.apk` file that you can run on a device to test it.
+Now, you can plug in your device to the computer
+and run `bundletool install-apks --apks=build_aab_apks/app-release.apks` 
+(change the location of the `.apks` you've created accordingly).
+
+- **using `Google Play`**, by uploading the bundle to `Google Play`
+to test it. You should use the internal test track, or alpha/beta channels 
+to test the bundle before production.
+For this, simply follow the instructions in https://developer.android.com/studio/publish/upload-bundle.
+
+
+#### Build an `APK`
+
+Although `app bundles` are required to publish to the `Play Store`,
+you may want to publish your app in other stores,
+which may not yet support `app bundles`.
+For this, just release the `APK` for each [target ABI](https://en.wikipedia.org/wiki/Application_binary_interface).
+
+Go to your project folder, and simply run:
+
+```shell
+flutter build apk --split-per-abi
+```
+
+> [!NOTE]
+>
+> If you want to obfuscate your code, run:
+> ```shell
+> flutter build apk --split-per-abi --obfuscate --split-debug-info=/<project-name>/<directory>
+> ```
+
+This command will create **three `APK` files**
+in `/build/app/outputs/apk/release/`.
+
+To test this `APK`, it's quite easy.
+Similarly to before,
+connect your Android device to your computer,
+go to your project folder
+and run `flutter install`.
+
+
+### 3. Publishing to `Play Store`
+
+Now that we have our `app bundle` ready,
+we ought to deploy it to `Play Store`.
+For a more in-depth tutorial, please check https://developer.android.com/distribute.
+
+
+//TODO add steps after getting verified
