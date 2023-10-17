@@ -61,11 +61,84 @@ as it's easier to setup.
 What matters here is that we have an account that we can use to publish apps.
 
 <p align="center">
-  <img width="800" src="https://github.com/dwyl/app/assets/17494745/8d0a9578-878e-4e95-8f80-e7aefaaf272f" />
+  <img width="800" src="https://github.com/dwyl/app/assets/17494745/c4033d57-17ca-4339-8bbd-37e8caf80217" />
 </p>
 
+Choose the option.
+In our case, 
+we'll have these requirements.
+You'll have to pay a `25 USD` fee in either one.
 
-// TODO FINISH
+<p align="center">
+  <img width="800" src="https://github.com/dwyl/app/assets/17494745/8c87b059-7bf3-45e8-a4a0-d63a284f2603" />
+</p>
+
+After clicking on `Continue`, you'll have to create a payment profile
+for verification purposes.
+This payment profile will also be used to pay the registration fee.
+
+Click on `Create or select payments profile`
+and go through the steps of adding your debit/credit card.
+Once that is finished, 
+you may press `Next`.
+
+After clicking `Next`, 
+you will be prompted to fill in your **Public Developer Profile**.
+
+<p align="center">
+  <img width="800" src="https://github.com/dwyl/app/assets/17494745/9f9398cf-49b9-4563-8de8-de96b7227949" />
+</p>
+
+Just fill the requested fields with your e-mail address,
+acknowledging sending the information to Google.
+
+Click `Next`.
+
+<p align="center">
+  <img width="800" src="https://github.com/dwyl/app/assets/17494745/f43b200e-98a3-4ead-9335-88e2854c0304" />
+</p>
+
+Fill out the requested information.
+Google will ask you for information regarding prior experience
+you may have had developing applications in the Play Store.
+It will also ask if you've used other Google Accounts
+in the `Google Play` ecosystem (this is just to speed up verification).
+
+Fill the requested parameters and click `Next`.
+
+<p align="center">
+  <img width="800" src="https://github.com/dwyl/app/assets/17494745/47de3f0f-ae19-4229-88cf-9cf3d3534c19" />
+</p>
+
+In this `Apps` section,
+just truthfully answer your app development plans.
+
+Click `Next`.
+
+<p float="left">
+  <img src="https://github.com/dwyl/app/assets/17494745/046ac90d-87a0-4757-87a0-28c4b39eaf64" width="49%" />
+  <img src="https://github.com/dwyl/app/assets/17494745/29a2bd2f-fb16-4932-93fc-78321f568302" width="49%" />
+</p>
+
+Agree to all the terms, 
+pay the registration fee and,
+upon success, 
+you will have your very own developer account! 🎉
+
+After this, you can access your newly created developer account
+in the `Play Console` by clicking the `Go to Play Console` button.
+
+<p align="center">
+  <img width="800" src="https://github.com/dwyl/app/assets/17494745/5e184de5-6716-4863-adc0-4139d401b007" />
+</p>
+
+You may be asked to finish setting up your account.
+You will need to complete the verification
+by sending your legal documents so Google knows it's really you
+who's creating the account.
+
+**You will need to complete this verification to publish apps on `Google Play`**.
+
 
 
 #### Review your app files
