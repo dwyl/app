@@ -51,7 +51,7 @@ jobs:
       # Needs to be the same as the one defined in `android/app/build.gradle`
       - name: 📝🔐 Create key.properties file
         env:
-          KEYSTORE_PROPERTIES_PATH: ${{ github.workspace }}/app/android/key.properties
+          KEYSTORE_PROPERTIES_PATH: ${{ github.workspace }}/android/key.properties
         run: |
           touch $KEYSTORE_PROPERTIES_PATH
           echo 'StoreFile=${{ github.workspace }}/decoded_android-keystore.jks' > $KEYSTORE_PROPERTIES_PATH
