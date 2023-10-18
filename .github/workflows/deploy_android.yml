@@ -47,10 +47,13 @@ jobs:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_FILE_BASE64 }}
         run: echo $KEYSTORE_BASE64 | base64 --decode > "${{ github.workspace }}/decoded_android-keystore.jks"
 
-      - name: 📝🔐 Create keystore.properties file
+      # Creates keystore file. 
+      # Needs to be the same as the one defined in `android/app/build.gradle`
+      - name: 📝🔐 Create key.properties file
         env:
-          KEYSTORE_PROPERTIES_PATH: ${{ github.workspace }}/app/android/keystore.properties
+          KEYSTORE_PROPERTIES_PATH: ${{ github.workspace }}/app/android/key.properties
         run: |
+          touch $KEYSTORE_PROPERTIES_PATH
           echo 'StoreFile=${{ github.workspace }}/decoded_android-keystore.jks' > $KEYSTORE_PROPERTIES_PATH
           echo 'KeyAlias=${{ secrets.KEYSTORE_KEY_ALIAS }}' >> $KEYSTORE_PROPERTIES_PATH
           echo 'StorePassword=${{ secrets.KEYSTORE_PASSWORD }}' >> $KEYSTORE_PROPERTIES_PATH
