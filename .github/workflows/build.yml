@@ -13,11 +13,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      # Installing Flutter because it's easier to generate .lcov files for test coverage
       - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
-          channel: 'stable'
+          flutter-version: "3.13.5"
+          channel: "stable"
 
       - name: Install dependencies
         run: flutter pub get
