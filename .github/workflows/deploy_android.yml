@@ -9,6 +9,8 @@ on:
   # Only trigger, when pushing into the `main` branch
   push:
     branches: [main]
+
+  # DELETE THIS
   pull_request:
     branches: [ "main" ]
 
@@ -59,6 +61,12 @@ jobs:
           echo 'StorePassword=${{ secrets.KEYSTORE_PASSWORD }}' >> $KEYSTORE_PROPERTIES_PATH
           echo 'KeyPassword=${{ secrets.KEYSTORE_KEY_PASSWORD }}' >> $KEYSTORE_PROPERTIES_PATH
 
+      # DELETE THIS
+      - name: Cat
+        env:
+          KEYSTORE_PROPERTIES_PATH: ${{ github.workspace }}/android/key.properties
+        run: cat $KEYSTORE_PROPERTIES_PATH
+          
       - name: 🤖📦 Create Android appbundle release
         run: |
           flutter build appbundle \
