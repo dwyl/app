@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: ⬇️ Checkout code
         uses: actions/checkout@v3
 
       # Needed to base64 decode the upload keystore
@@ -31,11 +31,30 @@ jobs:
         id: java
 
       # Needed to run Flutter-based commands
-      - name: Install Flutter
+      - name: 🐦 Install Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: "3.13.5"
           channel: "stable"
 
-      - name: Install dependencies
+      - name: 📚 Install dependencies
         run: flutter pub get
+
+      - name: 🔒 Retrieve base64 keystore and decode it to a file
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_FILE_BASE64 }}
+        run: echo $KEYSTORE_BASE64 | base64 --decode > "${{ github.workspace }}/decoded_android-keystore.jks"
+
+      - name: 📝🔐 Create keystore.properties file
+        env:
+          KEYSTORE_PROPERTIES_PATH: ${{ github.workspace }}/app/android/keystore.properties
+        run: |
+          echo 'StoreFile=${{ github.workspace }}/decoded_android-keystore.jks' > $KEYSTORE_PROPERTIES_PATH
+          echo 'KeyAlias=${{ secrets.KEYSTORE_KEY_ALIAS }}' >> $KEYSTORE_PROPERTIES_PATH
+          echo 'StorePassword=${{ secrets.KEYSTORE_PASSWORD }}' >> $KEYSTORE_PROPERTIES_PATH
+          echo 'KeyPassword=${{ secrets.KEYSTORE_KEY_PASSWORD }}' >> $KEYSTORE_PROPERTIES_PATH
+
+      - name: 🤖📦 Create Android appbundle release
+        run: |
+          flutter build appbundle \
+            --obfuscate
