@@ -63,7 +63,7 @@ jobs:
           
       # DELETE THIS
       - name: ls
-        run: ls ${{ github.workspace }}/android
+        run: ls ${{ github.workspace }}/
 
       - name: 🤖📦 Create Android appbundle release
         run: |
