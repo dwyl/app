@@ -56,14 +56,11 @@ jobs:
           KEYSTORE_PROPERTIES_PATH: ${{ github.workspace }}/android/key.properties
         run: |
           touch $KEYSTORE_PROPERTIES_PATH
-          echo 'StoreFile=${{ github.workspace }}/decoded_android-keystore.jks' > $KEYSTORE_PROPERTIES_PATH
-          echo 'KeyAlias=${{ secrets.KEYSTORE_KEY_ALIAS }}' >> $KEYSTORE_PROPERTIES_PATH
-          echo 'StorePassword=${{ secrets.KEYSTORE_PASSWORD }}' >> $KEYSTORE_PROPERTIES_PATH
-          echo 'KeyPassword=${{ secrets.KEYSTORE_KEY_PASSWORD }}' >> $KEYSTORE_PROPERTIES_PATH
+          echo 'storeFile=${{ github.workspace }}/decoded_android-keystore.jks' > $KEYSTORE_PROPERTIES_PATH
+          echo 'keyAlias=${{ secrets.KEYSTORE_KEY_ALIAS }}' >> $KEYSTORE_PROPERTIES_PATH
+          echo 'storePassword=${{ secrets.KEYSTORE_PASSWORD }}' >> $KEYSTORE_PROPERTIES_PATH
+          echo 'keyPassword=${{ secrets.KEYSTORE_KEY_PASSWORD }}' >> $KEYSTORE_PROPERTIES_PATH
           
-      # DELETE THIS
-      - name: ls
-        run: ls ${{ github.workspace }}/
 
       - name: 🤖📦 Create Android appbundle release
         run: |
