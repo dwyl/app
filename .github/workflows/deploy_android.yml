@@ -62,4 +62,5 @@ jobs:
       - name: 🤖📦 Create Android appbundle release
         run: |
           flutter build appbundle \
-            --obfuscate
+            --obfuscate \
+            --split-debug-info=${{ github.workspace }}/debug_info
