@@ -12,7 +12,7 @@ So, let's start!
 
 - [Deployment Guide 📩](#deployment-guide-)
   - [🤖 Google `Play Store`](#-google-play-store)
-    - [0. Pre-requisites](#0-pre-requisites)
+    - [0. Prerequisites](#0-prerequisites)
       - [Creating a `Google Play` account](#creating-a-google-play-account)
       - [Review your app files](#review-your-app-files)
         - [Setting up a splash screen](#setting-up-a-splash-screen)
@@ -26,6 +26,12 @@ So, let's start!
       - [Build an `app bundle`](#build-an-app-bundle)
       - [Build an `APK`](#build-an-apk)
     - [3. Publishing to `Play Store`](#3-publishing-to-play-store)
+    - [4. *(Optional)* ⛓️ Automating deployment with Github Actions](#4-optional-️-automating-deployment-with-github-actions)
+  - [🍏 Apple `App Store`](#-apple-app-store)
+    - [0. Prerequisites](#0-prerequisites-1)
+      - [Install X-Code](#install-x-code)
+      - [Ensure app adheres to the guidelines](#ensure-app-adheres-to-the-guidelines)
+      - [Make sure you're enrolled in the `Apple Developer Program`](#make-sure-youre-enrolled-in-the-apple-developer-program)
 
 
 > [!WARNING]
@@ -39,7 +45,7 @@ So, let's start!
 Let's start with Google's `Play Store`!
 
 
-### 0. Pre-requisites
+### 0. Prerequisites
 
 Before we start our guide,
 we are going to make sure everything is correctly setup
@@ -525,3 +531,111 @@ For a more in-depth tutorial, please check https://developer.android.com/distrib
 
 
 //TODO add steps after getting verified
+
+
+### 4. *(Optional)* ⛓️ Automating deployment with Github Actions
+
+Now that we know how to build,
+bundle and release our app to the public,
+it's time to learn how to automate this process!
+
+// TODO add section to create Github Actions to deploy to `Play Store`
+
+
+## 🍏 Apple `App Store`
+
+Now that we know how to release our app in Google's `Play Store`,
+it's time to go to the other side 
+and get our app available to iPhone users!
+
+
+### 0. Prerequisites
+
+Similarly to before,
+we need to make sure some prerequisites are fulfilled
+in order to publish our app.
+
+#### Install X-Code
+
+If you don't already have `XCode` installed, 
+open your `AppStore`, search for "XCode" and press `Install`. 
+It's that easy.
+
+<p align="center">
+  <img width="800" src="https://user-images.githubusercontent.com/17494745/200554456-ff9dc9cb-7a2a-4eb8-aff4-90dfd00a0427.png" />
+</p>
+
+
+#### Ensure app adheres to the guidelines
+
+You need to make sure the app follow's `App Store`'s guidelines.
+If not, it *won't get published*.
+
+You can check the guidelines in https://developer.apple.com/app-store/review/guidelines/.
+
+
+#### Make sure you're enrolled in the `Apple Developer Program`
+
+So you can publish apps, your Apple account
+needs to be part of the `Apple Developer Program`.
+
+Chances are you're already enrolled.
+However, if you're not,
+please visit https://developer.apple.com/programs/enroll/.
+
+<p align="center">
+  <img width="800" src="https://github.com/dwyl/app/assets/17494745/287fcb4b-91a3-4b42-86d0-6edd13509376" />
+</p>
+
+Click on `Start Enrollment` and fill in your `Apple ID` account information.
+
+<p align="center">
+  <img width="800" src="https://github.com/dwyl/app/assets/17494745/564e7dca-61f7-41bd-a84b-52c4fd81102b" />
+</p>
+
+After logging in with your account,
+you will be prompted with the Apple Developer Agreement.
+
+<p align="center">
+  <img width="800" src="https://github.com/dwyl/app/assets/17494745/595f8057-f5fa-49d1-9a22-9422e9e5901f" />
+</p>
+
+After agreeing,
+you will be logged in into your Apple Developer account.
+
+<p align="center">
+  <img width="800" src="https://github.com/dwyl/app/assets/17494745/788077d6-3efa-4380-a935-54eea07c18ba" />
+</p>
+
+Now click on `Enroll Now`.
+You will be shown the option 
+to adhere to the Apple Developer Program
+through their app or through the web.
+In our case, let's choose the latter.
+
+<p align="center">
+  <img width="800" src="https://github.com/dwyl/app/assets/17494745/65af8fda-83e6-492b-80d5-98471261095c" />
+</p>
+
+You'll have to go through filling your information,
+selecting the entity type (whether you're an individual or an organization)
+and agree to the legal terms.
+
+<p align="center">
+  <img width="33%" src="https://github.com/dwyl/app/assets/17494745/d86d96cd-3ed2-48ba-969e-7d088e3a9039" />
+  <img width="33%" src="https://github.com/dwyl/app/assets/17494745/8d209125-d87f-4f84-ac43-b49d54ea8228" />
+  <img width="33%" src="https://github.com/dwyl/app/assets/17494745/877c6e87-5d18-4ec5-abe0-f8858e669a20" />
+</p>
+
+After doing those, you'll need to pay a fee,
+which you can renew annually or not.
+
+<p align="center">
+  <img width="800" src="https://github.com/dwyl/app/assets/17494745/49480655-819b-4c0d-8576-fbc64c0f0e90" />
+</p>
+
+After completing this purchase,
+you'll be ready to start publishing your own applications 
+in the Apple ecosystem! 
+
+Great job! 👏
