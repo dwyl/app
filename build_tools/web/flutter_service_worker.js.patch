@@ -1,17 +1,17 @@
 Patched flutter_service_worker.js splits up the loading of files so they are parallel. 
 see: https://github.com/dwyl/app/issues/326#issuecomment-1478314967
 
---- flutter_service_worker.js	2023-03-24 19:00:29
-+++ flutter_service_worker2.js	2023-03-24 19:04:42
-@@ -28,22 +28,11 @@
- 
+--- flutter_service_worker.js	2023-10-18 11:49:35
++++ flutter_service_worker_new.js	2023-10-18 11:56:09
+@@ -55,21 +55,9 @@
+ "canvaskit/skwasm.worker.js": "51253d3321b11ddb8d73fa8aa87d3b15"};
  // The application shell files that are downloaded before a service worker can
  // start.
--const CORE = [
--  "main.dart.js",
+-const CORE = ["main.dart.js",
 -"index.html",
 -"assets/AssetManifest.json",
 -"assets/FontManifest.json"];
+ 
 -// During install, the TEMP cache is populated with the application shell files.
 -self.addEventListener("install", (event) => {
 -  self.skipWaiting();
