@@ -62,8 +62,20 @@ jobs:
           echo 'keyPassword=${{ secrets.KEYSTORE_KEY_PASSWORD }}' >> $KEYSTORE_PROPERTIES_PATH
           
 
-      - name: 🤖📦 Create Android appbundle release
+      - name: 📦 Create Android appbundle release
         run: |
           flutter build appbundle \
             --obfuscate \
             --split-debug-info=${{ github.workspace }}/debug_info
+
+      - name: 🚀 Upload Android Release to Play Store
+        uses: r0adkll/upload-google-play@v1.1.2
+        with:
+          # MUST match the package name defined in `android/app/build.gradle`
+          packageName: "com.dwyl.app"
+
+          # Can be 'alpha'/'beta'/'internal'/'production'
+          track: production
+          
+          releaseFiles: ${{ github.workspace }}/build/app/outputs/bundle/release/app-release.aab
+          serviceAccountJsonPlainText: "${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_KEY_JSON }}"
