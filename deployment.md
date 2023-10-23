@@ -34,6 +34,7 @@ So, let's start!
         - [Keystore file](#keystore-file)
         - [Gradle file](#gradle-file)
       - [`Github` secrets check-up](#github-secrets-check-up)
+      - [A note before releasing a new version](#a-note-before-releasing-a-new-version)
       - [Implementing our workflow file](#implementing-our-workflow-file)
   - [🍏 Apple `App Store`](#-apple-app-store)
     - [0. Prerequisites](#0-prerequisites-1)
@@ -694,8 +695,13 @@ and grant the necessary rights to perform actions.
 
 Grant the following permissions:
 
-- View financial data, orders, and cancellation survey responses
-- Manage orders and subscriptions
+- Admin (all permissions)
+
+> [!NOTE]
+>
+> You can definitely narrow the permissions down.
+> We're giving all the permissions to make this as simple as possible
+> for you 😀.
 
 <p align="center">
   <img width="800" src="https://github.com/dwyl/app/assets/17494745/3c805122-7fb8-46a6-b54b-a8e6ef210c68" />
@@ -719,7 +725,7 @@ Now that we have our service account,
 **all that's left is retrieving the `json` file that holds its keys**,
 so that we can use it in our workflow!
 
-Head over to https://console.cloud.google.com/iam-admin/serviceaccounts/details/,
+Head over to https://console.cloud.google.com/iam-admin/serviceaccounts/,
 which will lead you to `IAM & Admin` and to `Service Accounts`
 inside `Google Cloud Console`.
 
@@ -897,6 +903,39 @@ that we downloaded earlier.
 
 After you've set all of these secrets,
 we are now ready to roll! 🛼
+
+
+#### A note before releasing a new version
+
+When you merge a new feature to the `main`/`prod` branch
+or want to release a new version of your app,
+don't forget to upgrade the version
+in your `pubspec.yaml` file.
+
+We recommend you upgrade the version
+with the following format.
+
+`A.B.C+X`
+
+`A.B.C` represents the `versionName` such as 1.0.0.
+
+`X` (the number after the +) represents the `versionCode` such as 1, 2, 3, etc.
+
+You can check [Android's reference link](http://developer.android.com/guide/topics/manifest/manifest-element.html)
+to understand the difference between `versionName` and `versionCode`.
+But, to put it simply, 
+the `versionCode` is **an internal version number** that is used
+to determine whether one version is more recent than another.
+`versionName` is the version name shown to the end-user.
+
+Therefore, for each release, you are **obliged to increase the `versionCode`
+for the new release and workflow to work.
+You can maintain the version that is *shown to the user*
+by silently maintaining the `versionName` and increasing the `versionCode`.
+
+For more information, 
+please check 
+https://stackoverflow.com/questions/53570575/flutter-upgrade-the-version-code-for-play-store.
 
 
 #### Implementing our workflow file
