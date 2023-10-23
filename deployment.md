@@ -27,6 +27,14 @@ So, let's start!
       - [Build an `APK`](#build-an-apk)
     - [3. Publishing to `Play Store`](#3-publishing-to-play-store)
     - [4. *(Optional)* ⛓️ Automating deployment with Github Actions](#4-optional-️-automating-deployment-with-github-actions)
+      - [Pre-requisites](#pre-requisites)
+        - [Create app inside Google Play and set it up](#create-app-inside-google-play-and-set-it-up)
+        - [Create a service account and connect it to our app](#create-a-service-account-and-connect-it-to-our-app)
+        - [First manual release of app](#first-manual-release-of-app)
+        - [Keystore file](#keystore-file)
+        - [Gradle file](#gradle-file)
+      - [`Github` secrets check-up](#github-secrets-check-up)
+      - [Implementing our workflow file](#implementing-our-workflow-file)
   - [🍏 Apple `App Store`](#-apple-app-store)
     - [0. Prerequisites](#0-prerequisites-1)
       - [Install X-Code](#install-x-code)
@@ -539,7 +547,362 @@ Now that we know how to build,
 bundle and release our app to the public,
 it's time to learn how to automate this process!
 
-// TODO add section to create Github Actions to deploy to `Play Store`
+Ideally, you will want *at least* two separate environments
+when deploying your application.
+Many teams work with three different branches/environments 
+during the development cycle of any application:
+
+- `production`: the production version of the app.
+It's the stable version of the application that is shown to the end-client.
+- [`UAT`](https://uit.stanford.edu/pmo/UAT): also known as "staging".
+Can be thought out as a "pre-production" environment that is meant 
+to test the application with a small group of people 
+before being shipped into the `production` branch/env.
+- `dev`: branch for the development.
+Only accessible for developers and will not affect any real data
+from real clients.
+
+
+Therefore, you **should employ different workflows and builds for each env**.
+You should have a `prod`, `UAT` and `dev` version of your application.
+
+However, for sake of brevity and simplicity, 
+we'll show you a way of automating the workflow 
+**only for one branch** 
+(in this case, we'll consider it to be the `prod`/`main` branch).
+
+
+#### Pre-requisites
+
+Before proceeding with creating our own Github Actions workflow file,
+we need to sort some pre-requisites 
+that are **mandatory** in order for everything to work.
+
+Let's go through them right now.
+
+
+##### Create app inside Google Play and set it up
+
+Firstly, you need to create an app project in your 
+`Google Play Console` account.
+
+<p align="center">
+  <img width="800" src="https://github.com/dwyl/app/assets/17494745/b0fb7cc6-c5f9-4b7f-a173-3f9d0791808d" />
+</p>
+
+Go to https://console.cloud.google.com/home/dashboard,
+head to `All Apps` section to the left
+and click on the **`Create app`** button.
+
+<p align="center">
+  <img width="800" src="https://github.com/dwyl/app/assets/17494745/72c92aab-5d8b-4a7a-8246-9d1549744469" />
+</p>
+
+Follow through the instructions in the page and click on 
+`Create app` once you're finished.
+You will create a new **app project**,
+with its own dashboard and settings.
+
+You will be redirected to the `Dashboard` page 
+of your newly created app, like shown in the picture below.
+
+<p align="center">
+  <img width="800" src="https://github.com/dwyl/app/assets/17494745/d60cc985-fd16-40f3-a911-819b989a7354" />
+</p>
+
+You will see that, in order to be able to access some features
+shown in the page,
+you will have to first **set the app**.
+This means giving information about the application,
+what it does, who it is meant for, and a myriad of other information.
+
+You will need to go through **each required option**
+and fill the information.
+
+Like in the picture above, 
+you'll want to have all the steps completed in order to continue.
+For each one, you'll have a button redirecting you
+to a specific page where you'll fill out the requested information.
+
+After completing all of these steps, 
+you will be cleared to continue! 🥳
+
+
+##### Create a service account and connect it to our app
+
+Now that we've set everything up in our app,
+we will need to create a [**service account**](https://cloud.google.com/iam/docs/service-account-overview).
+A service account will be the agent that will use the `Google Play API`
+to upload new releases of our app.
+
+Let's create this account and add it to our account.
+
+First, we are going to head over to **`Google Cloud Console`**
+and create a new project.
+Head over to https://console.cloud.google.com/projectcreate
+and create your own project.
+
+<p align="center">
+  <img width="800" src="https://github.com/dwyl/app/assets/17494745/e23c0e72-d9ab-4b46-820b-8468fa462bd8" />
+</p>
+
+After that, we need to **enable the API**
+in our `Google Cloud` project we've just created.
+For this, go to https://console.developers.google.com/apis/api/androidpublisher.googleapis.com/,
+choose the project and enable `Google Play Developer API`.
+
+<p align="center">
+  <img width="800" src="https://github.com/dwyl/app/assets/17494745/a7d417a7-21c7-4157-ac0d-c95bce27c172" />
+</p>
+
+
+Awesome! 👏
+
+Now we are ready to *create a service account*.
+For this, head over to 
+https://console.cloud.google.com/iam-admin/serviceaccounts,
+and select your project.
+You are now in the `Service Accounts` tab.
+
+Click on `Create service account` and follow the steps.
+
+<p align="center">
+  <img width="49%" src="https://github.com/dwyl/app/assets/17494745/28840fb5-ca52-49c2-b9d7-6e42b0db94d2" />
+  <img width="49%" src="https://github.com/dwyl/app/assets/17494745/1dba5801-8f9b-47ba-8fb3-38bcfa07b31b" />
+</p>
+
+After these, you will have created a service account.
+
+<p align="center">
+  <img width="800" src="https://github.com/dwyl/app/assets/17494745/3c17884f-25f7-4d26-a2e0-01017e292893" />
+</p>
+
+
+Next, go to the `Users & Permissions` page
+and click on `Invite new users`.
+
+<p align="center">
+  <img width="800" src="https://github.com/dwyl/app/assets/17494745/5c7b85bb-68fb-485a-8cad-07c186646af6" />
+</p>
+
+Put an e-mail address for your service account in the `email address` field,
+and grant the necessary rights to perform actions.
+
+<p align="center">
+  <img width="800" src="https://github.com/dwyl/app/assets/17494745/82abd924-2b85-4607-97be-2729e527620f" />
+</p>
+
+Grant the following permissions:
+
+- View financial data, orders, and cancellation survey responses
+- Manage orders and subscriptions
+
+<p align="center">
+  <img width="800" src="https://github.com/dwyl/app/assets/17494745/3c805122-7fb8-46a6-b54b-a8e6ef210c68" />
+</p>
+
+After setting the permissions, just click `Invite user`!
+
+<p align="center">
+  <img width="800" src="https://github.com/dwyl/app/assets/17494745/38160928-2002-4798-8a44-f841091fd29b" />
+</p>
+
+After clicking it, you will see that you've just created
+your very own service account!
+
+<p align="center">
+  <img width="800" src="https://github.com/dwyl/app/assets/17494745/34eabc59-3eb7-4124-b8e8-23334b66325d" />
+</p>
+
+
+Now that we have our service account, 
+**all that's left is retrieving the `json` file that holds its keys**,
+so that we can use it in our workflow!
+
+Head over to https://console.cloud.google.com/iam-admin/serviceaccounts/details/,
+which will lead you to `IAM & Admin` and to `Service Accounts`
+inside `Google Cloud Console`.
+
+In here, choose the service account you've just created,
+click on the `Actions` icon 
+and click on `Manage keys`.
+
+<p align="center">
+  <img width="800" src="https://github.com/dwyl/app/assets/17494745/5b5bc556-a745-4361-8a5a-44bfe3729c23" />
+</p>
+
+Then, click on `Add key` and `Create new key`.
+
+<p align="center">
+  <img width="800" src="https://github.com/dwyl/app/assets/17494745/104440fe-4f6c-4711-b40a-71a72e1fe168" />
+</p>
+
+Now, click on the `JSON` option.
+
+<p align="center">
+  <img width="800" src="https://github.com/dwyl/app/assets/17494745/995c7417-4b70-4e7e-8457-2fcd264c4499" />
+</p>
+
+Once you do this,
+a `json` file will automatically download.
+**Do not share this `json` file with anyone**.
+It contains *private keys*.
+
+And that's it!
+Great job so far! 🎉
+
+
+##### First manual release of app
+
+In order to automate our app release,
+we first need to do it manually (only for the first time).
+This is because the app does not yet exist
+and we haven’t uploaded the first artifact 
+to our `Google Play` application manually.
+
+With this in mind, 
+let's create our first release!
+
+Head over to `Google Play Console`
+at https://play.google.com/console
+and select the app you've created prior.
+Then, head over to `Production`
+on the left tab,
+and create `New release`.
+
+<p align="center">
+  <img width="800" src="https://github.com/dwyl/app/assets/17494745/abc219d2-5802-456e-88aa-49794e50956d" />
+</p>
+
+You will be prompted a page
+in which you you will add details to the release.
+
+You will first need to choose
+how your apps will be signed.
+Choose the first option,
+in which Google itself will sign the apps for you.
+
+Then, you will need to upload the app bundle.
+If you've executed the commands properly,
+the default path in which this bundle lives
+should be 
+`build/app/outputs/bundle/release/app-release.aab`.
+
+Finally, add a release name.
+
+<p align="center">
+  <img width="32%" src="https://github.com/dwyl/app/assets/17494745/5004674d-dc58-47bc-a1d9-44a043d3ed66" />
+  <img width="33%" src="https://github.com/dwyl/app/assets/17494745/b20718c2-ea83-42c5-a635-6ca0881bb413" />
+  <img width="33%" src="https://github.com/dwyl/app/assets/17494745/9353cee4-50aa-4562-97ae-a6ba083ad2f5" />
+</p>
+
+After this,
+proceed with the instructions.
+You will be shown a preview page, like so:
+
+<p align="center">
+  <img width="800" src="https://github.com/dwyl/app/assets/17494745/685812ab-08ce-42d0-be44-8cc40f3e2d65" />
+</p>
+
+
+> [!WARNING]
+>
+> If you are shown errors, like in the picture below, 
+> you'll need to sort those out in order to continue.
+>
+> <p align="center">
+>  <img width="800" src="https://github.com/dwyl/app/assets/17494745/300ceff7-876a-47d4-a2d6-c7e4a05a0a72" />
+> </p>
+>
+> This means the app wasn't initially set up all the way through.
+> Click on each error and fix it, following instructions.
+
+
+After this,
+click on `Create release`
+and that's it!
+You've just created the first release of your application!
+
+Remember, this was needed in order to automate
+the release process in the future.
+
+
+##### Keystore file
+
+Even before publishing your app,
+you would have needed an **upload keystore**.
+
+If you haven't created one,
+please go to [Creating an upload keystore](#creating-an-upload-keystore)
+and follow the instructions.
+
+
+##### Gradle file
+
+You need to make some adjustments to the `android/app/build.gradle` file.
+Head over to [Reference the keystore from the app](#reference-the-keystore-from-the-app)
+to make the needed modifications.
+
+
+
+#### `Github` secrets check-up
+
+Now that all the pre-requisites are fulfilled,
+before proceeding with implementing 
+our Github Action workflow file,
+we need to 
+**define a set of repository secrets**
+that will later be used in it.
+
+Here are the secrets that you will need to have implemented
+in your repository.
+
+- `KEYSTORE_FILE_BASE64`, 
+this is the uploaded file encoded
+as a *base64 string*.
+**You should have one keystore per environment**.
+In our case, we'll just have one,
+for production release.
+
+To encode the upload keystore file 
+into a [base64](https://en.wikipedia.org/wiki/Base64) string,
+you can run the following command (on `MacOS` and `Linux`).
+
+```sh
+base64 -i company_prod_keystore.jks -o company_prod_keystore.jks.base64
+```
+
+You can then copy the `company_prod_keystore.jks.base64` contents
+into the secret.
+
+- `KEYSTORE_PASSWORD`: the keystore password that is present
+in the upload keystore file.
+It is the password that will be used by the Android build command 
+to decode the keystore itself.
+
+- `KEYSTORE_KEY_ALIAS`: a simple key, you can choose pretty much anything. 
+For example, use `my_company` as an alias for prod 
+and `my_company_uat` for UAT.
+Can be the same as the one found in the upload keystore file.
+
+- `KEYSTORE_KEY_PASSWORD`: the keystore key password that is present
+in the upload keystore file.
+It is a password that will be used by the Android build command 
+to decode the key inside the keystore. 
+It is identical to `KEYSTORE_PASSWORD`.
+
+- `GOOGLE_PLAY_SERVICE_ACCOUNT_KEY_JSON`: the contents
+of the service account `json` file 
+that we downloaded earlier.
+
+After you've set all of these secrets,
+we are now ready to roll! 🛼
+
+
+#### Implementing our workflow file
+
+// TODO add workflow file here.
+
 
 
 ## 🍏 Apple `App Store`
