@@ -11,8 +11,8 @@ on:
     branches: [main]
 
   # DELETE THIS
-  pull_request:
-    branches: [ "main" ]
+  #pull_request:
+  #  branches: [ "main" ]
 
 permissions:
   contents: write
@@ -72,10 +72,10 @@ jobs:
         uses: r0adkll/upload-google-play@v1.1.2
         with:
           # MUST match the package name defined in `android/app/build.gradle`
-          packageName: "com.dwyl.app"
+          packageName: com.dwyl.app
 
           # Can be 'alpha'/'beta'/'internal'/'production'
           track: production
-          
+
           releaseFiles: ${{ github.workspace }}/build/app/outputs/bundle/release/app-release.aab
           serviceAccountJsonPlainText: "${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_KEY_JSON }}"
