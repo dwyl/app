@@ -1,7 +1,7 @@
 name: dwyl_app
 description: Clear your mind. Organise your life. Ignore distractions. Focus on what matters.
 publish_to: 'none'
-version: 0.0.3
+version: 0.0.2+2
 homepage: https://github.com/dwyl/app
 repository: https://github.com/dwyl/app
 issue_tracker: https://github.com/dwyl/app/issues
