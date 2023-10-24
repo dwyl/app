@@ -588,7 +588,11 @@ Let's go through them right now.
 >
 > When you create an app, it is permanent.
 > Although you can [ask Google to delete it](https://stackoverflow.com/questions/14850708/delete-an-unpublished-app-from-google-play),
-> it will only work if it doesn't have any installs.
+> according to the following conditions:
+> - App must be in good standing (not rejected, removed, or suspended).
+> - App must have 0 lifetime installs.
+> - App must not be in review.
+> - App must be unpublished for 24 hours.
 >
 > You can *unpublish* an application, but the package name is tied to it *forever*.
 > Check https://stackoverflow.com/questions/34846872/how-to-unpublish-an-app-in-google-play-developer-console.
@@ -957,23 +961,228 @@ In this workflow, we will want to
 **mainly create the app bundle and ship it to our published app**
 on `Google Play Console`.
 
-We'll create a new workflow 
-inside `.github/workflows`
-and name it `deploy_android.yml`.
-
 Because we're only interested in 
 deploying features merged into the `main` branch,
 this workflow will solely be dedicated to it.
 
 However, 
 as we've stated before,
-you may 
+you should consider having different workflows
+for different environments 
+that bundle and *release* the app 
+to different tracks,
+be it production, open testing or internal testing.
 
+We'll create a new workflow 
+inside `.github/workflows`
+and name it `deploy_android.yml`.
 
+```yaml
+name: Deploy Android (Google Play Store)
+on:
+  # Only trigger, when the "build" workflow succeeded (only works in the Master Branch)
+  workflow_run:
+    workflows: ["Build & Test"]
+    types:
+      - completed
 
+  # Only trigger, when pushing into the `main` branch
+  push:
+    branches: [main]
 
-// TODO add workflow file here.
+permissions:
+  contents: write
 
+jobs:
+  build-and-deploy_android:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ⬇️ Checkout code
+        uses: actions/checkout@v3
+
+      # Needed to base64 decode the upload keystore
+      - name: ⚙️ Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: "12.x"
+          cache: 'gradle'
+        id: java
+
+      # Needed to run Flutter-based commands
+      - name: 🐦 Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          # If the flutter version that is used in development increases, it's recommended this one increases as well
+          flutter-version: "3.13.5"
+          channel: "stable"
+
+      - name: 📚 Install dependencies
+        run: flutter pub get
+
+      - name: 🔒 Retrieve base64 keystore and decode it to a file
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_FILE_BASE64 }}
+        run: echo $KEYSTORE_BASE64 | base64 --decode > "${{ github.workspace }}/decoded_android-keystore.jks"
+
+      # Creates keystore file. 
+      # Needs to be the same as the one defined in `android/app/build.gradle`
+      - name: 📝🔐 Create key.properties file
+        env:
+          KEYSTORE_PROPERTIES_PATH: ${{ github.workspace }}/android/key.properties
+        run: |
+          touch $KEYSTORE_PROPERTIES_PATH
+          echo 'storeFile=${{ github.workspace }}/decoded_android-keystore.jks' > $KEYSTORE_PROPERTIES_PATH
+          echo 'keyAlias=${{ secrets.KEYSTORE_KEY_ALIAS }}' >> $KEYSTORE_PROPERTIES_PATH
+          echo 'storePassword=${{ secrets.KEYSTORE_PASSWORD }}' >> $KEYSTORE_PROPERTIES_PATH
+          echo 'keyPassword=${{ secrets.KEYSTORE_KEY_PASSWORD }}' >> $KEYSTORE_PROPERTIES_PATH
+          
+
+      - name: 📦 Create Android appbundle release
+        run: |
+          flutter build appbundle \
+            --obfuscate \
+            --split-debug-info=${{ github.workspace }}/debug_info
+
+      - name: 🚀 Upload Android Release to Play Store
+        uses: r0adkll/upload-google-play@v1.1.2
+        with:
+          # MUST match the package name defined in `android/app/build.gradle`
+          packageName: org.dwyl.app
+
+          # Can be 'alpha'/'beta'/'internal'/'production'.
+          # 'production' is relevant to the final stable version released to ALL clients
+          # 'internal' can be used for development versions and testing
+          # 'alpha' and 'beta' can be used for pre-release/staging purposes, with a smaller userbase
+          track: production
+
+          releaseFiles: ${{ github.workspace }}/build/app/outputs/bundle/release/app-release.aab
+          serviceAccountJsonPlainText: "${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_KEY_JSON }}"
+```
+
+That's a lot!
+We'll go over each step and explain it.
+
+- in the `on` section,
+we are only triggering the workflow
+**when changes are pushed into the `main` branch**
+and only after the `build` workflow succeeds.
+- we need to define the `permissions > contents` 
+to `write` because we'll need to correctly
+create the local upload keystore 
+and to create the app bundle.
+
+- next, we define the `build-and-deploy_android` job.
+We are running it on a `ubuntu` environment.
+Firstly, we check out the code and install the needed dependencies.
+We are installing `Java` 
+(so we can decode the base64-encoded keystore
+we have in our repo secrets),,
+installing `Flutter` 
+(to create the app bundle)
+and the project dependencies
+for the same reason.
+
+```yaml
+    steps:
+      - name: ⬇️ Checkout code
+        uses: actions/checkout@v3
+
+      # Needed to base64 decode the upload keystore
+      - name: ⚙️ Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: "12.x"
+          cache: 'gradle'
+        id: java
+
+      # Needed to run Flutter-based commands
+      - name: 🐦 Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          # If the flutter version that is used in development increases, it's recommended this one increases as well
+          flutter-version: "3.13.5"
+          channel: "stable"
+
+      - name: 📚 Install dependencies
+        run: flutter pub get
+```
+
+- after, we **decode the base64-encoded keystore in our repository secrets**.
+This upload keystore holds the information
+to correctly **sign the app bundle**.
+We extract the decoded information
+and create a copy of this file locally.
+Remember, this file is used in the `android/app/build.gradle` file
+to bundle and sign the app.
+
+```yaml
+      - name: 📝🔐 Create key.properties file
+        env:
+          KEYSTORE_PROPERTIES_PATH: ${{ github.workspace }}/android/key.properties
+        run: |
+          touch $KEYSTORE_PROPERTIES_PATH
+          echo 'storeFile=${{ github.workspace }}/decoded_android-keystore.jks' > $KEYSTORE_PROPERTIES_PATH
+          echo 'keyAlias=${{ secrets.KEYSTORE_KEY_ALIAS }}' >> $KEYSTORE_PROPERTIES_PATH
+          echo 'storePassword=${{ secrets.KEYSTORE_PASSWORD }}' >> $KEYSTORE_PROPERTIES_PATH
+          echo 'keyPassword=${{ secrets.KEYSTORE_KEY_PASSWORD }}' >> $KEYSTORE_PROPERTIES_PATH
+```
+  
+- next, we create our Android app bundle!
+We are obfuscating the code for increased security.
+Check [2. Building app for release](#2-building-app-for-release)
+for more information.
+
+```yaml
+      - name: 📦 Create Android appbundle release
+        run: |
+          flutter build appbundle \
+            --obfuscate \
+            --split-debug-info=${{ github.workspace }}/build/app/outputs/symbols
+```
+
+- finally, we upload our newly created app bundle!
+For this, 
+we are going to be using 
+[`r0adkll/upload-google-play@v1.1.2`](https://github.com/r0adkll/upload-google-play).
+We need to set up the **package name** 
+(it identifies your application in the app store),
+the **track** we're uploading into 
+(it can be `production`, `internal`, `alpha` or `beta`, 
+for public release, internal and limited user testing, respectively), 
+the **path to the app bundle**
+and the **service account `json` file**
+(which is a repository secret we've defined earlier).
+
+```yaml
+  - name: 🚀 Upload Android Release to Play Store
+    uses: r0adkll/upload-google-play@v1.1.2
+    with:
+      # MUST match the package name defined in `android/app/build.gradle`
+      packageName: org.dwyl.app
+
+      # Can be 'alpha'/'beta'/'internal'/'production'.
+      # 'production' is relevant to the final stable version released to ALL clients
+      # 'internal' can be used for development versions and testing
+      # 'alpha' and 'beta' can be used for pre-release/staging purposes, with a smaller userbase
+      track: production
+
+      releaseFiles: ${{ github.workspace }}/build/app/outputs/bundle/release/app-release.aab
+      serviceAccountJsonPlainText: "${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_KEY_JSON }}"
+```
+
+And that's it!
+
+Congratulations, you've automated the release process 
+of a `Google Play` app!
+
+Do not forget that versions should be 
+**correctly incremented** 
+so new releases are correctly uploaded.
+Please visit [A note before releasing a new version](#a-note-before-releasing-a-new-version)
+for more information about this.
 
 
 ## 🍏 Apple `App Store`

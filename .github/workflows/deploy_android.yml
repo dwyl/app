@@ -67,13 +67,13 @@ jobs:
         run: |
           flutter build appbundle \
             --obfuscate \
-            --split-debug-info=${{ github.workspace }}/debug_info
+            --split-debug-info=${{ github.workspace }}/build/app/outputs/symbols
 
       - name: 🚀 Upload Android Release to Play Store
         uses: r0adkll/upload-google-play@v1.1.2
         with:
           # MUST match the package name defined in `android/app/build.gradle`
-          packageName: com.dwyl.app
+          packageName: org.dwyl.app
 
           # Can be 'alpha'/'beta'/'internal'/'production'.
           # 'production' is relevant to the final stable version released to ALL clients

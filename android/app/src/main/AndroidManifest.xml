@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.dwyl.app">
+    package="org.dwyl.app">
    <application
         android:label="app"
         android:name="${applicationName}"
