@@ -38,6 +38,7 @@ jobs:
       - name: 🐦 Install Flutter
         uses: subosito/flutter-action@v2
         with:
+          # If the flutter version that is used in development increases, it's recommended this one increases as well
           flutter-version: "3.13.5"
           channel: "stable"
 
@@ -74,7 +75,10 @@ jobs:
           # MUST match the package name defined in `android/app/build.gradle`
           packageName: com.dwyl.app
 
-          # Can be 'alpha'/'beta'/'internal'/'production'
+          # Can be 'alpha'/'beta'/'internal'/'production'.
+          # 'production' is relevant to the final stable version released to ALL clients
+          # 'internal' can be used for development versions and testing
+          # 'alpha' and 'beta' can be used for pre-release/staging purposes, with a smaller userbase
           track: production
 
           releaseFiles: ${{ github.workspace }}/build/app/outputs/bundle/release/app-release.aab

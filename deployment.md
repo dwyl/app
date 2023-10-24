@@ -584,6 +584,15 @@ Let's go through them right now.
 
 ##### Create app inside Google Play and set it up
 
+> [!WARNING]
+>
+> When you create an app, it is permanent.
+> Although you can [ask Google to delete it](https://stackoverflow.com/questions/14850708/delete-an-unpublished-app-from-google-play),
+> it will only work if it doesn't have any installs.
+>
+> You can *unpublish* an application, but the package name is tied to it *forever*.
+> Check https://stackoverflow.com/questions/34846872/how-to-unpublish-an-app-in-google-play-developer-console.
+
 Firstly, you need to create an app project in your 
 `Google Play Console` account.
 
@@ -939,6 +948,29 @@ https://stackoverflow.com/questions/53570575/flutter-upgrade-the-version-code-fo
 
 
 #### Implementing our workflow file
+
+Now that everything is correctly set up,
+we can start going over a simple workflow Github Action
+that is suitable for the `main` (or `prod`) branch.
+
+In this workflow, we will want to
+**mainly create the app bundle and ship it to our published app**
+on `Google Play Console`.
+
+We'll create a new workflow 
+inside `.github/workflows`
+and name it `deploy_android.yml`.
+
+Because we're only interested in 
+deploying features merged into the `main` branch,
+this workflow will solely be dedicated to it.
+
+However, 
+as we've stated before,
+you may 
+
+
+
 
 // TODO add workflow file here.
 
