@@ -1338,8 +1338,55 @@ let's go over the list of repository secrets
 **we need to set**
 in order for the workflow to work.
 
-- 
+- `IOS_DISTRIBUTION_PROVISIONING_PROFILE_BASE64`,
+this is the provisioning profile created through the iOS developer page,
+encoded as a base64 string.
 
+> [!NOTE]
+>
+> If you don't know how to base64 encode a file,
+> please check [`Github secrets check-up`](#github-secrets-check-up).
+
+- `IOS_EXPORT_OPTIONS_BASE64`,
+the `exportOptions.plist` file created 
+through `Xcode` archive feature 
+and encoded as a base64 string.
+
+- `APP_STORE_CONNECT_API_KEY_ID`,
+the identifier of the created API key.
+It can be found in the `Users and Access page`.
+
+- `APP_STORE_CONNECT_API_PRIVATE_KEY`,
+the private API key that we created 
+in `Users and Access page`.
+
+- `APP_STORE_CONNECT_ISSUER_ID`,
+the issuer id in the `Users and Access` page.
+It is an UUID property.
+
+<p align="center">
+  <img width="800" src="https://github.com/dwyl/app/assets/17494745/b0e72de2-81b1-489a-afd2-e77caf87e558" />
+</p>
+
+- `IOS_P12_DISTRIBUTION_CERTIFICATE_BASE64`,
+the `p12` certificate that we've created encoded as a base64 string.
+If you have not, 
+you will need to use your local `Mac Keychain`.
+Check https://support.magplus.com/hc/en-us/articles/203808748-iOS-Creating-a-Distribution-Certificate-and-p12-File
+on how to do this.
+
+- `IOS_P12_DISTRIBUTION_CERTIFICATE_PASSWORD`,
+password associated with previously created `p12` certificate.
+
+- `IOS_RUNNER_LOCAL_KEYCHAIN_PASSWORD`, any string.
+This is just a formality.
+It's only used for the time of the `CI/CD` deployment build
+to create a local keychain on Github Actions runner.
+
+
+And that's it
+(quite a lot, right?).
+We're ready to move on to the next step!
 
 
 #### A note before releasing a new version
