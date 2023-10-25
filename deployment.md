@@ -41,6 +41,10 @@ So, let's start!
       - [Install X-Code](#install-x-code)
       - [Ensure app adheres to the guidelines](#ensure-app-adheres-to-the-guidelines)
       - [Make sure you're enrolled in the `Apple Developer Program`](#make-sure-youre-enrolled-in-the-apple-developer-program)
+    - [1. Registering the app in `App Store Connect`](#1-registering-the-app-in-app-store-connect)
+      - [Register your `Bundle ID`](#register-your-bundle-id)
+      - [Create an application record on `App Store Connect`](#create-an-application-record-on-app-store-connect)
+    - [2. Registering the app in `App Store Connect`](#2-registering-the-app-in-app-store-connect)
     - [XXXX. *(Optional)* ⛓️ Automating deployment with Github Actions](#xxxx-optional-️-automating-deployment-with-github-actions)
       - [Pre-requisites](#pre-requisites-1)
       - [`Github` secrets check-up](#github-secrets-check-up-1)
@@ -1296,6 +1300,85 @@ https://www.youtube.com/watch?v=iE2bpP56QKc&t=44s&ab_channel=Flutter
 
 [`Github` secrets check-up](#github-secrets-check-up)
       - [A note before releasing a new version](#a-note-before-releasing-a-new-version)
+
+
+### 1. Registering the app in `App Store Connect`
+
+Firstly, we need to create our app
+in [`App Store Connect`](https://developer.apple.com/help/app-store-connect/).
+In here, you will be able to define your app name/description,
+screenshots, set pricing
+and manage releases to the `App Store` or `TestFlight`.
+`TestFlight` is a separate environment
+that you can invite a limited number of people
+to test your apps before releasing them
+into the `App Store`.
+
+To register the app, we'll need to do two things:
+- register a **unique `Bundle ID`**.
+- and create an **application record on `App Store Connect`**.
+
+
+#### Register your `Bundle ID`
+
+Every iOS application has a `Bundle ID` associated with it.
+It uniquely identifies it with Apple.
+
+To create your `Bundle ID`,
+open the `App IDs` page of the developer account.
+Under `Certificates, IDs & Profiles`,
+click on `Identifiers`.
+
+<p align="center">
+  <img width="800" src="https://github.com/dwyl/app/assets/17494745/ea7b9e43-ab15-4723-b5d5-fb90b31e4183" />
+</p>
+
+Then click on the `+` sign to create a new `Bundle ID`.
+Click on the `App ID` option,
+and follow through the wizard to fill out the details.
+At the end, click on `Register` to register your new `Bundle ID`.
+
+<p align="center">
+  <img width="49%" src="https://github.com/dwyl/app/assets/17494745/288c430e-3d03-4f32-92c6-0ed75faa0ede" />
+  <img width="49%" src="https://github.com/dwyl/app/assets/17494745/59b969aa-799a-4429-afbe-f658b8faab3d" />
+</p>
+
+Your `Bundle ID` will usually follow
+the following format:
+
+`com.mycompany.myapp`
+
+It includes the domain of your company 
+and the name of the app.
+
+
+#### Create an application record on `App Store Connect`
+
+Let's create our application record
+on `App Store Connect`.
+
+Open https://appstoreconnect.apple.com/ in your browser.
+You can also access this Apple Developer Account overview window,
+and click on `Apps`.
+
+<p align="center">
+  <img width="800" src="https://github.com/dwyl/app/assets/17494745/badb4760-6666-47c0-9a63-1a78c943e8ea" />
+</p>
+
+Then, click on the `+` sign and select `New App`.
+Fill in your app details in the form that appears
+and click `Create`.
+
+<p align="center">
+  <img width="49%" src="https://github.com/dwyl/app/assets/17494745/4bcc2631-5050-4216-b3e6-3964399c59a4" />
+  <img width="49%" src="https://github.com/dwyl/app/assets/17494745/d3f29427-e981-46bd-aefd-64bd05b318ee" />
+</p>
+
+Make sure to select the `Bundle ID`
+you've created previously in the `Bundle ID` dropdown bar.
+
+
+### 2. Registering the app in `App Store Connect`
 
 
 ### XXXX. *(Optional)* ⛓️ Automating deployment with Github Actions
