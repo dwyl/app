@@ -5,7 +5,6 @@
 list(APPEND FLUTTER_PLUGIN_LIST
   emoji_picker_flutter
   file_selector_windows
-  gal
   pasteboard
   url_launcher_windows
 )
