@@ -41,6 +41,11 @@ So, let's start!
       - [Install X-Code](#install-x-code)
       - [Ensure app adheres to the guidelines](#ensure-app-adheres-to-the-guidelines)
       - [Make sure you're enrolled in the `Apple Developer Program`](#make-sure-youre-enrolled-in-the-apple-developer-program)
+    - [XXXX. *(Optional)* ⛓️ Automating deployment with Github Actions](#xxxx-optional-️-automating-deployment-with-github-actions)
+      - [Pre-requisites](#pre-requisites-1)
+      - [`Github` secrets check-up](#github-secrets-check-up-1)
+      - [A note before releasing a new version](#a-note-before-releasing-a-new-version-1)
+      - [Implementing our workflow file](#implementing-our-workflow-file-1)
 
 
 > [!WARNING]
@@ -1185,6 +1190,7 @@ Please visit [A note before releasing a new version](#a-note-before-releasing-a-
 for more information about this.
 
 
+
 ## 🍏 Apple `App Store`
 
 Now that we know how to release our app in Google's `Play Store`,
@@ -1282,3 +1288,284 @@ you'll be ready to start publishing your own applications
 in the Apple ecosystem! 
 
 Great job! 👏
+
+// TODO add the process 
+https://www.youtube.com/watch?v=iE2bpP56QKc&t=44s&ab_channel=Flutter
+
+
+
+[`Github` secrets check-up](#github-secrets-check-up)
+      - [A note before releasing a new version](#a-note-before-releasing-a-new-version)
+
+
+### XXXX. *(Optional)* ⛓️ Automating deployment with Github Actions
+
+Now that you know the process
+of creating a release build archive `.ipa`
+and uploading it to the App Store,
+it's time to **automate it**.
+
+As we've done with `Google Play`,
+we are going to be simplifying this guide
+by making a *single workflow* 
+that focuses on changes made to the `main`/`prod` branch.
+Ideally, you'll want to have different environments 
+and a workflow for each one.
+
+For example, you may want to release the app
+first on `TestFlight` on a `staging` branch
+so internal/limited external user group
+first *tests the app* 
+before going to the full production release.
+
+However, we'll focus on 
+on the `main` branch only for now.
+
+Before starting our workflow file,
+let's do a round-up of pre-requisites
+and check-ups.
+
+
+#### Pre-requisites
+
+// TODO (need access to account)
+
+
+#### `Github` secrets check-up
+
+With the pre-requisites sorted,
+let's go over the list of repository secrets
+**we need to set**
+in order for the workflow to work.
+
+- 
+
+
+
+#### A note before releasing a new version
+
+This process is the same as found in 
+[`A note before releasing a new version`](#a-note-before-releasing-a-new-version).
+
+
+#### Implementing our workflow file
+
+Similarly to before,
+we'll create a new workflow file in 
+`.github/workflows`
+and name it `deploy_ios.yml`.
+
+Use the following code.
+
+```yaml
+name: Deploy iOS (Apple App Store)
+on:
+  # Only trigger, when the "build" workflow succeeded (only works in the Master Branch)
+  workflow_run:
+    workflows: ["Build & Test"]
+    types:
+      - completed
+
+  # Only trigger, when pushing into the `main` branch
+  push:
+    branches: [main]
+
+  # DELETE THIS
+  #pull_request:
+  #  branches: [ "main" ]
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy_android:
+    runs-on: macos-latest
+
+    steps:
+
+    - name: ⬇️ Checkout repository
+      uses: actions/checkout@v3
+
+    - name: 🔐 Install Apple certificate and provisioning profile
+      env:
+        P12_DISTRIBUTION_CERTIFICATE_BASE64: "${{ secrets.IOS_P12_DISTRIBUTION_CERTIFICATE_BASE64 }}"
+        P12_DISTRIBUTION_CERTIFICATE_PASSWORD: "${{ secrets.IOS_P12_DISTRIBUTION_CERTIFICATE_PASSWORD }}"
+        DISTRIBUTION_PROVISIONING_PROFILE_BASE64: "${{ secrets.IOS_DISTRIBUTION_PROVISIONING_PROFILE_BASE64 }}"
+        KEYCHAIN_PASSWORD: "${{ secrets.IOS_RUNNER_LOCAL_KEYCHAIN_PASSWORD }}"
+        EXPORT_OPTIONS_BASE64: "${{ secrets.IOS_EXPORT_OPTIONS_BASE64 }}"
+      run: |
+        # create variables
+        CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
+        PROVISIONING_PROFILE_PATH=$RUNNER_TEMP/build_pp.mobileprovision
+        KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+        EXPORT_OPTIONS_PATH="${{ github.workspace }}/app/ios/Runner/ExportOptions.plist"
+
+        # import certificate, provisioning profile and export options from secrets
+        echo -n "$P12_DISTRIBUTION_CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
+        echo -n "$DISTRIBUTION_PROVISIONING_PROFILE_BASE64" | base64 --decode -o $PROVISIONING_PROFILE_PATH
+        echo -n "$EXPORT_OPTIONS_BASE64" | base64 --decode -o $EXPORT_OPTIONS_PATH
+
+        # create temporary keychain
+        security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+        security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+        security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+
+        # import certificate to keychain
+        security import $CERTIFICATE_PATH -P "$P12_DISTRIBUTION_CERTIFICATE_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+        security list-keychain -d user -s $KEYCHAIN_PATH
+
+        # apply provisioning profile
+        mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+        cp $PROVISIONING_PROFILE_PATH ~/Library/MobileDevice/Provisioning\ Profiles
+
+
+    # Needed to run Flutter-based commands
+    - name: 🐦 Install Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        # If the flutter version that is used in development increases, it's recommended this one increases as well
+        flutter-version: "3.13.5"
+        channel: "stable"
+      id: flutter
+
+    # Setting up Melos, which will 
+    #- name: ⚙️ Setup Melos
+    #  uses: bluefireteam/melos-action@v2
+
+    - name: 📚 Install dependencies
+      run: flutter pub get
+
+    - name: 🍏📦 Create iOS appbundle release
+      run: |
+        flutter build ipa \
+            --release \
+            --export-options-plist=ios/Runner/ExportOptions.plist
+            --obfuscate \
+            --split-debug-info=${{ github.workspace }}/build/app/outputs/symbols
+
+    - name: 🍏🚀 Deploy to App Store (Testflight)
+      uses: apple-actions/upload-testflight-build@v1
+      with:
+        app-path: ${{ github.workspace }}/app/build/ios/ipa/flutter_ci_cd_demo.ipa
+        issuer-id: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+        api-key-id: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+        api-private-key: ${{ secrets.APP_STORE_CONNECT_API_PRIVATE_KEY }}
+```
+
+
+That's a lot!
+We'll go over each step and explain it.
+
+- in the `on` section,
+we are only triggering the workflow
+**when changes are pushed into the `main` branch**
+and only after the `build` workflow succeeds.
+- we need to define the `permissions > contents` 
+to `write` because we'll need to correctly
+create the local upload keystore 
+and to create the app bundle.
+
+- next, we define the `build-and-deploy_ios` job.
+We are running it on a `macos` environment,
+for obvious reasons.
+Firstly, we are installing the Apple certificate
+and provisioning profile.
+This is needed because we need to sign our `Xcode` apps
+in order to publish them.
+This part is taken from 
+[Github Actions documentation for `iOS` builds](https://docs.github.com/en/actions/deployment/deploying-xcode-applications/installing-an-apple-certificate-on-macos-runners-for-xcode-development),
+with the variables renamed 
+so it's simpler to understand.
+
+```yaml
+    - name: 🔐 Install Apple certificate and provisioning profile
+      env:
+        P12_DISTRIBUTION_CERTIFICATE_BASE64: "${{ secrets.IOS_P12_DISTRIBUTION_CERTIFICATE_BASE64 }}"
+        P12_DISTRIBUTION_CERTIFICATE_PASSWORD: "${{ secrets.IOS_P12_DISTRIBUTION_CERTIFICATE_PASSWORD }}"
+        DISTRIBUTION_PROVISIONING_PROFILE_BASE64: "${{ secrets.IOS_DISTRIBUTION_PROVISIONING_PROFILE_BASE64 }}"
+        KEYCHAIN_PASSWORD: "${{ secrets.IOS_RUNNER_LOCAL_KEYCHAIN_PASSWORD }}"
+        EXPORT_OPTIONS_BASE64: "${{ secrets.IOS_EXPORT_OPTIONS_BASE64 }}"
+      run: |
+        # create variables
+        CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
+        PROVISIONING_PROFILE_PATH=$RUNNER_TEMP/build_pp.mobileprovision
+        KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+        EXPORT_OPTIONS_PATH="${{ github.workspace }}/app/ios/Runner/ExportOptions.plist"
+
+        # import certificate, provisioning profile and export options from secrets
+        echo -n "$P12_DISTRIBUTION_CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
+        echo -n "$DISTRIBUTION_PROVISIONING_PROFILE_BASE64" | base64 --decode -o $PROVISIONING_PROFILE_PATH
+        echo -n "$EXPORT_OPTIONS_BASE64" | base64 --decode -o $EXPORT_OPTIONS_PATH
+
+        # create temporary keychain
+        security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+        security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+        security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+
+        # import certificate to keychain
+        security import $CERTIFICATE_PATH -P "$P12_DISTRIBUTION_CERTIFICATE_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+        security list-keychain -d user -s $KEYCHAIN_PATH
+
+        # apply provisioning profile
+        mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+        cp $PROVISIONING_PROFILE_PATH ~/Library/MobileDevice/Provisioning\ Profiles
+```
+
+- afterwards,
+we install the `Flutter` command-line
+needed to proceed.
+We download the app's dependencies.
+
+```yaml
+    # Needed to run Flutter-based commands
+    - name: 🐦 Install Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        # If the flutter version that is used in development increases, it's recommended this one increases as well
+        flutter-version: "3.13.5"
+        channel: "stable"
+      id: flutter
+
+    - name: 📚 Install dependencies
+      run: flutter pub get
+```
+
+- next, we create the app bundle for release.
+For this, we run the `flutter build ipa`
+to create the `.ipa` file 
+for release.
+
+```yaml
+    - name: 🍏📦 Create iOS appbundle release
+      run: |
+        flutter build ipa \
+            --release \
+            --export-options-plist=ios/Runner/ExportOptions.plist
+            --obfuscate \
+            --split-debug-info=${{ github.workspace }}/build/app/outputs/symbols
+```
+
+- finally,
+we deploy the app to the app store!
+We do it to `TestFlight`,
+since we already have 
+[`apple-actions/upload-testflight-build`](https://github.com/apple-actions/upload-testflight-build/tree/v1/) action
+that can do it for us.
+
+```yaml
+    - name: 🍏🚀 Deploy to App Store (Testflight)
+      uses: apple-actions/upload-testflight-build@v1
+      with:
+        app-path: ${{ github.workspace }}/app/build/ios/ipa/flutter_ci_cd_demo.ipa
+        issuer-id: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+        api-key-id: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+        api-private-key: ${{ secrets.APP_STORE_CONNECT_API_PRIVATE_KEY }}
+```
+
+And that's it! 🚀
+
+We've successfully completed a pipeline 
+where we build, bundle and release
+our app to our `Apple Developer Account` app
+into `TestFlight`, that can then be *opened* 
+to a public release in the web!
