@@ -44,8 +44,11 @@ So, let's start!
     - [1. Registering the app in `App Store Connect`](#1-registering-the-app-in-app-store-connect)
       - [Register your `Bundle ID`](#register-your-bundle-id)
       - [Create an application record on `App Store Connect`](#create-an-application-record-on-app-store-connect)
-    - [2. Registering the app in `App Store Connect`](#2-registering-the-app-in-app-store-connect)
-    - [XXXX. *(Optional)* ⛓️ Automating deployment with Github Actions](#xxxx-optional-️-automating-deployment-with-github-actions)
+    - [2. Review `Xcode` project settings](#2-review-xcode-project-settings)
+    - [3. Change app icon](#3-change-app-icon)
+    - [4. Create the app bundle](#4-create-the-app-bundle)
+    - [5. Add app bundle to `App Store Connect`](#5-add-app-bundle-to-app-store-connect)
+    - [6. *(Optional)* ⛓️ Automating deployment with Github Actions](#6-optional-️-automating-deployment-with-github-actions)
       - [Pre-requisites](#pre-requisites-1)
       - [`Github` secrets check-up](#github-secrets-check-up-1)
       - [A note before releasing a new version](#a-note-before-releasing-a-new-version-1)
@@ -1378,10 +1381,130 @@ Make sure to select the `Bundle ID`
 you've created previously in the `Bundle ID` dropdown bar.
 
 
-### 2. Registering the app in `App Store Connect`
+### 2. Review `Xcode` project settings
+
+Now, we need to **review the most important settings in the `XCode` workspace**.
+
+Open `Xcode`
+and open the `Flutter` project's workspace.
+The path is `ios/ios/Runner.xcworkspace`.
+After this, to view the app's settings, 
+select the `Runner` target in the `Xcode` navigator.
+
+Now let's go over the important settings.
+In the **Identity** section of the **General** tab:
+- change the `Display Name`.
+- change the `Bundle Identifier` with the `Bundle ID`
+we've previously created.
+
+In the **Signing & Capabilities** tab:
+- make `Automatically manage signing` to `true`.
+It is sufficient to most apps.
+- select the `Team` associated with your account.
+
+In the **Deployment** section of the **Build Settings** tab:
+- review `iOS Deployment Target`,
+the minimum iOS version that your app supports.
 
 
-### XXXX. *(Optional)* ⛓️ Automating deployment with Github Actions
+This is how your `Settings` page should look like.
+
+<p align="center">
+  <img width="800" src="https://github.com/dwyl/app/assets/17494745/5eb2182e-edb7-4c68-a433-25321976013b" />
+</p>
+
+
+> [!WARNING]
+>
+> If you changed the `Deployment Target` in your `Xcode` project, 
+> open `ios/Flutter/AppframeworkInfo.plist` in your Flutter app 
+> and update the `MinimumOSVersion` value to match.
+
+
+### 3. Change app icon
+
+By default, `Flutter` apps
+have a place holder icon that is created.
+You may have already used [`flutter_launcher_icons`](https://pub.dev/packages/flutter_launcher_icons)
+to change the icons across all platforms.
+
+*However*, it's best to check if everything is correctly set
+in your `Xcode` project.
+In your `Xcode` project navigator,
+select `Assets.xcassets` in the `Runner` folder
+and update the icons with your own app icons.
+
+You can verify that the icon has been replaced by running the app
+(run `flutter run`).
+
+<p align="center">
+  <img width="800" src="https://github.com/dwyl/app/assets/17494745/34e1b4ee-d4ac-4765-8284-dddaaff5d66d" />
+</p>
+
+
+### 4. Create the app bundle
+
+`Flutter` made it really easy to create the app bundle.
+You just need to run the following command:
+
+```shell
+flutter build ipa
+```
+
+You can consider adding the `--obfuscate` and `--split-debug-info` flags
+[to obfuscate your Dart code](https://docs.flutter.dev/deployment/obfuscate) 
+to make it more difficult to reverse engineer.
+
+
+### 5. Add app bundle to `App Store Connect`
+
+We're in the home stretch!
+
+It's time to add your `.api` file to 
+`App Store Connect`.
+
+By *far* the easiest way of doing this 
+is using the [`Apple Transport macOS app`](https://apps.apple.com/us/app/transporter/id1450874784).
+
+> [!NOTE]
+>
+> If you want alternative ways,
+> please visit https://docs.flutter.dev/deployment/ios#upload-the-app-bundle-to-app-store-connect.
+
+
+Simply drag an drop the `build/ios/ipa/*.ipa` app bundle into the app!
+
+<p align="center">
+  <img width="800" src="https://github.com/dwyl/app/assets/17494745/667531bc-f068-4b17-a389-9c136688c5ed" />
+</p>
+
+Wait for it to process.
+
+Once it's all ready,
+you can `Deliver` it to `App Store Connect`.
+
+
+<p align="center">
+  <img width="800" src="https://github.com/dwyl/app/assets/17494745/ed004994-0547-465d-a11c-d7dd33169041" />
+</p>
+
+Once you click this,
+the browser will be opened.
+You can then choose if you want to publish directly
+to the `App Store` 
+or if you want to `TestFlight` it instead.
+
+And that's it!
+You've successfully published your app to the `App Store`!
+
+Remember that it make take a few days for your app
+to be reviewed by Apple and be approved.
+But you've just completed the hard part!
+
+Hats off to ya! 🥳
+
+
+### 6. *(Optional)* ⛓️ Automating deployment with Github Actions
 
 Now that you know the process
 of creating a release build archive `.ipa`
