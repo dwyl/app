@@ -73,6 +73,7 @@ jobs:
         uses: r0adkll/upload-google-play@v1.1.2
         with:
           # MUST match the package name defined in `android/app/build.gradle`
+          # Change all instances of of the package name to this one
           packageName: org.dwyl.app
 
           # Can be 'alpha'/'beta'/'internal'/'production'.
