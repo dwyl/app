@@ -1,28 +1,37 @@
 name: Deploy Web (GitHub Pages)
 on:
+  # Only trigger, when the "build" workflow succeeded (only works in the Master Branch)
+  workflow_run:
+    workflows: ["Build & Test"]
+    types:
+      - completed
+
+  # Only trigger, when pushing into the `main` branch
   push:
-    branches: [ main ]
+    branches: [main]
 
 permissions:
   contents: write
+
 jobs:
-  build-and-deploy:
+  build-and-deploy_web:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      
+
       - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
-          channel: 'stable'
+          flutter-version: "3.13.5"
+          channel: "stable"
 
       - name: Install dependencies
         run: flutter pub get
 
       # See stackoverflow.com/questions/74164386/flutter-web-shows-blank-page-on-github-deployment
-      - name: Install and Build 
+      - name: Install and Build
         run: flutter build web --release --web-renderer html
 
       - name: Deploy to Github Pages
