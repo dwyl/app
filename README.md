@@ -1,14 +1,14 @@
 <div align="center">
 
 # `app`
+</div>
 
+<!--
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/dwyl/app/ci.yml?label=build&style=flat-square&branch=main)](https://github.com/dwyl/app/actions/workflows/ci.yml)
 [![codecov.io](https://img.shields.io/codecov/c/github/dwyl/app/main.svg?style=flat-square)](https://codecov.io/github/dwyl/app?branch=main)
 [![contributions welcome](https://img.shields.io/badge/feedback-welcome-brightgreen.svg?style=flat-square)](https://github.com/dwyl/app/issues)
 [![HitCount](https://hits.dwyl.com/dwyl/app.svg)](https://hits.dwyl.com/dwyl/app)
 
-</div>
-<!--
 ![Until we can manage time, we can manage nothing else](http://i.imgur.com/GbTyiib.png)
 -->
 
