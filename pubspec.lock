@@ -374,11 +374,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.3"
-  flutter_driver:
-    dependency: transitive
-    description: flutter
-    source: sdk
-    version: "0.0.0"
   flutter_inappwebview:
     dependency: transitive
     description:
@@ -468,18 +463,18 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_quill
-      sha256: "6350f7b93bd5dc30d12f8235c32f66727c4844f328a0e91869e36ecda4fdb2fa"
+      sha256: "7e3459678362a2e2cc3645df065a357ed60ff5e7863127046f5a2ca548cbf6f5"
       url: "https://pub.dev"
     source: hosted
-    version: "7.4.7"
+    version: "7.4.11"
   flutter_quill_extensions:
     dependency: "direct main"
     description:
       name: flutter_quill_extensions
-      sha256: "2881381283c2f31697ba0a5ce4f1b4eb1639d33b10c4252c0de601e4ae640347"
+      sha256: "8ad561415a00db5555e1b4dd353abdc8a815f945a0a61faac3c187138b616343"
       url: "https://pub.dev"
     source: hosted
-    version: "0.4.1"
+    version: "0.5.0"
   flutter_svg:
     dependency: transitive
     description:
@@ -506,19 +501,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.2.0"
-  fuchsia_remote_debug_protocol:
-    dependency: transitive
-    description: flutter
-    source: sdk
-    version: "0.0.0"
-  gallery_saver:
+  gal:
     dependency: transitive
     description:
-      name: gallery_saver
-      sha256: df8b7e207ca12d64c71e0710a7ee3bc48aa7206d51cc720716fedb1543a66712
+      name: gal
+      sha256: ebc581bea458be47e8e80761c4449ad3a0f045db206f6f4648885ac474444246
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.2"
+    version: "2.1.2"
   glob:
     dependency: transitive
     description:
@@ -555,10 +545,10 @@ packages:
     dependency: "direct main"
     description:
       name: http
-      sha256: "5895291c13fa8a3bd82e76d5627f69e0d85ca6a30dcac95c4ea19a5d555879c2"
+      sha256: "759d1a329847dd0f39226c688d3e06a6b8679668e350e2891a6474f8b4bb8525"
       url: "https://pub.dev"
     source: hosted
-    version: "0.13.6"
+    version: "1.1.0"
   http_multi_server:
     dependency: transitive
     description:
@@ -647,11 +637,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.1+1"
-  integration_test:
-    dependency: "direct dev"
-    description: flutter
-    source: sdk
-    version: "0.0.0"
   intl:
     dependency: transitive
     description:
@@ -896,10 +881,10 @@ packages:
     dependency: transitive
     description:
       name: platform
-      sha256: "4a451831508d7d6ca779f7ac6e212b4023dd5a7d08a27a63da33756410e32b76"
+      sha256: "0a279f0707af40c890e80b1e9df8bb761694c074ba7e1d4ab1bc4b728e200b59"
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.0"
+    version: "3.1.3"
   plugin_platform_interface:
     dependency: transitive
     description:
@@ -916,14 +901,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.5.1"
-  process:
-    dependency: transitive
-    description:
-      name: process
-      sha256: "53fd8db9cec1d37b0574e12f07520d582019cb6c44abf5479a01505099a34a09"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.2.4"
   provider:
     dependency: transitive
     description:
@@ -1129,22 +1106,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
-  string_validator:
-    dependency: transitive
-    description:
-      name: string_validator
-      sha256: b419cf5d21d608522e6e7cafed4deb34b6f268c43df866e63c320bab98a08cf6
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.0"
-  sync_http:
-    dependency: transitive
-    description:
-      name: sync_http
-      sha256: "7f0cd72eca000d2e026bcd6f990b81d0ca06022ef4e32fb257b30d3d1014a961"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.3.1"
   term_glyph:
     dependency: transitive
     description:
@@ -1393,14 +1354,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.4.0"
-  webdriver:
-    dependency: transitive
-    description:
-      name: webdriver
-      sha256: "3c923e918918feeb90c4c9fdf1fe39220fa4c0e8e2c0fffaded174498ef86c49"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.2"
   webkit_inspection_protocol:
     dependency: transitive
     description:

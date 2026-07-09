@@ -1,4 +1,4 @@
-package com.dwyl.app
+package org.dwyl.app
 
 import io.flutter.embedding.android.FlutterActivity
 
